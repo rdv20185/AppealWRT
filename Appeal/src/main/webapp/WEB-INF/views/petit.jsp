@@ -382,6 +382,40 @@
 		 $(function() {
 			    $( "#draggable" ).draggable();
 			  });
+		 
+		 
+		 $(document).ready(function(){
+
+				$("#draggable").submit(function(event) {
+					console.log('draggable ');
+
+					// Prevent the form from submitting via the browser.
+					event.preventDefault();
+					
+					console.log('stay here ');
+					
+					
+					
+					$.ajax({
+						type : "GET",
+						url : "add",
+						data : JSON.stringify("${petit}"),
+						success : function(data) {
+							console.log("SUCCESS: ", data);
+							
+						},
+						error : function(e) {
+							console.log("ERROR: ", e);
+						},
+						done : function(e) {
+							console.log("DONE");
+						}
+					});
+
+					
+				});
+
+			});
 		</script>
 	
 </head>

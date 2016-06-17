@@ -16,13 +16,13 @@ public class NotifyAspect {
 
     private static final String WEBSOCKET_TOPIC = "/topic/notify";
     
-    @Pointcut("execution(* web.PetitController.addPetit(..))")
+    @Pointcut("execution(* web.PetitControllerN.addPetit(..))")
     private void anyOldTransfer() {}
-    
+  /*  
     @Pointcut("execution(* web.PetitController.refreshAddPetit(..))")
     private void anyOldTransfer2() {}
     
-  /*
+  
     @After("execution(* web.PetitController.addPetit(..))") 
     public void notifyClients() throws Throwable {
     	System.out.println("@@ TEST2 @@");
@@ -30,7 +30,7 @@ public class NotifyAspect {
     }
     */
     
-    @After("anyOldTransfer() || anyOldTransfer2()") 
+    @After("anyOldTransfer()") 
     public void notifyClients() throws Throwable {
     	System.out.println("@@ TEST2 @@");
         template.convertAndSend(WEBSOCKET_TOPIC, new Date());

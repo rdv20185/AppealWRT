@@ -1,4 +1,4 @@
-package web;
+package res;
 
 import java.io.File;
 import java.io.FileInputStream;

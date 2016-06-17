@@ -21,3 +21,6 @@ stompClient.connect({}, function(frame) {
 }
 
 init();
+
+
+
