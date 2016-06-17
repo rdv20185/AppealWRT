@@ -1,0 +1,10 @@
+/app/
+/aspects/
+/config/
+/dao/
+/domain/
+/hibernate.cfg.xml
+/messages_ru.properties
+/res/
+/service/
+/web/

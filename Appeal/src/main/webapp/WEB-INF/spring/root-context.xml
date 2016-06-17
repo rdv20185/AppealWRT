@@ -1,0 +1,42 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+
+	<!-- Root Context: определяет ресурсы, доступные всему приложению, всем сервлетам -->
+	<mvc:annotation-driven />
+	
+	<!-- Включаем опцию использования конфигурационных аннотаций (@Annotation-based configuration)-->
+	<context:annotation-config />
+
+	<!-- Определяем папки, в которых будем автоматически искать бины-компоненты (@Component, @Service)  -->
+	<context:component-scan base-package="dao" />
+	<context:component-scan base-package="service" />
+	<context:component-scan base-package="aspects" />
+	<context:component-scan base-package="config.websoket" />
+	
+	
+	<!-- <websocket:message-broker application-destination-prefix="/app">
+        <websocket:stomp-endpoint path="/notify">
+        <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <websocket:stomp-broker-relay prefix="/topic" />
+    </websocket:message-broker> -->
+	
+	
+	<!-- Файл с настройками ресурсов для работы с данными (Data Access Resources) -->
+	 <import resource="data.xml" /> 
+				
+	<!-- Файл с настройками безопасности -->
+	<import resource="security.xml" />
+
+	
+</beans>

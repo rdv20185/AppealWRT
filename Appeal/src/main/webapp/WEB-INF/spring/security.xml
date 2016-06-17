@@ -1,0 +1,48 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+      
+    <http auto-config="true" >
+        <intercept-url pattern="/" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('ER') or hasRole('SMO')" />
+        <intercept-url pattern="/index*" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('ER') or hasRole('SMO') or hasRole('NIGHT')" />
+		<intercept-url pattern="/add*" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('ER') or hasRole('SMO') or hasRole('NIGHT')" />
+		<intercept-url pattern="/searching" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('SMO')" />
+		<intercept-url pattern="/reporting" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('SMO')" />
+		<intercept-url pattern="/delete/*" access="hasRole('ADMIN') or hasRole('NIGHT')" />
+        
+        
+        <remember-me />
+		<headers/>
+		<csrf/>
+    </http>
+  
+    <authentication-manager >
+        <authentication-provider>
+            <user-service>
+                <user name="smyvin" password="kjh987" authorities="ROLE_ADMIN,ROLE_TFOMS" />
+				<user name="vasilyeva" password="uhb567" authorities="ROLE_ADMIN,ROLE_TFOMS" />
+				<user name="smo_simaz" password="uyt765" authorities="ROLE_SMO" />
+				<user name="smo_rosno" password="wer456" authorities="ROLE_SMO" />
+				<user name="smo_ingos" password="rty579" authorities="ROLE_SMO" />
+				<user name="mityanina" password="tre456" authorities="ROLE_TFOMS" />
+				<user name="popova" password="fds321" authorities="ROLE_TFOMS" />
+				<user name="eremina" password="nbv654" authorities="ROLE_TFOMS" />
+				<user name="hamitov" password="zxc234" authorities="ROLE_TFOMS" />
+				<user name="kuznetsova" password="zxc567" authorities="ROLE_TFOMS" />
+				<user name="filimonova" password="lkj098" authorities="ROLE_TFOMS" />
+				<user name="osipova" password="jkl890" authorities="ROLE_TFOMS" />
+				<user name="ernso" password="123" authorities="ROLE_ER" />
+				<user name="call5001" password="5001" authorities="ROLE_ER" />
+				<user name="call5002" password="5002" authorities="ROLE_ER" />
+				<user name="call5003" password="5003" authorities="ROLE_ER" />
+				<user name="callnight5001" password="night5001" authorities="ROLE_ER,ROLE_NIGHT" />
+				<user name="callnight5002" password="night5002" authorities="ROLE_ER,ROLE_NIGHT" />
+				<user name="callnight5003" password="night5003" authorities="ROLE_ER,ROLE_NIGHT" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+      
+     
+</beans:beans>
