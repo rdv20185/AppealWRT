@@ -1,4 +1,4 @@
-<%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -386,23 +386,30 @@
 		 
 		 $(document).ready(function(){
 
+			 
 				$("#draggable").submit(function(event) {
-					console.log('draggable ');
+					var btn= $(this).find("input[type=submit]:focus").val();
+					console.log('draggable '+btn );
 
 					// Prevent the form from submitting via the browser.
 					event.preventDefault();
 					
-					console.log('stay here ');
+					//console.log('stay here '+JSON.stringify("${petit}"));
 					
+					var values = {};
+					$.each($("form").serializeArray(), function (i, field) {
+					    values[field.name] =field.value;
+					});
+					values["submitted"] = btn;
 					
 					
 					$.ajax({
 						type : "GET",
 						url : "add",
-						data : JSON.stringify("${petit}"),
-						success : function(data) {
-							console.log("SUCCESS: ", data);
-							
+						data : values,
+						success : function(response) {
+								console.log('test '+JSON.stringify(response));
+
 						},
 						error : function(e) {
 							console.log("ERROR: ", e);
@@ -470,7 +477,7 @@
 </c:if>
 
 
-<form:form method="post" action="add" commandName="petit" name='petit_form' class="${cssforedit}" id="draggable">
+<form:form method="get" action="add" commandName="petit" name='petit_form' class="${cssforedit}" id="draggable">
 
 	<form:errors path="*" cssClass="errorblock" element="div" />
 	<form:hidden path="id" name='id'/>

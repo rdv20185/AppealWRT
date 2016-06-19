@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -30,29 +31,29 @@ public class BlockGER2016 {
 	public BlockGER2016() {
 	}
 	
-	//дата завершения обращения
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	@Temporal(TemporalType.DATE)
 	private Date date_end;
-	// Дата Закрытия обращения
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	@Temporal(TemporalType.DATE)
 	private Date date_close;
-	// Номер письма (исходящее)
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 	private String letter_out_num;
-	// Дата письма (исходящее)
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 	private Date letter_out_date;
 	
-	// Тип регистратора
+	// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	private Integer regsource_id;
-	// Регистратор (по именим) кто создал зарегистрировал
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ) пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	private String regname;
-	// Номер регистрации (запослняется для взаимодествия различных структур - 1-м и 2-м уровнем)
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - 1-пїЅ пїЅ 2-пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 	private String regnum;
-	// Дата создания обращения в бд (не путать с date_input)
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ (пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ date_input)
 	private String date_create;
 
-	// Дата изменения редактирования
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	private Date date_change;
-	// Ссылка на файл  звонка (ночного... )
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ  пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ... )
 	private String filecall;
 	
 	public Date getDate_end() {
@@ -97,11 +98,11 @@ public class BlockGER2016 {
 	}
 
 	/*
-	   статус записи
-	   1-создан
-	   2-в работе
-	   3-завершен
-	   4-закрыт
+	   пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	   1-пїЅпїЅпїЅпїЅпїЅпїЅ
+	   2-пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	   3-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	   4-пїЅпїЅпїЅпїЅпїЅпїЅ
 	 */
 	private Integer state;
 	
@@ -118,7 +119,7 @@ public class BlockGER2016 {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
-	//@JsonIgnore
+	@JsonIgnore
 	public Petit getPetit() {
 		return petit;
 	}

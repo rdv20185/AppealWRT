@@ -39,19 +39,19 @@ public class blOutboindLETTER2016 {
 	public blOutboindLETTER2016() {
 	}
 	
-	//Дата промежуточного ответа
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	private String date_between;
-	//Дата запроса мед.документации
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	private String date_querymedDoc;
-	//Дата передачи мед.документации в ОМЭР
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
 	private String date_passmedDoc;
-	//Дата получения Актов МЭ
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ
 	private String date_obtainAkt;
-	//Дата окончательного ответа
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	private String date_response;  
-	//Номер исходящего письма
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	private String numOutLetter;
-	//Ответственный
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	private String responsible;
 	
 	
@@ -68,7 +68,7 @@ public class blOutboindLETTER2016 {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
-	//@JsonIgnore
+	@JsonIgnore
 	public Petit getPetit() {
 		return petit;
 	}

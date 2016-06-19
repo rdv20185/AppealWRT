@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.sql.SQLException;
@@ -32,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,9 +42,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import pylypiv.tfoms.ftp.FTPDownloadFileDemo;
 import res.Fields;
+import res.JsonResponse;
 import res.TransferFiles;
 import service.PetitService;
 import domain.BlockGER2016;
@@ -81,6 +85,8 @@ public class PetitControllerN {
 		source3.put(3, "ЕР НСО");
 	}
 	
+	private List<Petit> pl = new ArrayList<Petit>();
+	
 	@Autowired
     private PetitService petitService;
 	
@@ -92,8 +98,10 @@ public class PetitControllerN {
 		System.out.println("ModelAttribute "+ request.getRequestURI());
 		
 		map.put("petit", new Petit());
-		List<Petit> pl = new ArrayList<Petit>(); 
+		 
     	Petit t = new Petit();
+    	t.setId(1);
+    	t.setSurname("Иванов");
     	pl.add(t);
         map.put("petitList", pl);
 
@@ -174,13 +182,14 @@ public class PetitControllerN {
     }
    
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request) throws ParseException, InterruptedException {
-    	
+    public @ResponseBody List<Petit> addPetit(@ModelAttribute("petit") @Valid Petit petit,String submitted, BindingResult bindingResult,HttpServletRequest request,ModelMap model) throws ParseException, InterruptedException, UnsupportedEncodingException {
+    
+    	petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setName(new String(petit.getName().getBytes("ISO-8859-1"),"UTF-8"));
     	System.out.println("######## "+petit );
-    	Thread.sleep(1000000);
     	
-    	String para = request.getParameter("submit");
     	
+    	String para =new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
     	/* ловим с клиЕнта нажатую кнопку
     	 * ЕСЛИ с клиента прилетает письменное обращение petit.getConectId() ==2  и дата исходящего пустая getDate_response() то статус = 2(в работе) и date_end = ""
     	 * Если письменное и дата ответа не пустая то статус = 3
@@ -204,15 +213,11 @@ public class PetitControllerN {
     		}
     	}
     	
-		return adds(petit, bindingResult,request);
+		return adds(petit, bindingResult,request,submitted,model);
     }
 
-	private String adds(Petit petit, BindingResult bindingResult,HttpServletRequest request) {
-		if(bindingResult.hasErrors()) {
-			return "petit";
-		} else {
-			//checkID(petit);
-		}
+	private @ResponseBody List<Petit> adds(Petit petit, BindingResult bindingResult,HttpServletRequest request,String submitted,ModelMap model) throws UnsupportedEncodingException {
+		
 		/*
 		 * Ловим с клиента в переменную ff поле date_end
 		 */
@@ -224,7 +229,7 @@ public class PetitControllerN {
   		  	try { date = df.parse(ff); } catch (ParseException e) { e.printStackTrace(); }
     		petit.getBlockger2016().setDate_end(date);
 		}
-		String para = request.getParameter("submit");
+		String para = new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
 		
 		/* Если нажата кнопка сохранить то в поле username добавляется ключ (ключ приходит с клиента input select - "назначить")
 		 * Ключ - это значение при котором записи из базы будут доступны определенным группам пользователей
@@ -281,8 +286,21 @@ public class PetitControllerN {
 	    petit.getBlockger2016().setPetit(petit);
 	    
 	    System.out.println("@@@@@@@@@@@@@@@@@@@@  "+petit);
-		petitService.addPetit(petit);
-		return "redirect:/index";
+		//petitService.addPetit(petit);
+	    
+	    
+	    
+//////////////////////////
+	    ModelAndView modelAndView = new ModelAndView();
+	    petit.getBlockger2016().setPetit(null);
+	    pl.add(petit);
+	    //model.addAttribute("petitList", pl);
+	    model.addAttribute("petitList", pl);
+        modelAndView.addObject("petitList", pl);
+//////////////////
+	    
+		return pl;
+	    
 	}
     
 	private String getUserName() {
