@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -56,6 +57,7 @@ import domain.Conect;
 import domain.Hsp;
 import domain.Insur;
 import domain.Mo;
+import domain.Outboundmany;
 import domain.Petit;
 import domain.Present;
 import domain.Rectif1;
@@ -85,7 +87,6 @@ public class PetitControllerN {
 		source3.put(3, "ЕР НСО");
 	}
 	
-	private List<Petit> pl = new ArrayList<Petit>();
 	
 	@Autowired
     private PetitService petitService;
@@ -97,15 +98,13 @@ public class PetitControllerN {
 		
 		System.out.println("ModelAttribute "+ request.getRequestURI());
 		
+		//object for form
 		map.put("petit", new Petit());
-		 
-    	Petit t = new Petit();
-    	t.setId(1);
-    	t.setSurname("Иванов");
-    	pl.add(t);
-        map.put("petitList", pl);
-
-    	
+		// process nightcall
+		nightcallsprocess(request);
+		
+		
+		
 		if(getUserName().equals("sasha") ||
 				getUserName().equals("mityanina") ||
 				getUserName().equals("vasilyeva") ||
@@ -178,6 +177,15 @@ public class PetitControllerN {
 
     @RequestMapping("/index")
     public String listPetits(Map<String, Object> map) {
+    	
+    	List<Petit> pl = petitService.listPetit(getUserName());
+		for(Petit pt : pl)
+    	{
+    		if(pt.getDateInput() !=null)
+    		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+    	}
+		map.put("petitList", pl);
+    	
         return "petit";
     }
    
@@ -186,7 +194,6 @@ public class PetitControllerN {
     
     	petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setName(new String(petit.getName().getBytes("ISO-8859-1"),"UTF-8"));
-    	System.out.println("######## "+petit );
     	
     	
     	String para =new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
@@ -197,6 +204,8 @@ public class PetitControllerN {
     	if(para.trim().equals("Завершить")){
     		if(petit.getPresentId() == 2 && petit.getBloutboindletter2016().getDate_response().equals("")){
     			petit.getBlockger2016().setState(2);
+    			if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+         		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
     		}else{
     			
     			if(petit.getPresentId() == 2 && !petit.getBloutboindletter2016().getDate_response().equals(""))
@@ -205,6 +214,9 @@ public class PetitControllerN {
     				
     	  		  	DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
 	        		petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));
+	        		
+	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+	         		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
     			}
     			else{
 		    			petit.getBlockger2016().setState(3);
@@ -257,17 +269,24 @@ public class PetitControllerN {
 	        		try { petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));} catch (ParseException e) {
 						e.printStackTrace();
 					}
-	        		petit.setUsername(getUserName());
+	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+ 	        		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
 	    		}
 	    		else{
 	    			
-	    			if(petit.getPresentId() != 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 1 ){
-	    				
-	    				petit.getBlockger2016().setState(2);
-		        		petit.setUsername(getUserName());
-		    		}
+	    			if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 2 ){
+ 	    				petit.setUsername(getUserName());
+ 		    		}
+	    			else{
+		    			if(petit.getPresentId() != 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 1 ){
+		    				
+		    				petit.getBlockger2016().setState(2);
+			        		petit.setUsername(getUserName());
+			    		}
 	    			
+	    			if(petit.getPresentId() != 2)
 	    			petit.setUsername(getUserName());
+	    			}
 	    		}
 	    	}	
 		}
@@ -286,23 +305,37 @@ public class PetitControllerN {
 	    petit.getBlockger2016().setPetit(petit);
 	    
 	    System.out.println("@@@@@@@@@@@@@@@@@@@@  "+petit);
-		//petitService.addPetit(petit);
-	    
-	    
-	    
-//////////////////////////
+		petitService.addPetit(petit);
+		List<Petit> pl = petitService.listPetit(getUserName());
+		for(int i=0; i < pl.size();i++)
+		{
+			pl.get(i).getBlockger2016().setPetit(null);
+			if(pl.get(i).getBloutboindletter2016() != null){ 
+				pl.get(i).getBloutboindletter2016().setPetit(null);
+				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
+				for(int j=0;j<ob.size();j++){
+					ob.get(j).setBloutboindletter2016(null);
+				}
+			}
+		}
+		
 	    ModelAndView modelAndView = new ModelAndView();
-	    petit.getBlockger2016().setPetit(null);
-	    pl.add(petit);
-	    //model.addAttribute("petitList", pl);
 	    model.addAttribute("petitList", pl);
         modelAndView.addObject("petitList", pl);
-//////////////////
 	    
 		return pl;
 	    
 	}
     
+	@RequestMapping(value = "/open/{petitId}")
+	public String open(@PathVariable("petitId") Integer petitId)
+	{
+		Petit pt = petitService.getPetit(petitId);
+		pt.getBlockger2016().setState(3);
+		petitService.addPetit(pt);
+		return "redirect:/index";
+	}
+	
 	private String getUserName() {
 		
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -311,4 +344,85 @@ public class PetitControllerN {
 	}
 
 
+	 private void nightcallsprocess(HttpServletRequest request){
+	    	String path = request.getServletContext().getRealPath("/")+"night_calls_working";
+	    	String path_worked = request.getServletContext().getRealPath("/")+"night_calls_worked";
+	    	File f = new File(path);
+	    	if(f.isAbsolute()){
+	    		if(f.list().length != 0){
+		    		String []d =f.list();
+		    		for(int i=0;i < d.length; i++){
+		    			if(d[i].contains(".wav")){
+		    				String tel = parsenumTel(d[i]);
+		    				// вытаскиваем дату
+		    				String ff = d[i].substring(0,d[i].indexOf("_"));
+		    				//check the day
+		    				String day = ff.substring(ff.indexOf("-",5), ff.length()); 
+							if(day.length() ==2){  // e.g -4 or -9, not -25 or -18 etc
+								day = day.replace("-", "0");
+							}else{ if(day.length() ==3) {day = day.replace("-", "");}}
+		    				// check the mounth
+							String mounth = "";
+		    				if(ff.substring(1+ff.indexOf("-"), ff.indexOf("-", 1+ff.indexOf("-"))).length() == 1)
+		    				{
+		    					mounth = ".0"+ff.substring(1+ff.indexOf("-"), 2+ff.indexOf("-"));
+		    				}else{
+		    					mounth = "."+ff.substring(1+ff.indexOf("-"), ff.indexOf("-", 1+ff.indexOf("-")));
+		    				}
+		    				// get year
+		    				String year = "."+ff.substring(0, 4);
+		    				ff = day+mounth+year;
+		    				System.out.println("fff "+ff+"  ");
+		    				
+		    				new TransferFiles().copy(path + File.separator + d[i], path_worked + File.separator + d[i]);
+		    				new TransferFiles().delete(path + File.separator + d[i]);
+		    				
+		    				Petit petit = new Petit();
+		    				petit.setDateInput(ff);
+		    				petit.setTel(tel);
+		    				petit.setUsername("auto");
+		    				BlockGER2016 blo = new BlockGER2016();
+		    				blo.setRegname("auto");
+		    				blo.setRegsource_id(2);
+		    				blo.setFilecall(path_worked + File.separator + d[i]);
+		    				blo.setState(1);
+		    				petit.setBlockger2016(blo);
+		    				petit.getBlockger2016().setPetit(petit);
+		    				System.out.println("Petit "+petit);
+		    				petitService.addPetit(petit);
+		    			}
+		    		}
+	    		}else{System.out.println("equals 0");}	
+	    	}else{}
+	    	System.out.println("WWWWWWW "+path);
+	    	
+	    }
+	 
+	 private String parsenumTel(String val){
+	    	
+			// вытаскиваем дату
+	    	char []t = val.toCharArray();
+	    	int count = 0;
+	    	int startsubstr = 0;
+	    	int endsubstr = 0;
+	    	for (int j = 0; j < t.length; j++) {
+				if(t[j] == '_') count++;
+				if(count ==2 && t[j] == '_'){
+					startsubstr = j;
+				}
+				if(count == 3 && t[j] == '_'){
+					endsubstr = j;
+				}
+			}
+			String ff = val.substring(startsubstr+1,endsubstr);
+			
+			return ff;
+	    } 
+	 
+	 
+	 @RequestMapping(value = "/types", method = RequestMethod.GET)
+		public @ResponseBody
+		Set<TypeL> findAllTypes() {
+			return this.petitService.findAllTypes();
+		}
 }

@@ -13,10 +13,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+
 
 
 @Entity
@@ -25,35 +25,35 @@ public class BlockGER2016 {
 
 	
 	private Integer idblockger2016;
-	
+
 	private Petit petit;
 	
 	public BlockGER2016() {
 	}
 	
-	//���� ���������� ���������
+	//дата завершения обращения
 	@Temporal(TemporalType.DATE)
 	private Date date_end;
-	// ���� �������� ���������
+	// Дата Закрытия обращения
 	@Temporal(TemporalType.DATE)
 	private Date date_close;
-	// ����� ������ (���������)
+	// Номер письма (исходящее)
 	private String letter_out_num;
-	// ���� ������ (���������)
+	// Дата письма (исходящее)
 	private Date letter_out_date;
 	
-	// ��� ������������
+	// Тип регистратора
 	private Integer regsource_id;
-	// ����������� (�� ������) ��� ������ ���������������
+	// Регистратор (по именим) кто создал зарегистрировал
 	private String regname;
-	// ����� ����������� (������������ ��� ������������� ��������� �������� - 1-� � 2-� �������)
+	// Номер регистрации (запослняется для взаимодествия различных структур - 1-м и 2-м уровнем)
 	private String regnum;
-	// ���� �������� ��������� � �� (�� ������ � date_input)
+	// Дата создания обращения в бд (не путать с date_input)
 	private String date_create;
 
-	// ���� ��������� ��������������
+	// Дата изменения редактирования
 	private Date date_change;
-	// ������ �� ����  ������ (�������... )
+	// Ссылка на файл  звонка (ночного... )
 	private String filecall;
 	
 	public Date getDate_end() {
@@ -98,11 +98,11 @@ public class BlockGER2016 {
 	}
 
 	/*
-	   ������ ������
-	   1-������
-	   2-� ������
-	   3-��������
-	   4-������
+	   статус записи
+	   1-создан
+	   2-в работе
+	   3-завершен
+	   4-закрыт
 	 */
 	private Integer state;
 	
@@ -119,11 +119,12 @@ public class BlockGER2016 {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
-	@JsonIgnore
+	//@JsonIgnore
 	public Petit getPetit() {
 		return petit;
 	}
 
+	
 	public void setPetit(Petit petit) {
 		this.petit = petit;
 	}

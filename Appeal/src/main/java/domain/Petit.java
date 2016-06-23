@@ -12,9 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Table(name = "T_PETIT")
@@ -25,7 +28,7 @@ public class Petit {
     @Column(name = "ID")
     private Integer id;
 	
-	@Pattern(regexp = "(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}", message="Дата поступления должна быть в формате дд.мм.гггг")
+	@Pattern(regexp = "(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}", message="Р”Р°С‚Р° РїРѕСЃС‚СѓРїР»РµРЅРёСЏ РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РІ С„РѕСЂРјР°С‚Рµ РґРґ.РјРј.РіРіРіРі")
 	@Column(name = "DATE_INPUT")
     private String dateInput;
 	
@@ -40,31 +43,31 @@ public class Petit {
     
     @Column(name = "INTERMED")
     private int intermedId;
-    //@Range(min = 1, max = 150, message="Поле Тип обязательно для заполнения")
+    //@Range(min = 1, max = 150, message="РџРѕР»Рµ РўРёРї РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")
     @Column(name = "TYPE_ID")
     private int typeId;
 
-	//@NotEmpty(message="Поле \"Имя\" обязательно для заполнения")
+	//@NotEmpty(message="РџРѕР»Рµ \"РРјСЏ\" РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")
     @Column(name = "NAME")
     private String name;
     
-	//@NotEmpty(message="Поле \"Фамилия\" обязательно для заполнения")
+	//@NotEmpty(message="РџРѕР»Рµ \"Р¤Р°РјРёР»РёСЏ\" РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")
     @Column(name = "SURNAME")
     private String surname;
     
-	//@NotEmpty(message="Поле \"Отчество\" обязательно для заполнения")
+	//@NotEmpty(message="РџРѕР»Рµ \"РћС‚С‡РµСЃС‚РІРѕ\" РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")
     @Column(name = "PATRONY")
     private String patrony;
     
-	//@NotEmpty(message="Поле \"Полис\" обязательно для заполнения")
+	//@NotEmpty(message="РџРѕР»Рµ \"РџРѕР»РёСЃ\" РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")
     @Column(name = "POLICY")
     private String policy;
     
-	//@NotEmpty(message="Поле \"Телефон\" обязательно для заполнения")
+	//@NotEmpty(message="РџРѕР»Рµ \"РўРµР»РµС„РѕРЅ\" РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")
     @Column(name = "TEL")
     private String tel;
     
-	//@NotEmpty(message="Поле \"Адрес\" обязательно для заполнения")
+	//@NotEmpty(message="РџРѕР»Рµ \"РђРґСЂРµСЃ\" РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")
     @Column(name = "ADRESS")
     private String adress;
     
@@ -95,7 +98,7 @@ public class Petit {
     @Column(name = "USERNAME")
     private String username;
     
-    //@Range(min = 1, max = 150, message="Поле Причина обязательно для заполнения")
+    //@Range(min = 1, max = 150, message="РџРѕР»Рµ РџСЂРёС‡РёРЅР° РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")
     @Column(name = "CAUSE_ID")
     private int causeId;
     
@@ -114,7 +117,7 @@ public class Petit {
     @Column(name = "VALID_ID")
     private int validId;
     
-    //@Pattern(regexp = "(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}", message="Дата компенсации должна быть в формате дд.мм.гггг")
+    //@Pattern(regexp = "(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}", message="Р”Р°С‚Р° РєРѕРјРїРµРЅСЃР°С†РёРё РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РІ С„РѕСЂРјР°С‚Рµ РґРґ.РјРј.РіРіРіРі")
 	@Column(name = "COMPENS")
     private String compens;// new SimpleDateFormat("dd.MM.yyyy").format(new Date());
     
@@ -127,8 +130,8 @@ public class Petit {
     @Column(name = "COMPENS_CODE")
     private String compensCode;
     
-    @Pattern(regexp = "^(\\d|-)?(\\d|,)*\\.?\\d*$", message="Сумма может быть только числом")
-    @Size(max = 8, message="Длина суммы не более 8 символов")
+    @Pattern(regexp = "^(\\d|-)?(\\d|,)*\\.?\\d*$", message="РЎСѓРјРјР° РјРѕР¶РµС‚ Р±С‹С‚СЊ С‚РѕР»СЊРєРѕ С‡РёСЃР»РѕРј")
+    @Size(max = 8, message="Р”Р»РёРЅР° СЃСѓРјРјС‹ РЅРµ Р±РѕР»РµРµ 8 СЃРёРјРІРѕР»РѕРІ")
     @Column(name = "COMPENS_SUM")
     private String compensSum;
     
@@ -147,7 +150,7 @@ public class Petit {
     @Column(name = "DATE_END")
     private String dateEnd;
     
-    @Size(max =501, message="Длина примечания не более 500 символов")
+    @Size(max =501, message="Р”Р»РёРЅР° РїСЂРёРјРµС‡Р°РЅРёСЏ РЅРµ Р±РѕР»РµРµ 500 СЃРёРјРІРѕР»РѕРІ")
     @Column(name = "CAUSE_NOTE")
     private String causeNote;
     

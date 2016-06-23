@@ -8,6 +8,7 @@
 
 
 <sec:authentication var="principal" property="principal" />
+<sec:authentication var="role" property="principal.authorities" />
 
 
 
@@ -84,6 +85,8 @@
 	 }
 		
 	$(document).ready(function() {
+		
+		
 		
 			if($("#presentId" ).val() !=1){
 				$('#inboundLetter').fadeIn();
@@ -389,12 +392,9 @@
 			 
 				$("#draggable").submit(function(event) {
 					var btn= $(this).find("input[type=submit]:focus").val();
-					console.log('draggable '+btn );
 
 					// Prevent the form from submitting via the browser.
 					event.preventDefault();
-					
-					//console.log('stay here '+JSON.stringify("${petit}"));
 					
 					var values = {};
 					$.each($("form").serializeArray(), function (i, field) {
@@ -402,13 +402,96 @@
 					});
 					values["submitted"] = btn;
 					
+						
 					
 					$.ajax({
 						type : "GET",
 						url : "add",
 						data : values,
 						success : function(response) {
-								console.log('test '+JSON.stringify(response));
+							//console.log('stay here '+JSON.stringify(response));
+							var t = JSON.stringify(response).replace(/null/i, "\"\"");
+							console.log('@@ '+t);
+								var role = '${role}';
+								$container = $("#cont");
+						        $container.empty();
+						        
+						        userInfo =  
+				        				  "<thead><tr><th>НОМЕР</th><th>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th>РЕГИСТРАТОР</th><th>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
+	        				  	
+						        $.each(response, function(index, value) {
+						        	
+						        	 if(value === null) {
+						        		response[index] =''; 
+						        	 }
+						        									
+									if(value.blockger2016.state == 1){
+										var cssClassonUser = "blink";
+									}
+						        	
+						        	if(value.blockger2016.state != 1){
+										var cssClassonUser = "";
+									}
+						        	
+									if(value.blockger2016.state == 2){
+										var cssClass = "someclass2";
+									}
+						        	
+									if(value.blockger2016.state == 3 || value.blockger2016.state == 4){
+										var cssClass = "someclass3";
+									}
+									var type ='';
+						        	if (value.typeId == 1) type = 'ЖАЛОБА';
+						        	if (value.typeId == 2) type = 'ЗАЯВЛЕНИЕ';
+						        	if (value.typeId == 3) type = 'КОНСУЛЬТАЦИЯ';
+						        	if (value.typeId == 4) type = 'ПРЕДЛОЖЕНИЕ';
+									
+						        	userInfo +="<tr class="+cssClass+"><td>"+value.id+"</td><td>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td>"+type+"</td><td>"+value.surname+"</td><td>"+value.name+"</td><td>"+value.patrony+"</td><td>"+value.tel+"</td><td>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
+						        	
+						        	if(value.blockger2016.state != 4){
+						        		userInfo +="<td><a href='nightcallfile/"+value.id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a href='delete/"+value.id+"' id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td><td><a id='iddel' href='refresh/"+value.id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
+						        		
+						        		var n = role.indexOf("ROLE_ADMIN");
+						        		if (n >= 0){
+						        			if(value.presentId == 2){
+						        				if(value.blockger2016.state != 2){
+						        					userInfo +="<td><a id='iddel' href='close/"+value.id+"' title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+						        				}
+						        				if(value.blockger2016.state == 2){
+						        					userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
+						        				}
+											}
+						        			if(value.presentId != 2){
+						        				userInfo +="<td><a id='iddel' href='close/"+value.id+"' title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+						        			}
+						        		}else{
+						        			userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
+						        		}
+									}
+
+						        	
+						        	if(value.blockger2016.state == 4){
+						        		userInfo +="<td><i class='fa fa-headphones fa-2x noactive'></i></a></td><td><i class='fa fa-trash-o fa-2x noactive'></i></td><td><i class='fa fa-pencil-square-o  fa-2x noactive' aria-hidden='true'></i></td>";
+						        		n = role.indexOf("ROLE_ADMIN");
+						        		if (n >= 0){
+						        			userInfo +="<td><a id='iddel' href='open/"+value.id+"' title='Восстановить закрытое обращение'><i class='fa fa-lock  fa-2x' aria-hidden='true'></i></a></td>";
+						        		}else{
+						        			userInfo +="<td><i class='fa fa-lock  fa-2x noactive' aria-hidden='true'></i></td>";
+						        		}
+						        	}
+						        	
+						        	userInfo +="</tr>";
+						        })
+						        
+						        userInfo +="</tbody";
+						        $container.append(userInfo);
+						        
+						        // зачищаем форму
+						        $("form").each(function(){
+						            this.reset();
+						        });
+						        // добовляем п умолчанию dateInput
+						        $( "#dateInput" ).datepicker( "setDate", new Date());
 
 						},
 						error : function(e) {
@@ -418,10 +501,7 @@
 							console.log("DONE");
 						}
 					});
-
-					
 				});
-
 			});
 		</script>
 	
@@ -722,6 +802,9 @@
 							<form:option value="smyvin" label="smyvin" />
 							<form:option value="eremina" label="eremina" />
 							<form:option value="hamitov" label="hamitov" />
+							<form:option value="smo_simaz" label="smo_simaz" />
+ +							<form:option value="smo_ingos" label="smo_ingos" />
+ +							<form:option value="smo_rosno" label="smo_rosno" />
 						</form:select>
                 	</p>
                 	
@@ -867,8 +950,8 @@
 <sec:authorize access="hasRole('ROLE_NIGHT')">
 <!-- <input type="button" id="refreshnightcall" onclick="refreshnightcall()" value="Обновить НЧ"></input> -->	
 </sec:authorize>
-<div style="overflow:auto; height:500px;"> 
-<table class="secondtab">
+<div style="overflow:auto; height:500px;" id="aroundtab"> 
+<table class="secondtab" id="cont">
     <thead>
         <tr>
         <th><spring:message code="label.id" /></th>      
@@ -999,17 +1082,17 @@
 			    	<td><a id="iddel" href="delete/${petit.id}" title="Удалить"><i class="fa fa-trash-o fa-2x"></i></a></td>
 					<td><a id="iddel" href="refresh/${petit.id}" title="Редактировать"><i class="fa fa-pencil-square-o  fa-2x" aria-hidden="true"></i></a></td>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<c:if test="${(petit.presentId == 2)}">
-					    <c:if test="${(statecl != 2)}">
+						<c:if test="${(petit.presentId == 2)}">
+						    <c:if test="${(statecl != 2)}">
+								<td><a id="iddel" href="close/${petit.id}" title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+							</c:if>
+							<c:if test="${(statecl == 2)}">
+								<td><i class="fa fa-unlock  fa-2x noactive" aria-hidden="true"></i></td>
+							</c:if>
+						</c:if>
+						<c:if test="${(petit.presentId != 2)}">
 							<td><a id="iddel" href="close/${petit.id}" title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
 						</c:if>
-						<c:if test="${(statecl == 2)}">
-							<td><i class="fa fa-unlock  fa-2x noactive" aria-hidden="true"></i></td>
-						</c:if>
-					</c:if>
-					<c:if test="${(petit.presentId != 2)}">
-						<td><a id="iddel" href="close/${petit.id}" title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
-					</c:if>
 					</sec:authorize>
 					<sec:authorize access="!hasRole('ROLE_ADMIN')">
 						<td><i class="fa fa-unlock  fa-2x noactive" aria-hidden="true"></i></td>
@@ -1031,14 +1114,13 @@
 			    
 			    
     </tr>
-  </c:forEach>          
+  </c:forEach> 
     </tbody>
 </table>
 </div>
 </section>
 </c:if>
 <br>
-
 
 	
 </body>
