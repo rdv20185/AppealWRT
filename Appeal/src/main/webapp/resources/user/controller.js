@@ -69,39 +69,43 @@ function openmes(id,role){
  */
 function addJS(role){ 
 	
-	
-	$("#draggable").submit(function(event) {
-		var btn= $(this).find("input[type=submit]:focus").val();
-	
-		// Prevent the form from submitting via the browser.
-		event.preventDefault();
+	console.log('####### '+location.href);
+	if(location.href.indexOf("Appeal/refresh/") < 0)
+	{		
 		
-		// CREATE HTTP QUERY
-		var values = {};
-		$.each($("form").serializeArray(), function (i, field) {
-		    values[field.name] =field.value;
-		});
-		//added name button
-		values["submitted"] = btn;
+		$("#draggable").submit(function(event) {
+			var btn= $(this).find("input[type=submit]:focus").val();
 		
-			// SEND QUERY AND PROCESS RESPONSE
-			$.ajax({
-				type : "GET",
-				url : "add",
-				data : values,
-				success : function(response) {
-					//console.log('stay here '+JSON.stringify(response));
-			        table(response,role);
-		
-				},
-				error : function(e) {
-					alert("ERROR: ", +'обновите страницу');
-				},
-				done : function(e) {
-					console.log("DONE");
-				}
+			// Prevent the form from submitting via the browser.
+			event.preventDefault();
+			
+			// CREATE HTTP QUERY
+			var values = {};
+			$.each($("form").serializeArray(), function (i, field) {
+			    values[field.name] =field.value;
 			});
-	});
+			//added name button
+			values["submitted"] = btn;
+			
+				// SEND QUERY AND PROCESS RESPONSE
+				$.ajax({
+					type : "GET",
+					url : "add",
+					data : values,
+					success : function(response) {
+						//console.log('stay here '+JSON.stringify(response));
+				        table(response,role);
+			
+					},
+					error : function(e) {
+						alert("ERROR: ", +'обновите страницу');
+					},
+					done : function(e) {
+						console.log("DONE");
+					}
+				});
+		});
+	}	
 }				
 
 
