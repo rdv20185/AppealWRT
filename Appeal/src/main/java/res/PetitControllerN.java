@@ -1,4 +1,4 @@
-package web;
+package res;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,7 +47,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pylypiv.tfoms.ftp.FTPDownloadFileDemo;
 import res.Fields;
-import res.JsonResponse;
 import res.TransferFiles;
 import service.PetitService;
 import domain.BlockGER2016;
@@ -74,7 +73,7 @@ import domain.Ter;
 import domain.Type;
 import domain.TypeL;
 
-@Controller
+//@Controller
 public class PetitControllerN {
 	
 	

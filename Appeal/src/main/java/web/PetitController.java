@@ -1,25 +1,22 @@
-package res;
+package web;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import pylypiv.tfoms.ftp.FTPDownloadFileDemo;
 import res.Fields;
@@ -52,6 +50,7 @@ import domain.Conect;
 import domain.Hsp;
 import domain.Insur;
 import domain.Mo;
+import domain.Outboundmany;
 import domain.Petit;
 import domain.Present;
 import domain.Rectif1;
@@ -84,29 +83,17 @@ public class PetitController {
 	@Autowired
     private PetitService petitService;
 	
-    @Inject
-    public PetitController(PetitService petitService) {
-    	this.petitService = petitService;
+    public PetitController() {
+    	
     }
     
 	@ModelAttribute
 	public ModelMap setupForm(ModelMap map,HttpServletRequest request) {
-		
-		System.out.println("ModelAttribute "+ request.getRequestURI());
 
 		nightcallsprocess(request);
 		
     	map.put("petit", new Petit());
-    	List<Petit> pl = petitService.listPetit(getUserName());// new ArrayList<Petit>(); 
-    	//Petit t = new Petit();
-    	//pl.add(t);
-    	for(Petit pt : pl)
-    	{
-    		if(pt.getDateInput() !=null)
-    		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
-    		//pt.getBlockger2016().setDate_close(pt.getBlockger2016().getDate_close().substring(8, 10) + "."+pt.getBlockger2016().getDate_close().substring(5, 7) + "."+pt.getBlockger2016().getDate_close().substring(0, 4));
-    	}
-        map.put("petitList", pl);
+    	
 		if(getUserName().equals("sasha") ||
 				getUserName().equals("mityanina") ||
 				getUserName().equals("vasilyeva") ||
@@ -179,14 +166,27 @@ public class PetitController {
 
     @RequestMapping("/index")
     public String listPetits(Map<String, Object> map) {
+    	
+    	List<Petit> pl = petitService.listPetit(getUserName()); 
+    	for(Petit pt : pl)
+    	{
+    		if(pt.getDateInput() !=null)
+    		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+    		//pt.getBlockger2016().setDate_close(pt.getBlockger2016().getDate_close().substring(8, 10) + "."+pt.getBlockger2016().getDate_close().substring(5, 7) + "."+pt.getBlockger2016().getDate_close().substring(0, 4));
+    	}
+        map.put("petitList", pl);
+    	
         return "petit";
     }
    
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request) throws ParseException {
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public @ResponseBody List<Petit> addPetit(@ModelAttribute("petit") @Valid Petit petit,String submitted, BindingResult bindingResult,HttpServletRequest request,ModelMap model) throws ParseException, InterruptedException, UnsupportedEncodingException {
+    
+    	petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setName(new String(petit.getName().getBytes("ISO-8859-1"),"UTF-8"));
     	
-    	String para = request.getParameter("submit");
     	
+    	String para =new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
     	/* ловим с клиЕнта нажатую кнопку
     	 * ЕСЛИ с клиента прилетает письменное обращение petit.getConectId() ==2  и дата исходящего пустая getDate_response() то статус = 2(в работе) и date_end = ""
     	 * Если письменное и дата ответа не пустая то статус = 3
@@ -194,6 +194,8 @@ public class PetitController {
     	if(para.trim().equals("Завершить")){
     		if(petit.getPresentId() == 2 && petit.getBloutboindletter2016().getDate_response().equals("")){
     			petit.getBlockger2016().setState(2);
+    			if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+         		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
     		}else{
     			
     			if(petit.getPresentId() == 2 && !petit.getBloutboindletter2016().getDate_response().equals(""))
@@ -202,6 +204,9 @@ public class PetitController {
     				
     	  		  	DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
 	        		petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));
+	        		
+	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+	         		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
     			}
     			else{
 		    			petit.getBlockger2016().setState(3);
@@ -210,8 +215,106 @@ public class PetitController {
     		}
     	}
     	
-		return adds(petit, bindingResult,request);
+		return adds(petit, bindingResult,request,submitted,model);
     }
+    
+    	private @ResponseBody List<Petit> adds(Petit petit, BindingResult bindingResult,HttpServletRequest request,String submitted,ModelMap model) throws UnsupportedEncodingException {
+		
+		/*
+		 * Ловим с клиента в переменную ff поле date_end
+		 */
+		String ff = request.getParameter("fil");
+		if(ff !=null && !ff.equals(""))
+		{
+    		Date date = new Date();
+  		  	DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+  		  	try { date = df.parse(ff); } catch (ParseException e) { e.printStackTrace(); }
+    		petit.getBlockger2016().setDate_end(date);
+		}
+		String para = new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
+		
+		/* Если нажата кнопка сохранить то в поле username добавляется ключ (ключ приходит с клиента input select - "назначить")
+		 * Ключ - это значение при котором записи из базы будут доступны определенным группам пользователей
+		 */
+		/*
+		 * Обрабатывается нажатие клавиши назначить в режиме редактирования ночным 
+		 */
+	   	
+		System.out.println("hjdthrf "+petit.getPresentId()+" "+para.trim()+" "+petit.getBlockger2016().getState());
+		
+		if(para.trim().equals("Сохранить"))
+		{
+			//System.out.println("@@!!@@@@@@@!!!!!!!!     "+petit.getUsername());
+		}else
+		{ 
+			if(para.trim().equals("Назначить"))
+			{
+	    		petit.getBlockger2016().setState(1);
+	    		petit.getBlockger2016().setRegname(getUserName());
+	    	}else
+	    	{
+	    		if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 3 ){
+	    			
+	    			DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
+	        		try { petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));} catch (ParseException e) {
+						e.printStackTrace();
+					}
+	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+ 	        		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
+	    		}
+	    		else{
+	    			
+	    			if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 2 ){
+ 	    				petit.setUsername(getUserName());
+ 		    		}
+	    			else{
+		    			if(petit.getPresentId() != 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 1 ){
+		    				
+		    				petit.getBlockger2016().setState(2);
+			        		petit.setUsername(getUserName());
+			    		}
+	    			
+	    			if(petit.getPresentId() != 2)
+	    			petit.setUsername(getUserName());
+	    			}
+	    		}
+	    	}	
+		}
+
+		if(petit.getPresentId() == 2){
+			petit.getBloutboindletter2016().getMany().get(0).setBloutboindletter2016(petit.getBloutboindletter2016());
+			petit.getBloutboindletter2016().getMany().get(1).setBloutboindletter2016(petit.getBloutboindletter2016());
+			petit.getBloutboindletter2016().getMany().get(2).setBloutboindletter2016(petit.getBloutboindletter2016());
+			petit.getBloutboindletter2016().setPetit(petit);
+			
+		}else{
+			petit.setBloutboindletter2016(null);
+		}
+		
+		
+	    petit.getBlockger2016().setPetit(petit);
+	    
+	    System.out.println("@@@@@@@@@@@@@@@@@@@@  "+petit);
+		petitService.addPetit(petit);
+		List<Petit> pl = petitService.listPetit(getUserName());
+		for(int i=0; i < pl.size();i++)
+		{
+			pl.get(i).getBlockger2016().setPetit(null);
+			if(pl.get(i).getBloutboindletter2016() != null){ 
+				pl.get(i).getBloutboindletter2016().setPetit(null);
+				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
+				for(int j=0;j<ob.size();j++){
+					ob.get(j).setBloutboindletter2016(null);
+				}
+			}
+		}
+		
+	    ModelAndView modelAndView = new ModelAndView();
+	    model.addAttribute("petitList", pl);
+        modelAndView.addObject("petitList", pl);
+	    
+		return pl;
+	}
     
     @RequestMapping(value = "/refnc", method = RequestMethod.GET)
     public String refreshnightcall() throws IOException
@@ -264,13 +367,15 @@ public class PetitController {
 	    	
 	}
     
-    @RequestMapping(value = "/refresh/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/refresh/add", method = RequestMethod.GET)
     public String refreshAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request) {
     	String pa = request.getParameter("submit");
     	
     	if(pa.trim().equals("Завершить")){
     		if(petit.getPresentId() == 2 && petit.getBloutboindletter2016().getDate_response().equals("")){
     			petit.getBlockger2016().setState(2);
+    			if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+        		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
     		}
     		else if(petit.getPresentId() == 2 && !petit.getBloutboindletter2016().getDate_response().equals("")){
     			petit.getBlockger2016().setState(3);
@@ -278,20 +383,22 @@ public class PetitController {
         		try { petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));} catch (ParseException e) {
 					e.printStackTrace();
 				}
+        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+        		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
     		}else{
     			petit.getBlockger2016().setState(3);
     			petit.getBlockger2016().setDate_end(new Date());
     		}
     	}
-		return adds(petit, bindingResult,request);
+		return addsold(petit, bindingResult,request);
 	}
     
     @RequestMapping(value = "/more/refresh/add", method = RequestMethod.POST)
     public String moreAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request) {
-		return adds(petit, bindingResult,request);
+		return addsold(petit, bindingResult,request);
 	}
 
-	private String adds(Petit petit, BindingResult bindingResult,HttpServletRequest request) {
+    private String addsold(Petit petit, BindingResult bindingResult,HttpServletRequest request) {
 		if(bindingResult.hasErrors()) {
 			return "petit";
 		} else {
@@ -336,17 +443,25 @@ public class PetitController {
 	        		try { petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));} catch (ParseException e) {
 						e.printStackTrace();
 					}
-	        		petit.setUsername(getUserName());
+	        		
+	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+	        		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
 	    		}
 	    		else{
 	    			
+	    			if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 2 ){
+	    				petit.setUsername(getUserName());
+		    		}
+	    			else{
 	    			if(petit.getPresentId() != 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 1 ){
 	    				
 	    				petit.getBlockger2016().setState(2);
 		        		petit.setUsername(getUserName());
 		    		}
 	    			
+	    			if(petit.getPresentId() != 2)
 	    			petit.setUsername(getUserName());
+	    			}
 	    		}
 	    	}	
 		}
@@ -374,27 +489,6 @@ public class PetitController {
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    String name = user.getUsername();
 		return name;
-	}
-
-/*	synchronized private void checkID(Petit petit) {
-		int num = new PetitID().readPetitID().getNum();
-		//int num = 2748;
-		if(petit.getId() == null || petit.getId() <= 0 || petit.getId() > num) {
-			petit.setId(++num);
-			 new PetitID().writePetitID(num);
-		}
-	}*/
-	
-	@RequestMapping("/delete/{petitId}")
-    public String deletePetit(@PathVariable("petitId") Integer petitId) {
-    	petitService.removePetit(petitId);
-        return "redirect:/index";
-	}
-
-	@RequestMapping("/refresh/delete/{petitId}")
-    public String refreshDeletePetit(@PathVariable("petitId") Integer petitId) {
-    	petitService.removePetit(petitId);
-        return "redirect:/index";
 	}
 	
 	@RequestMapping(value = "/types", method = RequestMethod.GET)
@@ -608,13 +702,6 @@ public class PetitController {
     	return "petit";
     }
     
-    @RequestMapping(value = "/close/{petitId}")
-    public String close(@PathVariable("petitId") Integer petitId, ModelMap map) {
-    	petitService.closeAppeal(petitId);
-    	
-    	return "redirect:/index";
-    }
-    
     @RequestMapping(value = "/more/refresh/{petitId}")
     public String moreLoadPetit(@PathVariable("petitId") Integer petitId, ModelMap map) {
     	map.put("petit", petitService.getPetit(petitId));
@@ -695,5 +782,102 @@ public class PetitController {
 		String ff = val.substring(startsubstr+1,endsubstr);
 		
 		return ff;
-    } 
+    }
+    
+    
+    @RequestMapping("/delete")
+	public @ResponseBody List<Petit> deletePetit(@RequestParam Integer petitId,ModelMap model) {
+		petitService.removePetit(petitId);
+		List<Petit> pl = petitService.listPetit(getUserName());
+		for(int i=0; i < pl.size();i++)
+		{
+			pl.get(i).getBlockger2016().setPetit(null);
+			if(pl.get(i).getBloutboindletter2016() != null){ 
+				pl.get(i).getBloutboindletter2016().setPetit(null);
+				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
+				for(int j=0;j<ob.size();j++){
+					ob.get(j).setBloutboindletter2016(null);
+				}
+			}
+		}
+	    ModelAndView modelAndView = new ModelAndView();
+	    model.addAttribute("petitList", pl);
+	    modelAndView.addObject("petitList", pl);
+	    
+		return pl;
+	}
+    
+    @RequestMapping("/allist")
+	public @ResponseBody List<Petit> allPetit(ModelMap model) {
+		
+		List<Petit> pl = petitService.listPetit(getUserName());
+		for(int i=0; i < pl.size();i++)
+		{
+			pl.get(i).getBlockger2016().setPetit(null);
+			if(pl.get(i).getBloutboindletter2016() != null){ 
+				pl.get(i).getBloutboindletter2016().setPetit(null);
+				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
+				for(int j=0;j<ob.size();j++){
+					ob.get(j).setBloutboindletter2016(null);
+				}
+			}
+		}
+	    ModelAndView modelAndView = new ModelAndView();
+	    model.addAttribute("petitList", pl);
+	    modelAndView.addObject("petitList", pl);
+	    
+		return pl;
+	}
+	
+	
+	@RequestMapping(value = "/open")
+    public @ResponseBody List<Petit> open(@RequestParam Integer petitId,ModelMap model) {
+    	
+    	Petit pt = petitService.getPetit(petitId);
+    	pt.getBlockger2016().setState(3);
+    	petitService.addPetit(pt);
+    	
+    	List<Petit> pl = petitService.listPetit(getUserName());
+		for(int i=0; i < pl.size();i++)
+		{
+			pl.get(i).getBlockger2016().setPetit(null);
+			if(pl.get(i).getBloutboindletter2016() != null){ 
+				pl.get(i).getBloutboindletter2016().setPetit(null);
+				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
+				for(int j=0;j<ob.size();j++){
+					ob.get(j).setBloutboindletter2016(null);
+				}
+			}
+		}
+	    ModelAndView modelAndView = new ModelAndView();
+	    model.addAttribute("petitList", pl);
+	    modelAndView.addObject("petitList", pl);
+	    
+		return pl;
+    	
+    	
+    }
+	
+	@RequestMapping(value = "/close")
+    public @ResponseBody List<Petit>  close(@RequestParam Integer petitId,ModelMap model) {
+    	petitService.closeAppeal(petitId);
+    	
+    	List<Petit> pl = petitService.listPetit(getUserName());
+		for(int i=0; i < pl.size();i++)
+		{
+			pl.get(i).getBlockger2016().setPetit(null);
+			if(pl.get(i).getBloutboindletter2016() != null){ 
+				pl.get(i).getBloutboindletter2016().setPetit(null);
+				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
+				for(int j=0;j<ob.size();j++){
+					ob.get(j).setBloutboindletter2016(null);
+				}
+			}
+		}
+	    ModelAndView modelAndView = new ModelAndView();
+	    model.addAttribute("petitList", pl);
+	    modelAndView.addObject("petitList", pl);
+	    
+		return pl;
+    }
 }

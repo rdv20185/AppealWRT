@@ -16,29 +16,29 @@ public class TransferFiles {
 			File to_file = new File(toName);
 			
 			if (!from_file.exists())
-				abort("нет такого исходного файла: " + fromName);
+				abort("РЅРµС‚ С‚Р°РєРѕРіРѕ РёСЃС…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р°: " + fromName);
 			if (!from_file.isFile())
-				abort("невозможно копирование каталога: " + fromName);
+				abort("РЅРµРІРѕР·РјРѕР¶РЅРѕ РєРѕРїРёСЂРѕРІР°РЅРёРµ РєР°С‚Р°Р»РѕРіР°: " + fromName);
 			if (!from_file.canRead())
-				abort("исходный файл не доступен для чтения: " + fromName);
+				abort("РёСЃС…РѕРґРЅС‹Р№ С„Р°Р№Р» РЅРµ РґРѕСЃС‚СѓРїРµРЅ РґР»СЏ С‡С‚РµРЅРёСЏ: " + fromName);
 			
 			if (to_file.isDirectory())
 				to_file = new File(to_file, from_file.getName());
 			
 			if (to_file.exists()) {
 				if (!to_file.canWrite())
-					abort("конечный файл не доступен для записи: " + toName);
+					abort("РєРѕРЅРµС‡РЅС‹Р№ С„Р°Р№Р» РЅРµ РґРѕСЃС‚СѓРїРµРЅ РґР»СЏ Р·Р°РїРёСЃРё: " + toName);
 				
 			} else {
 				String parent = to_file.getParent();
 				if (parent == null) parent  = System.getProperty("user.dir");
 				File dir = new File(parent);
 				if (!dir.exists())
-					abort("каталог назначения не сущестует: " + parent);
+					abort("РєР°С‚Р°Р»РѕРі РЅР°Р·РЅР°С‡РµРЅРёСЏ РЅРµ СЃСѓС‰РµСЃС‚СѓРµС‚: " + parent);
 				if (!dir.isFile())
-					abort("каталог назначения не является каталогом: " + parent);
+					abort("РєР°С‚Р°Р»РѕРі РЅР°Р·РЅР°С‡РµРЅРёСЏ РЅРµ СЏРІР»СЏРµС‚СЃСЏ РєР°С‚Р°Р»РѕРіРѕРј: " + parent);
 				if (!dir.canWrite())
-					abort("каталог назначения не доступен для записи: " + parent);
+					abort("РєР°С‚Р°Р»РѕРі РЅР°Р·РЅР°С‡РµРЅРёСЏ РЅРµ РґРѕСЃС‚СѓРїРµРЅ РґР»СЏ Р·Р°РїРёСЃРё: " + parent);
 			}
 			
 			FileInputStream from = null;
