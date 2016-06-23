@@ -11,11 +11,14 @@
 		<intercept-url pattern="/searching" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('SMO')" />
 		<intercept-url pattern="/reporting" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('SMO')" />
 		<intercept-url pattern="/delete/*" access="hasRole('ADMIN') or hasRole('NIGHT')" />
+		<intercept-url pattern="/delete" access="hasRole('ADMIN') or hasRole('NIGHT')" />
         
-        
-        <remember-me />
-		<headers/>
-		<csrf/>
+        <form-login  login-page="/login"
+                     username-parameter="ssoId"
+                     password-parameter="password"
+                     authentication-failure-url="/Access_Denied" />
+                     
+         <remember-me/>            
     </http>
   
     <authentication-manager >

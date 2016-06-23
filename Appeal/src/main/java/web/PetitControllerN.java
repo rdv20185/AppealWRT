@@ -335,6 +335,84 @@ public class PetitControllerN {
 		petitService.addPetit(pt);
 		return "redirect:/index";
 	}
+
+	
+	@RequestMapping("/delete")
+	public @ResponseBody List<Petit> deletePetit(@RequestParam Integer petitId,ModelMap model) {
+		petitService.removePetit(petitId);
+		List<Petit> pl = petitService.listPetit(getUserName());
+		for(int i=0; i < pl.size();i++)
+		{
+			pl.get(i).getBlockger2016().setPetit(null);
+			if(pl.get(i).getBloutboindletter2016() != null){ 
+				pl.get(i).getBloutboindletter2016().setPetit(null);
+				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
+				for(int j=0;j<ob.size();j++){
+					ob.get(j).setBloutboindletter2016(null);
+				}
+			}
+		}
+	    ModelAndView modelAndView = new ModelAndView();
+	    model.addAttribute("petitList", pl);
+	    modelAndView.addObject("petitList", pl);
+	    
+		return pl;
+	}
+	
+	
+	@RequestMapping(value = "/open")
+    public @ResponseBody List<Petit> open(@RequestParam Integer petitId,ModelMap model) {
+    	
+    	Petit pt = petitService.getPetit(petitId);
+    	pt.getBlockger2016().setState(3);
+    	petitService.addPetit(pt);
+    	
+    	List<Petit> pl = petitService.listPetit(getUserName());
+		for(int i=0; i < pl.size();i++)
+		{
+			pl.get(i).getBlockger2016().setPetit(null);
+			if(pl.get(i).getBloutboindletter2016() != null){ 
+				pl.get(i).getBloutboindletter2016().setPetit(null);
+				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
+				for(int j=0;j<ob.size();j++){
+					ob.get(j).setBloutboindletter2016(null);
+				}
+			}
+		}
+	    ModelAndView modelAndView = new ModelAndView();
+	    model.addAttribute("petitList", pl);
+	    modelAndView.addObject("petitList", pl);
+	    
+		return pl;
+    	
+    	
+    }
+	
+	@RequestMapping(value = "/close")
+    public @ResponseBody List<Petit>  close(@RequestParam Integer petitId,ModelMap model) {
+    	petitService.closeAppeal(petitId);
+    	
+    	List<Petit> pl = petitService.listPetit(getUserName());
+		for(int i=0; i < pl.size();i++)
+		{
+			pl.get(i).getBlockger2016().setPetit(null);
+			if(pl.get(i).getBloutboindletter2016() != null){ 
+				pl.get(i).getBloutboindletter2016().setPetit(null);
+				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
+				for(int j=0;j<ob.size();j++){
+					ob.get(j).setBloutboindletter2016(null);
+				}
+			}
+		}
+	    ModelAndView modelAndView = new ModelAndView();
+	    model.addAttribute("petitList", pl);
+	    modelAndView.addObject("petitList", pl);
+	    
+		return pl;
+    }
+		
+		
+	
 	
 	private String getUserName() {
 		
