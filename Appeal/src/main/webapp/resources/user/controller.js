@@ -15,12 +15,6 @@ callback = function(message) {
 	flag = 0;
 };
 
-
-function notify(){
-	
-	
-};
-
 function restart(){
 	setTimeout(init, 10000);
 }
@@ -49,6 +43,7 @@ function init(){
 function del(id,role){ 
 	
 	// SEND QUERY AND PROCESS RESPONSE
+	flag = 1;
 	$.ajax({
 		type : "GET",
 		url : "delete",
@@ -70,6 +65,7 @@ function del(id,role){
 function closemes(id,role){ 
 	
 	// SEND QUERY AND PROCESS RESPONSE
+	flag = 1;
 	$.ajax({
 		type : "GET",
 		url : "close",
@@ -91,6 +87,7 @@ function closemes(id,role){
 function openmes(id,role){ 
 	
 	// SEND QUERY AND PROCESS RESPONSE
+	flag = 1;
 	$.ajax({
 		type : "GET",
 		url : "open",
@@ -131,7 +128,7 @@ function forWS(role){
 
 }
 
-function roleJS(role){ return role;}
+
 
 /*
  *  фУНКЦИЯ ОТРАБАТЫВАЕТ НАЖАТИЕ НА ФОРМЕ

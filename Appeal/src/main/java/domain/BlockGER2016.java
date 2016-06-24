@@ -17,6 +17,8 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -119,7 +121,7 @@ public class BlockGER2016 {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
-	//@JsonIgnore
+	@JsonIgnore
 	public Petit getPetit() {
 		return petit;
 	}

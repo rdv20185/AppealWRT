@@ -10,7 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "T_BLOCK_OUTBOUNDMESS_MANY")
@@ -26,9 +27,9 @@ public class Outboundmany {
     @JsonIgnore
 	private blOutboindLETTER2016 bloutboindletter2016;
 	
-	//Дата дополнительного запроса/ответа
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ
 	private String date_subquery;
-	//Пояснение
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	private String note;
 	public Integer getIdlettermany() {
 		return idlettermany;
