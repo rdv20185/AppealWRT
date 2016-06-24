@@ -16,7 +16,7 @@
 
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title><spring:message code="label.title" /></title>
 	
 	<link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/>" type="text/css"/>

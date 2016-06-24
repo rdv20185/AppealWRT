@@ -68,7 +68,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-		
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>	
 	
 
 </web-app>

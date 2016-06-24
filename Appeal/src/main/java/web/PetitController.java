@@ -1,12 +1,16 @@
 package web;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -75,9 +79,9 @@ public class PetitController {
     }
    
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public @ResponseBody List<Petit> addPetit(@ModelAttribute("petit") @Valid Petit petit,String submitted, BindingResult bindingResult,HttpServletRequest request,ModelMap model) throws ParseException, InterruptedException, UnsupportedEncodingException {
-    
-    	petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
+    public @ResponseBody List<Petit> addPetit(@ModelAttribute("petit") @Valid Petit petit,String submitted, BindingResult bindingResult,HttpServletRequest request,ModelMap model) throws ParseException, InterruptedException, IOException {
+
+    	//petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setName(new String(petit.getName().getBytes("ISO-8859-1"),"UTF-8"));
     	
     	

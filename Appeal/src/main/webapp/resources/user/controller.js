@@ -17,6 +17,7 @@ callback = function(message) {
 
 function restart(){
 	setTimeout(init, 10000);
+	console.log('bad');
 }
 
 function init(){
