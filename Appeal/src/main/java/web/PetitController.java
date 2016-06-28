@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -52,6 +53,7 @@ import domain.Conect;
 import domain.Hsp;
 import domain.Insur;
 import domain.Mo;
+import domain.Outboundmany;
 import domain.Petit;
 import domain.Present;
 import domain.Rectif1;
@@ -79,10 +81,29 @@ public class PetitController {
     }
    
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public @ResponseBody List<Petit> addPetit(@ModelAttribute("petit") @Valid Petit petit,String submitted, BindingResult bindingResult,HttpServletRequest request,ModelMap model) throws ParseException, InterruptedException, IOException {
+    public @ResponseBody List<Petit> addPetit(Petit petit,String submitted,HttpServletRequest request,ModelMap model) throws ParseException, InterruptedException, IOException {
 
-    	//petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setName(new String(petit.getName().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setPatrony(new String(petit.getPatrony().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setLetterNum(new String(petit.getLetterNum().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setLetterDate(new String(petit.getLetterDate().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setPolicy(new String(petit.getPolicy().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setAdress(new String(petit.getAdress().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setSatisf(new String(petit.getSatisf().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setCompens(new String(petit.getCompens().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setCompensSource(new String(petit.getCompensSource().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setCompensCode(new String(petit.getCompensCode().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setCompensSum(new String(petit.getCompensSum().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setCauseNote(new String(petit.getCauseNote().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.setUsername(new String(petit.getUsername().getBytes("ISO-8859-1"),"UTF-8"));
+    	
+    	petit.getBloutboindletter2016().setResponsible(new String(petit.getBloutboindletter2016().getResponsible().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.getBloutboindletter2016().setNumOutLetter(new String(petit.getBloutboindletter2016().getNumOutLetter().getBytes("ISO-8859-1"),"UTF-8"));
+    	
+    	petit.getBloutboindletter2016().getMany().get(0).setNote(new String(petit.getBloutboindletter2016().getMany().get(0).getNote().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.getBloutboindletter2016().getMany().get(1).setNote(new String(petit.getBloutboindletter2016().getMany().get(1).getNote().getBytes("ISO-8859-1"),"UTF-8"));
+    	petit.getBloutboindletter2016().getMany().get(2).setNote(new String(petit.getBloutboindletter2016().getMany().get(2).getNote().getBytes("ISO-8859-1"),"UTF-8"));
     	
     	
     	String para =new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
@@ -114,10 +135,10 @@ public class PetitController {
     		}
     	}
     	
-		return adds(petit, bindingResult,request,submitted,model);
+		return adds(petit,request,submitted,model);
     }
     
-    	private @ResponseBody List<Petit> adds(Petit petit, BindingResult bindingResult,HttpServletRequest request,String submitted,ModelMap model) throws UnsupportedEncodingException {
+    	private @ResponseBody List<Petit> adds(Petit petit,HttpServletRequest request,String submitted,ModelMap model) throws UnsupportedEncodingException {
 		
 		/*
 		 * Ловим с клиента в переменную ff поле date_end
@@ -196,18 +217,10 @@ public class PetitController {
 	    System.out.println("@@@@@@@@@@@@@@@@@@@@  "+petit);
 		petitService.addPetit(petit);
 		List<Petit> pl = petitService.listPetit(getUserName());
-		/*for(int i=0; i < pl.size();i++)
-		{
-			pl.get(i).getBlockger2016().setPetit(null);
-			if(pl.get(i).getBloutboindletter2016() != null){ 
-				pl.get(i).getBloutboindletter2016().setPetit(null);
-				List<Outboundmany> ob = pl.get(i).getBloutboindletter2016().getMany();
-				for(int j=0;j<ob.size();j++){
-					ob.get(j).setBloutboindletter2016(null);
-				}
-			}
-		}*/
-		
+		for(Petit pt : pl)
+    	{
+    		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+    	}
 	    ModelAndView modelAndView = new ModelAndView();
 	    model.addAttribute("petitList", pl);
         modelAndView.addObject("petitList", pl);
@@ -266,9 +279,11 @@ public class PetitController {
 	    	
 	}
     
-    @RequestMapping(value = "/refresh/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/refresh/add", method = RequestMethod.POST)
     public String refreshAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request) {
     	String pa = request.getParameter("submit");
+    	
+    	System.out.println("TESTTTT "+ petit + " "+ pa);
     	
     	if(pa.trim().equals("Завершить")){
     		if(petit.getPresentId() == 2 && petit.getBloutboindletter2016().getDate_response().equals("")){
@@ -595,11 +610,7 @@ public class PetitController {
         downloadFile(request, response, "\\reports\\count_detail.xls");
 	}	
 	
-    @RequestMapping(value = "/refresh/{petitId}")
-    public String loadPetit(@PathVariable("petitId") Integer petitId, ModelMap map) {
-    	map.put("petit", petitService.getPetit(petitId));
-    	return "petit";
-    }
+   
     
     @RequestMapping(value = "/more/refresh/{petitId}")
     public String moreLoadPetit(@PathVariable("petitId") Integer petitId, ModelMap map) {
@@ -615,6 +626,10 @@ public class PetitController {
 	public @ResponseBody List<Petit> deletePetit(@RequestParam Integer petitId,ModelMap model) {
 		petitService.removePetit(petitId);
 		List<Petit> pl = petitService.listPetit(getUserName());
+		for(Petit pt : pl)
+    	{
+    		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+    	}
 		
 	    ModelAndView modelAndView = new ModelAndView();
 	    model.addAttribute("petitList", pl);
@@ -627,6 +642,10 @@ public class PetitController {
 	public @ResponseBody List<Petit> allPetit(ModelMap model) {
 		
 		List<Petit> pl = petitService.listPetit(getUserName());
+		for(Petit pt : pl)
+    	{
+    		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+    	}
 		
 	    ModelAndView modelAndView = new ModelAndView();
 	    model.addAttribute("petitList", pl);
@@ -644,6 +663,11 @@ public class PetitController {
     	petitService.addPetit(pt);
     	
     	List<Petit> pl = petitService.listPetit(getUserName());
+    	
+    	for(Petit pt2 : pl)
+    	{
+    		pt2.setDateInput(pt2.getDateInput().substring(8, 10) + "." + pt2.getDateInput().substring(5, 7) + "." + pt2.getDateInput().substring(0, 4));
+    	}
 		
 	    ModelAndView modelAndView = new ModelAndView();
 	    model.addAttribute("petitList", pl);
@@ -659,6 +683,10 @@ public class PetitController {
     	petitService.closeAppeal(petitId);
     	
     	List<Petit> pl = petitService.listPetit(getUserName());
+    	for(Petit pt : pl)
+    	{
+    		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+    	}
 		
 	    ModelAndView modelAndView = new ModelAndView();
 	    model.addAttribute("petitList", pl);

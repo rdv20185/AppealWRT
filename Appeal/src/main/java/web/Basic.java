@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import domain.BlockGER2016;
@@ -29,6 +30,7 @@ public class Basic {
 	Map<Integer, String> source2 = new HashMap<Integer, String>();
 	Map<Integer, String> source3 = new HashMap<Integer, String>();
 	{
+		
 		source1.put(1, "ТФОМС");
 		source2.put(2, "СМО");
 		source3.put(3, "ЕР НСО");
@@ -38,11 +40,11 @@ public class Basic {
     private PetitService petitService;
 	
 
-	@ModelAttribute
+	//@ModelAttribute
 	public ModelMap setupForm(ModelMap map,HttpServletRequest request) {
 
 		System.out.println("INFO "+request.getRequestURI());
-		nightcallsprocess(request);
+		
 		
     	map.put("petit", new Petit());
     	
@@ -99,8 +101,6 @@ public class Basic {
 				}
 			
 		}
-		
-		
     	
     	map.put("intermedList", Fields.getIntermed());
     	map.put("typeList", Fields.getType());
@@ -117,7 +117,10 @@ public class Basic {
 	}
 
     @RequestMapping("/index")
-    public String listPetits(Map<String, Object> map) {
+    public String listPetits(Map<String, Object> map,HttpServletRequest request,ModelMap mapm) {
+    	
+    	setupForm(mapm,request);
+    	nightcallsprocess(request);
     	
     	List<Petit> pl = petitService.listPetit(getUserName()); 
     	for(Petit pt : pl)
@@ -212,4 +215,12 @@ public class Basic {
 		return ff;
     }
 	
+    
+    @RequestMapping(value = "/refresh/{petitId}")
+    public String loadPetit(@PathVariable("petitId") Integer petitId, ModelMap map,HttpServletRequest request) {
+    	setupForm(map,request);
+    	map.put("petit", petitService.getPetit(petitId));
+    	
+    	return "petit";
+    }
 }

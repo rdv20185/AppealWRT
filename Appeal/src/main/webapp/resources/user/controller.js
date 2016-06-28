@@ -215,6 +215,11 @@ function table(response,role){
 	if (value.typeId == 3) type = 'КОНСУЛЬТАЦИЯ';
 	if (value.typeId == 4) type = 'ПРЕДЛОЖЕНИЕ';
 	
+	if (value.surname == null) value.surname = '';
+	if (value.name == null) value.name = '';
+	if (value.patrony == null) value.patrony = '';
+	if (value.tel == null) value.tel = '';
+	
 	userInfo +="<tr class="+cssClass+"><td>"+value.id+"</td><td>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td>"+type+"</td><td>"+value.surname+"</td><td>"+value.name+"</td><td>"+value.patrony+"</td><td>"+value.tel+"</td><td>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
 	
 	if(value.blockger2016.state != 4){
@@ -261,6 +266,7 @@ $("form").each(function(){
 });
 // добовляем п умолчанию dateInput
 $( "#dateInput" ).datepicker( "setDate", new Date());
+
 	
 }
 
@@ -297,6 +303,11 @@ function tablews(response,role){
 	if (value.typeId == 2) type = 'ЗАЯВЛЕНИЕ';
 	if (value.typeId == 3) type = 'КОНСУЛЬТАЦИЯ';
 	if (value.typeId == 4) type = 'ПРЕДЛОЖЕНИЕ';
+	
+	if (value.surname == null) value.surname = '';
+	if (value.name == null) value.name = '';
+	if (value.patrony == null) value.patrony = '';
+	if (value.tel == null) value.tel = '';
 	
 	userInfo +="<tr class="+cssClass+"><td>"+value.id+"</td><td>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td>"+type+"</td><td>"+value.surname+"</td><td>"+value.name+"</td><td>"+value.patrony+"</td><td>"+value.tel+"</td><td>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
 	

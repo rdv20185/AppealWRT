@@ -195,6 +195,7 @@ section{
   padding:8px;
   
   }
+    
   
   .secondtab td #iddel{
 	color: #E80404;
@@ -205,6 +206,8 @@ section{
     //width: 20px;
     white-space: nowrap;
    }
+   
+   
    
      .secondtab  td:nth-child(n+10){
     //font-size: 20px;

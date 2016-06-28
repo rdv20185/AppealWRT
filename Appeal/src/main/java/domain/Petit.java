@@ -19,6 +19,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
 @Table(name = "T_PETIT")
 public class Petit {
@@ -52,6 +55,7 @@ public class Petit {
     private String name;
     
 	//@NotEmpty(message="Поле \"Фамилия\" обязательно для заполнения")
+   //@JsonInclude(JsonInclude.Include.NON_NULL) 
     @Column(name = "SURNAME")
     private String surname;
     

@@ -183,7 +183,7 @@ public class PetitServiceImpl implements PetitService {
     	Connection conn = connectForJasper();
 		Map mapReport = mapForJasper(dateReport, username);
 			
-		JasperReport jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_1_1.jrxml");
+		JasperReport jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_1_1dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		JRXlsExporter exporter = new JRXlsExporter();
@@ -191,7 +191,7 @@ public class PetitServiceImpl implements PetitService {
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\pg_form_1_1.xls"));
 		exporter.exportReport();
 		
-		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_1_2.jrxml");
+		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_1_2dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		exporter = new JRXlsExporter();
@@ -199,7 +199,7 @@ public class PetitServiceImpl implements PetitService {
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\pg_form_1_2.xls"));
 		exporter.exportReport();
 		
-		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_2_3.jrxml");
+		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_2_3dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		exporter = new JRXlsExporter();
@@ -207,7 +207,7 @@ public class PetitServiceImpl implements PetitService {
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\pg_form_2_3.xls"));
 		exporter.exportReport();
 		
-		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_2_1.jrxml");
+		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_2_1dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		exporter = new JRXlsExporter();
@@ -338,6 +338,7 @@ public class PetitServiceImpl implements PetitService {
 		 // Class.forName(properties.getProperty("jdbc.driverClassName")).newInstance();
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 	
+		System.out.println("############################ "+properties.getProperty("jdbc.databaseurl") +" --------- "+properties.getProperty("jdbc.username"));
       	conn = DriverManager.getConnection(
       			properties.getProperty("jdbc.databaseurl"), 
       			properties.getProperty("jdbc.username"),

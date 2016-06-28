@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -54,6 +55,7 @@ public class BlockGER2016 {
 	private String date_create;
 
 	// Дата изменения редактирования
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd kk:mm:ss.S", timezone="GMT+6")
 	private Date date_change;
 	// Ссылка на файл  звонка (ночного... )
 	private String filecall;

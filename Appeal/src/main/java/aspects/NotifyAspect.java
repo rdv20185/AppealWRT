@@ -46,7 +46,6 @@ public class NotifyAspect {
     
     @After("anyOldTransfer() || anyOldTransfer2() || anyOldTransfer3() || anyOldTransfer4() || anyOldTransfer5()") 
     public void notifyClients() throws Throwable {
-    	System.out.println("@@ TEST2 @@");
         template.convertAndSend(WEBSOCKET_TOPIC, new Date());
     }
     
