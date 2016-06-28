@@ -15,9 +15,9 @@ callback = function(message) {
 	flag = 0;
 };
 
-function restart(){
-	setTimeout(init, 10000);
-	console.log('bad');
+reconnect = function(){
+	setTimeout(init, 5000);
+	console.log('OKKKKKKKKK');
 }
 
 function init(){
@@ -27,9 +27,9 @@ function init(){
 		var stompClient = Stomp.over(socket);
 		stompClient.connect({}, function(frame) {
 			stompClient.subscribe("/topic/notify",  callback);
-			//socket.onclose = restart(); 
 		
 		});
+		socket.onclose = reconnect;
 	}	
 }
 
