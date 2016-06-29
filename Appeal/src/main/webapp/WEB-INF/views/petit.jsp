@@ -32,7 +32,6 @@
 	<script src="<c:url value="/resources/jquery/ui/1.11.2/jquery-ui.js"/>"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libs/sockjs/sockjs.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libs/stomp-websocket/lib/stomp.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/websocket.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/controller.js"></script>
 	
 	
@@ -430,9 +429,7 @@
 
 
 <div id ="main">
-<!-- <div id="draggable" class="ui-widget-content">
-  <p>Drag me around</p>
-</div> -->
+
  <c:if test="${petit.id ne null}">
   			<c:set value="foreditbackgr" var="cssforedit"></c:set>
 </c:if>
@@ -831,58 +828,31 @@
 
 <hr>
 <c:if test="${petit.id eq null}">
+
 <section>
 <sec:authorize access="!hasRole('ROLE_NIGHT')">
-	<input type="button" id="refreshpage" onclick="refreshp()" value="Обновить" style="    float: right; margin-top: -40px;"></input>
+	<!-- <input type="button" id="refreshpage" onclick="refreshp()" value="Обновить" style="    float: right; margin-top: -40px;"></input>  -->
 </sec:authorize>
 <sec:authorize access="hasRole('ROLE_NIGHT')">
 <!-- <input type="button" id="refreshnightcall" onclick="refreshnightcall()" value="Обновить НЧ"></input> -->	
 </sec:authorize>
-<div style="overflow:auto; height:500px;" id="aroundtab"> 
+
+<div style="overflow:auto; height:500px;   position: relative;" id="aroundtab"> 
+<div  id="divrefresh"  style="height:100%; width:1439px; background: #000000; opacity: 0.6; position: absolute; display:none; z-index: 100; top:0; left:0;"></div>
+<div style="width: 100%; height: 100%; position: absolute; z-index: 10; top:0; left:0;">
 <table class="secondtab" id="cont">
     <thead>
         <tr>
         <th><spring:message code="label.id" /></th>      
-		    <!-- <th><spring:message code="label.dateInput" /></th> --> <th>Дата поступления</th><th>Дата изменения</th>
-		    <!-- <th><spring:message code="label.dateBegin" /></th>
-		    <th><spring:message code="label.dateEnd" /></th>         
-		    <th><spring:message code="label.source" /></th>-->
-		    <!-- <th><spring:message code="label.present" /></th> -->
-		    <!-- <th><spring:message code="label.letterNum" /></th>
-		    <th><spring:message code="label.mo" /></th> -->
-		    <!--<th><spring:message code="label.letterDate" /></th>
-		    <th><spring:message code="label.conect" /></th>
-		    <th><spring:message code="label.intermed" /></th>
-		    -->
-		    <!-- <th><spring:message code="label.surname" /></th> -->
+		    <th>Дата поступления</th><th>Дата изменения</th>
 		    <th><spring:message code="label.type" /></th>
 		    <!-- <th>Причина</th> -->
 		    <th>Фамилия</th>
-		    <!-- <th><spring:message code="label.name" /></th> --><th>Имя</th>
-			    <th><spring:message code="label.patrony" /></th>
-			    <th><spring:message code="label.tel" /></th>
-			    <!-- <th><spring:message code="label.policy" /></th>
-			    <th><spring:message code="label.adress" /></th> 
-		    <th><spring:message code="label.ter" /></th>-->
-			    <!--<th><spring:message code="label.terAnswer" /></th>
-			    <th><spring:message code="label.last1" /></th>
-			    <th><spring:message code="label.last2" /></th>
-			    <th><spring:message code="label.hsp" /></th>
-			    <th><spring:message code="label.insur" /></th>
-			    <th><spring:message code="label.place" /></th>-->
-		    	<!--<th><spring:message code="label.cause" /></th>
-			    <th><spring:message code="label.rectif1" /></th>
-			    <th><spring:message code="label.rectif2" /></th>
-			    <th><spring:message code="label.rectif3" /></th>
-			    <th><spring:message code="label.rectif4" /></th>
-			    <th><spring:message code="label.valid" /></th>
-			    <th><spring:message code="label.compens" /></th>
-			    <th><spring:message code="label.satisf" /></th>
-			    <th><spring:message code="label.compensSource" /></th>
-			    <th><spring:message code="label.compensCode" /></th>
-			    <th><spring:message code="label.compensSum" /></th>
-			    <th><spring:message code="label.propos" /></th>-->
-		    <!-- <th><spring:message code="label.username" /></th> --><th>Регистратор</th></th> --><th>Исполнитель</th>
+		    <th>Имя</th>
+			<th><spring:message code="label.patrony" /></th>
+			<th><spring:message code="label.tel" /></th>
+		    <th>Регистратор</th></th>
+		    <th>Исполнитель</th>
 			<th></th>
 			<th></th>
 			<th></th>
@@ -1005,6 +975,7 @@
   </c:forEach> 
     </tbody>
 </table>
+</div>
 </div>
 </section>
 </c:if>

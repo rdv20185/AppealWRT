@@ -6,9 +6,7 @@ var tt ='';
 var flag = 0;
 
 callback = function(message) {
-	console.log('№№№ '+flag);
 	if(flag == 0){
-		//console.log('###################### '+tt);
 		 forWS(tt);
 	}
 
@@ -17,7 +15,6 @@ callback = function(message) {
 
 reconnect = function(){
 	setTimeout(init, 5000);
-	console.log('OKKKKKKKKK');
 }
 
 function init(){
@@ -42,7 +39,8 @@ function init(){
  * УДАЛЕНИЕ ЗАПИСИ
  */
 function del(id,role){ 
-	
+	$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+	$('#divrefresh').animate({opacity: 0.6}, 3000 );
 	// SEND QUERY AND PROCESS RESPONSE
 	flag = 1;
 	$.ajax({
@@ -51,9 +49,13 @@ function del(id,role){
 		data : ({petitId: id}),
 		success : function(response) {
 	        table(response,role);
+	        $('#divrefresh').animate({opacity: 0.0}, 2000 );
+	        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 		},
 		error : function(e) {
 			alert("ERROR: ", +'обновите страницу');
+			$('#divrefresh').animate({opacity: 0.0}, 2000 );
+	        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 		},
 		done : function(e) {
 			console.log("DONE");
@@ -64,29 +66,37 @@ function del(id,role){
 
 
 function closemes(id,role){ 
-	
 	// SEND QUERY AND PROCESS RESPONSE
 	flag = 1;
+	$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+	$('#divrefresh').animate({opacity: 0.6}, 3000 );
 	$.ajax({
 		type : "GET",
 		url : "close",
 		data : ({petitId: id}),
 		success : function(response) {
 	        table(response,role);
+	        $('#divrefresh').animate({opacity: 0.0}, 2000 );
+	        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+	        
 		},
 		error : function(e) {
 			alert("ERROR: ", +'обновите страницу');
+			$('#divrefresh').animate({opacity: 0.0}, 2000 );
+			setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 		},
 		done : function(e) {
 			console.log("DONE");
+			
 		}
 	});
 	
 }
 
 
-function openmes(id,role){ 
-	
+function openmes(id,role){
+	$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+	$('#divrefresh').animate({opacity: 0.6}, 3000 );
 	// SEND QUERY AND PROCESS RESPONSE
 	flag = 1;
 	$.ajax({
@@ -95,12 +105,17 @@ function openmes(id,role){
 		data : ({petitId: id}),
 		success : function(response) {
 	        table(response,role);
+	        $('#divrefresh').animate({opacity: 0.0}, 2000 );
+	        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 		},
 		error : function(e) {
 			alert("ERROR: ", +'обновите страницу');
+			$('#divrefresh').animate({opacity: 0.0}, 2000 );
+			setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 		},
 		done : function(e) {
 			console.log("DONE");
+			
 		}
 	});
 	
@@ -111,16 +126,22 @@ function openmes(id,role){
  */
 
 function forWS(role){
+	
+	$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+	$('#divrefresh').animate({opacity: 0.6}, 3000 );
 	$.ajax({
 		type : "GET",
 		url : "allist",
 		success : function(response) {
 			//console.log('stay here '+JSON.stringify(response));
 	        tablews(response,role);
-
+	        $('#divrefresh').animate({opacity: 0.0}, 2000 );
+	        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 		},
 		error : function(e) {
 			alert("ERROR: ", +'обновите страницу');
+			$('#divrefresh').animate({opacity: 0.0}, 2000 );
+	        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 		},
 		done : function(e) {
 			console.log("DONE");
@@ -154,6 +175,10 @@ function addJS(role){
 			//added name button
 			values["submitted"] = btn;
 			flag = 1;
+			
+			$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+			$('#divrefresh').animate({opacity: 0.6}, 3000 );
+			
 				// SEND QUERY AND PROCESS RESPONSE
 				$.ajax({
 					type : "GET",
@@ -162,16 +187,22 @@ function addJS(role){
 					success : function(response) {
 						//console.log('stay here '+JSON.stringify(response));
 				        table(response,role);
-			
+				        $('#divrefresh').animate({opacity: 0.0}, 2000 );
+				        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 					},
 					error : function(e) {
+						
 						alert("ERROR: ", +'обновите страницу');
+						$('#divrefresh').animate({opacity: 0.0}, 2000 );
+				        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 					},
 					done : function(e) {
 						console.log("DONE");
+						
 					}
 				});
 		});
+		
 	}	
 	
 	
