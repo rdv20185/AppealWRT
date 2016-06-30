@@ -111,7 +111,7 @@ public class Basic {
     	map.put("validList", Fields.getValid());
     	map.put("hspList", Fields.getHsp());
 
-    	map.put("dateReport", new ReportParams());
+    	//map.put("dateReport", new ReportParams());
     	
 		return map;
 	}

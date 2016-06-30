@@ -31,6 +31,15 @@ public class Security {
 		return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good idea to show login screen again.
 	}
 	
+	@RequestMapping(value="/loginfailed", method = RequestMethod.GET)
+	public String fial(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null){    
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/login?error";//You can redirect wherever you want, but generally it's a good idea to show login screen again.
+	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
 		return "login";

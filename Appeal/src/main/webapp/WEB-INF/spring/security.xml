@@ -16,7 +16,7 @@
         <form-login  login-page="/login"
                      username-parameter="ssoId"
                      password-parameter="password"
-                     authentication-failure-url="/Access_Denied" />
+                     authentication-failure-url="/loginfailed" />
                      
          <remember-me/>            
     </http>

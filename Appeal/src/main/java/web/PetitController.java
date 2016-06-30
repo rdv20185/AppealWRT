@@ -86,15 +86,23 @@ public class PetitController {
     	petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setName(new String(petit.getName().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setPatrony(new String(petit.getPatrony().getBytes("ISO-8859-1"),"UTF-8"));
+    	if(petit.getLetterNum() !=null)
     	petit.setLetterNum(new String(petit.getLetterNum().getBytes("ISO-8859-1"),"UTF-8"));
+    	if(petit.getLetterDate() !=null)
     	petit.setLetterDate(new String(petit.getLetterDate().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setPolicy(new String(petit.getPolicy().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setAdress(new String(petit.getAdress().getBytes("ISO-8859-1"),"UTF-8"));
+    	if(petit.getSatisf() !=null)
     	petit.setSatisf(new String(petit.getSatisf().getBytes("ISO-8859-1"),"UTF-8"));
+    	if(petit.getCompens() !=null)
     	petit.setCompens(new String(petit.getCompens().getBytes("ISO-8859-1"),"UTF-8"));
+    	if(petit.getCompensSource() !=null)
     	petit.setCompensSource(new String(petit.getCompensSource().getBytes("ISO-8859-1"),"UTF-8"));
+    	if(petit.getCompensCode() !=null)
     	petit.setCompensCode(new String(petit.getCompensCode().getBytes("ISO-8859-1"),"UTF-8"));
+    	if(petit.getCompensSum() !=null)
     	petit.setCompensSum(new String(petit.getCompensSum().getBytes("ISO-8859-1"),"UTF-8"));
+    	if(petit.getCauseNote() !=null)
     	petit.setCauseNote(new String(petit.getCauseNote().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setUsername(new String(petit.getUsername().getBytes("ISO-8859-1"),"UTF-8"));
     	
@@ -487,7 +495,8 @@ public class PetitController {
 	}
     
     @RequestMapping("/reporting")
-    public String reporting() {
+    public String reporting(ModelMap map) {
+    	map.put("dateReport", new ReportParams());
         return "reporting";
     }
 
