@@ -507,9 +507,9 @@ public class PetitController {
 		if(insursmo == null){	petitService.pgForm(dateReport, getUserName());	}
 		else
 		{
-			if(insursmo.equals("smo_simaz")){petitService.pgForm(dateReport, "smo_simaz");}
-			if(insursmo.equals("smo_rosno")){petitService.pgForm(dateReport, "smo_rosno");}
-			if(insursmo.equals("smo_ingos")){petitService.pgForm(dateReport, "smo_ingos");}
+			if(insursmo.equals("smo_simaz")){petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");}
+			if(insursmo.equals("smo_rosno")){petitService.pgForm(dateReport, "smo_rosnocall5002callnight5002");}
+			if(insursmo.equals("smo_ingos")){petitService.pgForm(dateReport, "smo_ingoscall5003callnight5003");}
 		}	
     	return "reporting";
 	}

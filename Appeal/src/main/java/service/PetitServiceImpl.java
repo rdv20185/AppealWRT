@@ -309,7 +309,7 @@ public class PetitServiceImpl implements PetitService {
 				username.equals("hamitov") ||
 				username.equals("filimonova") ||
 				username.equals("osipova")) {
-			username = "sashamityaninavasilyevapopovaereminahamitovfilimonovaosipovasmo_simazsmo_rosnosmo_ingos";
+			username = "kuznetsovasashamityaninavasilyevapopovaereminahamitovfilimonovaosipovasmo_simazsmo_rosnosmo_ingos";
 		}
 		mapReport.put("username", username);
 		return mapReport;

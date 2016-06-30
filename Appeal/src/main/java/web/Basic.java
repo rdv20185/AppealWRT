@@ -174,6 +174,8 @@ public class Basic {
 	    				new TransferFiles().delete(path + File.separator + d[i]);
 	    				
 	    				Petit petit = new Petit();
+	    				petit.setConectId(7);
+	    				petit.setPresentId(1);
 	    				petit.setDateInput(ff);
 	    				petit.setTel(tel);
 	    				petit.setUsername("auto");

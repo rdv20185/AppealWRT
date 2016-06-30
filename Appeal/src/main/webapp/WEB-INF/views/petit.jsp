@@ -440,6 +440,8 @@
 
 <form:form method="post" action="add" commandName="petit" name='petit_form' class="${cssforedit}" id="draggable">
 
+ 
+
 	<form:errors path="*" cssClass="errorblock" element="div" />
 	<form:hidden path="id" name='id'/>
 	<form:hidden path="blockger2016.filecall"/>
@@ -453,6 +455,8 @@
 		<spring:message code="label.nepetits" />
 	</c:if>
 </h1>
+
+<div class="errorrep" style="display:none; margin-bottom: 15px; color:red;"></div>
 <fieldset class="row1">
 	<legend>Данные обращения</legend>
 	  <p>
@@ -473,8 +477,8 @@
 	  </p>
 	  <p>
 		<form:label path="conectId"><spring:message code="label.conect" /></form:label>
-		<form:select path="conectId">
-			<form:option value="0" label="" />
+		<form:select path="conectId" id="connectid">
+			<form:option value="0" label=""/>
 		<form:options items="${conectList}"/>
 		</form:select>  
 		

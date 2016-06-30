@@ -41,6 +41,7 @@ public class Petit {
     @Column(name = "PRESENT_ID")
     private int presentId;
     
+    @Range(min = 1, max = 150, message="Поле Связь обязательно для заполнения")
     @Column(name = "CONECT_ID")
     private int conectId;
     

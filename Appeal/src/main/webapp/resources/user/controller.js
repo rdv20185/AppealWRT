@@ -167,40 +167,50 @@ function addJS(role){
 			// Prevent the form from submitting via the browser.
 			event.preventDefault();
 			
-			// CREATE HTTP QUERY
-			var values = {};
-			$.each($("form").serializeArray(), function (i, field) {
-			    values[field.name] =field.value;
-			});
-			//added name button
-			values["submitted"] = btn;
-			flag = 1;
-			
-			$('#divrefresh').css({'display':'block','width':$('#cont').width()});
-			$('#divrefresh').animate({opacity: 0.6}, 3000 );
-			
-				// SEND QUERY AND PROCESS RESPONSE
-				$.ajax({
-					type : "GET",
-					url : "add",
-					data : values,
-					success : function(response) {
-						//console.log('stay here '+JSON.stringify(response));
-				        table(response,role);
-				        $('#divrefresh').animate({opacity: 0.0}, 2000 );
-				        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
-					},
-					error : function(e) {
-						
-						alert("ERROR: ", +'обновите страницу');
-						$('#divrefresh').animate({opacity: 0.0}, 2000 );
-				        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
-					},
-					done : function(e) {
-						console.log("DONE");
-						
-					}
+			if($('#connectid').val() == 0){
+				$('.errorrep').append('<h3>Поле Связь обязательно для заполнения</h3>');
+				$('.errorrep').css({'display':'block'});
+			}
+			else{
+				$('.errorrep').empty();
+				$('.errorrep').css({'display':'none'});
+				// CREATE HTTP QUERY
+				var values = {};
+				$.each($("form").serializeArray(), function (i, field) {
+				    values[field.name] =field.value;
 				});
+				//added name button
+				values["submitted"] = btn;
+				flag = 1;
+				
+				$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+				$('#divrefresh').animate({opacity: 0.6}, 3000 );
+				
+					// SEND QUERY AND PROCESS RESPONSE
+					$.ajax({
+						type : "GET",
+						url : "add",
+						data : values,
+						success : function(response) {
+							//console.log('stay here '+JSON.stringify(response));
+					        table(response,role);
+					        $('#divrefresh').animate({opacity: 0.0}, 2000 );
+					        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+						},
+						error : function(e) {
+							
+							alert("ERROR: ", +'обновите страницу');
+							console.log('Тест'+ JSON.stringify(e));
+							
+							$('#divrefresh').animate({opacity: 0.0}, 2000 );
+					        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+						},
+						done : function(e) {
+							console.log("DONE");
+							
+						}
+					});
+			}		
 		});
 		
 	}	
