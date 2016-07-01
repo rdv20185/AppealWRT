@@ -24,19 +24,15 @@
 	<context:component-scan base-package="config.websoket" />
 	
 	
-	<!-- <websocket:message-broker application-destination-prefix="/app">
-        <websocket:stomp-endpoint path="/notify">
-        <websocket:sockjs/>
-        </websocket:stomp-endpoint>
-        <websocket:stomp-broker-relay prefix="/topic" />
-    </websocket:message-broker> -->
-	
 	
 	<!-- Файл с настройками ресурсов для работы с данными (Data Access Resources) -->
 	 <import resource="data.xml" /> 
 				
 	<!-- Файл с настройками безопасности -->
 	<import resource="security.xml" />
+	
+	<import resource="scheduled.xml" />
+	
 
 	
 </beans>
