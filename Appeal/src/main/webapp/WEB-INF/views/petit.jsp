@@ -478,7 +478,7 @@
 	  <p>
 		<form:label path="conectId"><spring:message code="label.conect" /></form:label>
 		<form:select path="conectId" id="connectid">
-			<form:option value="0" label=""/>
+			
 		<form:options items="${conectList}"/>
 		</form:select>  
 		
@@ -491,7 +491,6 @@
 	  <p>
 	  	<form:label path="letterNum"><spring:message code="label.letterNum" /></form:label>
 		<form:input path="letterNum" />
-				
 		<form:label path="letterDate"><spring:message code="label.letterDate" /></form:label>
 		<form:input path="letterDate" />
 	  </p>

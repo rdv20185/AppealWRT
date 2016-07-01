@@ -204,6 +204,7 @@ public class FieldsDepends {
 		this.rectifs1.put(rectif1.getId(), rectif1);
 		rectif1 = new Rectif1L("ПОЛИКЛИНИКА", 12);
 		rectif1
+			.addRectif2("Длительное ожидание оформления документов на плановую госпитализацию", 42)
 			.addRectif2("Наличие больших очередей в регистратуру", 7)
 			.addRectif2("Наличие больших очередей к врачам", 8)
 			.addRectif2("Длительное ожидание дня приема врача-терапевта", 9)

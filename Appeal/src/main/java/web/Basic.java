@@ -1,20 +1,27 @@
 package web;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import domain.BlockGER2016;
 import domain.Petit;
@@ -41,12 +48,12 @@ public class Basic {
 	
 
 	//@ModelAttribute
-	public ModelMap setupForm(ModelMap map,HttpServletRequest request) {
+	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) {
 
 		System.out.println("INFO "+request.getRequestURI());
 		
 		
-    	map.put("petit", new Petit());
+    	map.put("petit", petit);
     	
 		if(getUserName().equals("sasha") ||
 				getUserName().equals("mityanina") ||
@@ -119,7 +126,7 @@ public class Basic {
     @RequestMapping("/index")
     public String listPetits(Map<String, Object> map,HttpServletRequest request,ModelMap mapm) {
     	
-    	setupForm(mapm,request);
+    	setupForm(mapm,request,new Petit());
     	nightcallsprocess(request);
     	
     	List<Petit> pl = petitService.listPetit(getUserName()); 
@@ -174,6 +181,8 @@ public class Basic {
 	    				new TransferFiles().delete(path + File.separator + d[i]);
 	    				
 	    				Petit petit = new Petit();
+	    				//petit.setTypeId(3);
+	    				//petit.setCauseId(35);
 	    				petit.setConectId(7);
 	    				petit.setPresentId(1);
 	    				petit.setDateInput(ff);
@@ -220,9 +229,125 @@ public class Basic {
     
     @RequestMapping(value = "/refresh/{petitId}")
     public String loadPetit(@PathVariable("petitId") Integer petitId, ModelMap map,HttpServletRequest request) {
-    	setupForm(map,request);
+    	setupForm(map,request, new Petit());
     	map.put("petit", petitService.getPetit(petitId));
     	
     	return "petit";
     }
+    
+    @RequestMapping(value = "/refresh/add", method = RequestMethod.POST)
+    public String refreshAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request, ModelMap mapm) {
+    	String pa = request.getParameter("submit");
+    	
+    	if(pa.trim().equals("Завершить")){
+    		
+    		if(petit.getTypeId() == 0){bindingResult.rejectValue("typeId", "error.petit", "Поле Тип обязательно для заполнения");}
+    		if(petit.getCauseId() == 0){bindingResult.rejectValue("causeId", "error.petit", "Поле Причина обязательно для заполнения");}
+    		
+    		if(bindingResult.hasErrors()) { setupForm(mapm,request,petit); return "petit"; }
+    	}
+    	
+    	
+    	if(pa.trim().equals("Завершить")){
+    		if(petit.getPresentId() == 2 && petit.getBloutboindletter2016().getDate_response().equals("")){
+    			petit.getBlockger2016().setState(2);
+    			if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+        		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
+    		}
+    		else if(petit.getPresentId() == 2 && !petit.getBloutboindletter2016().getDate_response().equals("")){
+    			petit.getBlockger2016().setState(3);
+    			DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
+        		try { petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));} catch (ParseException e) {
+					e.printStackTrace();
+				}
+        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+        		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
+    		}else{
+    			petit.getBlockger2016().setState(3);
+    			petit.getBlockger2016().setDate_end(new Date());
+    		}
+    	}
+		return addsold(petit, bindingResult,request);
+	}
+    
+    private String addsold(Petit petit, BindingResult bindingResult,HttpServletRequest request) {
+		/*
+		 * Ловим с клиента в переменную ff поле date_end
+		 */
+		String ff = request.getParameter("fil");
+		if(ff !=null && !ff.equals(""))
+		{
+    		Date date = new Date();
+  		  	DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+  		  	try { date = df.parse(ff); } catch (ParseException e) { e.printStackTrace(); }
+    		petit.getBlockger2016().setDate_end(date);
+		}
+		String para = request.getParameter("submit");
+		
+		/* Если нажата кнопка сохранить то в поле username добавляется ключ (ключ приходит с клиента input select - "назначить")
+		 * Ключ - это значение при котором записи из базы будут доступны определенным группам пользователей
+		 */
+		/*
+		 * Обрабатывается нажатие клавиши назначить в режиме редактирования ночным 
+		 */
+	   	
+		System.out.println("hjdthrf "+petit.getPresentId()+" "+para.trim()+" "+petit.getBlockger2016().getState());
+		
+		if(para.trim().equals("Сохранить"))
+		{
+			//System.out.println("@@!!@@@@@@@!!!!!!!!     "+petit.getUsername());
+		}else
+		{ 
+			if(para.trim().equals("Назначить"))
+			{
+	    		petit.getBlockger2016().setState(1);
+	    		petit.getBlockger2016().setRegname(getUserName());
+	    	}else
+	    	{
+	    		if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 3 ){
+	    			
+	    			DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
+	        		try { petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));} catch (ParseException e) {
+						e.printStackTrace();
+					}
+	        		
+	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+	        		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
+	    		}
+	    		else{
+	    			
+	    			if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 2 ){
+	    				petit.setUsername(getUserName());
+		    		}
+	    			else{
+	    			if(petit.getPresentId() != 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 1 ){
+	    				
+	    				petit.getBlockger2016().setState(2);
+		        		petit.setUsername(getUserName());
+		    		}
+	    			
+	    			if(petit.getPresentId() != 2)
+	    			petit.setUsername(getUserName());
+	    			}
+	    		}
+	    	}	
+		}
+
+		if(petit.getPresentId() == 2){
+			petit.getBloutboindletter2016().getMany().get(0).setBloutboindletter2016(petit.getBloutboindletter2016());
+			petit.getBloutboindletter2016().getMany().get(1).setBloutboindletter2016(petit.getBloutboindletter2016());
+			petit.getBloutboindletter2016().getMany().get(2).setBloutboindletter2016(petit.getBloutboindletter2016());
+			petit.getBloutboindletter2016().setPetit(petit);
+			
+		}else{
+			petit.setBloutboindletter2016(null);
+		}
+		
+		
+	    petit.getBlockger2016().setPetit(petit);
+	    
+	    System.out.println("@@@@@@@@@@@@@@@@@@@@  "+petit);
+		petitService.addPetit(petit);
+		return "redirect:/index";
+	}
 }

@@ -39,7 +39,7 @@ function init(){
  * УДАЛЕНИЕ ЗАПИСИ
  */
 function del(id,role){ 
-	$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+	$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
 	$('#divrefresh').animate({opacity: 0.6}, 3000 );
 	// SEND QUERY AND PROCESS RESPONSE
 	flag = 1;
@@ -68,7 +68,7 @@ function del(id,role){
 function closemes(id,role){ 
 	// SEND QUERY AND PROCESS RESPONSE
 	flag = 1;
-	$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+	$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
 	$('#divrefresh').animate({opacity: 0.6}, 3000 );
 	$.ajax({
 		type : "GET",
@@ -95,7 +95,7 @@ function closemes(id,role){
 
 
 function openmes(id,role){
-	$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+	$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
 	$('#divrefresh').animate({opacity: 0.6}, 3000 );
 	// SEND QUERY AND PROCESS RESPONSE
 	flag = 1;
@@ -127,7 +127,7 @@ function openmes(id,role){
 
 function forWS(role){
 	
-	$('#divrefresh').css({'display':'block','width':$('#cont').width()});
+	$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
 	$('#divrefresh').animate({opacity: 0.6}, 3000 );
 	$.ajax({
 		type : "GET",
@@ -163,60 +163,74 @@ function addJS(role){
 		
 		$("#draggable").submit(function(event) {
 			var btn= $(this).find("input[type=submit]:focus").val();
-		
+			console.log('@@ '+btn);
 			// Prevent the form from submitting via the browser.
 			event.preventDefault();
 			
-			if($('#connectid').val() == 0){
-				$('.errorrep').append('<h3>Поле Связь обязательно для заполнения</h3>');
-				$('.errorrep').css({'display':'block'});
+			if(btn == 'Завершить'){
+				if(valid()){
+					body(btn,role);
+				}
 			}
 			else{
-				$('.errorrep').empty();
-				$('.errorrep').css({'display':'none'});
-				// CREATE HTTP QUERY
-				var values = {};
-				$.each($("form").serializeArray(), function (i, field) {
-				    values[field.name] =field.value;
-				});
-				//added name button
-				values["submitted"] = btn;
-				flag = 1;
-				
-				$('#divrefresh').css({'display':'block','width':$('#cont').width()});
-				$('#divrefresh').animate({opacity: 0.6}, 3000 );
-				
-					// SEND QUERY AND PROCESS RESPONSE
-					$.ajax({
-						type : "GET",
-						url : "add",
-						data : values,
-						success : function(response) {
-							//console.log('stay here '+JSON.stringify(response));
-					        table(response,role);
-					        $('#divrefresh').animate({opacity: 0.0}, 2000 );
-					        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
-						},
-						error : function(e) {
-							
-							alert("ERROR: ", +'обновите страницу');
-							console.log('Тест'+ JSON.stringify(e));
-							
-							$('#divrefresh').animate({opacity: 0.0}, 2000 );
-					        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
-						},
-						done : function(e) {
-							console.log("DONE");
-							
-						}
-					});
-			}		
+				body(btn,role);
+			}
+					
 		});
 		
 	}	
+}
+
+function body(btn,role){
 	
+	if($('#connectid').val() == 0){
+		$('.errorrep').append('<h3>Поле "Связь" обязательно для заполнения</h3>');
+		$('.errorrep').css({'display':'block'});
+		
+	}
+	else{
+		$('.errorrep').empty();
+		$('.errorrep').css({'display':'none'});
+
 	
-}				
+		// CREATE HTTP QUERY
+		var values = {};
+		$.each($("form").serializeArray(), function (i, field) {
+		    values[field.name] =field.value;
+		});
+		//added name button
+		values["submitted"] = btn;
+		flag = 1;
+		
+		$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
+		$('#divrefresh').animate({opacity: 0.6}, 3000 );
+	
+		// SEND QUERY AND PROCESS RESPONSE
+		$.ajax({
+			type : "GET",
+			url : "add",
+			data : values,
+			success : function(response) {
+				//console.log('stay here '+JSON.stringify(response));
+		        table(response,role);
+		        $('#divrefresh').animate({opacity: 0.0}, 2000 );
+		        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+			},
+			error : function(e) {
+				
+				alert("ERROR: ", +'обновите страницу');
+				console.log('Тест'+ JSON.stringify(e));
+				
+				$('#divrefresh').animate({opacity: 0.0}, 2000 );
+		        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+			},
+			done : function(e) {
+				console.log("DONE");
+				
+			}
+		});
+	}	
+}
 
 
 
@@ -389,6 +403,30 @@ function tablews(response,role){
 
 userInfo +="</tbody";
 $container.append(userInfo);
+	
+}
+
+
+function valid(){
+
+	 if($('#type').val() == 0){
+		$('.errorrep').append('<h3>Поле "Тип" обязательно для заполнения</h3>');
+		$('.errorrep').css({'display':'block'});
+		
+		return false;
+	}
+	else if($('#cause').val() == 0){
+		$('.errorrep').append('<h3>Поле "Причина" обязательно для заполнения</h3>');
+		$('.errorrep').css({'display':'block'});
+		
+		return false;
+	}
+	else{
+		$('.errorrep').empty();
+		$('.errorrep').css({'display':'none'});
+		
+		return true;
+	}
 	
 }
 
