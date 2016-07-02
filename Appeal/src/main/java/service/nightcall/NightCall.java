@@ -4,9 +4,11 @@ import java.io.File;
 import java.util.Date;
 import java.util.TimerTask;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import domain.BlockGER2016;
@@ -19,12 +21,14 @@ public class NightCall {
 
 	@Autowired
     private PetitService petitService;
+	@Autowired
+	private ServletContext servletContext;
 	
 	Date now; // to display current time
-
+		
 	  public void printMessage() {
 		 // 	nightcallsprocess();
-	       // System.out.println("I am called by Spring scheduler");
+	       System.out.println("I am called by Spring scheduler " +" ## "+servletContext.getRealPath("/"));
 	    }
 	
  private void nightcallsprocess(){

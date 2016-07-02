@@ -10,7 +10,8 @@
     <context:component-scan base-package="service.nightcall" />
  
     <task:scheduled-tasks scheduler="myScheduler">
-        <task:scheduled ref="myBean" method="printMessage" fixed-delay="10000" />
+        <task:scheduled ref="myBean" method="printMessage" cron="*/5 * * * * *" />
+        <!-- 0 0/5 9 * * * -->
     </task:scheduled-tasks>
  
     <task:scheduler id="myScheduler"/>
