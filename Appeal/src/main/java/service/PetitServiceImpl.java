@@ -303,13 +303,14 @@ public class PetitServiceImpl implements PetitService {
 		Map mapReport = mapForJasper(dateReport);
 		if(username.equals("sasha") ||
 				username.equals("mityanina") ||
+				username.equals("smyvin") ||
 				username.equals("vasilyeva") ||
 				username.equals("popova") ||
 				username.equals("eremina") ||
 				username.equals("hamitov") ||
 				username.equals("filimonova") ||
 				username.equals("osipova")) {
-			username = "kuznetsovasashamityaninavasilyevapopovaereminahamitovfilimonovaosipovasmo_simazsmo_rosnosmo_ingos";
+			username = "smyvinkuznetsovasashamityaninavasilyevapopovaereminahamitovfilimonovaosipovasmo_simazcall5001callnight5001smo_rosnocall5002callnight5002smo_ingoscall5003callnight5003";
 		}
 		mapReport.put("username", username);
 		return mapReport;
