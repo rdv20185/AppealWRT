@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pylypiv.tfoms.ftp.FTPDownloadFileDemo;
 import res.Fields;
@@ -340,7 +341,7 @@ public class PetitController {
     }
 	
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String search(@ModelAttribute("petit") Petit petit, ModelMap map) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
     	
     	//searching parameters
     	int t = petit.getTypeId(), c = petit.getCauseId(), 
@@ -371,7 +372,7 @@ public class PetitController {
 			map.put("searchListSize", listPetit.size());
 		} else map.put("searchListSize", "более 10000");
 		
-		return "searching";
+		return"searching";
 	}
     
     @RequestMapping("/reporting")

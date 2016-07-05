@@ -83,3 +83,9 @@ hr {
     text-align: center;
 }
 
+.cuting{
+overflow-x: hidden; 
+overflow-y: hidden; 
+white-space: nowrap; 
+max-width: 65px;	
+}

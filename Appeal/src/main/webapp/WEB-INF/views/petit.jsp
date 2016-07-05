@@ -926,11 +926,11 @@
 			    <td>${petit.dateInput}</td>
 			    <td>${petit.blockger2016.date_change}</td>
 			    <td>${petit.type.typeName}</td>
-			    <!-- <td>${petit.cause.causeName}</td> -->         
-				<td>${petit.surname}</td>
-				<td>${petit.name}</td>
-			    <td>${petit.patrony}</td>
-			    <td>${petit.tel}</td>
+			    <!-- <td style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap; max-width: 15px;">${petit.cause.causeName}</td> -->         
+				<td class="cuting">${petit.surname}</td>
+				<td  class="cuting">${petit.name}</td>
+			    <td  class="cuting">${petit.patrony}</td>
+			    <td  class="cuting">${petit.tel}</td>
 				<!-- <td style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap; max-width: 65px;">${petit.ter.terName}</td> -->
 				<td>${petit.blockger2016.regname}</td>
 				<td class="${cssClassonUser}">${petit.username}</td>

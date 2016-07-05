@@ -5,6 +5,13 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<% 
+response.setHeader("Cache-Control","cache"); //HTTP 1.1 
+response.setHeader("Pragma","cache"); //HTTP 1.0 
+response.setDateHeader ("Expires", 10000); //prevents caching at the proxy server 
+%> 
+
+
 <html>
 <head>
 	<script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery-1.6.1.min.js" />"></script>

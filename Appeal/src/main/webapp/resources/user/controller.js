@@ -275,7 +275,7 @@ function table(response,role){
 	if (value.patrony == null) value.patrony = '';
 	if (value.tel == null) value.tel = '';
 	
-	userInfo +="<tr class="+cssClass+"><td>"+value.id+"</td><td>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td>"+type+"</td><td>"+value.surname+"</td><td>"+value.name+"</td><td>"+value.patrony+"</td><td>"+value.tel+"</td><td>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
+	userInfo +="<tr class="+cssClass+"><td>"+value.id+"</td><td>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting'>"+value.patrony+"</td><td class='cuting'>"+value.tel+"</td><td>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
 	
 	if(value.blockger2016.state != 4){
 		userInfo +="<td><a href='nightcallfile/"+value.id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a onclick=del('"+value.id+"','"+role+"') id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td><td><a id='iddel' href='refresh/"+value.id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
@@ -364,7 +364,7 @@ function tablews(response,role){
 	if (value.patrony == null) value.patrony = '';
 	if (value.tel == null) value.tel = '';
 	
-	userInfo +="<tr class="+cssClass+"><td>"+value.id+"</td><td>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td>"+type+"</td><td>"+value.surname+"</td><td>"+value.name+"</td><td>"+value.patrony+"</td><td>"+value.tel+"</td><td>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
+	userInfo +="<tr class="+cssClass+"><td>"+value.id+"</td><td>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting'>"+value.patrony+"</td><td class='cuting'>"+value.tel+"</td><td>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
 	
 	if(value.blockger2016.state != 4){
 		userInfo +="<td><a href='nightcallfile/"+value.id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a onclick=del('"+value.id+"','"+role+"') id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td><td><a id='iddel' href='refresh/"+value.id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
