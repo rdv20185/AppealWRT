@@ -930,7 +930,7 @@
 				<td class="cuting">${petit.surname}</td>
 				<td  class="cuting">${petit.name}</td>
 			    <td  class="cuting">${petit.patrony}</td>
-			    <td  class="cuting">${petit.tel}</td>
+			    <td>${petit.tel}</td>
 				<!-- <td style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap; max-width: 65px;">${petit.ter.terName}</td> -->
 				<td>${petit.blockger2016.regname}</td>
 				<td class="${cssClassonUser}">${petit.username}</td>

@@ -385,7 +385,12 @@ public class PetitController {
 	@RequestMapping(value = "/report", method = RequestMethod.POST)
     public String report(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
-		if(insursmo == null){	petitService.pgForm(dateReport, getUserName());	}
+		if(insursmo == null){	
+			if(getUserName().equals("smo_rosno")) petitService.pgForm(dateReport, "smo_rosnocall5002callnight5002");
+			else if(getUserName().equals("smo_ingos")) petitService.pgForm(dateReport, "smo_ingoscall5003callnight5003");
+			else if(getUserName().equals("smo_simaz")) petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");
+			else {petitService.pgForm(dateReport, getUserName());}
+		}
 		else
 		{
 			if(insursmo.equals("smo_simaz")){petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");}

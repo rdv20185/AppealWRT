@@ -182,7 +182,7 @@ public class PetitServiceImpl implements PetitService {
 	public void pgForm(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
     	Connection conn = connectForJasper();
 		Map mapReport = mapForJasper(dateReport, username);
-			
+			System.out.println("TESTTTTTTTT "+username);
 		JasperReport jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_1_1dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
