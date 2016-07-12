@@ -1,6 +1,7 @@
 package dao;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.List;
 
 import domain.Petit;
@@ -16,6 +17,8 @@ public interface PetitDAO {
     public List<Petit> listSearch(Petit petit, String username) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException;
 
 	public Petit getPetit(Integer petitId);
+	
+	public List<Date> getMaxDate();
 	
 	public void close(Integer petitId);
 	

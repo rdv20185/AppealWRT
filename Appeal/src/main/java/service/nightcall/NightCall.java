@@ -1,7 +1,11 @@
 package service.nightcall;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimerTask;
 
 import javax.servlet.ServletContext;
@@ -26,8 +30,61 @@ public class NightCall {
 	
 	Date now; // to display current time
 		
-	  public void printMessage() {
+	  public void printMessage() throws ParseException {
 		 // 	nightcallsprocess();
+		  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		  
+		  // convert date to yyyy-dd-mm (across string)
+		  List<Date> maxDate_ = petitService.getMaxDate();
+		  String maxDate_str = maxDate_.get(0).toString();
+		  Date maxDate = formatter.parse(maxDate_str);
+		  
+		  // convert date to yyyy-dd-mm (across string)
+		  String format_str = formatter.format(new Date());
+		  Date format_date_today = formatter.parse(format_str);
+		  
+		  	if(maxDate.compareTo(format_date_today)>0){
+			  System.out.println("Date1 is after Date2"+" - "+ maxDate+" - "+format_date_today);
+  			}else if(maxDate.compareTo(format_date_today)<0){
+  				System.out.println("Date1 is before Date2"+" - "+ maxDate+" - "+format_date_today);
+  				
+  				Calendar cal = Calendar.getInstance();
+  		         
+  				while(maxDate.compareTo(format_date_today) != 0){
+  					System.out.println("ВОШЛИ В ЦИКЛ"+maxDate);
+  					
+  					cal.setTime(maxDate);
+  					
+  					Calendar start_day = cal;
+  					// increment day
+  	  		        cal.add(Calendar.DATE, 1);
+  	  		        Date date_increment = cal.getTime();
+  	  		        // check friday
+  	  		        if((start_day.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (start_day.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY))
+  	  		        {
+  	  		          // start_day 9_00 - date_increment до 9_00
+  	  		          System.out.println("Период забора выходные "+ date_increment);	
+  	  		        }
+  	  		        // и не праздничный добавить
+  	  		        else if(start_day.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){
+  	  		        	
+  	  	  		        // start_day 17_00 - date_increment до 9_00
+  	  		        	System.out.println("Период забора пятница "+ date_increment);
+  	  		        	
+  	  		        }
+  	  		        else{
+  	  		        	System.out.println("Обычный забор");
+  	  		        // start_day 18_00 - date_increment до 9_00
+  	  		        	
+  	  		        }
+  	  		        
+  	  		        maxDate  = cal.getTime();
+  				}
+  				
+  			}else if(maxDate.compareTo(format_date_today)==0){
+  				System.out.println("Date1 is equal to Date2"+" - "+ maxDate+" - "+format_date_today);
+  			}
+		  
 	       System.out.println("I am called by Spring scheduler " +" ## "+servletContext.getRealPath("/"));
 	    }
 	

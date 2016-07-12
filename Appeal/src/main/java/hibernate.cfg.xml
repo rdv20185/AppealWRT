@@ -26,7 +26,8 @@
  		<mapping class="domain.Insur" />
  		<mapping class="domain.BlockGER2016" />
  		<mapping class="domain.blOutboindLETTER2016" />
- 		<mapping class="domain.Outboundmany" /> 		
+ 		<mapping class="domain.Outboundmany" />
+ 		<mapping class="domain.Callnight_markerday" />		
 	</session-factory>
 </hibernate-configuration>
 

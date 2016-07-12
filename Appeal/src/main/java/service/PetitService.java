@@ -2,6 +2,7 @@ package service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,5 +64,7 @@ public interface PetitService {
 	public Map<Integer, Rectif3L> getRectifs3();
 	
 	public void closeAppeal(Integer petitId);
+	
+	public List<Date> getMaxDate();
 
 }

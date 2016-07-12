@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -347,4 +348,13 @@ public class PetitServiceImpl implements PetitService {
 		
 		return conn;
 	}
+
+	@Override
+	@Transactional
+	public List<Date> getMaxDate() {
+
+		return petitDAO.getMaxDate();
+	}
+	
+    
 }

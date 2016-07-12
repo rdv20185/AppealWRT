@@ -560,7 +560,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		</tr>
 		<c:forEach items="${searchList}" var="petit">
 			<tr>
-				<td>${petit.num}</td>      
+				<td  align="center" style="border: solid #000 1px;">${petit.id} ${petit.num}</td>      
 			    <td>${petit.dateInput}</td>       
 				<!-- <td>${petit.dateBegin}</td>
 			    <td>${petit.dateEnd}</td>-->  

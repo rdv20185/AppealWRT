@@ -215,6 +215,8 @@ public class PetitDAOImpl implements PetitDAO {
 		return petit;
 	}
 	
+	
+	
 	public void close(Integer petitId) {
 		Petit petit = (Petit) sessionFactory.getCurrentSession().get(Petit.class, petitId);
 		petit.getBlockger2016().setState(4);
@@ -224,5 +226,16 @@ public class PetitDAOImpl implements PetitDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(petit);
     	
 	 	
+	}
+
+
+
+	@Override
+	public List<Date> getMaxDate() {
+		
+		Query query = null;
+		query = sessionFactory.getCurrentSession().createQuery("select max(t.dateworked) from Callnight_markerday t");
+		return query.list();
+		
 	}
 }
