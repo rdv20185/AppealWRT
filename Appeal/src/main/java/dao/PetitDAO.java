@@ -1,6 +1,8 @@
 package dao;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,5 +23,7 @@ public interface PetitDAO {
 	public List<Date> getMaxDate();
 	
 	public void close(Integer petitId);
+	
+	public List<domain.Calendar> getCeleb(Date date) throws ParseException;
 	
 }

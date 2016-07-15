@@ -1,6 +1,7 @@
 package web;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,8 +25,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import domain.BlockGER2016;
+import domain.Cause;
+import domain.Conect;
+import domain.Hsp;
+import domain.Insur;
+import domain.Mo;
 import domain.Petit;
+import domain.Present;
+import domain.Rectif1;
+import domain.Rectif2;
+import domain.Rectif3;
+import domain.Rectif4;
 import domain.ReportParams;
+import domain.Source;
+import domain.Ter;
+import domain.Type;
 import res.Fields;
 import res.TransferFiles;
 import service.PetitService;
@@ -349,5 +363,49 @@ public class Basic {
 	    System.out.println("@@@@@@@@@@@@@@@@@@@@  "+petit);
 		petitService.addPetit(petit);
 		return "redirect:/index";
+	}
+    
+    @RequestMapping("/searching")
+    public String searching(ModelMap map,HttpServletRequest request) {
+    	setupForm(map,request,new Petit());
+    	map.put("petit", new Petit());
+        return "searching";
+    }
+    
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    	
+    	//searching parameters
+    	int t = petit.getTypeId(), c = petit.getCauseId(), 
+    			r1 = petit.getRectif1Id(), r2 = petit.getRectif2Id(), r3 = petit.getRectif3Id(), r4 = petit.getRectif4Id();
+		if(t != 0) petit.setType(new Type(this.petitService.getTypes().get(t).getName(),t));
+		if(c != 0) petit.setCause(new Cause(this.petitService.getTypes().get(t).getCause(c).getName(),c));
+		if(r1 != 0) petit.setRectif1(new Rectif1(this.petitService.getCauses().get(c).getRectif1(r1).getName(),r1));
+		if(r2 != 0) petit.setRectif2(new Rectif2(this.petitService.getRectifs1().get(r1).getRectif2(r2).getName(),r2));
+		if(r3 != 0) petit.setRectif3(new Rectif3(this.petitService.getRectifs2().get(r2).getRectif3(r3).getName(),r3));
+		if(r4 != 0) petit.setRectif4(new Rectif4(this.petitService.getRectifs3().get(r3).getRectif4(r4).getName(),r4));
+		if(petit.getSourceId() != 0) petit.setSource(new Source(Fields.getSource().get(petit.getSourceId()), petit.getSourceId()));
+		if(petit.getPresentId() != 0) petit.setPresent(new Present(Fields.getPresent().get(petit.getPresentId()), petit.getPresentId()));
+		if(petit.getConectId() != 0) petit.setConect(new Conect(Fields.getConect().get(petit.getConectId()), petit.getConectId()));
+		if(petit.getTerId() != 0) petit.setTer(new Ter(Fields.getTer().get(petit.getTerId()), petit.getTerId()));
+		if(petit.getTerAnswerId() != 0) petit.setTerAnswer(new Ter(Fields.getTer().get(petit.getTerAnswerId()), petit.getTerAnswerId()));
+		if(petit.getMoId() != 0) petit.setMo(new Mo(Fields.getMo().get(petit.getMoId()), petit.getMoId()));
+		if(petit.getInsurId() != 0) petit.setInsur(new Insur(Fields.getInsur().get(petit.getInsurId()), petit.getInsurId()));
+		if(petit.getValidId() != 0) petit.setValid(new domain.Valid(Fields.getValid().get(petit.getValidId()), petit.getValidId()));
+		if(petit.getHspId() != 0) petit.setHsp(new Hsp(Fields.getHsp().get(petit.getHspId()), petit.getHspId()));
+		map.put("petitParam", petit);
+
+		//searching
+		petitService.setSearchParams(petit);
+		List<Petit> listPetit = petitService.listSearch(getUserName());
+		for(Petit pt : listPetit) pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+		if(listPetit.size() <= 10000) {
+			map.put("searchList", listPetit);
+			map.put("searchListSize", listPetit.size());
+		} else map.put("searchListSize", "более 10000");
+		
+		setupForm(map,request,petit);
+		
+		return"searching";
 	}
 }

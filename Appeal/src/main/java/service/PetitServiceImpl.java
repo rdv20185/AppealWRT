@@ -6,8 +6,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -354,6 +356,15 @@ public class PetitServiceImpl implements PetitService {
 	public List<Date> getMaxDate() {
 
 		return petitDAO.getMaxDate();
+	}
+
+	@Override
+	@Transactional
+	public boolean isCeleb(Date date) throws ParseException {
+		List<domain.Calendar> celebr = petitDAO.getCeleb(date);
+		if (celebr.get(0).getWeekand().equals("1") || celebr.get(0).getCelebr().equals("1")) {return true;}
+		else{ return false;}
+		
 	}
 	
     

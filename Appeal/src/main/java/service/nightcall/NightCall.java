@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import domain.BlockGER2016;
 import domain.Petit;
+import ftp.FTPDownloadFileDemo;
 import res.TransferFiles;
 import service.PetitService;
 
@@ -49,36 +50,66 @@ public class NightCall {
   				System.out.println("Date1 is before Date2"+" - "+ maxDate+" - "+format_date_today);
   				
   				Calendar cal = Calendar.getInstance();
-  		         
-  				while(maxDate.compareTo(format_date_today) != 0){
-  					System.out.println("ВОШЛИ В ЦИКЛ"+maxDate);
+  				Calendar cal2 = Calendar.getInstance();
+  				FTPDownloadFileDemo block_ftp = new FTPDownloadFileDemo();
+  				while(maxDate.compareTo(format_date_today) <0){
   					
   					cal.setTime(maxDate);
   					
-  					Calendar start_day = cal;
-  					// increment day
-  	  		        cal.add(Calendar.DATE, 1);
-  	  		        Date date_increment = cal.getTime();
+  					cal2.setTime(maxDate);
+  					Calendar start_day = cal2;
+  					start_day.set(Calendar.HOUR, 0);
+
   	  		        // check friday
-  	  		        if((start_day.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (start_day.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY))
+  					if(petitService.isCeleb(start_day.getTime())){
+  						
+  						  cal.add(Calendar.DATE, 1);
+    	  		          
+    	  		          start_day.set(Calendar.HOUR, 9);
+    	  		          cal.set(Calendar.HOUR, 9);
+    	  		          System.out.println("Период забора проздничный "+ start_day.getTime()+" $$$$$$$$$$$$$$$$$$$$$$$ "+cal.getTime());
+    	  		          block_ftp.startFtp(start_day,cal);
+    	  		          maxDate  = cal.getTime();
+  					}
+  					else if((start_day.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) || (start_day.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) )
   	  		        {
   	  		          // start_day 9_00 - date_increment до 9_00
-  	  		          System.out.println("Период забора выходные "+ date_increment);	
+  	  		          
+  	  		          cal.add(Calendar.DATE, 1);
+  	  		          
+  	  		          start_day.set(Calendar.HOUR, 9);
+  	  		          cal.set(Calendar.HOUR, 9);
+  	  		          System.out.println("Период забора выходные "+ start_day.getTime()+" $$$$$$$$$$$$$$$$$$$$$$$ "+cal.getTime());
+  	  		          block_ftp.startFtp(start_day,cal);
+  	  		          maxDate  = cal.getTime();
   	  		        }
   	  		        // и не праздничный добавить
   	  		        else if(start_day.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){
   	  		        	
   	  	  		        // start_day 17_00 - date_increment до 9_00
-  	  		        	System.out.println("Период забора пятница "+ date_increment);
+  	  		        	
+  	  		        	cal.add(Calendar.DATE, 1);
+  	  		        	
+  	  		        	start_day.set(Calendar.HOUR, 17);
+  	  		        	cal.set(Calendar.HOUR, 9);
+  	  		        	System.out.println("Период забора пятница "+ start_day.getTime()+" $$$$$$$$$$$$$$$$$$$$$$$ "+cal.getTime());
+  	  		        	block_ftp.startFtp(start_day,cal);
+  	  		        	maxDate  = cal.getTime();
   	  		        	
   	  		        }
   	  		        else{
-  	  		        	System.out.println("Обычный забор");
-  	  		        // start_day 18_00 - date_increment до 9_00
+  	  		        	
+  	  		        	// 	start_day 18_00 - date_increment до 9_00
+  	  		        	cal.add(Calendar.DATE, 1);
+  	  		        	
+  	  		        	start_day.set(Calendar.HOUR, 18);
+  	  		        	cal.set(Calendar.HOUR, 9);
+  	  		        	System.out.println("Обычный забор "+start_day.getTime()+" $$$$$$$$$$$$$$$$$$$$$$$ "+cal.getTime());
+  	  		        	block_ftp.startFtp(start_day,cal);
+  	  		        	maxDate  = cal.getTime();
   	  		        	
   	  		        }
   	  		        
-  	  		        maxDate  = cal.getTime();
   				}
   				
   			}else if(maxDate.compareTo(format_date_today)==0){

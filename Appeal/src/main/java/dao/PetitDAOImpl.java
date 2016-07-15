@@ -3,6 +3,9 @@ package dao;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -230,12 +233,23 @@ public class PetitDAOImpl implements PetitDAO {
 
 
 
-	@Override
 	public List<Date> getMaxDate() {
-		
 		Query query = null;
 		query = sessionFactory.getCurrentSession().createQuery("select max(t.dateworked) from Callnight_markerday t");
 		return query.list();
 		
+	}
+
+
+
+	@Override
+	public List<domain.Calendar> getCeleb(Date date) throws ParseException {
+		//SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S"); 
+		Date dt = date;//formatter.parse(maxDate_str.substring(8, 10) + "." + maxDate_str.substring(5, 7) + "." + maxDate_str.substring(0, 4)+" 00:00:00.000");
+		
+		Query query = null;
+		query = sessionFactory.getCurrentSession().createQuery("from Calendar t where trunc(t.num_day)=:dt)");
+		query.setTimestamp("dt", dt);
+		return query.list();
 	}
 }
