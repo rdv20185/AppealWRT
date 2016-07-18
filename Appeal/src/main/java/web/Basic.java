@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import domain.BlockGER2016;
 import domain.Cause;
@@ -373,11 +374,12 @@ public class Basic {
     }
     
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request,@RequestParam(required=false) String searchcheckinbound) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
     	
     	//searching parameters
     	int t = petit.getTypeId(), c = petit.getCauseId(), 
     			r1 = petit.getRectif1Id(), r2 = petit.getRectif2Id(), r3 = petit.getRectif3Id(), r4 = petit.getRectif4Id();
+    	
 		if(t != 0) petit.setType(new Type(this.petitService.getTypes().get(t).getName(),t));
 		if(c != 0) petit.setCause(new Cause(this.petitService.getTypes().get(t).getCause(c).getName(),c));
 		if(r1 != 0) petit.setRectif1(new Rectif1(this.petitService.getCauses().get(c).getRectif1(r1).getName(),r1));
@@ -398,7 +400,22 @@ public class Basic {
 		//searching
 		petitService.setSearchParams(petit);
 		List<Petit> listPetit = petitService.listSearch(getUserName());
-		for(Petit pt : listPetit) pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+		for (int i = 0; i < listPetit.size(); i++) {
+			if(searchcheckinbound != null){
+				if(listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getTypeId() == 1 && listPetit.get(i).getPresentId() == 2){
+					listPetit.remove(listPetit.get(i));
+					i = i-1;
+				}
+				else{
+					listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(8, 10) + "." + listPetit.get(i).getDateInput().substring(5, 7) + "." + listPetit.get(i).getDateInput().substring(0, 4));
+				}
+	    	}else{
+	    		listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(8, 10) + "." + listPetit.get(i).getDateInput().substring(5, 7) + "." + listPetit.get(i).getDateInput().substring(0, 4));
+			}
+			
+		}
+		
+		
 		if(listPetit.size() <= 10000) {
 			map.put("searchList", listPetit);
 			map.put("searchListSize", listPetit.size());

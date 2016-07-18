@@ -3,6 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <% 
@@ -98,6 +99,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 					$('#rectif1').html(html);
 				});
 			});
+		
 		});
 	</script>
 	
@@ -297,10 +299,13 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			</form:select></td>
 			
 			<td><form:label path="presentId"><spring:message code="label.present" /></form:label></td>
-			<td><form:select path="presentId">
+			<td><form:select path="presentId" id="presentIdhtml">
 				<form:option value="0" label="" />
     			<form:options items="${presentList}"/>
-			</form:select></td>
+			</form:select>
+			<div id="inbound_div">с исходящими <input type="checkbox" name="searchcheckinbound" id="searchcheckinbound"  value="checkinbound"></div></td>
+			
+			
 			
 			<td><form:label path="letterNum"><spring:message code="label.letterNum" /></form:label></td>
 			<td><form:input path="letterNum" /></td>
@@ -555,10 +560,12 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		    <th><spring:message code="label.compensCode" /></th>
 		    <th><spring:message code="label.compensSum" /></th>
 		    <th><spring:message code="label.propos" /></th>-->
-		    <th><spring:message code="label.username" /></th>
+		    <th>Регистратор</th>
+		    <th>Исполнитель</th>
 			<th>&nbsp;</th>
 		</tr>
 		<c:forEach items="${searchList}" var="petit">
+			<c:set var="user_tab" value="${petit.username}"/>
 			<tr>
 				<td  align="center" style="border: solid #000 1px;">${petit.id} ${petit.num}</td>      
 			    <td>${petit.dateInput}</td>       
@@ -596,9 +603,18 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			    <td>${petit.compensCode}</td>
 			    <td>${petit.compensSum}</td>
 			    <td>${petit.propos}</td>-->
+			    <td>${petit.blockger2016.regname}</td>
 				<td>${petit.username}</td>			    
 				<td><a href="more/${petit.id}"><spring:message code="label.more" /></a></td>
-				<td><a href="refresh/${petit.id}"><spring:message code="label.correct" /></a></td>
+				<c:choose>
+				    <c:when test="${fn:startsWith(user_tab, 'call')}">
+				        <td><a><spring:message code="label.correct" /></a></td>
+			        </c:when>
+				    <c:otherwise>
+				        <td><a href="refresh/${petit.id}"><spring:message code="label.correct" /></a></td>
+				    </c:otherwise>
+				</c:choose>
+				
 			</tr>
 		</c:forEach>
 	</table>

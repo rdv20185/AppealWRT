@@ -190,9 +190,16 @@ public class PetitDAOImpl implements PetitDAO {
     		criteria.add(Restrictions.le("dateInput", petit.getDateEnd()));
     	}
     	
-    	if(username.equals("smo_simaz") || username.equals("smo_rosno") || username.equals("smo_ingos")) {
-    		criteria.add(Restrictions.eq("username", username));
+    	if(username.equals("smo_ingos")) {
+    		criteria.add( Restrictions.in( "username", new String[] { "smo_ingos", "call5003", "callnight5003" } ) );
     	}
+    	if(username.equals("smo_simaz")) {
+    		criteria.add( Restrictions.in( "username", new String[] { "smo_simaz", "call5001", "callnight5001" } ) );
+    	}
+    	if(username.equals("smo_rosno")) {
+    		criteria.add( Restrictions.in( "username", new String[] { "smo_rosno", "call5002", "callnight5002" } ) );
+    	}
+    	
     	
     	criteria.addOrder(Order.desc("dateInput"));
     	
