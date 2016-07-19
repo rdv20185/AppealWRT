@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import pylypiv.tfoms.ftp.FTPDownloadFileDemo;
 
 public class Option {
 

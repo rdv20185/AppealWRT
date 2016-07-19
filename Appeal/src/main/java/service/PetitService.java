@@ -3,6 +3,7 @@ package service;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -70,5 +71,7 @@ public interface PetitService {
 	public List<Date> getMaxDate();
 	
 	public boolean isCeleb(Date date) throws ParseException;
+	
+	public void updateLastDate(Calendar cal);
 
 }

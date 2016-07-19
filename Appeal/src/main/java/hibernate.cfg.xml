@@ -7,28 +7,31 @@
 	<session-factory>
         
         <property name="hbm2ddl.auto">update</property>
+       
+        
 
 	
-		<mapping class="domain.Petit" />
-		<mapping class="domain.Source" />
-		<mapping class="domain.Present" />
-		<mapping class="domain.Conect" />
-		<mapping class="domain.Type" />
-		<mapping class="domain.Ter" />
-		<mapping class="domain.Valid" />
-		<mapping class="domain.Mo" />
-		<mapping class="domain.Hsp" />
- 		<mapping class="domain.Cause" />
- 		<mapping class="domain.Rectif1" />
- 		<mapping class="domain.Rectif2" />
- 		<mapping class="domain.Rectif3" />
- 		<mapping class="domain.Rectif4" />
- 		<mapping class="domain.Insur" />
- 		<mapping class="domain.BlockGER2016" />
- 		<mapping class="domain.blOutboindLETTER2016" />
- 		<mapping class="domain.Outboundmany" />
- 		<mapping class="domain.Callnight_markerday" />
- 		<mapping class="domain.Calendar" />
+	
+		<mapping class="domain.Source"></mapping>
+		<mapping class="domain.Present"></mapping>
+		<mapping class="domain.Conect"></mapping>
+		<mapping class="domain.Type"></mapping>
+		<mapping class="domain.Ter"></mapping>
+		<mapping class="domain.Valid"></mapping>
+		<mapping class="domain.Mo"></mapping>
+		<mapping class="domain.Hsp"></mapping>
+ 		<mapping class="domain.Cause"></mapping>
+ 		<mapping class="domain.Rectif1"></mapping>
+ 		<mapping class="domain.Rectif2"></mapping>
+ 		<mapping class="domain.Rectif3"></mapping>
+ 		<mapping class="domain.Rectif4"></mapping>
+ 		<mapping class="domain.Insur"></mapping>
+ 		<mapping class="domain.BlockGER2016"></mapping>
+ 		<mapping class="domain.blOutboindLETTER2016"></mapping>
+ 		<mapping class="domain.Outboundmany"></mapping>
+ 		<mapping class="domain.Callnight_markerday"></mapping>
+ 		<mapping class="domain.Calendar"></mapping>
+ 			<mapping class="domain.Petit"></mapping>
  		
 	</session-factory>
 </hibernate-configuration>

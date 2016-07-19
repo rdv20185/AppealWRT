@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,15 +25,18 @@ import service.PetitService;
 @Component("myBean")
 public class NightCall {
 
+	private static final Logger logger = Logger.getLogger(NightCall.class);
+	
 	@Autowired
     private PetitService petitService;
 	@Autowired
 	private ServletContext servletContext;
 	
-	Date now; // to display current time
 		
 	  public void printMessage() throws ParseException {
-		 // 	nightcallsprocess();
+		
+		  if(logger.isInfoEnabled()){ logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$          начало обработки         $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");}
+			
 		  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		  
 		  // convert date to yyyy-dd-mm (across string)
@@ -45,9 +49,9 @@ public class NightCall {
 		  Date format_date_today = formatter.parse(format_str);
 		  
 		  	if(maxDate.compareTo(format_date_today)>0){
-			  System.out.println("Date1 is after Date2"+" - "+ maxDate+" - "+format_date_today);
+		  		if(logger.isInfoEnabled()){ logger.info("Последняя дата обработки: "+ maxDate+"  Сегодня: "+format_date_today);}
   			}else if(maxDate.compareTo(format_date_today)<0){
-  				System.out.println("Date1 is before Date2"+" - "+ maxDate+" - "+format_date_today);
+  				if(logger.isInfoEnabled()){ logger.info("Последняя дата обработки: "+ maxDate+"  Сегодня: "+format_date_today);}
   				
   				Calendar cal = Calendar.getInstance();
   				Calendar cal2 = Calendar.getInstance();
@@ -67,8 +71,10 @@ public class NightCall {
     	  		          
     	  		          start_day.set(Calendar.HOUR, 9);
     	  		          cal.set(Calendar.HOUR, 9);
-    	  		          System.out.println("Период забора проздничный "+ start_day.getTime()+" $$$$$$$$$$$$$$$$$$$$$$$ "+cal.getTime());
+    	  		          if(logger.isInfoEnabled()){ logger.info("Период забора праздничный день: c "+ start_day.getTime()+" по "+cal.getTime());}
     	  		          block_ftp.startFtp(start_day,cal);
+    	  		          // заносим в базу отработанную дату
+    	  		          petitService.updateLastDate(cal);
     	  		          maxDate  = cal.getTime();
   					}
   					else if((start_day.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) || (start_day.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) )
@@ -79,8 +85,10 @@ public class NightCall {
   	  		          
   	  		          start_day.set(Calendar.HOUR, 9);
   	  		          cal.set(Calendar.HOUR, 9);
-  	  		          System.out.println("Период забора выходные "+ start_day.getTime()+" $$$$$$$$$$$$$$$$$$$$$$$ "+cal.getTime());
+  	  		          if(logger.isInfoEnabled()){ logger.info("Период забора выходной день: c "+ start_day.getTime()+" по "+cal.getTime());}
   	  		          block_ftp.startFtp(start_day,cal);
+	  		          // заносим в базу отработанную дату
+  	  		          petitService.updateLastDate(cal);
   	  		          maxDate  = cal.getTime();
   	  		        }
   	  		        // и не праздничный добавить
@@ -92,8 +100,10 @@ public class NightCall {
   	  		        	
   	  		        	start_day.set(Calendar.HOUR, 17);
   	  		        	cal.set(Calendar.HOUR, 9);
-  	  		        	System.out.println("Период забора пятница "+ start_day.getTime()+" $$$$$$$$$$$$$$$$$$$$$$$ "+cal.getTime());
+  	  		        	if(logger.isInfoEnabled()){ logger.info("Период забора пятницы: c "+ start_day.getTime()+" по "+cal.getTime());}
   	  		        	block_ftp.startFtp(start_day,cal);
+  	  		        	// 	заносим в базу отработанную дату
+  	  		        	petitService.updateLastDate(cal);
   	  		        	maxDate  = cal.getTime();
   	  		        	
   	  		        }
@@ -104,8 +114,10 @@ public class NightCall {
   	  		        	
   	  		        	start_day.set(Calendar.HOUR, 18);
   	  		        	cal.set(Calendar.HOUR, 9);
-  	  		        	System.out.println("Обычный забор "+start_day.getTime()+" $$$$$$$$$$$$$$$$$$$$$$$ "+cal.getTime());
+  	  		        	if(logger.isInfoEnabled()){ logger.info("Обычный период забора : c "+ start_day.getTime()+" по "+cal.getTime());}
   	  		        	block_ftp.startFtp(start_day,cal);
+  	  		        	// заносим в базу отработанную дату
+  	  		        	petitService.updateLastDate(cal);
   	  		        	maxDate  = cal.getTime();
   	  		        	
   	  		        }
@@ -113,10 +125,12 @@ public class NightCall {
   				}
   				
   			}else if(maxDate.compareTo(format_date_today)==0){
-  				System.out.println("Date1 is equal to Date2"+" - "+ maxDate+" - "+format_date_today);
+  				if(logger.isInfoEnabled()){ logger.info("Последняя дата обработки равна сегодняшней : последняя ");}
   			}
 		  
-	       System.out.println("I am called by Spring scheduler " +" ## "+servletContext.getRealPath("/"));
+		  	if(logger.isInfoEnabled()){ logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$          конец обработки         $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");}
+		  	
+			 // 	nightcallsprocess();
 	    }
 	
  private void nightcallsprocess(){

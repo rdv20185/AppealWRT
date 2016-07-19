@@ -18,6 +18,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import domain.Callnight_markerday;
 import domain.Outboundmany;
 import domain.Petit;
 
@@ -162,6 +163,10 @@ public class PetitDAOImpl implements PetitDAO {
     	
     }
     
+    public void updateLastDate(Callnight_markerday  cm) {
+    	 sessionFactory.getCurrentSession().saveOrUpdate(cm);
+    }
+    
     @SuppressWarnings("unchecked")
 	public List<Petit> listSearch(Petit petit, String username) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
     	
@@ -251,9 +256,7 @@ public class PetitDAOImpl implements PetitDAO {
 
 	@Override
 	public List<domain.Calendar> getCeleb(Date date) throws ParseException {
-		//SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S"); 
-		Date dt = date;//formatter.parse(maxDate_str.substring(8, 10) + "." + maxDate_str.substring(5, 7) + "." + maxDate_str.substring(0, 4)+" 00:00:00.000");
-		
+		Date dt = date;
 		Query query = null;
 		query = sessionFactory.getCurrentSession().createQuery("from Calendar t where trunc(t.num_day)=:dt)");
 		query.setTimestamp("dt", dt);

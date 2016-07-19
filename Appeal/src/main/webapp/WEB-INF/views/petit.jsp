@@ -937,9 +937,8 @@
 				
 				
 			    
-			    
+			    <td><a  href="nightcallfile/${petit.id}" title="Прослушать"><i class="fa fa-headphones fa-2x"></i></a></td>
 			    <c:if test="${(statecl != 4)}">
-			    	<td><a  href="nightcallfile/${petit.id}" title="Прослушать"><i class="fa fa-headphones fa-2x"></i></a></td>
 			    	<td><a id="iddel" onclick='del("${petit.id}","${role}")'  title="Удалить"><i class="fa fa-trash-o fa-2x"></i></a></td>
 					<td><a id="iddel" href="refresh/${petit.id}" title="Редактировать"><i class="fa fa-pencil-square-o  fa-2x" aria-hidden="true"></i></a></td>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -961,7 +960,6 @@
 				</c:if>
 				
 				<c:if test="${(statecl == 4)}">
-					<td><i class="fa fa-headphones fa-2x noactive"></i></a></td>
 					<td><i class="fa fa-trash-o fa-2x noactive"></i></td>
 					<td><i class="fa fa-pencil-square-o  fa-2x noactive" aria-hidden="true"></i></td>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">

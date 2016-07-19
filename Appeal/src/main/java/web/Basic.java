@@ -37,7 +37,6 @@ import domain.Rectif1;
 import domain.Rectif2;
 import domain.Rectif3;
 import domain.Rectif4;
-import domain.ReportParams;
 import domain.Source;
 import domain.Ter;
 import domain.Type;

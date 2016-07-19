@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import domain.Callnight_markerday;
 import domain.Petit;
 
 public interface PetitDAO {
@@ -25,5 +26,7 @@ public interface PetitDAO {
 	public void close(Integer petitId);
 	
 	public List<domain.Calendar> getCeleb(Date date) throws ParseException;
+	
+	public void updateLastDate(Callnight_markerday  cm);
 	
 }

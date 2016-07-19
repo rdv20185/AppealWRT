@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import pylypiv.tfoms.ftp.FTPDownloadFileDemo;
 import res.Fields;
 import res.TransferFiles;
 import service.PetitService;
@@ -70,6 +69,7 @@ import domain.Source;
 import domain.Ter;
 import domain.Type;
 import domain.TypeL;
+import ftp.FTPDownloadFileDemo;
 
 @Controller
 public class PetitController {
@@ -235,13 +235,7 @@ public class PetitController {
 		return pl;
 	}
     
-    @RequestMapping(value = "/refnc", method = RequestMethod.GET)
-    public String refreshnightcall() throws IOException
-    {
-    	FTPDownloadFileDemo ftp = new FTPDownloadFileDemo();
-    	ftp.startFtp();
-    	return "redirect:/index";
-    }
+   
     
     @RequestMapping(value = "/nightcallfile/{petitId}", method = RequestMethod.GET)
     public void downloadcall(@PathVariable("petitId")Integer petitId,HttpServletRequest request,HttpServletResponse response) throws IOException

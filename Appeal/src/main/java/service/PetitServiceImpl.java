@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import app.Appeal;
 import dao.PetitDAO;
+import domain.Callnight_markerday;
 import domain.CauseL;
 import domain.Petit;
 import domain.Rectif1L;
@@ -356,6 +357,16 @@ public class PetitServiceImpl implements PetitService {
 	public List<Date> getMaxDate() {
 
 		return petitDAO.getMaxDate();
+	}
+	
+	@Override
+	@Transactional
+	public void updateLastDate(Calendar cal) {
+		
+		cal.set(Calendar.HOUR, 0);
+		Callnight_markerday cm = new Callnight_markerday();
+		cm.setDateworked(cal.getTime());
+		petitDAO.updateLastDate(cm);
 	}
 
 	@Override

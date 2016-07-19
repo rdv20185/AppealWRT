@@ -13,8 +13,9 @@ import java.util.Date;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.log4j.Logger;
 
-import pylypiv.tfoms.option.Option;
+import service.nightcall.NightCall;
  
 /**
  * A program demonstrates how to upload files from local computer to a remote
@@ -22,6 +23,8 @@ import pylypiv.tfoms.option.Option;
  * @author www.codejava.net
  */
 public class FTPDownloadFileDemo {
+	
+	private static final Logger logger = Logger.getLogger(FTPDownloadFileDemo.class);
  
 	public void startFtp(Calendar conrol,Calendar date_on){
     	FTPClient ftpClient = new FTPClient();
@@ -65,8 +68,6 @@ public class FTPDownloadFileDemo {
                 		{
                 			// set a name wav files
                 			String remoteFile = fi.getName();
-                			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ "+fi.getTimestamp().getTime()+" ^^ "+file.getName()+" ^^ "+ remoteFile);
-	                			
 	                			
 	                			String remoteFile1 = remotePath+"/"+remoteFile;
 	                			String directoryTo = Option.getDirectory("dirTo");
@@ -76,10 +77,10 @@ public class FTPDownloadFileDemo {
 	                            outputStream1.close();
 	                 
 	                            if (success) {
-	                                System.out.println("File #1 has been downloaded successfully. "+ downloadFile1.getAbsolutePath());
+	                            	if(logger.isInfoEnabled()){ logger.info("---> Файл был успешно загружен "+ downloadFile1.getAbsolutePath());}
 	                            }else
 	                            {
-	                            	System.out.println("File #1 bad");
+	                            	if(logger.isInfoEnabled()){ logger.info("!!!! Произошла ошибка в загрузке файла "+ downloadFile1.getAbsolutePath());}
 	                            }
                 		}
                 		
@@ -137,17 +138,6 @@ public class FTPDownloadFileDemo {
             }
         }
     }
-    
-    private static boolean parsetime(String remoteFile){
-    	String time = remoteFile.substring(1+remoteFile.indexOf("_"),remoteFile.indexOf("_",1+remoteFile.indexOf("_")));
-    	String hour = time.substring(0, time.indexOf("-"));
-    	if(Integer.valueOf(hour) >= 18 || Integer.valueOf(hour) < 9){
-    		return true;
-    	}
-    	else{
-    		return false;
-    	}
-    }
-    
+  
     	
 }
