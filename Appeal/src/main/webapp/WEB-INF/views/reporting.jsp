@@ -96,6 +96,34 @@
 </a>&nbsp;&nbsp;&nbsp;&nbsp;
 <br><br><hr/>
 
+
+<h3><spring:message code="label.call_centr" /></h3>
+<form:form method="post" action="report_call" commandName="dateReport" onsubmit="subDisableButton('submit');">
+	<table cellspacing='15'>
+		<tr>
+			<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>
+			<form:input id="dateBegin" path="dateBegin" class='reportParam' /></td>
+			<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
+			<form:input id="dateEnd" path="dateEnd" class='reportParam' /></td>
+			
+			<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
+			
+		</tr>
+	</table>
+</form:form>
+<br>
+<a href="<c:url value="/report_cc" />">
+	<spring:message code="label.call_cc" />
+</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="<c:url value="/report_calc" />">
+	<spring:message code="label.call_calc" />
+</a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<br><br><hr/>
+
+
+
+
 <h3><spring:message code="label.reportAppealPay" /></h3>
 <form:form name='reportAppealPay_form' method="post" action="reportAppealPay" commandName="dateReport" onsubmit="subDisableButton('reportAppealPay');">
 	<table cellspacing='15'>

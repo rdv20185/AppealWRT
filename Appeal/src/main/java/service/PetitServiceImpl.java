@@ -186,7 +186,6 @@ public class PetitServiceImpl implements PetitService {
 	public void pgForm(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
     	Connection conn = connectForJasper();
 		Map mapReport = mapForJasper(dateReport, username);
-			System.out.println("TESTTTTTTTT "+username);
 		JasperReport jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_1_1dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
@@ -218,6 +217,26 @@ public class PetitServiceImpl implements PetitService {
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\pg_form_2_1.xls"));
 		exporter.exportReport();
+		
+   		disconnectForJasper(conn);
+	}
+    
+    
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void report_call(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
+    	Connection conn = connectForJasper();
+		Map mapReport = mapForJasper(dateReport, username);
+		
+		JasperReport jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_1_1dop.jrxml");
+		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
+		JRXlsExporter exporter = new JRXlsExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\pg_form_1_1.xls"));
+		exporter.exportReport();
+		
+		
 		
    		disconnectForJasper(conn);
 	}

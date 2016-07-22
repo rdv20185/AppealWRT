@@ -357,6 +357,19 @@ public class PetitController {
     	return "reporting";
 	}
 	
+	@RequestMapping(value = "/report_call", method = RequestMethod.POST)
+    public String report_call(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
+		if(bindingResult.hasErrors()) return "reporting";
+		
+			if(getUserName().equals("smo_rosno")) petitService.pgForm(dateReport, "smo_rosnocall5002callnight5002");
+			else if(getUserName().equals("smo_ingos")) petitService.pgForm(dateReport, "smo_ingoscall5003callnight5003");
+			else if(getUserName().equals("smo_simaz")) petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");
+			else {petitService.pgForm(dateReport, getUserName());}
+		
+			
+    	return "reporting";
+	}
+	
 	@RequestMapping(value = "/report_1_1", method = RequestMethod.GET)
     public void report_1_1(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         downloadFile(request, response, "\\reports\\pg_form_1_1.xls");

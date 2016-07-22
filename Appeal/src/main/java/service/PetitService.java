@@ -73,5 +73,7 @@ public interface PetitService {
 	public boolean isCeleb(Date date) throws ParseException;
 	
 	public void updateLastDate(Calendar cal);
+	
+	public void report_call(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
 
 }
