@@ -361,10 +361,10 @@ public class PetitController {
     public String report_call(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
 		
-			if(getUserName().equals("smo_rosno")) petitService.pgForm(dateReport, "smo_rosnocall5002callnight5002");
-			else if(getUserName().equals("smo_ingos")) petitService.pgForm(dateReport, "smo_ingoscall5003callnight5003");
-			else if(getUserName().equals("smo_simaz")) petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");
-			else {petitService.pgForm(dateReport, getUserName());}
+			if(getUserName().equals("smo_rosno")) petitService.report_call(dateReport, "smo_rosnocall5002callnight5002");
+			else if(getUserName().equals("smo_ingos")) petitService.report_call(dateReport, "smo_ingoscall5003callnight5003");
+			else if(getUserName().equals("smo_simaz")) petitService.report_call(dateReport, "smo_simazcall5001callnight5001");
+			else {petitService.report_call(dateReport, getUserName());}
 		
 			
     	return "reporting";
@@ -389,6 +389,11 @@ public class PetitController {
 	@RequestMapping(value = "/report_2_3", method = RequestMethod.GET)
     public void report_2_3(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         downloadFile(request, response, "\\reports\\pg_form_2_3.xls");
+	}
+	
+	@RequestMapping(value = "/report_cc", method = RequestMethod.GET)
+    public void report_cc(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        downloadFile(request, response, "\\reports\\contact_call.xls");
 	}
 
 	private void downloadFile(HttpServletRequest request,

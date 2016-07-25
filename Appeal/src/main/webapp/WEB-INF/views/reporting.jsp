@@ -25,6 +25,10 @@
 			$( "#dateEndConsultOther" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#dateBeginCountDetail" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#dateEndCountDetail" ).datepicker({dateFormat:'dd.mm.yy'});
+			$( "#db" ).datepicker({dateFormat:'dd.mm.yy'});
+			$( "#de" ).datepicker({dateFormat:'dd.mm.yy'});
+			
+			
 		});
 	</script>
 	<script>
@@ -102,9 +106,9 @@
 	<table cellspacing='15'>
 		<tr>
 			<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>
-			<form:input id="dateBegin" path="dateBegin" class='reportParam' /></td>
+			<form:input id="db" path="dateBegin" class='reportParam' /></td>
 			<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
-			<form:input id="dateEnd" path="dateEnd" class='reportParam' /></td>
+			<form:input id="de" path="dateEnd" class='reportParam' /></td>
 			
 			<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
 			
