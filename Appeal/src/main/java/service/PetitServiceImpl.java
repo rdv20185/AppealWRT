@@ -236,6 +236,13 @@ public class PetitServiceImpl implements PetitService {
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\contact_call.xls"));
 		exporter.exportReport();
 		
+		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\contact_call2.jrxml");
+		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
+		jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
+		exporter = new JRXlsExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\contact_call2.xls"));
+		exporter.exportReport();
 		
 		
    		disconnectForJasper(conn);

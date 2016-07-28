@@ -395,6 +395,11 @@ public class PetitController {
     public void report_cc(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         downloadFile(request, response, "\\reports\\contact_call.xls");
 	}
+	
+	@RequestMapping(value = "/report_cc2", method = RequestMethod.GET)
+    public void report_cc2(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        downloadFile(request, response, "\\reports\\contact_call2.xls");
+	}
 
 	private void downloadFile(HttpServletRequest request,
 			HttpServletResponse response, String filePath) throws FileNotFoundException,

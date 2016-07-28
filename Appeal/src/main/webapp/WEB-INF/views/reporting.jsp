@@ -119,7 +119,7 @@
 <a href="<c:url value="/report_cc" />">
 	<spring:message code="label.call_cc" />
 </a>&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="<c:url value="/report_calc" />">
+<a href="<c:url value="/report_cc2" />">
 	<spring:message code="label.call_calc" />
 </a>&nbsp;&nbsp;&nbsp;&nbsp;
 

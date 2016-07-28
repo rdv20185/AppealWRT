@@ -63,7 +63,6 @@ public class FTPDownloadFileDemo {
                 		
                         // set time GMT on the *.wav files
                         fi.getTimestamp().set(Calendar.HOUR, fi.getTimestamp().get(Calendar.HOUR)+6);
-                        
                 		if(fi.getTimestamp().after(conrol) && fi.getTimestamp().before(date_on))
                 		{
                 			// set a name wav files
@@ -75,6 +74,7 @@ public class FTPDownloadFileDemo {
 	                            OutputStream outputStream1 = new BufferedOutputStream(new FileOutputStream(downloadFile1));
 	                            boolean success = ftpClient.retrieveFile(remoteFile1, outputStream1);
 	                            outputStream1.close();
+	                			
 	                 
 	                            if (success) {
 	                            	if(logger.isInfoEnabled()){ logger.info("---> Файл был успешно загружен "+ downloadFile1.getAbsolutePath());}

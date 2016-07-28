@@ -55,6 +55,7 @@ public class Basic {
 		source1.put(1, "ТФОМС");
 		source2.put(2, "СМО");
 		source3.put(3, "ЕР НСО");
+		source3.put(4, "CallNight");
 	}
 	
 	@Autowired
@@ -204,7 +205,7 @@ public class Basic {
 	    				petit.setUsername("auto");
 	    				BlockGER2016 blo = new BlockGER2016();
 	    				blo.setRegname("auto");
-	    				blo.setRegsource_id(2);
+	    				blo.setRegsource_id(4);
 	    				blo.setFilecall(path_worked + File.separator + d[i]);
 	    				blo.setState(1);
 	    				petit.setBlockger2016(blo);
