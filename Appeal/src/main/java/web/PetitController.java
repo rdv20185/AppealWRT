@@ -84,6 +84,7 @@ public class PetitController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public @ResponseBody List<Petit> addPetit(Petit petit,String submitted,HttpServletRequest request,ModelMap model) throws ParseException, InterruptedException, IOException {
 
+    	/*
     	petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setName(new String(petit.getName().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setPatrony(new String(petit.getPatrony().getBytes("ISO-8859-1"),"UTF-8"));
@@ -107,15 +108,16 @@ public class PetitController {
     	petit.setCauseNote(new String(petit.getCauseNote().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.setUsername(new String(petit.getUsername().getBytes("ISO-8859-1"),"UTF-8"));
     	
+    	
     	petit.getBloutboindletter2016().setResponsible(new String(petit.getBloutboindletter2016().getResponsible().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.getBloutboindletter2016().setNumOutLetter(new String(petit.getBloutboindletter2016().getNumOutLetter().getBytes("ISO-8859-1"),"UTF-8"));
     	
     	petit.getBloutboindletter2016().getMany().get(0).setNote(new String(petit.getBloutboindletter2016().getMany().get(0).getNote().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.getBloutboindletter2016().getMany().get(1).setNote(new String(petit.getBloutboindletter2016().getMany().get(1).getNote().getBytes("ISO-8859-1"),"UTF-8"));
     	petit.getBloutboindletter2016().getMany().get(2).setNote(new String(petit.getBloutboindletter2016().getMany().get(2).getNote().getBytes("ISO-8859-1"),"UTF-8"));
+    	*/
     	
-    	
-    	String para =new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
+    	String para = submitted;//new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
     	/* ловим с клиЕнта нажатую кнопку
     	 * ЕСЛИ с клиента прилетает письменное обращение petit.getConectId() ==2  и дата исходящего пустая getDate_response() то статус = 2(в работе) и date_end = ""
     	 * Если письменное и дата ответа не пустая то статус = 3
@@ -160,7 +162,7 @@ public class PetitController {
   		  	try { date = df.parse(ff); } catch (ParseException e) { e.printStackTrace(); }
     		petit.getBlockger2016().setDate_end(date);
 		}
-		String para = new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
+		String para = submitted;//new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
 		
 		/* Если нажата кнопка сохранить то в поле username добавляется ключ (ключ приходит с клиента input select - "назначить")
 		 * Ключ - это значение при котором записи из базы будут доступны определенным группам пользователей

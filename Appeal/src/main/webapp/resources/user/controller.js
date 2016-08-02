@@ -245,7 +245,7 @@ function table(response,role){
     $container.empty();
 	
 	 userInfo =  
-		 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th>РЕГИСТРАТОР</th><th class='cuting2'>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
+		 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th  class='cuting2'>РЕГИСТРАТОР</th><th>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
 	
 	$.each(response, function(index, value) {
 									
@@ -334,7 +334,7 @@ function tablews(response,role){
     $container.empty();
 	
 	 userInfo =  
-	 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th>РЕГИСТРАТОР</th><th class='cuting2'>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
+	 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th  class='cuting2'>РЕГИСТРАТОР</th><th>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
 	
 	$.each(response, function(index, value) {
 									
