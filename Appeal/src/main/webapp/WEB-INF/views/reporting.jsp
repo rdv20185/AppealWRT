@@ -100,7 +100,7 @@
 </a>&nbsp;&nbsp;&nbsp;&nbsp;
 <br><br><hr/>
 
-
+<sec:authorize access="hasRole('ROLE_TFOMS')">
 <h3><spring:message code="label.call_centr" /></h3>
 <form:form method="post" action="report_call" commandName="dateReport" onsubmit="subDisableButton('submit');">
 	<table cellspacing='15'>
@@ -124,7 +124,7 @@
 </a>&nbsp;&nbsp;&nbsp;&nbsp;
 
 <br><br><hr/>
-
+</sec:authorize>
 
 
 

@@ -245,7 +245,7 @@ function table(response,role){
     $container.empty();
 	
 	 userInfo =  
-	 "<thead><tr><th>НОМЕР</th><th>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th>РЕГИСТРАТОР</th><th>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
+		 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th>РЕГИСТРАТОР</th><th class='cuting2'>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
 	
 	$.each(response, function(index, value) {
 									
@@ -275,7 +275,7 @@ function table(response,role){
 	if (value.patrony == null) value.patrony = '';
 	if (value.tel == null) value.tel = '';
 	
-	userInfo +="<tr class="+cssClass+"><td>"+value.id+"</td><td>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting'>"+value.patrony+"</td><td class='cuting'>"+value.tel+"</td><td>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
+	userInfo +="<tr class="+cssClass+"><td class='cuting2'>"+value.id+"</td><td class='cuting2'>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td class='cuting2'>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting2'>"+value.patrony+"</td><td class='cuting'>"+value.tel+"</td><td class='cuting2'>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
 	
 	if(value.blockger2016.state != 4){
 		userInfo +="<td><a href='nightcallfile/"+value.id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a onclick=del('"+value.id+"','"+role+"') id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td><td><a id='iddel' href='refresh/"+value.id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
@@ -334,7 +334,7 @@ function tablews(response,role){
     $container.empty();
 	
 	 userInfo =  
-	 "<thead><tr><th>НОМЕР</th><th>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th>РЕГИСТРАТОР</th><th>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
+	 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th>РЕГИСТРАТОР</th><th class='cuting2'>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
 	
 	$.each(response, function(index, value) {
 									
@@ -364,7 +364,7 @@ function tablews(response,role){
 	if (value.patrony == null) value.patrony = '';
 	if (value.tel == null) value.tel = '';
 	
-	userInfo +="<tr class="+cssClass+"><td>"+value.id+"</td><td>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting'>"+value.patrony+"</td><td>"+value.tel+"</td><td>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
+	userInfo +="<tr class="+cssClass+"><td class='cuting2'>"+value.id+"</td><td class='cuting2'>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td class='cuting2'>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting2'>"+value.patrony+"</td><td class='cuting'>"+value.tel+"</td><td class='cuting2'>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
 	
 	if(value.blockger2016.state != 4){
 		userInfo +="<td><a href='nightcallfile/"+value.id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a onclick=del('"+value.id+"','"+role+"') id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td><td><a id='iddel' href='refresh/"+value.id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";

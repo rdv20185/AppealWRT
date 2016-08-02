@@ -89,3 +89,10 @@ overflow-y: hidden;
 white-space: nowrap; 
 max-width: 65px;	
 }
+
+.cuting2{
+overflow-x: hidden; 
+overflow-y: hidden; 
+white-space: nowrap; 
+max-width: 35px;	
+}

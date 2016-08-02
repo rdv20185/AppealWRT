@@ -846,17 +846,17 @@
 <table class="secondtab" id="cont">
     <thead>
         <tr>
-        <th><spring:message code="label.id" /></th>      
-		    <th>Дата поступления</th><th>Дата изменения</th>
+        <th class="cuting2"><spring:message code="label.id" /></th>      
+		    <th class="cuting2">Дата поступления</th><th>Дата изменения</th>
 		    <th><spring:message code="label.type" /></th>
 		     <!-- <th>Причина</th>
 		    <th>Связь</th>
 		    <th>Ghtlcn</th> -->
 		    <th>Фамилия</th>
 		    <th>Имя</th>
-			<th><spring:message code="label.patrony" /></th>
+			<th class="cuting2"><spring:message code="label.patrony" /></th>
 			<th><spring:message code="label.tel" /></th>
-		    <th>Регистратор</th></th>
+		    <th class="cuting2">Регистратор</th></th>
 		    <th>Исполнитель</th>
 			<th></th>
 			<th></th>
@@ -924,19 +924,19 @@
 				 			    
 			    -->
 			    
-			    <td>${petit.id}</td>      
-			    <td>${petit.dateInput}</td>
+			    <td  class="cuting2">${petit.id}</td>      
+			    <td class="cuting2">${petit.dateInput}</td>
 			    <td>${petit.blockger2016.date_change}</td>
-			    <td>${petit.type.typeName}</td>
+			    <td  class="cuting2">${petit.type.typeName}</td>
 			     <!-- <td style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap; max-width: 15px;">${petit.cause.causeName}</td>
 			    <td style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap; max-width: 15px;">${petit.conectId}</td>
 			    <td style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap; max-width: 15px;">${petit.presentId}</td> -->        
 				<td class="cuting">${petit.surname}</td>
 				<td  class="cuting">${petit.name}</td>
-			    <td  class="cuting">${petit.patrony}</td>
+			    <td  class="cuting2">${petit.patrony}</td>
 			    <td>${petit.tel}</td>
 				<!-- <td style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap; max-width: 65px;">${petit.ter.terName}</td> -->
-				<td>${petit.blockger2016.regname}</td>
+				<td class="cuting2">${petit.blockger2016.regname}</td>
 				<td class="${cssClassonUser}">${petit.username}</td>
 				
 				

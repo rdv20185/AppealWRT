@@ -608,10 +608,10 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 				<td><a href="more/${petit.id}"><spring:message code="label.more" /></a></td>
 				<c:choose>
 				    <c:when test="${fn:startsWith(user_tab, 'call')}">
-				        <td><a><spring:message code="label.correct" /></a></td>
+				     <!--    <td><a><spring:message code="label.correct" /></a></td> -->
 			        </c:when>
 				    <c:otherwise>
-				        <td><a href="refresh/${petit.id}"><spring:message code="label.correct" /></a></td>
+				      <!--   <td><a href="refresh/${petit.id}"><spring:message code="label.correct" /></a></td> -->
 				    </c:otherwise>
 				</c:choose>
 				
