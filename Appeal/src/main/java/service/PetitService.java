@@ -43,7 +43,7 @@ public interface PetitService {
 
 	void setSearchParams(Petit petit);
 	
-	public List<Petit> listSearch(String username) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException;
+	public List<Petit> listSearch(String username) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, Throwable;
 	
 	public void pgForm(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
 

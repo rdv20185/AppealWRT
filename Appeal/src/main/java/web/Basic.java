@@ -164,7 +164,7 @@ public class Basic {
     
     private void nightcallsprocess(HttpServletRequest request){
     	String path = request.getServletContext().getRealPath("/")+"night_calls_working";
-    	String path_worked = request.getServletContext().getRealPath("/")+"night_calls_worked";
+    	String path_worked = "D:/Java/Tomcat7/TomCat7/night_calls_worked/";//request.getServletContext().getRealPath("/")+"night_calls_worked";
     	File f = new File(path);
     	if(f.isAbsolute()){
     		if(f.list().length != 0){
@@ -374,7 +374,7 @@ public class Basic {
     }
     
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request,@RequestParam(required=false) String searchcheckinbound) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request,@RequestParam(required=false) String searchcheckinbound) throws Throwable {
     	
     	//searching parameters
     	int t = petit.getTypeId(), c = petit.getCauseId(), 
@@ -402,7 +402,7 @@ public class Basic {
 		List<Petit> listPetit = petitService.listSearch(getUserName());
 		for (int i = 0; i < listPetit.size(); i++) {
 			if(searchcheckinbound != null){
-				if(listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getTypeId() == 1 && listPetit.get(i).getPresentId() == 2){
+				if(listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getTypeId() == 1 /*&& listPetit.get(i).getPresentId() == 2*/){
 					listPetit.remove(listPetit.get(i));
 					i = i-1;
 				}

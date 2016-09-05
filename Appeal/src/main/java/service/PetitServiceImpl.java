@@ -170,7 +170,7 @@ public class PetitServiceImpl implements PetitService {
 	}
 	
     @Transactional
-    public List<Petit> listSearch(String username) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    public List<Petit> listSearch(String username) throws Throwable {
     	
     	List<Petit> lp = petitDAO.listSearch(petit, username);
     	
