@@ -169,7 +169,7 @@ public class PetitDAOImpl implements PetitDAO {
     }
     
     @SuppressWarnings("unchecked")
-	public List<Petit> listSearch(Petit petit, String username) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	public List<Petit> listSearch(Petit petit, String username, String searchcheckinbound) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
     	
     	Criteria criteria =  sessionFactory.getCurrentSession().createCriteria(Petit.class,"p");
     	criteria.createAlias("p.blockger2016", "b");
@@ -191,19 +191,39 @@ public class PetitDAOImpl implements PetitDAO {
 
     	Pattern p = Pattern.compile("(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}");
     	DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
-    	try {
-	    	if(p.matcher(petit.getDateBegin()).matches()) {
-	    		
-					criteria.add(Restrictions.ge("b.date_end", df.parse(petit.getDateBegin().concat(" 0:00:01.0"))	));
-	    	}
-	    	if(p.matcher(petit.getDateEnd()).matches()) {
-	    		criteria.add(Restrictions.le("b.date_end", df.parse(petit.getDateEnd().concat(" 23:59:00.0"))	));
-	    	}
     	
-    	} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	/*
+    	 * логика учитывает нажата или нет отметка "в работе"
+    	 */
+    	
+    	if(searchcheckinbound == null){
+		    	try {
+			    	if(p.matcher(petit.getDateBegin()).matches()) {
+			    		
+							criteria.add(Restrictions.ge("b.date_end", df.parse(petit.getDateBegin().concat(" 0:00:01.0"))	));
+			    	}
+			    	if(p.matcher(petit.getDateEnd()).matches()) {
+			    		criteria.add(Restrictions.le("b.date_end", df.parse(petit.getDateEnd().concat(" 23:59:00.0"))	));
+			    	}
+		    	
+		    	} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    	}  
+    	else{
+    		Date b = null;
+    		criteria.add(Restrictions.isNull("b.date_end"));
+    		//criteria.add(Restrictions.eq("b.date_end", b));
+    		
+    		if(p.matcher(petit.getDateBegin()).matches()) {
+	    		
+				criteria.add(Restrictions.ge("p.dateInput", petit.getDateBegin()	));
+    		}
+	    	if(p.matcher(petit.getDateEnd()).matches()) {
+	    		criteria.add(Restrictions.le("p.dateInput", petit.getDateEnd()	));
+	    	}
+    	}
     	
     	if(username.equals("smo_ingos")) {
     		criteria.add( Restrictions.in( "username", new String[] { "smo_ingos", "call5003", "callnight5003" } ) );

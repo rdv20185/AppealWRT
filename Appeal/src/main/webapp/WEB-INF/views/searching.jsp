@@ -279,8 +279,8 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			<td><form:label path="num"><spring:message code="label.id" /></form:label></td>
 			<td><form:input path="num" /></td>
 		
-			<td><form:label path="dateInput"><spring:message code="label.dateInput" /></form:label></td>
-			<td><form:input id="dateInput" path="dateInput" /></td>
+			<!--  прячу	 -->
+			<td><form:hidden id="dateInput" path="dateInput" /></td>
 			
 			<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label></td>
 			<td><form:input id="dateBegin" path="dateBegin" /></td>
@@ -302,9 +302,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			<td><form:select path="presentId" id="presentIdhtml">
 				<form:option value="0" label="" />
     			<form:options items="${presentList}"/>
-			</form:select>
-			<div id="inbound_div">с исходящими <input type="checkbox" name="searchcheckinbound" id="searchcheckinbound"  value="checkinbound"></div></td>
-			
+			</form:select></td>
 			
 			
 			<td><form:label path="letterNum"><spring:message code="label.letterNum" /></form:label></td>
@@ -364,8 +362,8 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 	<table>	
 		<tr>
 			<td><form:label path="typeId"><spring:message code="label.type" /></form:label></td>
-			<td><form:select id="type" path="typeId">
-			</form:select></td>
+			<td><form:select id="type" path="typeId"></form:select>
+			<div id="inbound_div">В работе <input type="checkbox" name="searchcheckinbound" id="searchcheckinbound"  value="checkinbound">?</div></td>
 		</tr>
 		<tr>			
 			<td><form:label path="causeId"><spring:message code="label.cause" /></form:label></td>

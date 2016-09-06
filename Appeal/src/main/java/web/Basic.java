@@ -399,10 +399,10 @@ public class Basic {
 
 		//searching
 		petitService.setSearchParams(petit);
-		List<Petit> listPetit = petitService.listSearch(getUserName());
+		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound);
 		for (int i = 0; i < listPetit.size(); i++) {
-			if(searchcheckinbound != null){
-				if(listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getTypeId() == 1 /*&& listPetit.get(i).getPresentId() == 2*/){
+			/*if(searchcheckinbound != null){
+				if(listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getTypeId() == 1 && listPetit.get(i).getPresentId() == 2){
 					listPetit.remove(listPetit.get(i));
 					i = i-1;
 				}
@@ -411,7 +411,7 @@ public class Basic {
 				}
 	    	}else{
 	    		listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(8, 10) + "." + listPetit.get(i).getDateInput().substring(5, 7) + "." + listPetit.get(i).getDateInput().substring(0, 4));
-			}
+			}*/
 			
 		}
 		

@@ -71,6 +71,7 @@ public class PetitServiceImpl implements PetitService {
      * Remove old records 
      */
     @Transactional
+  
     public void removeOldmanyNotes(Integer id) {
     	petitDAO.removePetit(id);
     }
@@ -170,9 +171,9 @@ public class PetitServiceImpl implements PetitService {
 	}
 	
     @Transactional
-    public List<Petit> listSearch(String username) throws Throwable {
+    public List<Petit> listSearch(String username, String searchcheckinbound) throws Throwable {
     	
-    	List<Petit> lp = petitDAO.listSearch(petit, username);
+    	List<Petit> lp = petitDAO.listSearch(petit, username,searchcheckinbound);
     	
     	if (lp != null) {
     		return lp;
