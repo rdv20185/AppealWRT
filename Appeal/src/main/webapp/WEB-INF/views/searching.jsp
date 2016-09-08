@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <% 
@@ -15,7 +16,11 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 
 <html>
 <head>
-	<script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery-1.6.1.min.js" />"></script>
+	<link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/>" type="text/css"/>
+	<link rel="stylesheet" href="<c:url value="/resources/jquery/ui/1.11.2/themes/smoothness/jquery-ui.css"/>">
+	<script src="<c:url value="/resources/jquery/jquery-1.10.2.js"/>"></script>
+	<script src="<c:url value="/resources/jquery/ui/1.11.2/jquery-ui.js"/>"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/expir_session.js"></script>
 	
 	<c:url var="findTypesURL" value="/types" />
 	<c:url var="findCausesURL" value="/causes" />
@@ -26,6 +31,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 	
 	<script type="text/javascript">
 	$(document).ready(
+			
 		function() {
 			$.getJSON('${findTypesURL}', {
 				ajax : 'true'
@@ -62,6 +68,9 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 						$('#cause').html(html);
 					});
 				});
+		
+		
+			
 	});
 	</script>
 	
@@ -82,6 +91,11 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 	
 	<script type="text/javascript">
 	$(document).ready(function() { 
+		
+		$(function() {
+            $("#inbound_div").tooltip();
+         });
+		
 		$('#cause').change(
 			function() {
 				$.getJSON('${findRectifs1URL}', {
@@ -238,10 +252,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		});
 	</script>	
 	
-	<link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/>" type="text/css"/>
-	<link rel="stylesheet" href="<c:url value="/resources/jquery/ui/1.11.2/themes/smoothness/jquery-ui.css"/>">
-	<script src="<c:url value="/resources/jquery/jquery-1.10.2.js"/>"></script>
-	<script src="<c:url value="/resources/jquery/ui/1.11.2/jquery-ui.js"/>"></script>
+	
 	<script>
 		$(function() {
 			$( "#dateInput" ).datepicker({dateFormat:'dd.mm.yy'});
@@ -363,7 +374,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		<tr>
 			<td><form:label path="typeId"><spring:message code="label.type" /></form:label></td>
 			<td><form:select id="type" path="typeId"></form:select>
-			<div id="inbound_div">В работе <input type="checkbox" name="searchcheckinbound" id="searchcheckinbound"  value="checkinbound">?</div></td>
+			<div id="inbound_div" style="display: -webkit-inline-box;"  title="Отметка покажет обращения которые в работе, т.е. либо мигают желтым,либо закрашены желтым. Если отметка не проставлена,то обращения которые завершены, в случае с  письменными жалобами - проставлена дата исходщего сообщения (т.е. отправлен ответ)">В работе <input type="checkbox" name="searchcheckinbound" id="searchcheckinbound"  value="checkinbound"></div></td>
 		</tr>
 		<tr>			
 			<td><form:label path="causeId"><spring:message code="label.cause" /></form:label></td>
@@ -561,6 +572,9 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		    <th>Регистратор</th>
 		    <th>Исполнитель</th>
 			<th>&nbsp;</th>
+				<sec:authorize access="hasRole('ADMIN')">
+					<th>&nbsp;</th>
+				</sec:authorize>
 		</tr>
 		<c:forEach items="${searchList}" var="petit">
 			<c:set var="user_tab" value="${petit.username}"/>
@@ -604,6 +618,9 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			    <td>${petit.blockger2016.regname}</td>
 				<td>${petit.username}</td>			    
 				<td><a href="more/${petit.id}"><spring:message code="label.more" /></a></td>
+				<sec:authorize access="hasRole('ADMIN')">
+					<td><a href="refresh/${petit.id}"><spring:message code="label.correct" /></a></td>
+				</sec:authorize>
 				<c:choose>
 				    <c:when test="${fn:startsWith(user_tab, 'call')}">
 				     <!--    <td><a><spring:message code="label.correct" /></a></td> -->

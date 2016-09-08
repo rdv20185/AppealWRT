@@ -33,6 +33,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libs/sockjs/sockjs.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libs/stomp-websocket/lib/stomp.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/controller.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/expir_session.js"></script>
 	
 	
 	<c:url var="findTypesURL" value="/types" />
@@ -86,6 +87,9 @@
 		
 	$(document).ready(function() {
 		
+
+		
+		
 			addJS('${role}');
 		
 			if($("#presentId" ).val() !=1){
@@ -127,6 +131,18 @@
 				}
 				
 			}
+			
+			$('#connectid').click(function(){
+				var epr = $( "#connectid option:selected" ).text();
+				if(epr.indexOf('ИНТЕРНЕТ') > -1 || epr.indexOf('ПОЧТА') > -1){
+					$("#presentId").val(2);
+					
+				}
+				else{
+					$("#presentId").val(1);
+				}
+				
+			});
 	});
 		
 	</script>

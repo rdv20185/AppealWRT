@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="<c:url value="/resources/jquery/ui/1.11.2/themes/smoothness/jquery-ui.css"/>">
 	<script src="<c:url value="/resources/jquery/jquery-1.10.2.js"/>"></script>
 	<script src="<c:url value="/resources/jquery/ui/1.11.2/jquery-ui.js"/>"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/expir_session.js"></script>
 	<script>
 		$(function() {
 			$( "#dateBegin" ).datepicker({dateFormat:'dd.mm.yy'});

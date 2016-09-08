@@ -97,4 +97,7 @@ white-space: nowrap;
 max-width: 35px;	
 }
 
-  
+.ui-tooltip-content {
+    font-size:10pt;
+    font-family:Calibri;
+}
