@@ -89,7 +89,7 @@
 		
 
 		
-		
+			/*	Метол из файла contriller.js	*/
 			addJS('${role}');
 		
 			if($("#presentId" ).val() !=1){

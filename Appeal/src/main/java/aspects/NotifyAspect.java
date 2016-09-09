@@ -2,8 +2,10 @@ package aspects;
 
 import java.util.Date;
 
+import org.apache.poi.util.SystemOutLogger;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -31,18 +33,22 @@ public class NotifyAspect {
     @Pointcut("execution(* web.PetitController.open(..))")
     private void anyOldTransfer5() {}
     
+    @Pointcut("execution(* web.Basic.refreshAddPetit(..))")
+    private void anyOldTransfer6() {
+    }
+    
     
   /*  
     @Pointcut("execution(* web.PetitController.refreshAddPetit(..))")
     private void anyOldTransfer2() {}
     
-  
-    @After("execution(* web.PetitController.addPetit(..))") 
-    public void notifyClients() throws Throwable {
+  */
+    @After("anyOldTransfer6()") 
+    public void notifyCents() throws Throwable {
     	System.out.println("@@ TEST2 @@");
         template.convertAndSend(WEBSOCKET_TOPIC, new Date());
     }
-    */
+    
     
     @After("anyOldTransfer() || anyOldTransfer2() || anyOldTransfer3() || anyOldTransfer4() || anyOldTransfer5()") 
     public void notifyClients() throws Throwable {

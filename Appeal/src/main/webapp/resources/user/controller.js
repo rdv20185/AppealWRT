@@ -7,7 +7,14 @@ var flag = 0;
 
 callback = function(message) {
 	if(flag == 0){
-		 forWS(tt);
+		/*
+		 * Если submit нажата с Appeal/refresh/ то отправляется
+		 * по сокету message на всех клиентов - это и есть сигнал всем обновляться 
+		 */
+		if(location.href.indexOf("Appeal/refresh/") < 0)
+		{		
+			forWS(tt);
+		}
 	}
 
 	flag = 0;
@@ -18,8 +25,8 @@ reconnect = function(){
 }
 
 function init(){
-	if(location.href.indexOf("Appeal/refresh/") < 0)
-	{	
+	//if(location.href.indexOf("Appeal/refresh/") < 0)
+	//{	
 		var socket = new SockJS("/Appeal/notify");
 		var stompClient = Stomp.over(socket);
 		stompClient.connect({}, function(frame) {
@@ -27,7 +34,7 @@ function init(){
 		
 		});
 		socket.onclose = reconnect;
-	}	
+	//}	
 }
 
 
@@ -156,6 +163,10 @@ function forWS(role){
  *  фУНКЦИЯ ОТРАБАТЫВАЕТ НАЖАТИЕ НА ФОРМЕ
  */
 function addJS(role){ 
+	/*
+	 * В petit.jsp после прогрузки страницы запускается addJS 
+	 * Тем самым происходит инициализыция переменной tt
+	 */
 	tt = role;
 	
 	if(location.href.indexOf("Appeal/refresh/") < 0)
@@ -179,6 +190,9 @@ function addJS(role){
 		});
 		
 	}	
+	else{
+		// $('#draggable').delay(2000).submit();
+	}
 }
 
 function body(btn,role){
