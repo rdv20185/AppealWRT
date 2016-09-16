@@ -109,7 +109,7 @@ public class Basic {
 					{
 						map.put("listassign", Fields.getfirstsimaz());	
 					}
-					if(getUserName().equals("smo_rosno"))
+					if(getUserName().contains("smo_rosno"))
 					{
 						map.put("listassign", Fields.getfirstrosno());	
 					}

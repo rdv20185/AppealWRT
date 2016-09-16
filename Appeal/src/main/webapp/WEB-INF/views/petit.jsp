@@ -710,7 +710,26 @@
 							<form:option value="hamitov" label="hamitov" />
 							<form:option value="smo_simaz" label="smo_simaz" />
  +							<form:option value="smo_ingos" label="smo_ingos" />
- +							<form:option value="smo_rosno" label="smo_rosno" />
+ +							<form:option value="smo_rosno_01" label="smo_rosno_01" />
+ +							<form:option value="smo_rosno_02" label="smo_rosno_02" />
+ +							<form:option value="smo_rosno_03" label="smo_rosno_03" />
+ +							<form:option value="smo_rosno_04" label="smo_rosno_04" />
+ +							<form:option value="smo_rosno_05" label="smo_rosno_05" />
+ +							<form:option value="smo_rosno_06" label="smo_rosno_06" />
+ +							<form:option value="smo_rosno_07" label="smo_rosno_07" />
+ +							<form:option value="smo_rosno_08" label="smo_rosno_08" />
+ +							<form:option value="smo_rosno_09" label="smo_rosno_09" />
+ +							<form:option value="smo_rosno_10" label="smo_rosno_10" />
+ +							<form:option value="smo_rosno_11" label="smo_rosno_11" />
+ +							<form:option value="smo_rosno_12" label="smo_rosno_12" />
+ +							<form:option value="smo_rosno_13" label="smo_rosno_13" />
+ +							<form:option value="smo_rosno_14" label="smo_rosno_14" />
+ +							<form:option value="smo_rosno_15" label="smo_rosno_15" />
+ +							<form:option value="smo_rosno_16" label="smo_rosno_16" />
+ +							<form:option value="smo_rosno_17" label="smo_rosno_17" />
+ +							<form:option value="smo_rosno_18" label="smo_rosno_18" />
+ +							<form:option value="smo_rosno_19" label="smo_rosno_19" />
+ +							<form:option value="smo_rosno_20" label="smo_rosno_20" />
 						</form:select>
                 	</p>
                 	

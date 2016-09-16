@@ -345,7 +345,7 @@ public class PetitController {
     public String report(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
 		if(insursmo == null){	
-			if(getUserName().equals("smo_rosno")) petitService.pgForm(dateReport, "smo_rosnocall5002callnight5002");
+			if(getUserName().contains("smo_rosno")) petitService.pgForm(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20");
 			else if(getUserName().equals("smo_ingos")) petitService.pgForm(dateReport, "smo_ingoscall5003callnight5003");
 			else if(getUserName().equals("smo_simaz")) petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");
 			else {petitService.pgForm(dateReport, getUserName());}
@@ -353,7 +353,7 @@ public class PetitController {
 		else
 		{
 			if(insursmo.equals("smo_simaz")){petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");}
-			if(insursmo.equals("smo_rosno")){petitService.pgForm(dateReport, "smo_rosnocall5002callnight5002");}
+			if(insursmo.equals("smo_rosno")){petitService.pgForm(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20");}
 			if(insursmo.equals("smo_ingos")){petitService.pgForm(dateReport, "smo_ingoscall5003callnight5003");}
 		}	
     	return "reporting";
@@ -363,7 +363,7 @@ public class PetitController {
     public String report_call(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
 		
-			if(getUserName().equals("smo_rosno")) petitService.report_call(dateReport, "smo_rosnocall5002callnight5002");
+			if(getUserName().contains("smo_rosno")) petitService.report_call(dateReport, "smo_rosnocall5002callnight5002");
 			else if(getUserName().equals("smo_ingos")) petitService.report_call(dateReport, "smo_ingoscall5003callnight5003");
 			else if(getUserName().equals("smo_simaz")) petitService.report_call(dateReport, "smo_simazcall5001callnight5001");
 			else {petitService.report_call(dateReport, getUserName());}

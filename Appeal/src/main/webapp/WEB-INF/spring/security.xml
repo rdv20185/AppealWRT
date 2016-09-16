@@ -43,6 +43,28 @@
 				<user name="callnight5001" password="night5001" authorities="ROLE_ER,ROLE_NIGHT" />
 				<user name="callnight5002" password="night5002" authorities="ROLE_ER,ROLE_NIGHT" />
 				<user name="callnight5003" password="night5003" authorities="ROLE_ER,ROLE_NIGHT" />
+				
+				<user name="smo_rosno_01" password="fsdr456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_02" password="dfswer456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_03" password="gfr456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_04" password="wfhd54" authorities="ROLE_SMO" />
+				<user name="smo_rosno_05" password="rfsd43" authorities="ROLE_SMO" />
+				<user name="smo_rosno_06" password="34dsf6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_07" password="23f456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_08" password="34ggd56" authorities="ROLE_SMO" />
+				<user name="smo_rosno_09" password="3242r456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_10" password="654rgtf" authorities="ROLE_SMO" />
+				<user name="smo_rosno_11" password="423fsfg456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_12" password="234fsg6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_13" password="qwedfg32" authorities="ROLE_SMO" />
+				<user name="smo_rosno_14" password="fgdf3456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_15" password="42r456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_16" password="23as6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_17" password="34gfd6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_18" password="3423gfsdg" authorities="ROLE_SMO" />
+				<user name="smo_rosno_19" password="345gd6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_20" password="wer36" authorities="ROLE_SMO" />
+				
             </user-service>
         </authentication-provider>
     </authentication-manager>

@@ -42,48 +42,48 @@ public class PetitDAOImpl implements PetitDAO {
     	if(username.equals("ernso"))
     	{
     		query = sessionFactory.getCurrentSession().createQuery(
-        			"select t from Petit t, BlockGER2016 t2 where (t.username = :username or t.username='"+"ТФОМС"+"' or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"')and t.id=t2.idblockger2016 and t2.regname='"+"ernso"+"' and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by t.id desc");
+        			"select t from Petit t, BlockGER2016 t2 where (t.username = :username or t.username='"+"ТФОМС"+"' or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"')and t.id=t2.idblockger2016 and t2.regname='"+"ernso"+"' order by t.id desc");
             query.setParameter("username", username);
     	}
     	
     	if(username.equals("callnight5001") || username.equals("callnight5002") || username.equals("callnight5003")){
     		query = sessionFactory.getCurrentSession().createQuery(
-        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username = '"+"callnight5003"+"' or t.username = '"+"ТФОМС"+"' or t.username = '"+"callnight5001"+"' or t.username = '"+"callnight5002"+"' or t.username='"+"auto"+"'   or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"') and t.id=t2.idblockger2016 and (t2.regname='"+"auto"+"' or t2.regname='"+"callnight5001"+"' or t2.regname='"+"callnight5002"+"' or t2.regname='"+"callnight5003"+"') and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by t.id desc");
+        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username = '"+"callnight5003"+"' or t.username = '"+"ТФОМС"+"' or t.username = '"+"callnight5001"+"' or t.username = '"+"callnight5002"+"' or t.username='"+"auto"+"'   or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"') and t.id=t2.idblockger2016 and (t2.regname='"+"auto"+"' or t2.regname='"+"callnight5001"+"' or t2.regname='"+"callnight5002"+"' or t2.regname='"+"callnight5003"+"')  order by t.id desc");
             query.setParameter("username", username);
     	}
     	
     	if(username.equals("call5001"))
     	{
     		query = sessionFactory.getCurrentSession().createQuery(
-        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username='"+"ТФОМС"+"' or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"')and t.id=t2.idblockger2016 and t2.regname='"+"call5001"+"' and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by t.id desc");
+        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username='"+"ТФОМС"+"' or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"')and t.id=t2.idblockger2016 and t2.regname='"+"call5001"+"'   order by t.id desc");
             query.setParameter("username", username);
     	}
     	
     	if(username.equals("call5002"))
     	    	{
     	    		query = sessionFactory.getCurrentSession().createQuery(
-    	        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username='"+"ТФОМС"+"' or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"')and t.id=t2.idblockger2016 and t2.regname='"+"call5002"+"'  and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by t.id desc");
+    	        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username='"+"ТФОМС"+"' or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"')and t.id=t2.idblockger2016 and t2.regname='"+"call5002"+"'  order by t.id desc");
     	            query.setParameter("username", username);
     	    	}
     	
     	if(username.equals("call5003"))
  	    	{
  	    		query = sessionFactory.getCurrentSession().createQuery(
- 	        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username='"+"ТФОМС"+"' or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"')and t.id=t2.idblockger2016 and t2.regname='"+"call5003"+"'   and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by t.id desc");
+ 	        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username='"+"ТФОМС"+"' or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"')and t.id=t2.idblockger2016 and t2.regname='"+"call5003"+"'   order by t.id desc");
  	            query.setParameter("username", username);
  	    	}
     	
 		if(username.equals("hamitov") || username.equals("mityanina") || username.equals("eremina"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
-			"from Petit where (username = :username or username='"+"ТФОМС"+"') and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by id desc");
+			"from Petit where (username = :username or username='"+"ТФОМС"+"')  order by id desc");
 			query.setParameter("username", username);
     	}
     	
     	if(username.equals("kuznetsova"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
-			"select t from Petit t, BlockGER2016 t2 where t2.regname = :username and t.id=t2.idblockger2016 and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by id desc");
+			"select t from Petit t, BlockGER2016 t2 where t2.regname = :username and t.id=t2.idblockger2016 order by id desc");
 			query.setParameter("username", username);
     	}
 		
@@ -92,30 +92,30 @@ public class PetitDAOImpl implements PetitDAO {
 		if(username.equals("smo_ingos"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
-			"from Petit where (username = :username or username='"+"ИНГОССТРАХ"+"') and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by id desc");
+			"from Petit where (username = :username or username='"+"ИНГОССТРАХ"+"') order by id desc");
             query.setParameter("username", username);
     	}
 		
-		if(username.equals("smo_rosno"))
+		if(username.contains("smo_rosno"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
-			"from Petit where (username = :username or username='"+"РОСНО"+"') and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by  id desc");
-            query.setParameter("username", username);
+			"from Petit where (username like '%'||'"+"smo_rosno"+"'||'%' or username='"+"РОСНО"+"')  order by  id desc");
+          //  query.setParameter("username", username);
     	}
 		
 		if(username.equals("smo_simaz"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
-			"from Petit where (username = :username or username='"+"СИМАЗ"+"') and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by  id desc");
+			"from Petit where (username = :username or username='"+"СИМАЗ"+"') order by  id desc");
             query.setParameter("username", username);
     	}
 		
 		if(username.equals("vasilyeva") || username.equals("smyvin"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
-			"from Petit where (username = :username or username='"+"ТФОМС"+"' "
+		/*	"from Petit where (username = :username or username='"+"ТФОМС"+"' "
 					+ "or username='"+"СИМАЗ"+"' "
-					+ "or username='"+"РОСНО"+"' "
+					+ "or username like '%'||'"+"smo_rosno"+"'||'%' "
 					+ "or username='"+"ИНГОССТРАХ"+"' "
 					+ "or username='"+"smo_ingos"+"' "
 					+ "or username='"+"smo_simaz"+"' "
@@ -133,9 +133,11 @@ public class PetitDAOImpl implements PetitDAO {
 					+ "or username='"+"callnight5002"+"' "
 					+ "or username='"+"callnight5003"+"' "
 					+ "or username='"+"auto"+"' "
-					+ "or username='"+"eremina"+"') and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by id desc");
+					+ "or username='"+"eremina"+"')  order by id desc");
 			query.setParameter("username", username);
-			query.setMaxResults(5000);
+		*/	
+			"from Petit order by id desc");
+			query.setMaxResults(1000);
     	}
 	        		    		
 	        		    		/*
@@ -231,8 +233,10 @@ public class PetitDAOImpl implements PetitDAO {
     	if(username.equals("smo_simaz")) {
     		criteria.add( Restrictions.in( "username", new String[] { "smo_simaz", "call5001", "callnight5001" } ) );
     	}
-    	if(username.equals("smo_rosno")) {
-    		criteria.add( Restrictions.in( "username", new String[] { "smo_rosno", "call5002", "callnight5002" } ) );
+    	if(username.contains("smo_rosno")) {
+    		criteria.add( Restrictions.in( "username", new String[] { "smo_rosno", "smo_rosno_01","smo_rosno_02", "smo_rosno_03","smo_rosno_04", "smo_rosno_05","smo_rosno_06", "smo_rosno_07",
+    				"smo_rosno_08", "smo_rosno_09","smo_rosno_10", "smo_rosno_11","smo_rosno_12", "smo_rosno_13","smo_rosno_14", "smo_rosno_15","smo_rosno_16","smo_rosno_17", "smo_rosno_18","smo_rosno_19", "smo_rosno_20",
+    				"call5002", "callnight5002" } ) );
     	}
     	
     	criteria.addOrder(Order.desc("id"));
