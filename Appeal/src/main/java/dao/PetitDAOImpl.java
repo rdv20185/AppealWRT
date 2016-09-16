@@ -135,7 +135,7 @@ public class PetitDAOImpl implements PetitDAO {
 					+ "or username='"+"auto"+"' "
 					+ "or username='"+"eremina"+"') and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by id desc");
 			query.setParameter("username", username);
-			query.setMaxResults(1000);
+			query.setMaxResults(5000);
     	}
 	        		    		
 	        		    		/*

@@ -136,10 +136,12 @@
 				var epr = $( "#connectid option:selected" ).text();
 				if(epr.indexOf('ИНТЕРНЕТ') > -1 || epr.indexOf('ПОЧТА') > -1){
 					$("#presentId").val(2);
+					$('#inboundLetter').fadeIn();
 					
 				}
 				else{
 					$("#presentId").val(1);
+					$('#inboundLetter').fadeOut();
 				}
 				
 			});
