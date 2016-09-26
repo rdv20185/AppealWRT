@@ -50,6 +50,8 @@
 
 		
 	function numberone() {
+		
+		
 		if($('#sel').val() != '0'){
 			
 			$('#addpetit').prop('disabled', false);
@@ -86,7 +88,7 @@
 	 }
 		
 	$(document).ready(function() {
-		
+		console.log('@@@ '+$('#sel').val());		
 
 		
 			/*	Метол из файла contriller.js	*/
@@ -709,27 +711,27 @@
 							<form:option value="eremina" label="eremina" />
 							<form:option value="hamitov" label="hamitov" />
 							<form:option value="smo_simaz" label="smo_simaz" />
- +							<form:option value="smo_ingos" label="smo_ingos" />
- +							<form:option value="smo_rosno_01" label="smo_rosno_01" />
- +							<form:option value="smo_rosno_02" label="smo_rosno_02" />
- +							<form:option value="smo_rosno_03" label="smo_rosno_03" />
- +							<form:option value="smo_rosno_04" label="smo_rosno_04" />
- +							<form:option value="smo_rosno_05" label="smo_rosno_05" />
- +							<form:option value="smo_rosno_06" label="smo_rosno_06" />
- +							<form:option value="smo_rosno_07" label="smo_rosno_07" />
- +							<form:option value="smo_rosno_08" label="smo_rosno_08" />
- +							<form:option value="smo_rosno_09" label="smo_rosno_09" />
- +							<form:option value="smo_rosno_10" label="smo_rosno_10" />
- +							<form:option value="smo_rosno_11" label="smo_rosno_11" />
- +							<form:option value="smo_rosno_12" label="smo_rosno_12" />
- +							<form:option value="smo_rosno_13" label="smo_rosno_13" />
- +							<form:option value="smo_rosno_14" label="smo_rosno_14" />
- +							<form:option value="smo_rosno_15" label="smo_rosno_15" />
- +							<form:option value="smo_rosno_16" label="smo_rosno_16" />
- +							<form:option value="smo_rosno_17" label="smo_rosno_17" />
- +							<form:option value="smo_rosno_18" label="smo_rosno_18" />
- +							<form:option value="smo_rosno_19" label="smo_rosno_19" />
- +							<form:option value="smo_rosno_20" label="smo_rosno_20" />
+ 							<form:option value="smo_ingos" label="smo_ingos" />
+ 							<form:option value="smo_rosno_01" label="smo_rosno_01" />
+ 							<form:option value="smo_rosno_02" label="smo_rosno_02" />
+ 							<form:option value="smo_rosno_03" label="smo_rosno_03" />
+ 							<form:option value="smo_rosno_04" label="smo_rosno_04" />
+ 							<form:option value="smo_rosno_05" label="smo_rosno_05" />
+ 							<form:option value="smo_rosno_06" label="smo_rosno_06" />
+ 							<form:option value="smo_rosno_07" label="smo_rosno_07" />
+ 							<form:option value="smo_rosno_08" label="smo_rosno_08" />
+ 							<form:option value="smo_rosno_09" label="smo_rosno_09" />
+ 							<form:option value="smo_rosno_10" label="smo_rosno_10" />
+ 							<form:option value="smo_rosno_11" label="smo_rosno_11" />
+ 							<form:option value="smo_rosno_12" label="smo_rosno_12" />
+ 							<form:option value="smo_rosno_13" label="smo_rosno_13" />
+ 							<form:option value="smo_rosno_14" label="smo_rosno_14" />
+ 							<form:option value="smo_rosno_15" label="smo_rosno_15" />
+ 							<form:option value="smo_rosno_16" label="smo_rosno_16" />
+ 							<form:option value="smo_rosno_17" label="smo_rosno_17" />
+ 							<form:option value="smo_rosno_18" label="smo_rosno_18" />
+ 							<form:option value="smo_rosno_19" label="smo_rosno_19" />
+ 							<form:option value="smo_rosno_20" label="smo_rosno_20" />
 						</form:select>
                 	</p>
                 	
@@ -876,8 +878,10 @@
 <sec:authorize access="hasRole('ROLE_NIGHT')">
 <!-- <input type="button" id="refreshnightcall" onclick="refreshnightcall()" value="Обновить НЧ"></input> -->	
 </sec:authorize>
+<div id="info_socket">вы пытаетесь закрыть не обработанное сообщение</div>
 
 <div style="overflow:auto; height:500px;   position: relative;" id="aroundtab"> 
+
 <div  id="divrefresh"  style="height:100%; width:1439px; background: #000000; opacity: 0.6; position: absolute; display:none; z-index: 100; top:0; left:0;"></div>
 <div style="width: 100%; height: 100%; position: absolute; z-index: 10; top:0; left:0;">
 <table class="secondtab" id="cont">
@@ -904,6 +908,8 @@
     </thead>
     <tbody>
           <c:forEach items="${petitList}" var="petit" >
+          
+        
   			<c:set var="statecl" value="${petit.blockger2016.state}"/>
   			
   			<c:if test="${(statecl == 3 || statecl == 4)}">
@@ -992,7 +998,7 @@
 							</c:if>
 						</c:if>
 						<c:if test="${(petit.presentId != 2)}">
-							<td><a id="iddel" onclick='closemes("${petit.id}","${role}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+							<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
 						</c:if>
 					</sec:authorize>
 					<sec:authorize access="!hasRole('ROLE_ADMIN')">
@@ -1014,6 +1020,7 @@
 			    
 			    
     </tr>
+     
   </c:forEach> 
     </tbody>
 </table>

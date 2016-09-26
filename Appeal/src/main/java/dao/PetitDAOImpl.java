@@ -84,6 +84,8 @@ public class PetitDAOImpl implements PetitDAO {
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
 			"select t from Petit t, BlockGER2016 t2 where t2.regname = :username and t.id=t2.idblockger2016 order by id desc");
+			//"from Petit order by id desc");
+			//query.setMaxResults(1000);
 			query.setParameter("username", username);
     	}
 		

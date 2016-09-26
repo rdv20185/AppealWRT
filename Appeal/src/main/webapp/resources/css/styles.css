@@ -97,7 +97,26 @@ white-space: nowrap;
 max-width: 35px;	
 }
 
+.cuting3{
+overflow-x: hidden; 
+overflow-y: hidden; 
+white-space: nowrap; 
+max-width: 20px;	
+}
+
 .ui-tooltip-content {
     font-size:10pt;
     font-family:Calibri;
+}
+
+#info_socket{
+	width: 304px;
+    height: 80px;
+    position: absolute;
+    top: 74%;
+   	right: 4%;
+   border: double;
+   background: chartreuse;
+   display:none;
+	
 }

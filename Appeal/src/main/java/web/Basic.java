@@ -412,7 +412,7 @@ public class Basic {
 	    	}else{
 	    		listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(8, 10) + "." + listPetit.get(i).getDateInput().substring(5, 7) + "." + listPetit.get(i).getDateInput().substring(0, 4));
 			}*/
-			
+			listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(0, 11));
 		}
 		
 		

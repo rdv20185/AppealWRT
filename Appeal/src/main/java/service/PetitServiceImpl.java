@@ -341,7 +341,8 @@ public class PetitServiceImpl implements PetitService {
 				username.equals("hamitov") ||
 				username.equals("filimonova") ||
 				username.equals("osipova")) {
-			username = "smyvinkuznetsovasashamityaninavasilyevapopovaereminahamitovfilimonovaosipovasmo_simazcall5001callnight5001smo_rosnocall5002callnight5002smo_ingoscall5003callnight5003";
+			username = "smyvinkuznetsovasashamityaninavasilyevapopovaereminahamitovfilimonovaosipovasmo_simazcall5001callnight5001smo_rosnocall5002callnight5002smo_ingoscall5003callnight5003"
+					+ "smo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20";
 		}
 		mapReport.put("username", username);
 		return mapReport;

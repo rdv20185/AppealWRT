@@ -1,0 +1,57 @@
+@CHARSET "UTF-8";
+
+.tab_search{
+ width:100%;
+ border-spacing: 1px;
+ }
+ .tab_search thead{
+ background: -webkit-linear-gradient(left, rgb(0, 0, 0) 0%, rgb(130, 135, 140) 20%, rgb(148, 190, 239) 80%, rgb(0, 103, 220) 100%);
+    background-attachment: fixed;
+ background: -o-linear-gradient(left, rgb(0, 0, 0) 0%, rgb(130, 135, 140) 20%, rgb(148, 190, 239) 80%, rgb(0, 103, 220) 100%);
+ background-attachment: fixed;
+ background: -moz-linear-gradient(left, rgb(0, 0, 0) 0%, rgb(130, 135, 140) 20%, rgb(148, 190, 239) 80%, rgb(0, 103, 220) 100%);
+ background-attachment: fixed;
+ background-attachment: fixed;
+ }
+ .tab_search thead th {
+  width: 100px;
+  border-bottom: solid 1px #ddd;
+  font-weight: bold;
+  padding:10px;
+  font-weight: 300;
+  font-size: 10px;
+  color: #fff;
+  text-transform: uppercase;
+  }
+  
+   .tab_search tbody td {
+  text-align:center;
+  font-weight: 300;
+  font-size: 10px;
+  color: #000;
+  text-transform: uppercase;
+  padding:8px;
+  border: solid #9d9dbb 1px;
+  }
+    
+  
+  .tab_search td #iddel{
+	color: #E80404;
+  }
+  /*
+   .tab_search  td:nth-child(-n+9){
+    font-size: 10px;
+    //width: 20px;
+    white-space: nowrap;
+   }
+   */
+   
+   
+     .tab_search  td:nth-child(n+17){
+    //font-size: 20px;
+    font-size: 10px;
+    width: 1%;
+   }
+  
+ .tab_search tbody:nth-child(odd) { background: #f5f5f5;  border: solid 1px #ddd; }
+ .tab_search tbody:nth-child(even) { background: #e5e5e5;  border: solid 1px #ddd; }

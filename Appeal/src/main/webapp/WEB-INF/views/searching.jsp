@@ -17,10 +17,16 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 <html>
 <head>
 	<link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/>" type="text/css"/>
+	<link rel="stylesheet" href="<c:url value="/resources/css/style2.css"/>" type="text/css"/>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome-4.6.1/css/font-awesome.min.css">
+	<link rel="stylesheet" href="<c:url value="/resources/css/bliking.css"/>" type="text/css"/>
+	
+	<link rel="stylesheet" href="<c:url value="/resources/css/tab_search.css"/>" type="text/css"/>
 	<link rel="stylesheet" href="<c:url value="/resources/jquery/ui/1.11.2/themes/smoothness/jquery-ui.css"/>">
 	<script src="<c:url value="/resources/jquery/jquery-1.10.2.js"/>"></script>
 	<script src="<c:url value="/resources/jquery/ui/1.11.2/jquery-ui.js"/>"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/expir_session.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/for_search.js"></script>
 	
 	<c:url var="findTypesURL" value="/types" />
 	<c:url var="findCausesURL" value="/causes" />
@@ -30,9 +36,8 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 	<c:url var="findRectifs4URL" value="/rectifs4" />
 	
 	<script type="text/javascript">
-	$(document).ready(
-			
-		function() {
+	$(document).ready(function() {
+		
 			$.getJSON('${findTypesURL}', {
 				ajax : 'true'
 			}, function(data) {
@@ -91,6 +96,18 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 	
 	<script type="text/javascript">
 	$(document).ready(function() { 
+
+		
+			$("#search_form").submit(function(event) {
+				if(valid()){	
+					var btn= $(this).find("input[type=submit]:focus").val();
+					console.log('@@ '+btn);
+					// Prevent the form from submitting via the browser.
+					event.preventDefault();
+				}
+			
+					
+		});
 		
 		$(function() {
             $("#inbound_div").tooltip();
@@ -283,7 +300,8 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 <div id = main2>
 <h3><spring:message code="label.searching" /></h3>
 
-<form:form method="post" action="search" commandName="petit" name='search_form'>
+<div class="error_search" style="display:none; margin-bottom: 15px; color:red;"></div>
+<form:form method="post" action="search" commandName="petit" name='search_form' id="search_form">
 
 	<table>
 		<tr>
@@ -531,40 +549,41 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 <h5>Найдено: ${searchListSize}</h5><br></c:if>
 
 <c:if test="${!empty searchList}">
-	<table class="data">
+	<table class="tab_search">
+	<thead>
 		<tr>
 			<th><spring:message code="label.id" /></th>      
 		    <th><spring:message code="label.dateInput" /></th>
    		    <!-- <th><spring:message code="label.dateBegin" /></th>
 		    <th><spring:message code="label.dateEnd" /></th>-->  
 		    <th><spring:message code="label.source" /></th>
-		    <th><spring:message code="label.present" /></th>
+		    <th class="cuting2"><spring:message code="label.present" /></th>
 		    <th><spring:message code="label.letterNum" /></th>
-		    <th><spring:message code="label.mo" /></th>
+		    <th class="cuting"><spring:message code="label.mo" /></th>
 		    <!--<th><spring:message code="label.letterDate" /></th>
 		    <th><spring:message code="label.conect" /></th>
 		    <th><spring:message code="label.intermed" /></th>-->
-		    <th><spring:message code="label.type" /></th>
-		    <th><spring:message code="label.surname" /></th>
-		    <th><spring:message code="label.name" /></th>
+		    <th class="cuting3"><spring:message code="label.type" /></th>
+		    <th class="cuting"><spring:message code="label.surname" /></th>
+		    <th class="cuting2"><spring:message code="label.name" /></th>
 		    <!--<th><spring:message code="label.patrony" /></th>
 		    <th><spring:message code="label.policy" /></th>
 		    <th><spring:message code="label.tel" /></th>
 		    <th><spring:message code="label.adress" /></th> -->
-		    <th><spring:message code="label.ter" /></th>
+		    <th class="cuting2"><spring:message code="label.ter" /></th>
 		    <!--<th><spring:message code="label.terAnswer" /></th>
 		    <th><spring:message code="label.last1" /></th>
 		    <th><spring:message code="label.last2" /></th>
 		    <th><spring:message code="label.insur" /></th>
 		    <th><spring:message code="label.place" /></th>-->
-		    <th><spring:message code="label.cause" /></th>
-		    <th><spring:message code="label.rectif1" /></th>
+		    <th class="cuting2"><spring:message code="label.cause" /></th>
+		    <th class="cuting3"><spring:message code="label.rectif1" /></th>
 		    <!-- <th><spring:message code="label.rectif2" /></th>
 		    <th><spring:message code="label.rectif3" /></th>
 		    <th><spring:message code="label.rectif4" /></th>-->
-		    <th><spring:message code="label.valid" /></th>
+		    <th  class="cuting3"><spring:message code="label.valid" /></th>
 		    <!-- <th><spring:message code="label.compens" /></th>-->
-		    <th><spring:message code="label.satisf" /></th>
+		    <th  class="cuting3"><spring:message code="label.satisf" /></th>
 		    <!-- <th><spring:message code="label.compensSource" /></th>
 		    <th><spring:message code="label.compensCode" /></th>
 		    <th><spring:message code="label.compensSum" /></th>
@@ -572,66 +591,107 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		    <th>Регистратор</th>
 		    <th>Исполнитель</th>
 			<th>&nbsp;</th>
-				<sec:authorize access="hasRole('ADMIN')">
-					<th>&nbsp;</th>
-				</sec:authorize>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+				
 		</tr>
+	</thead>
+	<tbody>	
 		<c:forEach items="${searchList}" var="petit">
-			<c:set var="user_tab" value="${petit.username}"/>
-			<tr>
-				<td  align="center" style="border: solid #000 1px;">${petit.id} ${petit.num}</td>      
+			<c:set var="statecl" value="${petit.blockger2016.state}"/>
+  			
+  			<c:if test="${(statecl == 3 || statecl == 4)}">
+		  		<c:set value="someclass3" var="cssClass"></c:set>
+			</c:if> 
+			<c:if test="${(statecl == 1)}">
+	  			<c:set value="someclass blink" var="cssClassonUser"></c:set>
+	  			<c:set value="" var="cssClass"></c:set>
+			</c:if>
+			<c:if test="${(statecl != 1)}">
+	  			<c:set value="" var="cssClassonUser"></c:set>
+			</c:if>
+			<c:if test="${(statecl == 2)}">
+	  			<c:set value="someclass2" var="cssClass"></c:set>
+			</c:if> 
+		
+			<tr  class="${cssClass}">
+				<td  align="center">${petit.id} ${petit.num}</td>      
 			    <td>${petit.dateInput}</td>       
 				<!-- <td>${petit.dateBegin}</td>
 			    <td>${petit.dateEnd}</td>-->  
 			    <td>${petit.source.sourceName}</td>
-			    <td>${petit.present.presentName}</td>
+			    <td class="cuting2">${petit.present.presentName}</td>
 			    <td>${petit.letterNum}</td>
-			    <td>${petit.mo.moName}</td>
+			    <td class="cuting">${petit.mo.moName}</td>
 			    <!--<td>${petit.letterDate}</td>
 			    <td>${petit.conect.conectName}</td>
 			    <td>${petit.intermedId}</td>-->
-			    <td>${petit.type.typeName}</td>
-			    <td>${petit.surname}</td>
-			    <td>${petit.name}</td>
+			    <td class="cuting3">${petit.type.typeName}</td>
+			    <td class="cuting">${petit.surname}</td>
+			    <td class="cuting2">${petit.name}</td>
 			    <!--<td>${petit.patrony}</td>
 			    <td>${petit.policy}</td>
 			    <td>${petit.tel}</td>
 			    <td>${petit.adress}</td> -->
-			    <td>${petit.ter.terName}</td>
+			    <td class="cuting2">${petit.ter.terName}</td>
 			    <!--<td>${petit.terAnswer.terName}</td>
 			    <td>${petit.last1}</td>
 			    <td>${petit.last2}</td>
 			    <td>${petit.insurId}</td>	
 			    <td>${petit.placeId}</td>-->
-			    <td>${petit.cause.causeName}</td>
-			    <td>${petit.rectif1.rectif1Name}</td>
+			    <td class="cuting2">${petit.cause.causeName}</td>
+			    <td class="cuting3">${petit.rectif1.rectif1Name}</td>
 			   	<!-- <td>${petit.rectif2.rectif2Name}</td>
 			    <td>${petit.rectif3.rectif3Name}</td>
 			    <td>${petit.rectif4.rectif4Name}</td>-->
-			    <td>${petit.valid.validName}</td>
+			    <td class="cuting3">${petit.valid.validName}</td>
 			    <!-- <td>${petit.compens}</td>-->
-			    <td>${petit.satisf}</td>
+			    <td class="cuting3">${petit.satisf}</td>
 			    <!-- <td>${petit.compensSource}</td>
 			    <td>${petit.compensCode}</td>
 			    <td>${petit.compensSum}</td>
 			    <td>${petit.propos}</td>-->
 			    <td>${petit.blockger2016.regname}</td>
-				<td>${petit.username}</td>			    
-				<td><a href="more/${petit.id}"><spring:message code="label.more" /></a></td>
-				<sec:authorize access="hasRole('ADMIN')">
-					<td><a href="refresh/${petit.id}"><spring:message code="label.correct" /></a></td>
-				</sec:authorize>
-				<c:choose>
-				    <c:when test="${fn:startsWith(user_tab, 'call')}">
-				     <!--    <td><a><spring:message code="label.correct" /></a></td> -->
-			        </c:when>
-				    <c:otherwise>
-				      <!--   <td><a href="refresh/${petit.id}"><spring:message code="label.correct" /></a></td> -->
-				    </c:otherwise>
-				</c:choose>
+				<td class="${cssClassonUser}">${petit.username}</td>	
 				
+				 <td><a  href="nightcallfile/${petit.id}" title="Прослушать"><i class="fa fa-headphones fa-2x"></i></a></td>
+			    <c:if test="${(statecl != 4)}">
+			    	<td><a id="iddel" onclick='del("${petit.id}","${role}")'  title="Удалить"><i class="fa fa-trash-o fa-2x"></i></a></td>
+					<td><a id="iddel" href="refresh/${petit.id}" title="Редактировать"><i class="fa fa-pencil-square-o  fa-2x" aria-hidden="true"></i></a></td>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<c:if test="${(petit.presentId == 2)}">
+						    <c:if test="${(statecl != 2)}">
+								<td><a id="iddel" onclick='closemes("${petit.id}","${role}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+							</c:if>
+							<c:if test="${(statecl == 2)}">
+								<td><i class="fa fa-unlock  fa-2x noactive" aria-hidden="true"></i></td>
+							</c:if>
+						</c:if>
+						<c:if test="${(petit.presentId != 2)}">
+							<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+						</c:if>
+					</sec:authorize>
+					<sec:authorize access="!hasRole('ROLE_ADMIN')">
+						<td><i class="fa fa-unlock  fa-2x noactive" aria-hidden="true"></i></td>
+					</sec:authorize>
+				</c:if>
+				
+				<c:if test="${(statecl == 4)}">
+					<td><i class="fa fa-trash-o fa-2x noactive"></i></td>
+					<td><i class="fa fa-pencil-square-o  fa-2x noactive" aria-hidden="true"></i></td>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<td><a id="iddel" onclick='openmes("${petit.id}","${role}")' title="Восстановить закрытое обращение"><i class="fa fa-lock  fa-2x" aria-hidden="true"></i></a></td>
+					</sec:authorize>
+					<sec:authorize access="!hasRole('ROLE_ADMIN')">
+						<td><i class="fa fa-lock  fa-2x noactive" aria-hidden="true"></i></td>
+					</sec:authorize>
+				</c:if>
+									    
+
 			</tr>
 		</c:forEach>
+	</tbody>
 	</table>
 </c:if>
 </div>

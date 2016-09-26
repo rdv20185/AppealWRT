@@ -72,60 +72,65 @@ function del(id,role){
 }
 
 
-function closemes(id,role){ 
-	// SEND QUERY AND PROCESS RESPONSE
-	flag = 1;
-	$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
-	$('#divrefresh').animate({opacity: 0.6}, 3000 );
-	$.ajax({
-		type : "GET",
-		url : "close",
-		data : ({petitId: id}),
-		success : function(response) {
-	        table(response,role);
-	        $('#divrefresh').animate({opacity: 0.0}, 2000 );
-	        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
-	        
-		},
-		error : function(e) {
-			alert("ERROR: ", +'обновите страницу');
-			$('#divrefresh').animate({opacity: 0.0}, 2000 );
-			setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
-		},
-		done : function(e) {
-			console.log("DONE");
-			
-		}
-	});
-	
+function closemes(id,role,state){
+	if(state	> 	2){
+		// SEND QUERY AND PROCESS RESPONSE
+		flag = 1;
+		$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
+		$('#divrefresh').animate({opacity: 0.6}, 3000 );
+		$.ajax({
+			type : "GET",
+			url : "close",
+			data : ({petitId: id}),
+			success : function(response) {
+		        table(response,role);
+		        $('#divrefresh').animate({opacity: 0.0}, 2000 );
+		        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+		        
+			},
+			error : function(e) {
+				alert("ERROR: ", +'обновите страницу');
+				$('#divrefresh').animate({opacity: 0.0}, 2000 );
+				setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+			},
+			done : function(e) {
+				//console.log("DONE");
+				
+			}
+		});
+	}else{
+		$('#info_socket').css({'display':'block'});
+		$('#info_socket').animate({opacity: 0.6}, 3000 );
+		setTimeout ("$('#info_socket').css({'display':'none'});",2500);
+	}
 }
 
 
 function openmes(id,role){
-	$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
-	$('#divrefresh').animate({opacity: 0.6}, 3000 );
-	// SEND QUERY AND PROCESS RESPONSE
-	flag = 1;
-	$.ajax({
-		type : "GET",
-		url : "open",
-		data : ({petitId: id}),
-		success : function(response) {
-	        table(response,role);
-	        $('#divrefresh').animate({opacity: 0.0}, 2000 );
-	        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
-		},
-		error : function(e) {
-			alert("ERROR: ", +'обновите страницу');
-			$('#divrefresh').animate({opacity: 0.0}, 2000 );
-			setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
-		},
-		done : function(e) {
-			console.log("DONE");
-			
-		}
-	});
 	
+		$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
+		$('#divrefresh').animate({opacity: 0.6}, 3000 );
+		// SEND QUERY AND PROCESS RESPONSE
+		flag = 1;
+		$.ajax({
+			type : "GET",
+			url : "open",
+			data : ({petitId: id}),
+			success : function(response) {
+		        table(response,role);
+		        $('#divrefresh').animate({opacity: 0.0}, 2000 );
+		        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+			},
+			error : function(e) {
+				alert("ERROR: ", +'обновите страницу');
+				$('#divrefresh').animate({opacity: 0.0}, 2000 );
+				setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+			},
+			done : function(e) {
+				console.log("DONE");
+				
+			}
+		});
 }
 /*
  * ФУНКЦИЯ ОТРАБАТЫВАЕТ В СОКЕТЕ 
@@ -174,7 +179,7 @@ function addJS(role){
 		
 		$("#draggable").submit(function(event) {
 			var btn= $(this).find("input[type=submit]:focus").val();
-			console.log('@@ '+btn);
+			//console.log('@@ '+btn);
 			// Prevent the form from submitting via the browser.
 			event.preventDefault();
 			
@@ -298,14 +303,14 @@ function table(response,role){
 		if (n >= 0){
 			if(value.presentId == 2){
 				if(value.blockger2016.state != 2){
-					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 				}
 				if(value.blockger2016.state == 2){
 					userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
 				}
 			}
 			if(value.presentId != 2){
-				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 			}
 		}else{
 			userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
@@ -387,14 +392,14 @@ function tablews(response,role){
 		if (n >= 0){
 			if(value.presentId == 2){
 				if(value.blockger2016.state != 2){
-					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 				}
 				if(value.blockger2016.state == 2){
 					userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
 				}
 			}
 			if(value.presentId != 2){
-				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 			}
 		}else{
 			userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
