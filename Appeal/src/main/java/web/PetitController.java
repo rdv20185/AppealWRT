@@ -225,11 +225,13 @@ public class PetitController {
 	    petit.getBlockger2016().setPetit(petit);
 	    
 		petitService.addPetit(petit);
-		List<Petit> pl = petitService.listPetit(getUserName());
-		for(Petit pt : pl)
+		List<Petit> pl = new ArrayList<Petit>();//petitService.listPetit(getUserName());
+		pl.add(petit);
+		/*for(Petit pt : pl)
     	{
     		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
     	}
+    	*/
 	    ModelAndView modelAndView = new ModelAndView();
 	    model.addAttribute("petitList", pl);
         modelAndView.addObject("petitList", pl);
@@ -557,14 +559,16 @@ public class PetitController {
 	
 	@RequestMapping(value = "/close")
     public @ResponseBody List<Petit>  close(@RequestParam Integer petitId,ModelMap model) {
+		
     	petitService.closeAppeal(petitId);
-    	
-    	List<Petit> pl = petitService.listPetit(getUserName());
+    	List<Petit> pl = new ArrayList<Petit>();
+    	/*List<Petit> pl = petitService.listPetit(getUserName());
     	for(Petit pt : pl)
     	{
     		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
     	}
-		
+		*/
+    	
 	    ModelAndView modelAndView = new ModelAndView();
 	    model.addAttribute("petitList", pl);
 	    modelAndView.addObject("petitList", pl);

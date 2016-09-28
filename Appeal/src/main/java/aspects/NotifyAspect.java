@@ -2,13 +2,20 @@ package aspects;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.poi.util.SystemOutLogger;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.ui.ModelMap;
+
+import domain.MessageList;
+import domain.Petit;
 
 @Aspect
 public class NotifyAspect {
@@ -18,14 +25,8 @@ public class NotifyAspect {
 
     private static final String WEBSOCKET_TOPIC = "/topic/notify";
     
-    @Pointcut("execution(* web.PetitController.addPetit(..))")
-    private void anyOldTransfer() {}
-    
     @Pointcut("execution(* web.PetitController.deletePetit(..))")
     private void anyOldTransfer2() {}
-    
-    @Pointcut("execution(* web.PetitController.close(..))")
-    private void anyOldTransfer3() {}
     
     @Pointcut("execution(* web.PetitController.refreshAddPetit(..))")
     private void anyOldTransfer4() {}
@@ -50,10 +51,37 @@ public class NotifyAspect {
     }
     
     
-    @After("anyOldTransfer() || anyOldTransfer2() || anyOldTransfer3() || anyOldTransfer4() || anyOldTransfer5()") 
+    @After("anyOldTransfer2() || anyOldTransfer4() || anyOldTransfer5()") 
     public void notifyClients() throws Throwable {
         template.convertAndSend(WEBSOCKET_TOPIC, new Date());
     }
     
+    
+    
+    
+    
+    
+    @Pointcut("execution(* web.PetitController.close(..))")
+    private void anyOldTransfer3() {}
+    
+    @Pointcut("execution(* web.PetitController.addPetit(..))")
+    private void anyOldTransfer() {}
+    
+    
+    @After(value = "anyOldTransfer3() && args(petitId,model)")
+	public void beforeAccountMethodExecution(JoinPoint jp, Integer petitId,ModelMap model) {
+
+	  MessageList ml = new MessageList(petitId,"test1","test2","closemes","test4");
+	  template.convertAndSend(WEBSOCKET_TOPIC, ml);
+	}
+    
+    
+    @After(value = "anyOldTransfer() && args(petit,..)")
+	public void after_add(JoinPoint jp, Petit petit) {
+
+	  
+	  MessageList ml = new MessageList(petit,"test1","test2","add","test4");
+	  template.convertAndSend(WEBSOCKET_TOPIC, ml);
+	}
 
 }

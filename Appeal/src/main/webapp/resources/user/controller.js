@@ -1,9 +1,187 @@
+/*
+ * closemes бежит по таблице и ищет ид и зкрывает НО бежит на каждом клиенте
+ * доработать чтобы бежал только на том где есть это сообщение
+ */
+
 $(document).ready(function() {
+	
+	// инициализация сокета
 	init();	
 });
 
+var this_js_script = $('script[src*=controller]'); // or better regexp to get the file name..
+
+var my_var_1 = this_js_script.attr('data-my_var_1');   
+if (typeof my_var_1 === "undefined" ) {
+   var my_var_1 = 'some_default_value';
+}
+
 var tt ='';
 var flag = 0;
+var for_night_regname = "auto_callnight5001_callnight5002_callnight5003";
+var for_night_username = "callnight5003_ТФОМС_callnight5001_callnight5002_auto_СИМАЗ_РОСНО_ИНГОССТРАХ";
+var call5001 = "call5001", call5002 = "call5002", call5003 = "call5003";
+var all_assign5001 ="ТФОМС_СИМАЗ_РОСНО_ИНГОССТРАХ_call5001";
+var all_assign5002 ="ТФОМС_СИМАЗ_РОСНО_ИНГОССТРАХ_call5002";
+var all_assign5003 ="ТФОМС_СИМАЗ_РОСНО_ИНГОССТРАХ_call5003";
+var for_tfoms = my_var_1+"_ТФОМС";
+var for_ingos = my_var_1+"_ИНГОССТРАХ";
+var for_rosno = my_var_1+"_РОСНО";
+var for_simaz = my_var_1+"_СИМАЗ";
+var admin = "smyvin_vasilyeva";
+	
+/*
+ * Метод отрабатывает на клиенте отрисовку строки таблицы после закрытия (нажатия на открытый замочек)
+ * другим клиентом
+ */
+function process_callback_closemes(pr){
+
+	 try{
+		 
+		 $('#cont > tbody  > tr').each(function (i) {
+			 
+			 	let tdId = $(this).children("td:nth-child(1)");
+			 	
+		        if(tdId.html().indexOf(pr.id) >= 0){
+		        	
+		        	$('#info_socket').html("Обращение № "+pr.id+" было закрыто пользователем "+pr.user+" в "+pr.time);
+		        	$('#info_socket').css({'display':'block'});
+		    		$('#info_socket').animate({opacity: 0.6}, 3000 );
+		    		setTimeout ("$('#info_socket').css({'display':'none'});",4000);
+		        	
+		        	// tt - глобальная
+		        	let role_o = tt.replace(/\s/g, ''); // space
+		        	let n = role_o.indexOf("ROLE_ADMIN");
+		        	let tdLock = $(this).children("td:nth-child(14)");
+		        	let tdEdit = $(this).children("td:nth-child(13)");
+		        	let tdDel = $(this).children("td:nth-child(12)");
+		        	
+		        	tdEdit.html("<i class='fa fa-pencil-square-o  fa-2x noactive' aria-hidden='true'></i>");
+		        	tdDel.html("<i class='fa fa-trash-o fa-2x noactive'></i>");
+		        	
+		    		if (n >= 0){
+			        	tdLock.html("<a onclick=openmes('"+tdId.html()+"','"+role_o+"') id='iddel'  title='Восстановить закрытое обращение'><i class='fa fa-lock  fa-2x' aria-hidden='true'></i></a>");
+		    		}
+		    		else{ tdLock.html("<i class='fa fa-lock  fa-2x noactive' aria-hidden='true'></i>"); }
+		        	
+		        	console.log((i+1));
+		        	
+		        	
+		        	 throw new BreakException();
+		        }
+		 });
+		 
+	 } catch (e) {
+		  if (e);
+		}
+};
+
+
+/*
+ * Метод отрабатывает на клиенте отрисовку строки таблицы после добовления обращения(кнопка завершить или сохранить)
+ * 
+ */
+function process_callback_add(pr){
+	
+				// tt - глобальная
+				let role_o = tt.replace(/\s/g, ''); // space
+				let n = role_o.indexOf("ROLE_ADMIN");
+				
+				let cssClassonUser = "blink";
+				if(pr.id.blockger2016.state == 1){
+					cssClassonUser = "blink";
+				}
+				
+				if(pr.id.blockger2016.state != 1){
+					cssClassonUser = "";
+				}
+		 		
+				let typ ='';
+				if (pr.id.typeId == 1) typ = 'ЖАЛОБА';
+				if (pr.id.typeId == 2) typ = 'ЗАЯВЛЕНИЕ';
+				if (pr.id.typeId == 3) typ = 'КОНСУЛЬТАЦИЯ';
+				if (pr.id.typeId == 4) typ = 'ПРЕДЛОЖЕНИЕ';
+	
+				let text = "<tr>"+ "<td class='cuting2'>"+pr.id.id+"</td>"+"<td class='cuting2'>"+pr.id.dateInput+"</td>"+"<td>"+pr.id.date_change+"</td>"+"<td class='cuting2'>"+typ+"</td>"+
+				"<td class='cuting'>"+pr.id.surname+"</td>"+ "<td class='cuting'>"+pr.id.name+"</td>"+ "<td class='cuting2'>"+pr.id.patrony+"</td>"+ "<td>"+pr.id.tel+"</td>"+  "<td class='cuting2'>"+pr.id.blockger2016.regname+"</td>"+ "<td class="+cssClassonUser+">"+pr.id.username+"</td>"+
+				"<td><a href='nightcallfile/"+pr.id.id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a onclick=del('"+pr.id.id+"','"+role_o+"') id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td>"+"" +
+				"<td><a id='iddel' href='refresh/"+pr.id.id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
+				
+				if (n >= 0){
+		        	text +=	"<td><a onclick=closemes('"+pr.id.id+"','"+role_o+"','"+pr.id.blockger2016.state+"',this) id='iddel'  title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+	    		}
+	    		else{ text += "<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>"; }
+
+				text +="</tr>";
+				$('#cont > tbody').prepend(text);
+	
+};
+
+/*
+ * вынес логику  отработки добавления записи на клиенте
+ */
+function body_add(pr){
+	
+	let reg_name = pr.id.blockger2016.regname || "";
+	
+	if(admin.indexOf(my_var_1) >= 0){
+		console.log('вошли в админов ');
+		process_callback_add(pr);
+	}
+	
+	// если пользователь принадлежит группе ночников и "прилетает" создатель из группы ночников
+	if(for_night_regname.indexOf(my_var_1) >= 0 && for_night_regname.indexOf(reg_name) >= 0){
+		console.log('вошли в ночников ');
+		// совпадение для исполнителей
+		if(for_night_username.indexOf(pr.id.username) >= 0){
+			
+			/* "прилетевшее обновление" классифицируется по типу (закрытие, добовление и тд)
+			 *  и добовляется на клиента
+			 */ 
+			process_callback_add(pr);
+		}
+	}	
+	else if (reg_name.indexOf(my_var_1) >= 0 && my_var_1.indexOf(call5001) >= 0 && all_assign5001.indexOf(pr.id.username) >= 0){
+		console.log('вошли в 5001 ');
+		process_callback_add(pr);
+	}
+	else if (reg_name.indexOf(my_var_1) >= 0 && my_var_1.indexOf(call5002) >= 0 && all_assign5002.indexOf(pr.id.username) >= 0){
+		console.log('вошли в 5002 ');
+		process_callback_add(pr);
+	}
+	else if (reg_name.indexOf(my_var_1) >= 0 && my_var_1.indexOf(call5003) >= 0 && all_assign5003.indexOf(pr.id.username) >= 0){
+		console.log('вошли в 5003 ');
+		process_callback_add(pr);
+	}
+	else if(for_tfoms.indexOf(pr.id.username) >= 0 && for_tfoms.indexOf(my_var_1) >= 0){
+		console.log('вошли для тфомс');
+		process_callback_add(pr);
+	}
+	else if(pr.id.blockger2016.regname.indexOf('kuznetsova') >= 0){
+		console.log('вошли для кузнецова');
+		process_callback_add(pr);
+	}
+	else if(for_ingos.indexOf(pr.id.username) >= 0 && my_var_1.indexOf('smo_ingos') >= 0){
+		console.log('вошли для ИНГОС');
+		process_callback_add(pr);
+	}
+	else if(for_rosno.indexOf(pr.id.username) >= 0 && my_var_1.indexOf('smo_rosno') >= 0){
+		console.log('вошли для РОСНО');
+		process_callback_add(pr);
+	}
+	else if(for_simaz.indexOf(pr.id.username) >= 0 && my_var_1.indexOf('smo_simaz') >= 0){
+		console.log('вошли для симаз');
+		process_callback_add(pr);
+	}
+	else{
+		console.log('вошли в никуда ');
+		//console.log('reg_name '+reg_name+' my_var_1 '+my_var_1+' call5001 '+call5001+' pr.id.username '+pr.id.username+' all_assign5001 '+all_assign5001);
+		//console.log(reg_name.indexOf(my_var_1) >= 0);
+		//console.log(my_var_1.indexOf(call5001) >= 0);
+		//console.log(all_assign5001.indexOf(pr.id.username) >= 0);
+		//forWS(tt);
+	}
+};
 
 callback = function(message) {
 	if(flag == 0){
@@ -13,11 +191,18 @@ callback = function(message) {
 		 */
 		if(location.href.indexOf("Appeal/refresh/") < 0)
 		{		
-			forWS(tt);
+			
+			let pr = JSON.parse(message.body);
+			let qw = pr.process || "";
+			if(qw.indexOf('closemes') >= 0 ){ process_callback_closemes(pr); }
+			else if(qw.indexOf('add') >= 0){	body_add(pr);	 }
+			else{forWS(tt);}
+				
 		}
 	}
 
 	flag = 0;
+	
 };
 
 reconnect = function(){
@@ -72,26 +257,39 @@ function del(id,role){
 }
 
 
-function closemes(id,role,state){
+function closemes(id,role,state,th){
+	
+	let tab_tr = $(th).parent().parent(); //tr
 	if(state	> 	2){
-		// SEND QUERY AND PROCESS RESPONSE
 		flag = 1;
-		$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
-		$('#divrefresh').animate({opacity: 0.6}, 3000 );
+		
+		
+		//$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
+		//$('#divrefresh').animate({opacity: 0.6}, 2000 );
 		$.ajax({
 			type : "GET",
 			url : "close",
 			data : ({petitId: id}),
 			success : function(response) {
-		        table(response,role);
-		        $('#divrefresh').animate({opacity: 0.0}, 2000 );
-		        setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
-		        
+				
+			        	// tt - глобальная
+			        	let role_o = tt.replace(/\s/g, ''); // space
+				
+						let td_lock = tab_tr.children("td:nth-child(14)");
+						let td_edit = tab_tr.children("td:nth-child(13)");
+						let td_del = tab_tr.children("td:nth-child(12)");
+						let td_id = tab_tr.children("td:nth-child(1)");
+			        	td_edit.html("<i class='fa fa-pencil-square-o  fa-2x noactive' aria-hidden='true'></i>");
+			        	td_del.html("<i class='fa fa-trash-o fa-2x noactive'></i>");
+				        td_lock.html("<a onclick=openmes('"+td_id.html()+"','"+role_o+"') id='iddel'  title='Восстановить закрытое обращение'><i class='fa fa-lock  fa-2x' aria-hidden='true'></i></a>");
+				
+				        //$('#divrefresh').animate({opacity: 0.0}, 2000 );
+				        //setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 			},
 			error : function(e) {
 				alert("ERROR: ", +'обновите страницу');
-				$('#divrefresh').animate({opacity: 0.0}, 2000 );
-				setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+				//$('#divrefresh').animate({opacity: 0.0}, 2000 );
+				//setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
 			},
 			done : function(e) {
 				//console.log("DONE");
@@ -133,8 +331,9 @@ function openmes(id,role){
 		});
 }
 /*
- * ФУНКЦИЯ ОТРАБАТЫВАЕТ В СОКЕТЕ 
- * 
+ * обновляет на всех клиентах кроме того с которого произошло
+ * добовление,удаление и тп 
+ * ОБНОВЛЯЕТ ВЕСЬ СПИСОК 
  */
 
 function forWS(role){
@@ -185,11 +384,11 @@ function addJS(role){
 			
 			if(btn == 'Завершить'){
 				if(valid()){
-					body(btn,role);
+					new_body(btn,role);
 				}
 			}
 			else{
-				body(btn,role);
+				new_body(btn,role);
 			}
 					
 		});
@@ -200,6 +399,107 @@ function addJS(role){
 	}
 }
 
+
+function new_body(btn,role){
+	
+	if($('#connectid').val() == 0){
+		$('.errorrep').append('<h3>Поле "Связь" обязательно для заполнения</h3>');
+		$('.errorrep').css({'display':'block'});
+		
+	}
+	else{
+		$('.errorrep').empty();
+		$('.errorrep').css({'display':'none'});
+
+	
+		// CREATE HTTP QUERY
+		var values = {};
+		$.each($("form").serializeArray(), function (i, field) {
+		    values[field.name] =field.value;
+		});
+		//added name button
+		values["submitted"] = btn;
+		flag = 1;
+		
+		//$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});
+		//$('#divrefresh').animate({opacity: 0.6}, 3000 );
+	
+		// SEND QUERY AND PROCESS RESPONSE
+		$.ajax({
+			type : "GET",
+			url : "add",
+			data : values,
+			success : function(response) {
+				//console.log('stay here '+JSON.stringify(response));
+				//   table(response,role);
+				
+				// tt - глобальная
+				let role_o = tt.replace(/\s/g, ''); // space
+				let n = role_o.indexOf("ROLE_ADMIN");
+				
+				let cssClassonUser = "blink";
+				if(response[0].blockger2016.state == 1){
+					cssClassonUser = "blink";
+				}
+				
+				if(response[0].blockger2016.state != 1){
+					cssClassonUser = "";
+				}
+		 		
+				let typ ='';
+				if (response[0].typeId == 1) typ = 'ЖАЛОБА';
+				if (response[0].typeId == 2) typ = 'ЗАЯВЛЕНИЕ';
+				if (response[0].typeId == 3) typ = 'КОНСУЛЬТАЦИЯ';
+				if (response[0].typeId == 4) typ = 'ПРЕДЛОЖЕНИЕ';
+	
+				let text = "<tr>"+ "<td class='cuting2'>"+response[0].id+"</td>"+"<td class='cuting2'>"+response[0].dateInput+"</td>"+"<td>"+response[0].date_change+"</td>"+"<td class='cuting2'>"+typ+"</td>"+
+				"<td class='cuting'>"+response[0].surname+"</td>"+ "<td class='cuting'>"+response[0].name+"</td>"+ "<td class='cuting2'>"+response[0].patrony+"</td>"+ "<td>"+response[0].tel+"</td>"+  "<td class='cuting2'>"+response[0].blockger2016.regname+"</td>"+ "<td class="+cssClassonUser+">"+response[0].username+"</td>"+
+				"<td><a href='nightcallfile/"+response[0].id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a onclick=del('"+response[0].id+"','"+role_o+"') id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td>"+"" +
+				"<td><a id='iddel' href='refresh/"+response[0].id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
+				
+				if (n >= 0){
+		        	text +=	"<td><a onclick=closemes('"+response[0].id+"','"+role_o+"','"+response[0].blockger2016.state+"',this) id='iddel'  title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+	    		}
+	    		else{ text += "<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>"; }
+
+				text +="</tr>";
+				$('#cont > tbody').prepend(text);
+				
+				
+				// зачищаем форму
+				$("form").each(function(){
+				   this.reset();
+				});
+				// добовляем п умолчанию dateInput
+				$( "#dateInput" ).datepicker( "setDate", new Date());
+		        
+		        
+		        //$('#divrefresh').animate({opacity: 0.0}, 2000 );
+		        //setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+			},
+			error : function(e) {
+				
+				alert("ERROR: ", +'обновите страницу');
+				console.log('Тест'+ JSON.stringify(e));
+				
+				//$('#divrefresh').animate({opacity: 0.0}, 2000 );
+		        //setTimeout ("$('#divrefresh').css({'display':'none'});",2500);
+			},
+			done : function(e) {
+				console.log("DONE");
+				
+			}
+		});
+	}	
+}
+
+
+
+/*
+ * Depricated
+ * After optimizaton 
+ * 
+ */
 function body(btn,role){
 	
 	if($('#connectid').val() == 0){
@@ -303,14 +603,14 @@ function table(response,role){
 		if (n >= 0){
 			if(value.presentId == 2){
 				if(value.blockger2016.state != 2){
-					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this) title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 				}
 				if(value.blockger2016.state == 2){
 					userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
 				}
 			}
 			if(value.presentId != 2){
-				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this) title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 			}
 		}else{
 			userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
@@ -392,14 +692,14 @@ function tablews(response,role){
 		if (n >= 0){
 			if(value.presentId == 2){
 				if(value.blockger2016.state != 2){
-					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this) title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 				}
 				if(value.blockger2016.state == 2){
 					userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
 				}
 			}
 			if(value.presentId != 2){
-				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this) title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 			}
 		}else{
 			userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";

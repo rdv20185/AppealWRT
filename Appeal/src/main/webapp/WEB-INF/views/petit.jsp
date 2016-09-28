@@ -32,7 +32,7 @@
 	<script src="<c:url value="/resources/jquery/ui/1.11.2/jquery-ui.js"/>"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libs/sockjs/sockjs.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libs/stomp-websocket/lib/stomp.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/controller.js"></script>
+	<script type="text/javascript"  data-my_var_1="${principal.username}" src="${pageContext.request.contextPath}/resources/user/controller.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/expir_session.js"></script>
 	
 	
@@ -138,11 +138,12 @@
 				var epr = $( "#connectid option:selected" ).text();
 				if(epr.indexOf('ИНТЕРНЕТ') > -1 || epr.indexOf('ПОЧТА') > -1){
 					$("#presentId").val(2);
+					changepresentId();
 					$('#inboundLetter').fadeIn();
-					
 				}
 				else{
 					$("#presentId").val(1);
+					changepresentId();
 					$('#inboundLetter').fadeOut();
 				}
 				
@@ -991,14 +992,14 @@
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<c:if test="${(petit.presentId == 2)}">
 						    <c:if test="${(statecl != 2)}">
-								<td><a id="iddel" onclick='closemes("${petit.id}","${role}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+								<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}",this)' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
 							</c:if>
 							<c:if test="${(statecl == 2)}">
 								<td><i class="fa fa-unlock  fa-2x noactive" aria-hidden="true"></i></td>
 							</c:if>
 						</c:if>
 						<c:if test="${(petit.presentId != 2)}">
-							<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+							<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}",this)' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
 						</c:if>
 					</sec:authorize>
 					<sec:authorize access="!hasRole('ROLE_ADMIN')">
