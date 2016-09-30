@@ -88,7 +88,21 @@
 	 }
 		
 	$(document).ready(function() {
-		console.log('@@@ '+$('#sel').val());		
+		
+		$('#testclick').click(function(event){
+			$('#info_socket').finish();
+			$('#info_socket').animate({opacity: 0.2}, 0 );
+			$('#info_socket').animate({opacity: 1}, 0 );
+    		//$('#info_socket').animate({opacity: 0.0}, 5000 );
+		});
+		
+		$("#info_socket").hover(function() {
+		    $('#info_socket').stop();
+		    $('#info_socket').css({'opacity':'1'});
+		}, function() {
+            $(this).animate({opacity: 0.0}, 5000 );
+        });
+		
 
 		
 			/*	Метол из файла contriller.js	*/
@@ -426,11 +440,21 @@
 <a href="<c:url value="/reporting" />">
 	<spring:message code="label.report" />
 </a>
+<a >
+	Документация
+</a>
 <div style="float:right; margin-right:15px; font-weight: bold;">
 	<i class="fa fa-user" aria-hidden="true"></i> Пользователь: <c:out value="${principal.username}"/>
 </div>
 
 </div>
+<ul class="anim_queue_example2">
+	<li><a href="#">Menu Item One</a></li>
+	<li><a href="#">Menu Item Two</a></li>
+	<li><a href="#">Menu Item Three</a></li>
+	<li><a href="#">Menu Item Four</a></li>
+	<li><a href="#">Menu Item Five</a></li>
+</ul>
 <div id ="main-menu">
 <div style="float:left; padding: 10px;">
 <i style="margin-left:10px;" class="fa fa-heartbeat fa-2x " aria-hidden="true"></i>
@@ -871,7 +895,7 @@
 
 <hr>
 <c:if test="${petit.id eq null}">
-
+  <!-- <button id="testclick">ТЕСТ</button> --> 
 <section>
 <sec:authorize access="!hasRole('ROLE_NIGHT')">
 	<!-- <input type="button" id="refreshpage" onclick="refreshp()" value="Обновить" style="    float: right; margin-top: -40px;"></input>  -->
@@ -879,7 +903,10 @@
 <sec:authorize access="hasRole('ROLE_NIGHT')">
 <!-- <input type="button" id="refreshnightcall" onclick="refreshnightcall()" value="Обновить НЧ"></input> -->	
 </sec:authorize>
-<div id="info_socket">вы пытаетесь закрыть не обработанное сообщение</div>
+<div id="info_socket">
+<div class="msgbox"></div>
+<div id="info_text">вы пытаетесь закрыть не обработанное сообщение</div>
+</div>
 
 <div style="overflow:auto; height:500px;   position: relative;" id="aroundtab"> 
 
@@ -992,14 +1019,14 @@
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<c:if test="${(petit.presentId == 2)}">
 						    <c:if test="${(statecl != 2)}">
-								<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}",this)' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+								<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}",this,"${principal.username}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
 							</c:if>
 							<c:if test="${(statecl == 2)}">
 								<td><i class="fa fa-unlock  fa-2x noactive" aria-hidden="true"></i></td>
 							</c:if>
 						</c:if>
 						<c:if test="${(petit.presentId != 2)}">
-							<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}",this)' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+							<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}",this,"${principal.username}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
 						</c:if>
 					</sec:authorize>
 					<sec:authorize access="!hasRole('ROLE_ADMIN')">

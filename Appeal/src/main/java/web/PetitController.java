@@ -558,7 +558,7 @@ public class PetitController {
     }
 	
 	@RequestMapping(value = "/close")
-    public @ResponseBody List<Petit>  close(@RequestParam Integer petitId,ModelMap model) {
+    public @ResponseBody List<Petit>  close(@RequestParam Integer petitId,ModelMap model,String role,String user) {
 		
     	petitService.closeAppeal(petitId);
     	List<Petit> pl = new ArrayList<Petit>();

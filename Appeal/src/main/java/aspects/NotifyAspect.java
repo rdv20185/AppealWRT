@@ -68,10 +68,10 @@ public class NotifyAspect {
     private void anyOldTransfer() {}
     
     
-    @After(value = "anyOldTransfer3() && args(petitId,model)")
-	public void beforeAccountMethodExecution(JoinPoint jp, Integer petitId,ModelMap model) {
+    @After(value = "anyOldTransfer3() && args(petitId,model,role,user)")
+	public void beforeAccountMethodExecution(JoinPoint jp, Integer petitId,ModelMap model,String role,String user) {
 
-	  MessageList ml = new MessageList(petitId,"test1","test2","closemes","test4");
+	  MessageList ml = new MessageList(petitId,role,user,"closemes",new Date().toString());
 	  template.convertAndSend(WEBSOCKET_TOPIC, ml);
 	}
     
@@ -80,7 +80,7 @@ public class NotifyAspect {
 	public void after_add(JoinPoint jp, Petit petit) {
 
 	  
-	  MessageList ml = new MessageList(petit,"test1","test2","add","test4");
+	  MessageList ml = new MessageList(petit,"test1","test2","add",new Date().toString());
 	  template.convertAndSend(WEBSOCKET_TOPIC, ml);
 	}
 

@@ -44,10 +44,12 @@ function process_callback_closemes(pr){
 			 	
 		        if(tdId.html().indexOf(pr.id) >= 0){
 		        	
-		        	$('#info_socket').html("Обращение № "+pr.id+" было закрыто пользователем "+pr.user+" в "+pr.time);
-		        	$('#info_socket').css({'display':'block'});
-		    		$('#info_socket').animate({opacity: 0.6}, 3000 );
-		    		setTimeout ("$('#info_socket').css({'display':'none'});",4000);
+		        	$('#info_text').html("Обращение № "+pr.id+" было закрыто пользователем "+pr.user+" в "+pr.time);
+		        	//$('#info_socket').css({'display':'block'});
+		        	$('#info_socket').finish();
+					$('#info_socket').animate({opacity: 0.2}, 0 );
+					$('#info_socket').animate({opacity: 1}, 0 );
+		    		$('#info_socket').animate({opacity: 0.0}, 5000 );
 		        	
 		        	// tt - глобальная
 		        	let role_o = tt.replace(/\s/g, ''); // space
@@ -108,7 +110,7 @@ function process_callback_add(pr){
 				"<td><a id='iddel' href='refresh/"+pr.id.id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
 				
 				if (n >= 0){
-		        	text +=	"<td><a onclick=closemes('"+pr.id.id+"','"+role_o+"','"+pr.id.blockger2016.state+"',this) id='iddel'  title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+		        	text +=	"<td><a onclick=closemes('"+pr.id.id+"','"+role_o+"','"+pr.id.blockger2016.state+"',this,'"+my_var_1+"') id='iddel'  title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 	    		}
 	    		else{ text += "<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>"; }
 
@@ -153,7 +155,7 @@ function body_add(pr){
 		console.log('вошли в 5003 ');
 		process_callback_add(pr);
 	}
-	else if(for_tfoms.indexOf(pr.id.username) >= 0 && for_tfoms.indexOf(my_var_1) >= 0){
+	else if(for_tfoms.indexOf(pr.id.username) >= 0 && for_tfoms.indexOf(my_var_1) >= 0 && my_var_1 !='smyvin' && my_var_1 !='vasilyeva'){
 		console.log('вошли для тфомс');
 		process_callback_add(pr);
 	}
@@ -257,7 +259,7 @@ function del(id,role){
 }
 
 
-function closemes(id,role,state,th){
+function closemes(id,role,state,th,us){
 	
 	let tab_tr = $(th).parent().parent(); //tr
 	if(state	> 	2){
@@ -269,7 +271,7 @@ function closemes(id,role,state,th){
 		$.ajax({
 			type : "GET",
 			url : "close",
-			data : ({petitId: id}),
+			data : ({petitId: id,role : role, user: us}),
 			success : function(response) {
 				
 			        	// tt - глобальная
@@ -458,7 +460,7 @@ function new_body(btn,role){
 				"<td><a id='iddel' href='refresh/"+response[0].id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
 				
 				if (n >= 0){
-		        	text +=	"<td><a onclick=closemes('"+response[0].id+"','"+role_o+"','"+response[0].blockger2016.state+"',this) id='iddel'  title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+		        	text +=	"<td><a onclick=closemes('"+response[0].id+"','"+role_o+"','"+response[0].blockger2016.state+"',this,'"+my_var_1+"') id='iddel'  title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 	    		}
 	    		else{ text += "<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>"; }
 
@@ -603,14 +605,14 @@ function table(response,role){
 		if (n >= 0){
 			if(value.presentId == 2){
 				if(value.blockger2016.state != 2){
-					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this) title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this,'"+my_var_1+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 				}
 				if(value.blockger2016.state == 2){
 					userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
 				}
 			}
 			if(value.presentId != 2){
-				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this) title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this,'"+my_var_1+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 			}
 		}else{
 			userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
@@ -692,14 +694,14 @@ function tablews(response,role){
 		if (n >= 0){
 			if(value.presentId == 2){
 				if(value.blockger2016.state != 2){
-					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this) title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+					userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this,'"+my_var_1+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 				}
 				if(value.blockger2016.state == 2){
 					userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
 				}
 			}
 			if(value.presentId != 2){
-				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this) title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
+				userInfo +="<td><a id='iddel' onclick=closemes('"+value.id+"','"+role+"','"+value.blockger2016.state+"',this,'"+my_var_1+"') title='Закрыть обращение'><i class='fa fa-unlock  fa-2x' aria-hidden='true'></i></a></td>";
 			}
 		}else{
 			userInfo +="<td><i class='fa fa-unlock  fa-2x noactive' aria-hidden='true'></i></td>";
