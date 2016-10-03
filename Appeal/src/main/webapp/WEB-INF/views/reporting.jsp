@@ -13,6 +13,7 @@
 	<title><spring:message code="label.title" /></title>
 	<link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/>" type="text/css"/>
 	<link rel="stylesheet" href="<c:url value="/resources/jquery/ui/1.11.2/themes/smoothness/jquery-ui.css"/>">
+	<link rel="stylesheet" href="<c:url value="/resources/css/menu.css"/>" type="text/css"/>
 	<script src="<c:url value="/resources/jquery/jquery-1.10.2.js"/>"></script>
 	<script src="<c:url value="/resources/jquery/ui/1.11.2/jquery-ui.js"/>"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/expir_session.js"></script>

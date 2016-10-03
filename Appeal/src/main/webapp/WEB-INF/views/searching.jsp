@@ -20,6 +20,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 	<link rel="stylesheet" href="<c:url value="/resources/css/style2.css"/>" type="text/css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome-4.6.1/css/font-awesome.min.css">
 	<link rel="stylesheet" href="<c:url value="/resources/css/bliking.css"/>" type="text/css"/>
+	<link rel="stylesheet" href="<c:url value="/resources/css/menu.css"/>" type="text/css"/>
 	
 	<link rel="stylesheet" href="<c:url value="/resources/css/tab_search.css"/>" type="text/css"/>
 	<link rel="stylesheet" href="<c:url value="/resources/jquery/ui/1.11.2/themes/smoothness/jquery-ui.css"/>">
@@ -662,14 +663,14 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<c:if test="${(petit.presentId == 2)}">
 						    <c:if test="${(statecl != 2)}">
-								<td><a id="iddel" onclick='closemes("${petit.id}","${role}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+								<td><a id="iddel" onclick='closemes_search("${petit.id}","${petit.blockger2016.state}",this)' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
 							</c:if>
 							<c:if test="${(statecl == 2)}">
 								<td><i class="fa fa-unlock  fa-2x noactive" aria-hidden="true"></i></td>
 							</c:if>
 						</c:if>
 						<c:if test="${(petit.presentId != 2)}">
-							<td><a id="iddel" onclick='closemes("${petit.id}","${role}","${petit.blockger2016.state}")' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
+							<td><a id="iddel" onclick='closemes_search("${petit.id}","${petit.blockger2016.state}",this)' title="Закрыть обращение"><i class="fa fa-unlock  fa-2x" aria-hidden="true"></i></a></td>
 						</c:if>
 					</sec:authorize>
 					<sec:authorize access="!hasRole('ROLE_ADMIN')">

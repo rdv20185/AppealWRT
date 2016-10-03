@@ -389,6 +389,16 @@ public class PetitController {
     public void report_2_1(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         downloadFile(request, response, "\\reports\\pg_form_2_1.xls");
 	}
+	
+	@RequestMapping(value = "/downloadreestr", method = RequestMethod.GET)
+    public void reestr(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        downloadFile(request, response, "\\resources\\doc_fond\\reestr_25.09.2016.docx");
+	}
+	
+	@RequestMapping(value = "/downloadmanual", method = RequestMethod.GET)
+    public void manual(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        downloadFile(request, response, "\\resources\\doc_fond\\manual.docx");
+	}
 
 	@RequestMapping(value = "/report_2_3", method = RequestMethod.GET)
     public void report_2_3(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
@@ -410,10 +420,16 @@ public class PetitController {
 			IOException {
 		ServletContext context = request.getServletContext();
         String appPath = context.getRealPath("");
+       
         System.out.println("appPath = " + appPath);
  
+        String fullPath = "";
+        if(filePath.contains("doc_fond")){
+        	fullPath = appPath + filePath;
+        }else{
         //String fullPath = appPath + filePath ;      
-        String fullPath = "D:\\Appeals3\\Appeal" + filePath ;
+        fullPath = "D:\\Appeals3\\Appeal" + filePath ;
+        }
         File downloadFile = new File(fullPath);
         FileInputStream inputStream = new FileInputStream(downloadFile);
          
@@ -559,6 +575,25 @@ public class PetitController {
 	
 	@RequestMapping(value = "/close")
     public @ResponseBody List<Petit>  close(@RequestParam Integer petitId,ModelMap model,String role,String user) {
+		
+    	petitService.closeAppeal(petitId);
+    	List<Petit> pl = new ArrayList<Petit>();
+    	/*List<Petit> pl = petitService.listPetit(getUserName());
+    	for(Petit pt : pl)
+    	{
+    		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+    	}
+		*/
+    	
+	    ModelAndView modelAndView = new ModelAndView();
+	    model.addAttribute("petitList", pl);
+	    modelAndView.addObject("petitList", pl);
+	    
+		return pl;
+    }
+	
+	@RequestMapping(value = "/close_search")
+    public @ResponseBody List<Petit>  close_search(@RequestParam Integer petitId,ModelMap model) {
 		
     	petitService.closeAppeal(petitId);
     	List<Petit> pl = new ArrayList<Petit>();

@@ -25,6 +25,7 @@ var all_assign5001 ="ТФОМС_СИМАЗ_РОСНО_ИНГОССТРАХ_call5
 var all_assign5002 ="ТФОМС_СИМАЗ_РОСНО_ИНГОССТРАХ_call5002";
 var all_assign5003 ="ТФОМС_СИМАЗ_РОСНО_ИНГОССТРАХ_call5003";
 var for_tfoms = my_var_1+"_ТФОМС";
+var for_tfoms_1 = "hamitov_eremina_mityanina";
 var for_ingos = my_var_1+"_ИНГОССТРАХ";
 var for_rosno = my_var_1+"_РОСНО";
 var for_simaz = my_var_1+"_СИМАЗ";
@@ -155,7 +156,7 @@ function body_add(pr){
 		console.log('вошли в 5003 ');
 		process_callback_add(pr);
 	}
-	else if(for_tfoms.indexOf(pr.id.username) >= 0 && for_tfoms.indexOf(my_var_1) >= 0 && my_var_1 !='smyvin' && my_var_1 !='vasilyeva'){
+	else if(for_tfoms.indexOf(pr.id.username) >= 0 && for_tfoms_1.indexOf(my_var_1) >= 0){
 		console.log('вошли для тфомс');
 		process_callback_add(pr);
 	}
@@ -299,6 +300,7 @@ function closemes(id,role,state,th,us){
 			}
 		});
 	}else{
+		$('#info_text').html("Вы пытаетесь закрыть не отработанное обращение.");
 		$('#info_socket').css({'display':'block'});
 		$('#info_socket').animate({opacity: 0.6}, 3000 );
 		setTimeout ("$('#info_socket').css({'display':'none'});",2500);

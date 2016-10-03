@@ -26,6 +26,7 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/bliking.css"/>" type="text/css"/>
 	<link rel="stylesheet" href="<c:url value="/resources/css/style2.css"/>" type="text/css"/>
 	<link rel="stylesheet" href="<c:url value="/resources/css/newform.css"/>" type="text/css"/>
+	<link rel="stylesheet" href="<c:url value="/resources/css/menu.css"/>" type="text/css"/>
 	
 	
 	<script src="<c:url value="/resources/jquery/jquery-1.10.2.js"/>"></script>
@@ -415,6 +416,20 @@
         }, 45000);
 		
 		
+		 $(function() {
+             $('#navigation div').stop().animate({'marginLeft':'-2px'},1000);
+
+             $('#navigation > li').hover(
+                 function () {
+                     $('div',$(this)).stop().animate({'marginLeft':'-485px'},200);
+                 },
+                 function () {
+                     $('div',$(this)).stop().animate({'marginLeft':'-2px'},200);
+                 }
+             );
+         });
+		
+		
 		});
 
 		 $(function() {
@@ -425,36 +440,37 @@
 	
 </head>
 <body>
-
+<ul id="navigation">
+            <li class="home"><div title="в разработке"></div></li>
+         </ul>
 <div id = top-menu>
 
-<a href="<c:url value="/logout" />">
-	<spring:message code="label.logout" />
-</a>
-<a href="<c:url value="/index" />">
-	<spring:message code="label.index" />
-</a>
-<a href="<c:url value="/searching" />">
-	<spring:message code="label.searching" />
-</a>
-<a href="<c:url value="/reporting" />">
-	<spring:message code="label.report" />
-</a>
-<a >
-	Документация
-</a>
+
+  <nav>
+      <ul class="menu">
+        <li><a href="<c:url value="/logout" />">Выйти из приложения</a></li>
+        <li><a href="<c:url value="/index" />">Главная</a></li>
+        <li><a href="<c:url value="/searching" />">Поиск</a></li>
+        <li><a href="<c:url value="/reporting" />">Создать отчет</a></li>
+        
+        <li><a href="" class="submenu-link">Документация</a>
+          <ul class="submenu">
+            <li><a href="">Регламент</a></li>
+            <li><a href="<c:url value="/downloadmanual" />">Инструкция пользователя</a></li>
+            <li><a href="<c:url value="/downloadreestr" />">Реестр страховых представителей</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+
+
 <div style="float:right; margin-right:15px; font-weight: bold;">
 	<i class="fa fa-user" aria-hidden="true"></i> Пользователь: <c:out value="${principal.username}"/>
 </div>
 
 </div>
-<ul class="anim_queue_example2">
-	<li><a href="#">Menu Item One</a></li>
-	<li><a href="#">Menu Item Two</a></li>
-	<li><a href="#">Menu Item Three</a></li>
-	<li><a href="#">Menu Item Four</a></li>
-	<li><a href="#">Menu Item Five</a></li>
-</ul>
+
 <div id ="main-menu">
 <div style="float:left; padding: 10px;">
 <i style="margin-left:10px;" class="fa fa-heartbeat fa-2x " aria-hidden="true"></i>
