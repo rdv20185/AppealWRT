@@ -80,7 +80,7 @@ public class NotifyAspect {
 	public void after_add(JoinPoint jp, Petit petit) {
 
 	  
-	  MessageList ml = new MessageList(petit,"test1","test2","add",new Date().toString());
+	  MessageList ml = new MessageList(petit,"test1",petit.getBlockger2016().getRegname(),"add",new Date().toString());
 	  template.convertAndSend(WEBSOCKET_TOPIC, ml);
 	}
 

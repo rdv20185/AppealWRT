@@ -86,6 +86,14 @@ function process_callback_closemes(pr){
  */
 function process_callback_add(pr){
 	
+				$('#info_text').html("Обращение № "+pr.id.id+" было добавлено пользователем "+pr.user+" в "+pr.time);
+				//$('#info_socket').css({'display':'block'});
+				$('#info_socket').finish();
+				$('#info_socket').animate({opacity: 0.2}, 0 );
+				$('#info_socket').animate({opacity: 1}, 0 );
+				$('#info_socket').animate({opacity: 0.0}, 5000 );
+	
+	
 				// tt - глобальная
 				let role_o = tt.replace(/\s/g, ''); // space
 				let n = role_o.indexOf("ROLE_ADMIN");
@@ -336,7 +344,7 @@ function openmes(id,role){
 }
 /*
  * обновляет на всех клиентах кроме того с которого произошло
- * добовление,удаление и тп 
+ * добавление,удаление и тп 
  * ОБНОВЛЯЕТ ВЕСЬ СПИСОК 
  */
 
@@ -423,6 +431,8 @@ function new_body(btn,role){
 		});
 		//added name button
 		values["submitted"] = btn;
+		values["role"] = role;
+		
 		flag = 1;
 		
 		//$('#divrefresh').css({'display':'block','width':$('#cont').width(),'height':$('#cont').height()});

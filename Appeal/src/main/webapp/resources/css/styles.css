@@ -3,9 +3,13 @@ html {
 }
 
 body {
-	font-family: Verdana, sans-serif; font-size: 12px; margin: 0; padding: 0; 
-width: 100%; float:left;
-
+	font-family: Verdana, sans-serif;
+	font-size: 12px;
+	margin: 0;
+	padding: 0; 
+	width: 100%;
+	float:left;
+	
 }
 
 #top-menu { background: #000; color: #fff; height: 1.8em; font-size: 0.8em; border-bottom: 1px solid #FFF; padding: 4px;}
@@ -159,7 +163,7 @@ ul#navigation {
     //left: 0px;
 	right: 0px;
     list-style: none;
-    z-index:9999;
+    z-index:15000;
 }
 ul#navigation li {
     width: 10px;
@@ -205,4 +209,15 @@ ul#navigation .photos a     {
 }
 ul#navigation .contact a    {
     background-image: url(../images/mail.png);
+}
+
+.dim{
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+    background-color: rgba(0, 120, 201, 0.7);
+    display: none;
+    text-align: left;
 }

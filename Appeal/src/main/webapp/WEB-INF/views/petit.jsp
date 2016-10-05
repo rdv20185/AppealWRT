@@ -94,12 +94,15 @@
 			$('#info_socket').finish();
 			$('#info_socket').animate({opacity: 0.2}, 0 );
 			$('#info_socket').animate({opacity: 1}, 0 );
-    		//$('#info_socket').animate({opacity: 0.0}, 5000 );
+    		$('#info_socket').animate({opacity: 0.0}, 5000 );
+    		
 		});
 		
 		$("#info_socket").hover(function() {
-		    $('#info_socket').stop();
-		    $('#info_socket').css({'opacity':'1'});
+			if($('#info_socket').css('opacity') != 0) {
+		    	$('#info_socket').stop();
+		    	$('#info_socket').css({'opacity':'1'});
+			}
 		}, function() {
             $(this).animate({opacity: 0.0}, 5000 );
         });
@@ -421,9 +424,11 @@
 
              $('#navigation > li').hover(
                  function () {
+                	 $('.dim').css({display:'block',position:'fixed',height:'100%'});
                      $('div',$(this)).stop().animate({'marginLeft':'-485px'},200);
                  },
                  function () {
+                	 $('.dim').css({display:'none'});
                      $('div',$(this)).stop().animate({'marginLeft':'-2px'},200);
                  }
              );
@@ -440,6 +445,7 @@
 	
 </head>
 <body>
+<div class="dim"></div>
 <ul id="navigation">
             <li class="home"><div title="в разработке"></div></li>
          </ul>
@@ -911,7 +917,7 @@
 
 <hr>
 <c:if test="${petit.id eq null}">
-  <!-- <button id="testclick">ТЕСТ</button> --> 
+   <!-- <button id="testclick">ТЕСТ</button> -->
 <section>
 <sec:authorize access="!hasRole('ROLE_NIGHT')">
 	<!-- <input type="button" id="refreshpage" onclick="refreshp()" value="Обновить" style="    float: right; margin-top: -40px;"></input>  -->
