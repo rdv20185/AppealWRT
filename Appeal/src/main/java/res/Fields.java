@@ -15,74 +15,74 @@ import java.util.TreeMap;
 public class Fields {
 	
 	public  static Map<String, String> getfirsttfoms() {
-		return getPropertiesStr("D:\\Appeals3\\Appeal\\res\\listfortfoms.txt");
+		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listfortfoms.txt");
 	}
 	public  static Map<String, String> getfirstingos() {
-		return getPropertiesStr("D:\\Appeals3\\Appeal\\res\\listforingos.txt");
+		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listforingos.txt");
 	}
 	
 	public  static Map<String, String> getfirstsimaz() {
-		return getPropertiesStr("D:\\Appeals3\\Appeal\\res\\listforsimaz.txt");
+		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listforsimaz.txt");
 	}
 	
 	public  static Map<String, String> getfirstrosno() {
-		return getPropertiesStr("D:\\Appeals3\\Appeal\\res\\listforrosno.txt");
+		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listforrosno.txt");
 	}
 	
 	public  static Map<String, String> getProperties() {
-		return getPropertiesStr("D:\\Appeals3\\Appeal\\res\\listforger.txt");
+		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listforger.txt");
 	}
 	
 	public static Map<Integer, String> getSource() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\source.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\source.txt");
 	}
 	
 	public static Map<Integer, String> getPresent() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\present.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\present.txt");
 	}
 	
 	public static Map<Integer, String> getPresentforFL() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\presentforfl.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\presentforfl.txt");
 	}
 	
 	public static Map<Integer, String> getConect() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\conect.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\conect.txt");
 	}
 	
 	public static Map<Integer, String> getConectforFL() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\conectforfl.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\conectforfl.txt");
 	}
 	
 	public static Map<Integer, String> getIntermed() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\intermed.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\intermed.txt");
 	}
 	
 	public static Map<Integer, String> getType() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\type.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\type.txt");
 	}
 	
 	public static Map<Integer, String> getTer() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\ter.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\ter.txt");
 	}
 	
 	public static Map<Integer, String> getMo() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\mo.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\mo.txt");
 	}
 	
 	public static Map<Integer, String> getInsur() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\insur.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\insur.txt");
 	}
 	
 	public static Map<Integer, String> getPlace() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\place.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\place.txt");
 	}
 	
 	public static Map<Integer, String> getValid() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\valid.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\valid.txt");
 	}
 	
 	public static Map<Integer, String> getHsp() {
-		return getProperties("D:\\Appeals3\\Appeal\\res\\hsp.txt");
+		return getProperties("C:\\Appeals3\\Appeal\\res\\hsp.txt");
 	}
 
 	private static Map<Integer, String> getProperties(String filename) {

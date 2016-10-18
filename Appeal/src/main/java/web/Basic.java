@@ -142,7 +142,7 @@ public class Basic {
     public String listPetits(Map<String, Object> map,HttpServletRequest request,ModelMap mapm) {
     	
     	setupForm(mapm,request,new Petit());
-    	nightcallsprocess(request);
+    	//nightcallsprocess(request);
     	
     	List<Petit> pl = petitService.listPetit(getUserName()); 
     	for(Petit pt : pl)

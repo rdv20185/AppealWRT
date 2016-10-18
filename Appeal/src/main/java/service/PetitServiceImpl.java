@@ -187,36 +187,36 @@ public class PetitServiceImpl implements PetitService {
 	public void pgForm(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
     	Connection conn = connectForJasper();
 		Map mapReport = mapForJasper(dateReport, username);
-		JasperReport jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_1_1dop.jrxml");
+		JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\pg_form_1_1dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		JRXlsExporter exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\pg_form_1_1.xls"));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\pg_form_1_1.xls"));
 		exporter.exportReport();
 		
-		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_1_2dop.jrxml");
+		jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\pg_form_1_2dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\pg_form_1_2.xls"));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\pg_form_1_2.xls"));
 		exporter.exportReport();
 		
-		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_2_3dop.jrxml");
+		jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\pg_form_2_3dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\pg_form_2_3.xls"));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\pg_form_2_3.xls"));
 		exporter.exportReport();
 		
-		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\pg_form_2_1dop.jrxml");
+		jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\pg_form_2_1dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\pg_form_2_1.xls"));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\pg_form_2_1.xls"));
 		exporter.exportReport();
 		
    		disconnectForJasper(conn);
@@ -229,20 +229,20 @@ public class PetitServiceImpl implements PetitService {
     	Connection conn = connectForJasper();
 		Map mapReport = mapForJasper(dateReport, username);
 		
-		JasperReport jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\contact_call.jrxml");
+		JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\contact_call.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		JRXlsExporter exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\contact_call.xls"));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\contact_call.xls"));
 		exporter.exportReport();
 		
-		jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\contact_call2.jrxml");
+		jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\contact_call2.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\contact_call2.xls"));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\contact_call2.xls"));
 		exporter.exportReport();
 		
 		
@@ -266,13 +266,13 @@ public class PetitServiceImpl implements PetitService {
     	Connection conn = connectForJasper();
 		Map mapReport = mapForJasper(dateReport, username);
 			
-		JasperReport jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\appeal_pay.jrxml");
+		JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\appeal_pay.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 	
 		JRXlsExporter exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\appeal_pay.xls"));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\appeal_pay.xls"));
 		exporter.exportReport();
 		
    		disconnectForJasper(conn);
@@ -289,14 +289,14 @@ public class PetitServiceImpl implements PetitService {
 		Map mapReport = mapForJasper(dateReport);
 		
 		JasperReport jasperReport;
-		if(dateReport.isClinic()) jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\consult_other.jrxml");
-		else jasperReport = JasperCompileManager.compileReport("D:\\Appeals3\\Appeal\\reports\\consult_other.jrxml");
+		if(dateReport.isClinic()) jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\consult_other.jrxml");
+		else jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\consult_other.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		
 		JRXlsExporter exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\consult_other.xls"));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\consult_other.xls"));
 		exporter.exportReport();
 			
    		disconnectForJasper(conn);
@@ -309,10 +309,10 @@ public class PetitServiceImpl implements PetitService {
     	Connection conn = connectForJasper();
 		Map mapReport = mapForJasper(dateReport);
 		
-		String report = "D:\\Appeals3\\Appeal\\reports\\count_detail.jrxml";
-		if(dateReport.isClinic()) report = "D:\\Appeals3\\Appeal\\reports\\count_detail_polyclinic.jrxml";
-		if(dateReport.isEachMedicalOrg()) report = "D:\\Appeals3\\Appeal\\reports\\count_detail_eachMedicalOrg.jrxml";
-		if(dateReport.isClinic() && dateReport.isEachMedicalOrg()) report = "D:\\Appeals3\\Appeal\\reports\\count_detail_polyclinic_eachMedicalOrg.jrxml";
+		String report = "C:\\Appeals3\\Appeal\\reports\\count_detail.jrxml";
+		if(dateReport.isClinic()) report = "C:\\Appeals3\\Appeal\\reports\\count_detail_polyclinic.jrxml";
+		if(dateReport.isEachMedicalOrg()) report = "C:\\Appeals3\\Appeal\\reports\\count_detail_eachMedicalOrg.jrxml";
+		if(dateReport.isClinic() && dateReport.isEachMedicalOrg()) report = "C:\\Appeals3\\Appeal\\reports\\count_detail_polyclinic_eachMedicalOrg.jrxml";
 		
 		JasperReport jasperReport = JasperCompileManager.compileReport(report);
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
@@ -320,7 +320,7 @@ public class PetitServiceImpl implements PetitService {
 		
 		JRXlsExporter exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\Appeals3\\Appeal\\reports\\count_detail.xls"));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\count_detail.xls"));
 		exporter.exportReport();
 			
    		disconnectForJasper(conn);
@@ -361,7 +361,7 @@ public class PetitServiceImpl implements PetitService {
 		
 		Properties properties = new Properties();
 		try {
-			properties.load(new FileInputStream("D:\\Appeals3\\Appeal\\WebContent\\WEB-INF\\jdbc2.properties"));
+			properties.load(new FileInputStream("C:\\Appeals3\\Appeal\\WebContent\\WEB-INF\\jdbc2.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
