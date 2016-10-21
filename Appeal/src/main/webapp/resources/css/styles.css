@@ -217,7 +217,12 @@ ul#navigation .contact a    {
     left: 0;
     width: 100%;
     z-index: 10000;
-    background-color: rgba(0, 120, 201, 0.7);
+    background-color: rgba(121, 121, 121, 0.7);
     display: none;
     text-align: left;
+}
+
+.data{
+	color: white;
+    text-shadow: 2px 3px #000000;
 }

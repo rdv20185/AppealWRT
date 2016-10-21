@@ -595,6 +595,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			<th>&nbsp;</th>
 			<th>&nbsp;</th>
 			<th>&nbsp;</th>
+			<th>&nbsp;</th>
 				
 		</tr>
 	</thead>
@@ -657,6 +658,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 				<td class="${cssClassonUser}">${petit.username}</td>	
 				
 				 <td><a  href="nightcallfile/${petit.id}" title="Прослушать"><i class="fa fa-headphones fa-2x"></i></a></td>
+				 <td><a href="more/${petit.id}" title="Подробнее"><i class="fa fa-wpforms   fa-2x" aria-hidden="true"></i></a></td>
 			    <c:if test="${(statecl != 4)}">
 			    	<td><a id="iddel" onclick='del("${petit.id}","${role}")'  title="Удалить"><i class="fa fa-trash-o fa-2x"></i></a></td>
 					<td><a id="iddel" href="refresh/${petit.id}" title="Редактировать"><i class="fa fa-pencil-square-o  fa-2x" aria-hidden="true"></i></a></td>

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -60,7 +61,8 @@ public class Basic {
 	
 	@Autowired
     private PetitService petitService;
-	
+	@Autowired
+    private ApplicationContext applicationContext;
 
 	//@ModelAttribute
 	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) {
@@ -141,8 +143,15 @@ public class Basic {
     @RequestMapping("/index")
     public String listPetits(Map<String, Object> map,HttpServletRequest request,ModelMap mapm) {
     	
+    	//String[] beanNames = applicationContext.getBeanDefinitionNames();
+
+       // for (String beanName : beanNames) {
+       //     System.out.println(beanName + " : " + applicationContext.getBean(beanName).getClass().toString());
+      //  }
+    	
+    	
     	setupForm(mapm,request,new Petit());
-    	//nightcallsprocess(request);
+    	nightcallsprocess(request);
     	
     	List<Petit> pl = petitService.listPetit(getUserName()); 
     	for(Petit pt : pl)
