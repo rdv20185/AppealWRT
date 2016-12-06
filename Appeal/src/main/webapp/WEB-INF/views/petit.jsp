@@ -77,10 +77,12 @@
 	function changepresentId() {
 		if($("#presentId" ).val() !=1){
 			$('#inboundLetter').fadeIn();
+			
 			$('#addpetit').fadeOut();
 			$('#sel').fadeOut();
 		}else{
 			$('#inboundLetter').fadeOut();
+			
 			$('#addpetit').fadeIn();
 			$('#sel').fadeIn();
 			
@@ -114,10 +116,12 @@
 		
 			if($("#presentId" ).val() !=1){
 				$('#inboundLetter').fadeIn();
+				
 				$('#addpetit').fadeOut();
 				$('#sel').fadeOut();
 			}else{
 				$('#inboundLetter').fadeOut();
+				
 				$('#addpetit').fadeIn();
 				$('#sel').fadeIn();
 			}
@@ -785,6 +789,7 @@
                 </div>
                 <p>
                 	<input id="inboundLetter" class='btn-slide2' type="button" value="Исходящее письмо"/>
+                	
                 </p>
 </fieldset>
 
@@ -841,7 +846,7 @@
 						</c:if>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
-						  		<input name="сlose_button" onclick="" type="button" value="Закрыть"/>
+						  	<!-- 	<input name="сlose_button" onclick="" type="button" value="Закрыть"/> -->
 						</sec:authorize>				
 						
 					</c:if>
@@ -856,7 +861,7 @@
 							onclick="document.getElementById('typeWarning').hidden = false;document.getElementById('causeWarning').hidden = false;document.getElementById('rectif1Warning').hidden = false;"
 						/>
 						
-						<input name="submit"  type="submit" value="<spring:message code="label.endpetit"/>" 
+						<input name="submit" id="change_edit" type="submit" value="<spring:message code="label.endpetit"/>" 
 							onclick="document.getElementById('typeWarning').hidden = false;document.getElementById('causeWarning').hidden = false;document.getElementById('rectif1Warning').hidden = false;"
 						/>
 					</c:if>

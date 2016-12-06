@@ -173,7 +173,7 @@ public class Basic {
     
     private void nightcallsprocess(HttpServletRequest request){
     	String path = request.getServletContext().getRealPath("/")+"night_calls_working";
-    	String path_worked = "D:/Java/Tomcat7/TomCat7/night_calls_worked/";//request.getServletContext().getRealPath("/")+"night_calls_worked";
+    	String path_worked = "D:/Java/Tomcat7/TomCat7/night_calls_worked/"; /*request.getServletContext().getRealPath("/")+"night_calls_worked";*/
     	File f = new File(path);
     	if(f.isAbsolute()){
     		if(f.list().length != 0){

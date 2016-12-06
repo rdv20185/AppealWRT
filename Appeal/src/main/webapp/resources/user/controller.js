@@ -81,7 +81,7 @@ function process_callback_closemes(pr){
 
 
 /*
- * Метод отрабатывает на клиенте отрисовку строки таблицы после добовления обращения(кнопка завершить или сохранить)
+ * Метод отрабатывает на клиенте отрисовку строки таблицы после добавления обращения(кнопка завершить или сохранить)
  * 
  */
 function process_callback_add(pr){
@@ -459,6 +459,14 @@ function new_body(btn,role){
 				if(response[0].blockger2016.state != 1){
 					cssClassonUser = "";
 				}
+				
+				if(response[0].blockger2016.state == 2){
+					cssClassonUser2 = "someclass2";
+				}
+				
+				if(response[0].blockger2016.state != 2){
+					cssClassonUser2 = "";
+				}
 		 		
 				let typ ='';
 				if (response[0].typeId == 1) typ = 'ЖАЛОБА';
@@ -466,7 +474,7 @@ function new_body(btn,role){
 				if (response[0].typeId == 3) typ = 'КОНСУЛЬТАЦИЯ';
 				if (response[0].typeId == 4) typ = 'ПРЕДЛОЖЕНИЕ';
 	
-				let text = "<tr>"+ "<td class='cuting2'>"+response[0].id+"</td>"+"<td class='cuting2'>"+response[0].dateInput+"</td>"+"<td>"+response[0].date_change+"</td>"+"<td class='cuting2'>"+typ+"</td>"+
+				let text = "<tr class="+cssClassonUser2+">"+ "<td class='cuting2'>"+response[0].id+"</td>"+"<td class='cuting2'>"+response[0].dateInput+"</td>"+"<td>"+response[0].date_change+"</td>"+"<td class='cuting2'>"+typ+"</td>"+
 				"<td class='cuting'>"+response[0].surname+"</td>"+ "<td class='cuting'>"+response[0].name+"</td>"+ "<td class='cuting2'>"+response[0].patrony+"</td>"+ "<td>"+response[0].tel+"</td>"+  "<td class='cuting2'>"+response[0].blockger2016.regname+"</td>"+ "<td class="+cssClassonUser+">"+response[0].username+"</td>"+
 				"<td><a href='nightcallfile/"+response[0].id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a onclick=del('"+response[0].id+"','"+role_o+"') id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td>"+"" +
 				"<td><a id='iddel' href='refresh/"+response[0].id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
