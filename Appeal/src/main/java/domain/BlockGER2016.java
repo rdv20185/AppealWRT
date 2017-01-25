@@ -44,7 +44,17 @@ public class BlockGER2016 {
 	private String letter_out_num;
 	// Дата письма (исходящее)
 	private Date letter_out_date;
+	// пришло из минфина, минзндава...ставится отметка входящего письма.
+	private String inbound_from;
 	
+	public String getInbound_from() {
+		return inbound_from;
+	}
+
+	public void setInbound_from(String inbound_from) {
+		this.inbound_from = inbound_from;
+	}
+
 	// Тип регистратора
 	private Integer regsource_id;
 	// Регистратор (по именим) кто создал зарегистрировал
@@ -178,7 +188,7 @@ public class BlockGER2016 {
 				+ ", letter_out_date=" + letter_out_date + ", regsource_id="
 				+ regsource_id + ", regname=" + regname + ", regnum=" + regnum
 				+ ", date_create=" + date_create + ", date_change="
-				+ date_change + ", state=" + state + ",filecall ="+ filecall +"]";
+				+ date_change + ",inbound_from="+ inbound_from +" state=" + state + ",filecall ="+ filecall +"]";
 	}
 
 	public Date getDate_close() {

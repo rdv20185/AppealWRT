@@ -40,6 +40,9 @@ public class Fields {
 	public static Map<Integer, String> getPresent() {
 		return getProperties("C:\\Appeals3\\Appeal\\res\\present.txt");
 	}
+	public static Map<Integer, String> getInbound_from() {
+		return getProperties("C:\\Appeals3\\Appeal\\res\\inbound_from.txt");
+	}
 	
 	public static Map<Integer, String> getPresentforFL() {
 		return getProperties("C:\\Appeals3\\Appeal\\res\\presentforfl.txt");

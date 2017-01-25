@@ -491,6 +491,7 @@ function new_body(btn,role){
 				// зачищаем форму
 				$("form").each(function(){
 				   this.reset();
+				   $('#inbound_from').fadeOut();
 				});
 				// добовляем п умолчанию dateInput
 				$( "#dateInput" ).datepicker( "setDate", new Date());
@@ -762,7 +763,12 @@ function valid(){
 		
 		return false;
 	}
-	else{
+	else if($('#inbound_from').val() == null && $('#inbound_from').is(':visible')){
+		$('.errorrep').append('<h3>Поле "Выбор отписавшего" обязательно для заполнения</h3>');
+		$('.errorrep').css({'display':'block'});
+		
+		return false;
+	}else{
 		$('.errorrep').empty();
 		$('.errorrep').css({'display':'none'});
 		

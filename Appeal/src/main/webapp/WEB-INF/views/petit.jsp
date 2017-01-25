@@ -78,14 +78,15 @@
 		if($("#presentId" ).val() !=1){
 			$('#inboundLetter').fadeIn();
 			
+			$('#inbound_from').fadeIn();
 			$('#addpetit').fadeOut();
 			$('#sel').fadeOut();
 		}else{
 			$('#inboundLetter').fadeOut();
+			$('#inbound_from').fadeOut();
 			
 			$('#addpetit').fadeIn();
-			$('#sel').fadeIn();
-			
+			$('#sel').fadeIn();	
 		}
 		
 	 }
@@ -116,11 +117,13 @@
 		
 			if($("#presentId" ).val() !=1){
 				$('#inboundLetter').fadeIn();
+				$('#inbound_from').fadeIn();
 				
 				$('#addpetit').fadeOut();
 				$('#sel').fadeOut();
 			}else{
 				$('#inboundLetter').fadeOut();
+				$('#inbound_from').fadeOut();
 				
 				$('#addpetit').fadeIn();
 				$('#sel').fadeIn();
@@ -556,6 +559,10 @@
 		<form:label path="presentId"><spring:message code="label.present" /></form:label>
 		<form:select id="presentId" onclick='changepresentId()' path="presentId">
 	 		<form:options items="${presentList}"/>
+		</form:select>
+		<form:select id="inbound_from"  path="blockger2016.inbound_from">
+		<option value="" disabled selected>Выбор отписавшего</option>
+	 		<form:options items="${inbound_fromList}"/>
 		</form:select>
 	  </p>
 <sec:authorize access="hasAnyRole('ROLE_TFOMS','DEVELOPER','ROLE_SMO','ROLE_ADMIN')">	  
