@@ -1,0 +1,4 @@
+hamit=ТФОМС
+simaz=СИМАЗ
+ingos=ИНГОССТРАХ
+rosno=РОСНО

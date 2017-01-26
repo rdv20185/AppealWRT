@@ -5,87 +5,98 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
+
 
 public class Fields {
 	
+	private static URL url = Fields.class.getResource("Fields.class");
+	private static String str = url.getPath().substring(url.getPath().indexOf("C:/"), url.getPath().indexOf("WEB-INF"))+"resources/settings_fields/";
+	
 	public  static Map<String, String> getfirsttfoms() {
-		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listfortfoms.txt");
+		return getPropertiesStr(str+"listfortfoms.txt");
 	}
 	public  static Map<String, String> getfirstingos() {
-		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listforingos.txt");
+		return getPropertiesStr(str+"listforingos.txt");
 	}
 	
 	public  static Map<String, String> getfirstsimaz() {
-		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listforsimaz.txt");
+		return getPropertiesStr(str+"listforsimaz.txt");
 	}
 	
 	public  static Map<String, String> getfirstrosno() {
-		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listforrosno.txt");
+		return getPropertiesStr(str+"listforrosno.txt");
 	}
 	
 	public  static Map<String, String> getProperties() {
-		return getPropertiesStr("C:\\Appeals3\\Appeal\\res\\listforger.txt");
+		return getPropertiesStr(str+"listforger.txt");
 	}
 	
 	public static Map<Integer, String> getSource() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\source.txt");
+		return getProperties(str+"source.txt");
 	}
 	
 	public static Map<Integer, String> getPresent() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\present.txt");
+		return getProperties(str+"present.txt");
 	}
+	
 	public static Map<Integer, String> getInbound_from() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\inbound_from.txt");
+		return getProperties(str+"inbound_from.txt");
 	}
 	
 	public static Map<Integer, String> getPresentforFL() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\presentforfl.txt");
+		return getProperties(str+"presentforfl.txt");
 	}
 	
 	public static Map<Integer, String> getConect() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\conect.txt");
+		return getProperties(str+"conect.txt");
 	}
 	
 	public static Map<Integer, String> getConectforFL() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\conectforfl.txt");
+		return getProperties(str+"conectforfl.txt");
 	}
 	
 	public static Map<Integer, String> getIntermed() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\intermed.txt");
+		return getProperties(str+"intermed.txt");
 	}
 	
 	public static Map<Integer, String> getType() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\type.txt");
+		return getProperties(str+"type.txt");
 	}
 	
 	public static Map<Integer, String> getTer() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\ter.txt");
+		return getProperties(str+"ter.txt");
 	}
 	
 	public static Map<Integer, String> getMo() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\mo.txt");
+		return getProperties(str+"mo.txt");
 	}
 	
 	public static Map<Integer, String> getInsur() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\insur.txt");
+		return getProperties(str+"insur.txt");
 	}
 	
 	public static Map<Integer, String> getPlace() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\place.txt");
+		return getProperties(str+"place.txt");
 	}
 	
 	public static Map<Integer, String> getValid() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\valid.txt");
+		return getProperties(str+"valid.txt");
 	}
 	
 	public static Map<Integer, String> getHsp() {
-		return getProperties("C:\\Appeals3\\Appeal\\res\\hsp.txt");
+		return getProperties(str+"hsp.txt");
 	}
 
 	private static Map<Integer, String> getProperties(String filename) {
