@@ -723,18 +723,19 @@
 </sec:authorize>                
                 <div class="hide2">
 					<p>
-							<form:label style="float:none;" path="bloutboindletter2016.date_between">Дата промежуточного ответа</form:label><br>
-		      				<form:input style="float:none;" id="datebetween"  path="bloutboindletter2016.date_between"/>
-<br>
+							<form:label style="float:left;" path="bloutboindletter2016.date_between">Дата промежуточного ответа</form:label>
+		      				<form:input style="float:left;" id="datebetween"  path="bloutboindletter2016.date_between"/>
+							<form:label path="bloutboindletter2016.date_passmedDoc">Дата передачи мед.документации в ОМЭР</form:label>
+      						<form:input id="date_passOmer" path="bloutboindletter2016.date_passmedDoc"/>
+					</p>
+					<p>
+
 							<form:label style="float:none;" path="bloutboindletter2016.date_querymedDoc">Дата запроса мед.документации</form:label><br>
 		      				<form:input style="float:none;" id="date_med_doc" path="bloutboindletter2016.date_querymedDoc"/>
 					</p>                
 	      			<p>
 	      				<form:label path="bloutboindletter2016.date_obtainAkt">Дата получения Актов МЭ</form:label>
 	      				<form:input id="date_receive" path="bloutboindletter2016.date_obtainAkt"/>
-	      				
-	      				<form:label path="bloutboindletter2016.date_passmedDoc">Дата передачи мед.документации в ОМЭР</form:label>
-      					<form:input id="date_passOmer" path="bloutboindletter2016.date_passmedDoc"/>
 	      			</p>
 	      			<p>
 	      				<form:label path="bloutboindletter2016.many[0].date_subquery">Дата дополнительного запроса/ответа</form:label>
