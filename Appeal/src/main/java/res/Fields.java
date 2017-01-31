@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Map;
@@ -24,79 +26,156 @@ public class Fields {
 	private static URL url = Fields.class.getResource("Fields.class");
 	private static String str = url.getPath().substring(url.getPath().indexOf("C:/"), url.getPath().indexOf("WEB-INF"))+"resources/settings_fields/";
 	
-	public  static Map<String, String> getfirsttfoms() {
-		return getPropertiesStr(str+"listfortfoms.txt");
+	
+	public  static Map<String, String> getfirsttfoms() throws UnsupportedEncodingException {
+		String test = str +"listfortfoms.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getPropertiesStr(test);
 	}
-	public  static Map<String, String> getfirstingos() {
-		return getPropertiesStr(str+"listforingos.txt");
+	public  static Map<String, String> getfirstingos() throws UnsupportedEncodingException {
+		String test = str+"listforingos.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getPropertiesStr(test);
 	}
 	
-	public  static Map<String, String> getfirstsimaz() {
-		return getPropertiesStr(str+"listforsimaz.txt");
+	public  static Map<String, String> getfirstsimaz() throws UnsupportedEncodingException {
+		String test = str+"listforsimaz.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getPropertiesStr(test);
 	}
 	
-	public  static Map<String, String> getfirstrosno() {
-		return getPropertiesStr(str+"listforrosno.txt");
+	public  static Map<String, String> getfirstrosno() throws UnsupportedEncodingException {
+		String test = str+"listforrosno.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getPropertiesStr(test);
 	}
 	
-	public  static Map<String, String> getProperties() {
-		return getPropertiesStr(str+"listforger.txt");
+	public  static Map<String, String> getProperties() throws UnsupportedEncodingException {
+		String test = str+"listforger.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getPropertiesStr(test);
 	}
 	
-	public static Map<Integer, String> getSource() {
-		return getProperties(str+"source.txt");
+	public static Map<Integer, String> getSource() throws UnsupportedEncodingException {
+		String test = str+"source.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getPresent() {
-		return getProperties(str+"present.txt");
+	public static Map<Integer, String> getPresent() throws UnsupportedEncodingException {
+		String test = str+"present.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getInbound_from() {
-		return getProperties(str+"inbound_from.txt");
+	public static Map<Integer, String> getInbound_from() throws UnsupportedEncodingException {
+		String test = str+"inbound_from.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getPresentforFL() {
-		return getProperties(str+"presentforfl.txt");
+	public static Map<Integer, String> getPresentforFL() throws UnsupportedEncodingException {
+		String test = str+"presentforfl.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getConect() {
-		return getProperties(str+"conect.txt");
+	public static Map<Integer, String> getConect() throws UnsupportedEncodingException {
+		String test = str+"conect.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getConectforFL() {
-		return getProperties(str+"conectforfl.txt");
+	public static Map<Integer, String> getConectforFL() throws UnsupportedEncodingException {
+		String test = str+"conectforfl.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getIntermed() {
-		return getProperties(str+"intermed.txt");
+	public static Map<Integer, String> getIntermed() throws UnsupportedEncodingException {
+		String test = str+"intermed.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getType() {
-		return getProperties(str+"type.txt");
+	public static Map<Integer, String> getType() throws UnsupportedEncodingException {
+		String test = str+"type.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getTer() {
-		return getProperties(str+"ter.txt");
+	public static Map<Integer, String> getTer() throws UnsupportedEncodingException {
+		String test = str+"ter.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getMo() {
-		return getProperties(str+"mo.txt");
+	public static Map<Integer, String> getMo() throws UnsupportedEncodingException {
+		String test = str+"mo.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getInsur() {
-		return getProperties(str+"insur.txt");
+	public static Map<Integer, String> getInsur() throws UnsupportedEncodingException {
+		String test = str+"insur.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getPlace() {
-		return getProperties(str+"place.txt");
+	public static Map<Integer, String> getPlace() throws UnsupportedEncodingException {
+		String test = str+"place.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getValid() {
-		return getProperties(str+"valid.txt");
+	public static Map<Integer, String> getValid() throws UnsupportedEncodingException {
+		String test = str+"valid.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 	
-	public static Map<Integer, String> getHsp() {
-		return getProperties(str+"hsp.txt");
+	public static Map<Integer, String> getHsp() throws UnsupportedEncodingException {
+		String test = str+"hsp.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
 	}
 
 	private static Map<Integer, String> getProperties(String filename) {

@@ -1,6 +1,7 @@
 package web;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -65,7 +66,7 @@ public class Basic {
     private ApplicationContext applicationContext;
 
 	//@ModelAttribute
-	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) {
+	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) throws UnsupportedEncodingException {
 
 		System.out.println("INFO "+request.getRequestURI());
 		
@@ -143,7 +144,7 @@ public class Basic {
 	}
 
     @RequestMapping("/index")
-    public String listPetits(Map<String, Object> map,HttpServletRequest request,ModelMap mapm) {
+    public String listPetits(Map<String, Object> map,HttpServletRequest request,ModelMap mapm) throws UnsupportedEncodingException {
     	
     	//String[] beanNames = applicationContext.getBeanDefinitionNames();
 
@@ -254,7 +255,7 @@ public class Basic {
 	
     
     @RequestMapping(value = "/refresh/{petitId}")
-    public String loadPetit(@PathVariable("petitId") Integer petitId, ModelMap map,HttpServletRequest request) {
+    public String loadPetit(@PathVariable("petitId") Integer petitId, ModelMap map,HttpServletRequest request) throws UnsupportedEncodingException {
     	setupForm(map,request, new Petit());
     	map.put("petit", petitService.getPetit(petitId));
     	
@@ -262,7 +263,7 @@ public class Basic {
     }
     
     @RequestMapping(value = "/refresh/add", method = RequestMethod.POST)
-    public String refreshAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request, ModelMap mapm) {
+    public String refreshAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request, ModelMap mapm) throws UnsupportedEncodingException {
     	String pa = request.getParameter("submit");
     	
     	if(pa.trim().equals("Завершить")){
@@ -378,7 +379,7 @@ public class Basic {
 	}
     
     @RequestMapping("/searching")
-    public String searching(ModelMap map,HttpServletRequest request) {
+    public String searching(ModelMap map,HttpServletRequest request) throws UnsupportedEncodingException {
     	setupForm(map,request,new Petit());
     	map.put("petit", new Petit());
         return "searching";
