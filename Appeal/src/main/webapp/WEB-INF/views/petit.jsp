@@ -591,7 +591,7 @@
 		<form:input  path="policy" />
 
 		<form:label  style="font-weight: bold;" path="tel"><spring:message code="label.tel" /></form:label>
-		<form:input  path="tel" />
+		<form:input  path="tel"/>
 
 		<form:label  style="font-weight: bold;" path="adress"><spring:message code="label.adress" /></form:label>
 		<form:input  path="adress" />	
@@ -710,7 +710,7 @@
 					<form:input class="css-input" path="compensCode" placeholder="Код дефекта"/>
 	
 					<form:label path="compensSum"><spring:message code="label.compensSum" /></form:label>
-					<form:input class="css-input" path="compensSum" />
+					<form:input class="css-input" path="compensSum" pattern="^[^.]*$" title="Не используйте точку"/>
                 </p>
                 <p>
 					<form:label style="width: 144px;" path="causeNote"><spring:message code="label.causeNote" /></form:label>

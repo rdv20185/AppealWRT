@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Comparator;
@@ -15,16 +14,12 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
-
 
 public class Fields {
 	
 	private static URL url = Fields.class.getResource("Fields.class");
-	private static String str = url.getPath().substring(url.getPath().indexOf("C:/"), url.getPath().indexOf("WEB-INF"))+"resources/settings_fields/";
+	private static String str = url.getPath().substring(url.getPath().indexOf("/"), url.getPath().indexOf("WEB-INF"))+"resources/settings_fields/";
+	
 	
 	
 	public  static Map<String, String> getfirsttfoms() throws UnsupportedEncodingException {
@@ -86,7 +81,7 @@ public class Fields {
 		String test = str+"inbound_from.txt";
 		test = URLDecoder.decode(test, "UTF-8");
 		test = new File(test).getPath();
-		
+		System.out.println("TEST "+test);
 		return getProperties(test);
 	}
 	

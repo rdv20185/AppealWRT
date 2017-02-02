@@ -65,6 +65,32 @@
 				<user name="smo_rosno_19" password="345gd6" authorities="ROLE_SMO" />
 				<user name="smo_rosno_20" password="wer36" authorities="ROLE_SMO" />
 				
+				<user name="smo_rosno_21" password="wer21" authorities="ROLE_SMO" />
+				<user name="smo_rosno_22" password="wer22" authorities="ROLE_SMO" />
+				<user name="smo_rosno_23" password="wer23" authorities="ROLE_SMO" />
+				<user name="smo_rosno_24" password="wer24" authorities="ROLE_SMO" />
+				<user name="smo_rosno_25" password="fsdr25" authorities="ROLE_SMO" />
+				<user name="smo_rosno_26" password="dfswer26" authorities="ROLE_SMO" />
+				<user name="smo_rosno_27" password="gfr24" authorities="ROLE_SMO" />
+				<user name="smo_rosno_28" password="wfhddf" authorities="ROLE_SMO" />
+				<user name="smo_rosno_29" password="rfsd43dfg" authorities="ROLE_SMO" />
+				<user name="smo_rosno_30" password="34dsf6fg45t" authorities="ROLE_SMO" />
+				<user name="smo_rosno_31" password="23f54f6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_32" password="34ggf6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_33" password="3242tertg6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_34" password="6543242f" authorities="ROLE_SMO" />
+				<user name="smo_rosno_35" password="423fsuio56" authorities="ROLE_SMO" />
+				<user name="smo_rosno_36" password="234fsg6gf" authorities="ROLE_SMO" />
+				<user name="smo_rosno_37" password="qweredfg32" authorities="ROLE_SMO" />
+				<user name="smo_rosno_38" password="feergdf3456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_39" password="42tyr456" authorities="ROLE_SMO" />
+				<user name="smo_rosno_40" password="23atyus6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_41" password="34gf877d6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_42" password="3423gkjkfsdg" authorities="ROLE_SMO" />
+				<user name="smo_rosno_43" password="345gd9iy6" authorities="ROLE_SMO" />
+				<user name="smo_rosno_44" password="wer36ytu" authorities="ROLE_SMO" />
+				<user name="smo_rosno_45" password="wer36546" authorities="ROLE_SMO" />
+				
             </user-service>
         </authentication-provider>
     </authentication-manager>

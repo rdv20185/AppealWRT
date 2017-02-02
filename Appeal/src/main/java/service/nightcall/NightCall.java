@@ -35,7 +35,7 @@ public class NightCall {
 		
 	  public void printMessage() throws ParseException {
 		
-		  if(logger.isInfoEnabled()){ logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$          начало обработки      TEST   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");}
+		  if(logger.isInfoEnabled()){ logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$          начало обработки   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");}
 			
 		  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		  
@@ -128,7 +128,7 @@ public class NightCall {
   				if(logger.isInfoEnabled()){ logger.info("Последняя дата обработки равна сегодняшней : последняя ");}
   			}
 		  
-		  	if(logger.isInfoEnabled()){ logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$          конец обработки   TEST      $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");}
+		  	if(logger.isInfoEnabled()){ logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$          конец обработки   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");}
 		  	
 			 // 	nightcallsprocess();
 	    }

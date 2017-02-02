@@ -46,7 +46,6 @@ public class NotifyAspect {
   */
     @After("anyOldTransfer6()") 
     public void notifyCents() throws Throwable {
-    	System.out.println("@@ TEST2 @@");
         template.convertAndSend(WEBSOCKET_TOPIC, new Date());
     }
     

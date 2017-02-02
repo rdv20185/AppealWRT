@@ -251,6 +251,8 @@ public class PetitDAOImpl implements PetitDAO {
     	if(username.contains("smo_rosno")) {
     		criteria.add( Restrictions.in( "username", new String[] { "smo_rosno", "smo_rosno_01","smo_rosno_02", "smo_rosno_03","smo_rosno_04", "smo_rosno_05","smo_rosno_06", "smo_rosno_07",
     				"smo_rosno_08", "smo_rosno_09","smo_rosno_10", "smo_rosno_11","smo_rosno_12", "smo_rosno_13","smo_rosno_14", "smo_rosno_15","smo_rosno_16","smo_rosno_17", "smo_rosno_18","smo_rosno_19", "smo_rosno_20",
+    				"smo_rosno_21", "smo_rosno_22","smo_rosno_23", "smo_rosno_24","smo_rosno_25", "smo_rosno_26","smo_rosno_27", "smo_rosno_28","smo_rosno_29","smo_rosno_30", "smo_rosno_31","smo_rosno_32", "smo_rosno_33",
+    				"smo_rosno_34", "smo_rosno_35","smo_rosno_36", "smo_rosno_37","smo_rosno_38", "smo_rosno_39","smo_rosno_40", "smo_rosno_41","smo_rosno_","smo_rosno_42", "smo_rosno_43","smo_rosno_44", "smo_rosno_45",
     				"call5002", "callnight5002" } ) );
     	}
     	
