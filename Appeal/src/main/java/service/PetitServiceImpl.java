@@ -1,5 +1,6 @@
 package service;
  
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -19,6 +20,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.servlet.ServletContext;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRTextElement;
@@ -51,6 +54,8 @@ public class PetitServiceImpl implements PetitService {
  
     @Autowired
     private PetitDAO petitDAO;
+    @Autowired
+    private ServletContext servletcontext;
  
     @Transactional
     public void addPetit(Petit petit) {
@@ -171,9 +176,9 @@ public class PetitServiceImpl implements PetitService {
 	}
 	
     @Transactional
-    public List<Petit> listSearch(String username, String searchcheckinbound) throws Throwable {
+    public List<Petit> listSearch(String username, String searchcheckinbound, String overdueappeal) throws Throwable {
     	
-    	List<Petit> lp = petitDAO.listSearch(petit, username,searchcheckinbound);
+    	List<Petit> lp = petitDAO.listSearch(petit, username,searchcheckinbound,overdueappeal);
     	
     	if (lp != null) {
     		return lp;
@@ -248,6 +253,28 @@ public class PetitServiceImpl implements PetitService {
 		
    		disconnectForJasper(conn);
 	}
+    
+    
+    
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void report_overdue_appeal(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
+    	
+    	System.out.println("##############2 "+servletcontext.getRealPath("/")+"resources"+File.separator+"form_report"+File.separator);
+    	/*Connection conn = connectForJasper();
+		Map mapReport = mapForJasper(dateReport, username);
+		JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\pg_form_1_1dop.jrxml");
+		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
+		JRXlsExporter exporter = new JRXlsExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Appeals3\\Appeal\\reports\\pg_form_1_1.xls"));
+		exporter.exportReport();
+		
+   		disconnectForJasper(conn);*/
+	}
+    
+    
 
     @Transactional
 	public Petit getPetit(Integer petitId) {

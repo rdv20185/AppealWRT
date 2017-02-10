@@ -470,7 +470,10 @@
           <ul class="submenu">
             <li><a href="">Регламент</a></li>
             <li><a href="<c:url value="/downloadmanual" />">Инструкция пользователя</a></li>
-            <li><a href="<c:url value="/downloadreestr" />">Реестр страховых представителей</a></li>
+            <li><a href="<c:url value="/downloadreestr" />">Реестр страховых представителей 25.09.16</a></li>
+            <li><a href="<c:url value="/downloadreestr1117_1" />">Реестр страховых представителей Симаз 01.02.17</a></li>
+            <li><a href="<c:url value="/downloadreestr1117_2" />">Реестр страховых представителей Росно 01.02.17</a></li>
+            <li><a href="<c:url value="/downloadreestr1117_4" />">Реестр страховых представителей Ингострах 01.02.17</a></li>
           </ul>
         </li>
       </ul>
@@ -561,7 +564,7 @@
 	 		<form:options items="${presentList}"/>
 		</form:select>
 		<form:select id="inbound_from"  path="blockger2016.inbound_from">
-		<option value="" disabled selected>Выбор отписавшего</option>
+		<option value="" disabled selected>От кого</option>
 	 		<form:options items="${inbound_fromList}"/>
 		</form:select>
 	  </p>
@@ -628,6 +631,12 @@
 			<form:select id="type" path="typeId" onchange="document.getElementById('typeWarning').hidden = true;">
 			<form:option value="0" label=""/>
 			<form:option value="3" label="Консультация" />
+			</form:select>
+	</sec:authorize>
+	<sec:authorize access="hasAnyRole('ROLE_TFOMS')">
+			<form:select style="margin-left: 100px;" id="claim_inshur" path="blockger2016.claim_inshur">
+			<option value="" disabled selected>Претензия к СМО</option>
+			<form:options items="${insurList}"/>
 			</form:select>
 	</sec:authorize>		
 	</p>

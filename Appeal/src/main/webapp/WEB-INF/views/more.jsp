@@ -39,6 +39,8 @@
 <table class="data">
 	<tr><td><spring:message code="label.id"/></td><td>${petit.num}</td></tr>
 	<tr><td><spring:message code="label.dateInput"/></td><td>${petit.dateInput}</td></tr>
+	<tr><td>Дата промежуточного ответа </td><td>${petit.getBloutboindletter2016().getDate_between()}</td></tr>
+	<tr><td>Дата окончательного ответа </td><td>${petit.blockger2016.date_end}</td></tr>
 	<tr><td><spring:message code="label.dateBegin"/></td><td>${petit.dateBegin}</td></tr>
 	<tr><td><spring:message code="label.dateEnd"/></td><td>${petit.dateEnd}</td></tr>
 	<tr><td><spring:message code="label.source"/></td><td>${petit.source.sourceName}</td></tr>

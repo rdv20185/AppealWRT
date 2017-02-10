@@ -70,7 +70,7 @@
 </form:form>
 
 <h3><spring:message code="label.pg_form" /></h3>
-<form:form method="post" action="report" commandName="dateReport" onsubmit="subDisableButton('submit');">
+<form:form method="post" action="report.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
 	<table cellspacing='15'>
 		<tr>
 			<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>

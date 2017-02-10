@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,7 +187,7 @@ public class PetitDAOImpl implements PetitDAO {
     }
     
     @SuppressWarnings("unchecked")
-	public List<Petit> listSearch(Petit petit, String username, String searchcheckinbound) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	public List<Petit> listSearch(Petit petit, String username, String searchcheckinbound, String overdueappeal) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
     	
     	Criteria criteria =  sessionFactory.getCurrentSession().createCriteria(Petit.class,"p");
     	criteria.createAlias("p.blockger2016", "b");
@@ -216,19 +217,17 @@ public class PetitDAOImpl implements PetitDAO {
     	if(searchcheckinbound == null){
 		    	try {
 			    	if(p.matcher(petit.getDateBegin()).matches()) {
-			    		
-							criteria.add(Restrictions.ge("b.date_end", df.parse(petit.getDateBegin().concat(" 0:00:01.0"))	));
+						criteria.add(Restrictions.ge("b.date_end", df.parse(petit.getDateBegin().concat(" 0:00:01.0"))	));
 			    	}
 			    	if(p.matcher(petit.getDateEnd()).matches()) {
 			    		criteria.add(Restrictions.le("b.date_end", df.parse(petit.getDateEnd().concat(" 23:59:00.0"))	));
 			    	}
-		    	
+			    	
 		    	} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
     	}  
-    	else{
+    	else{ 
     		Date b = null;
     		criteria.add(Restrictions.isNull("b.date_end"));
     		//criteria.add(Restrictions.eq("b.date_end", b));
@@ -241,6 +240,8 @@ public class PetitDAOImpl implements PetitDAO {
 	    		criteria.add(Restrictions.le("p.dateInput", petit.getDateEnd()	));
 	    	}
     	}
+    	
+    	
     	
     	if(username.equals("smo_ingos")) {
     		criteria.add( Restrictions.in( "username", new String[] { "smo_ingos", "call5003", "callnight5003" } ) );

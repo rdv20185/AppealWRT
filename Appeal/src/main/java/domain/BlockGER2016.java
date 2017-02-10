@@ -46,7 +46,17 @@ public class BlockGER2016 {
 	private Date letter_out_date;
 	// пришло из минфина, минзндава...ставится отметка входящего письма.
 	private String inbound_from;
+	// claim_inshur
+	private String claim_inshur;
 	
+	public String getClaim_inshur() {
+		return claim_inshur;
+	}
+
+	public void setClaim_inshur(String claim_inshur) {
+		this.claim_inshur = claim_inshur;
+	}
+
 	public String getInbound_from() {
 		return inbound_from;
 	}
@@ -188,7 +198,7 @@ public class BlockGER2016 {
 				+ ", letter_out_date=" + letter_out_date + ", regsource_id="
 				+ regsource_id + ", regname=" + regname + ", regnum=" + regnum
 				+ ", date_create=" + date_create + ", date_change="
-				+ date_change + ",inbound_from="+ inbound_from +" state=" + state + ",filecall ="+ filecall +"]";
+				+ date_change + ",inbound_from="+ inbound_from +",claim_inshur="+ claim_inshur +" state=" + state + ",filecall ="+ filecall +"]";
 	}
 
 	public Date getDate_close() {

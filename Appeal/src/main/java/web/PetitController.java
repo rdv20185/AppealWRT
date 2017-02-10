@@ -70,6 +70,7 @@ import domain.Ter;
 import domain.Type;
 import domain.TypeL;
 import ftp.FTPDownloadFileDemo;
+import domain.Book;
 
 @Controller
 public class PetitController {
@@ -343,7 +344,7 @@ public class PetitController {
     }
 
 	
-	@RequestMapping(value = "/report", method = RequestMethod.POST)
+	@RequestMapping(value = "/report.html", method = RequestMethod.POST)
     public String report(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
 		if(insursmo == null){	
@@ -361,11 +362,34 @@ public class PetitController {
     	return "reporting";
 	}
 	
+	
+	@RequestMapping(value = "/generate/excel.xls", method = RequestMethod.GET)
+	public ModelAndView downloadExcel(HttpServletRequest request) {
+		// create some sample data
+		List<Book> listBooks = new ArrayList<Book>();
+		/*listBooks.add(new Book("Effective Java", "Joshua Bloch", "0321356683",
+				"May 28, 2008", 38.11F));
+		listBooks.add(new Book("Head First Java", "Kathy Sierra & Bert Bates",
+				"0596009208", "February 9, 2005", 30.80F));
+		listBooks.add(new Book("Java Generics and Collections",
+				"Philip Wadler", "0596527756", "Oct 24, 2006", 29.52F));
+		listBooks.add(new Book("Thinking in Java", "Bruce Eckel", "0596527756",
+				"February 20, 2006", 43.97F));
+		listBooks.add(new Book("Spring in Action", "Craig Walls", "1935182358",
+				"June 29, 2011", 31.98F));*/
+		List<Petit> listpetit = (List<Petit>)request.getAttribute("list_search");
+		System.out.println("@@@@@ "+listpetit);
+		
+		// return a view which will be resolved by an excel view resolver
+		return new ModelAndView("excelView", "listpetit", listpetit);
+	}
+	
 	@RequestMapping(value = "/report_call", method = RequestMethod.POST)
     public String report_call(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
 		
-			if(getUserName().contains("smo_rosno")) petitService.report_call(dateReport, "smo_rosnocall5002callnight5002smo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20");
+			if(getUserName().contains("smo_rosno")) petitService.report_call(dateReport, "smo_rosnocall5002callnight5002smo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19"
+					+ "smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
 			else if(getUserName().equals("smo_ingos")) petitService.report_call(dateReport, "smo_ingoscall5003callnight5003");
 			else if(getUserName().equals("smo_simaz")) petitService.report_call(dateReport, "smo_simazcall5001callnight5001");
 			else {petitService.report_call(dateReport, getUserName());}
@@ -393,6 +417,22 @@ public class PetitController {
 	@RequestMapping(value = "/downloadreestr", method = RequestMethod.GET)
     public void reestr(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         downloadFile(request, response, "\\resources\\doc_fond\\reestr_25.09.2016.docx");
+	}
+	
+	
+	@RequestMapping(value = "/downloadreestr1117_1", method = RequestMethod.GET)
+    public void reestr1(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        downloadFile(request, response, "\\resources\\doc_fond\\simaz_01.02.17.docx");
+	}
+	
+	@RequestMapping(value = "/downloadreestr1117_2", method = RequestMethod.GET)
+    public void reestr2(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        downloadFile(request, response, "\\resources\\doc_fond\\rosno_01.02.17.doc");
+	}
+	
+	@RequestMapping(value = "/downloadreestr1117_4", method = RequestMethod.GET)
+    public void reestr4(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        downloadFile(request, response, "\\resources\\doc_fond\\ingos_02.02.2017.doc");
 	}
 	
 	@RequestMapping(value = "/downloadmanual", method = RequestMethod.GET)

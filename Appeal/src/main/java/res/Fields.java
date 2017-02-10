@@ -81,7 +81,6 @@ public class Fields {
 		String test = str+"inbound_from.txt";
 		test = URLDecoder.decode(test, "UTF-8");
 		test = new File(test).getPath();
-		System.out.println("TEST "+test);
 		return getProperties(test);
 	}
 	

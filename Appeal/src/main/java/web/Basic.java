@@ -2,10 +2,10 @@ package web;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,9 +42,11 @@ import domain.Rectif4;
 import domain.Source;
 import domain.Ter;
 import domain.Type;
+import domain.blOutboindLETTER2016;
 import res.Fields;
 import res.TransferFiles;
 import service.PetitService;
+import util.Util;
 
 @Controller
 public class Basic {
@@ -67,9 +69,6 @@ public class Basic {
 
 	//@ModelAttribute
 	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) throws UnsupportedEncodingException {
-
-		System.out.println("INFO "+request.getRequestURI());
-		
 		
     	map.put("petit", petit);
     	
@@ -228,7 +227,7 @@ public class Basic {
 	    		}
     		}else{System.out.println("equals 0");}	
     	}else{}
-    	System.out.println("WWWWWWW "+path);
+    	//System.out.println("WWWWWWW "+path);
     	
     }
     
@@ -386,7 +385,9 @@ public class Basic {
     }
     
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request,@RequestParam(required=false) String searchcheckinbound) throws Throwable {
+    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request,
+    		@RequestParam(required=false) String searchcheckinbound,
+    		@RequestParam(required=false) String overdueappeal) throws Throwable {
     	
     	//searching parameters
     	int t = petit.getTypeId(), c = petit.getCauseId(), 
@@ -411,23 +412,60 @@ public class Basic {
 
 		//searching
 		petitService.setSearchParams(petit);
-		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound);
+		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound,overdueappeal);
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df2 = new SimpleDateFormat("dd.MM.yyyy");
+		Calendar cal  = Calendar.getInstance();
+		Calendar cal2  = Calendar.getInstance();
 		for (int i = 0; i < listPetit.size(); i++) {
-			/*if(searchcheckinbound != null){
-				if(listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getTypeId() == 1 && listPetit.get(i).getPresentId() == 2){
-					listPetit.remove(listPetit.get(i));
-					i = i-1;
+			if (listPetit.get(i).getBloutboindletter2016() == null) listPetit.get(i).setBloutboindletter2016(new blOutboindLETTER2016());
+			if (listPetit.get(i).getBloutboindletter2016().getDate_between() == null) listPetit.get(i).getBloutboindletter2016().setDate_between("");
+			
+			if(overdueappeal == null){}
+			else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("")){
+				cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
+				cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
+				
+				if(Util.daysBetween(cal, cal2) <= 30){
+					if(i == 0){listPetit.remove(i); i = 0;}
+					else{listPetit.remove(i);	i = i-1;}
 				}
-				else{
-					listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(8, 10) + "." + listPetit.get(i).getDateInput().substring(5, 7) + "." + listPetit.get(i).getDateInput().substring(0, 4));
+			}
+			else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1){
+						cal.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
+						cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
+						
+						if(Util.daysBetween(cal, cal2) <= 30){
+							if(i == 0){listPetit.remove(i); i = 0;}
+							else{listPetit.remove(i);	i = i-1;}
+						}
+			}
+			else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1 ){
+				cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
+				cal2.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
+				
+				if(Util.daysBetween(cal, cal2) <= 30){
+					if(i == 0){listPetit.remove(i); i = 0;}
+					else{listPetit.remove(i);	i = i-1;}
 				}
-	    	}else{
-	    		listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(8, 10) + "." + listPetit.get(i).getDateInput().substring(5, 7) + "." + listPetit.get(i).getDateInput().substring(0, 4));
-			}*/
+			}
+			else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("") ){
+				cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
+				cal2.setTime(new Date());
+				
+				if(Util.daysBetween(cal, cal2) <= 30){
+					if(i == 0){listPetit.remove(i); i = 0;}
+					else{listPetit.remove(i);	i = i-1;}
+				}
+			}
+			
+			if(i == listPetit.size()-1){	listPetit.remove(0); i = i-1;}
 			listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(0, 11));
 		}
 		
 		
+		request.setAttribute("list_search", listPetit);
 		if(listPetit.size() <= 10000) {
 			map.put("searchList", listPetit);
 			map.put("searchListSize", listPetit.size());

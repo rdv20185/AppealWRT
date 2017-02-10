@@ -43,7 +43,7 @@ public interface PetitService {
 
 	void setSearchParams(Petit petit);
 	
-	public List<Petit> listSearch(String username, String searchcheckinbound) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, Throwable;
+	public List<Petit> listSearch(String username, String searchcheckinbound, String overdueappeal) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, Throwable;
 	
 	public void pgForm(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
 
@@ -75,5 +75,7 @@ public interface PetitService {
 	public void updateLastDate(Calendar cal);
 	
 	public void report_call(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
+	
+	public void report_overdue_appeal(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
 
 }

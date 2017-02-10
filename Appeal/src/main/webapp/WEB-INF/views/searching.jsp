@@ -302,6 +302,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 <h3><spring:message code="label.searching" /></h3>
 
 <div class="error_search" style="display:none; margin-bottom: 15px; color:red;"></div>
+
 <form:form method="post" action="search" commandName="petit" name='search_form' id="search_form">
 
 	<table>
@@ -392,8 +393,10 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 	<table>	
 		<tr>
 			<td><form:label path="typeId"><spring:message code="label.type" /></form:label></td>
-			<td><form:select id="type" path="typeId"></form:select>
-			<div id="inbound_div" style="display: -webkit-inline-box;"  title="Отметка покажет обращения которые в работе, т.е. либо мигают желтым,либо закрашены желтым. Если отметка не проставлена,то обращения которые завершены, в случае с  письменными жалобами - проставлена дата исходщего сообщения (т.е. отправлен ответ)">В работе <input type="checkbox" name="searchcheckinbound" id="searchcheckinbound"  value="checkinbound"></div></td>
+			<td><form:select id="type" path="typeId"></form:select></td>
+			<td><div id="inbound_div" style="display: -webkit-inline-box;"  title="Отметка покажет обращения которые в работе, т.е. либо мигают желтым,либо закрашены желтым. Если отметка не проставлена,то обращения которые завершены, в случае с  письменными жалобами - проставлена дата исходщего сообщения (т.е. отправлен ответ)">В работе <input type="checkbox" name="searchcheckinbound" id="searchcheckinbound"  value="checkinbound"></div></td>
+			<td><div id="overdueappeal_div" style="display: -webkit-inline-box;"  title="Наличие отметки покажет обращения у которых превышена дата окончательного или промежуточного ответа (в случае письменного обращения) или же в случае устного обращения покажет не завершенный статус (то есть можно допустить что устное обращение (звонок) не обратан или вовсе не было общения с обратившимся)">Просроченные обращения <input type="checkbox" name="overdueappeal" id="overdueappeal"  value="overdueappeal"></div></td>
+			
 		</tr>
 		<tr>			
 			<td><form:label path="causeId"><spring:message code="label.cause" /></form:label></td>
@@ -548,7 +551,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 <c:if test="${petitParam.propos ne ''}"><spring:message code="label.propos" /> - <c:out value="${petitParam.propos}"/>;&nbsp&nbsp&nbsp&nbsp</c:if>
 </h5><br>
 <h5>Найдено: ${searchListSize}</h5><br></c:if>
-
+<a href="generate/excel.xls">Generate Excel</a>  
 <c:if test="${!empty searchList}">
 	<table class="tab_search">
 	<thead>
@@ -558,6 +561,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
    		    <!-- <th><spring:message code="label.dateBegin" /></th>
 		    <th><spring:message code="label.dateEnd" /></th>-->  
 		    <th><spring:message code="label.source" /></th>
+		    <th>Тип МО</th>
 		    <th class="cuting2"><spring:message code="label.present" /></th>
 		    <th><spring:message code="label.letterNum" /></th>
 		    <th class="cuting"><spring:message code="label.mo" /></th>
@@ -623,6 +627,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 				<!-- <td>${petit.dateBegin}</td>
 			    <td>${petit.dateEnd}</td>-->  
 			    <td>${petit.source.sourceName}</td>
+			    <td>${petit.hsp.hspName}</td>
 			    <td class="cuting2">${petit.present.presentName}</td>
 			    <td>${petit.letterNum}</td>
 			    <td class="cuting">${petit.mo.moName}</td>
