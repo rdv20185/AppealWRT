@@ -11,7 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +31,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import domain.BlockGER2016;
 import domain.Cause;
@@ -45,6 +52,7 @@ import domain.Type;
 import domain.blOutboindLETTER2016;
 import res.Fields;
 import res.TransferFiles;
+import service.PetitListWrapper;
 import service.PetitService;
 import util.Util;
 
@@ -385,13 +393,14 @@ public class Basic {
     }
     
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request,
+    public String search(@ModelAttribute("petit") Petit petit, ModelMap map,HttpServletRequest request,HttpServletResponse response,
     		@RequestParam(required=false) String searchcheckinbound,
-    		@RequestParam(required=false) String overdueappeal) throws Throwable {
+    		@RequestParam(required=false) String overdueappeal,
+    		HttpSession session) throws Throwable {
     	
     	//searching parameters
     	int t = petit.getTypeId(), c = petit.getCauseId(), 
-    			r1 = petit.getRectif1Id(), r2 = petit.getRectif2Id(), r3 = petit.getRectif3Id(), r4 = petit.getRectif4Id();
+    	r1 = petit.getRectif1Id(), r2 = petit.getRectif2Id(), r3 = petit.getRectif3Id(), r4 = petit.getRectif4Id();
     	
 		if(t != 0) petit.setType(new Type(this.petitService.getTypes().get(t).getName(),t));
 		if(c != 0) petit.setCause(new Cause(this.petitService.getTypes().get(t).getCause(c).getName(),c));
@@ -408,6 +417,7 @@ public class Basic {
 		if(petit.getInsurId() != 0) petit.setInsur(new Insur(Fields.getInsur().get(petit.getInsurId()), petit.getInsurId()));
 		if(petit.getValidId() != 0) petit.setValid(new domain.Valid(Fields.getValid().get(petit.getValidId()), petit.getValidId()));
 		if(petit.getHspId() != 0) petit.setHsp(new Hsp(Fields.getHsp().get(petit.getHspId()), petit.getHspId()));
+		//if(!petit.getBlockger2016().getClaim_inshur().equals("0")) petit.getBlockger2016().setClaim_inshur("1");
 		map.put("petitParam", petit);
 
 		//searching
@@ -421,51 +431,59 @@ public class Basic {
 		for (int i = 0; i < listPetit.size(); i++) {
 			if (listPetit.get(i).getBloutboindletter2016() == null) listPetit.get(i).setBloutboindletter2016(new blOutboindLETTER2016());
 			if (listPetit.get(i).getBloutboindletter2016().getDate_between() == null) listPetit.get(i).getBloutboindletter2016().setDate_between("");
+			listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(0, 11));
 			
 			if(overdueappeal == null){}
-			else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("")){
-				cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
-				cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
+			else if(overdueappeal != null){
 				
-				if(Util.daysBetween(cal, cal2) <= 30){
-					if(i == 0){listPetit.remove(i); i = 0;}
-					else{listPetit.remove(i);	i = i-1;}
-				}
-			}
-			else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1){
-						cal.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
+					if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("")){
+						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
 						cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
 						
-						if(Util.daysBetween(cal, cal2) <= 30){
+						if(Util.daysBetween(cal, cal2) < 30){
 							if(i == 0){listPetit.remove(i); i = 0;}
 							else{listPetit.remove(i);	i = i-1;}
 						}
-			}
-			else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1 ){
-				cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
-				cal2.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
-				
-				if(Util.daysBetween(cal, cal2) <= 30){
-					if(i == 0){listPetit.remove(i); i = 0;}
-					else{listPetit.remove(i);	i = i-1;}
-				}
-			}
-			else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("") ){
-				cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
-				cal2.setTime(new Date());
-				
-				if(Util.daysBetween(cal, cal2) <= 30){
-					if(i == 0){listPetit.remove(i); i = 0;}
-					else{listPetit.remove(i);	i = i-1;}
-				}
-			}
-			
-			if(i == listPetit.size()-1){	listPetit.remove(0); i = i-1;}
-			listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(0, 11));
+					}
+					else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1){
+								cal.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
+								cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
+								
+								if(Util.daysBetween(cal, cal2) < 30){
+									if(i == 0){listPetit.remove(i); i = 0;}
+									else{listPetit.remove(i);	i = i-1;}
+								}
+					}
+					else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1 ){
+						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
+						cal2.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
+						
+						if(Util.daysBetween(cal, cal2) < 30){
+							if(i == 0){listPetit.remove(i); i = 0;}
+							else{listPetit.remove(i);	i = i-1;}
+						}
+					}
+					else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("") ){
+						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
+						cal2.setTime(new Date());
+						
+						if(Util.daysBetween(cal, cal2) < 30){
+							if(i == 0){listPetit.remove(i); i = 0;}
+							else{listPetit.remove(i);	i = i-1;}
+						}
+					}
+					
+					if(i == listPetit.size()-1){	listPetit.remove(0); i = i-1;}
+					
+			}		
 		}
 		
 		
-		request.setAttribute("list_search", listPetit);
+		PetitListWrapper pt = new PetitListWrapper();
+		pt.setPetit(listPetit);
+		session.setAttribute("list_search", pt);
+		
+		
 		if(listPetit.size() <= 10000) {
 			map.put("searchList", listPetit);
 			map.put("searchListSize", listPetit.size());

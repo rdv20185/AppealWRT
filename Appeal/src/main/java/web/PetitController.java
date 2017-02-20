@@ -18,12 +18,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import net.sf.jasperreports.engine.JRException;
@@ -40,11 +42,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import res.Fields;
 import res.TransferFiles;
+import service.PetitListWrapper;
 import service.PetitService;
 import domain.BlockGER2016;
 import domain.Cause;
@@ -70,13 +74,23 @@ import domain.Ter;
 import domain.Type;
 import domain.TypeL;
 import ftp.FTPDownloadFileDemo;
-import domain.Book;
 
+/**
+ * @author pylypiv.sergey
+ *
+ */
+/**
+ * @author pylypiv.sergey
+ *
+ */
 @Controller
 public class PetitController {
 	
 	@Autowired
     private PetitService petitService;
+	
+	@Autowired
+    private ServletContext servletcontext;
 	
     public PetitController() {
     	
@@ -150,7 +164,7 @@ public class PetitController {
 		return adds(petit,request,submitted,model);
     }
     
-    	private @ResponseBody List<Petit> adds(Petit petit,HttpServletRequest request,String submitted,ModelMap model) throws UnsupportedEncodingException {
+    private @ResponseBody List<Petit> adds(Petit petit,HttpServletRequest request,String submitted,ModelMap model) throws UnsupportedEncodingException {
 		
 		/*
 		 * Ловим с клиента в переменную ff поле date_end
@@ -242,9 +256,9 @@ public class PetitController {
     
    
     
-    @RequestMapping(value = "/nightcallfile/{petitId}", method = RequestMethod.GET)
-    public void downloadcall(@PathVariable("petitId")Integer petitId,HttpServletRequest request,HttpServletResponse response) throws IOException
-    {
+   @RequestMapping(value = "/nightcallfile/{petitId}", method = RequestMethod.GET)
+   public void downloadcall(@PathVariable("petitId")Integer petitId,HttpServletRequest request,HttpServletResponse response) throws IOException
+   {
     	Petit petit = petitService.getPetit(petitId);
     	
 		ServletContext context = request.getServletContext();
@@ -285,27 +299,27 @@ public class PetitController {
 	    	
 	}
     
-	private String getUserName() {
+   private String getUserName() {
 		
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    String name = user.getUsername();
 		return name;
 	}
 	
-	@RequestMapping(value = "/types", method = RequestMethod.GET)
+   @RequestMapping(value = "/types", method = RequestMethod.GET)
 	public @ResponseBody
 	Set<TypeL> findAllTypes() {
 		return this.petitService.findAllTypes();
 	}
 	
-	@RequestMapping(value = "/causes", method = RequestMethod.GET)
+   @RequestMapping(value = "/causes", method = RequestMethod.GET)
 	public @ResponseBody
 	Set<CauseL> causesForTypes(
 			@RequestParam(value = "typeName", required = true) int type) {
 		return this.petitService.findCausesForTypes(type);
 	}
 	
-	@RequestMapping(value = "/rectifs1", method = RequestMethod.GET)
+   @RequestMapping(value = "/rectifs1", method = RequestMethod.GET)
 	public @ResponseBody
 	Set<Rectif1L> rectifs1ForCauses(
 			@RequestParam(value = "causeName", required = true) int cause) {
@@ -348,7 +362,8 @@ public class PetitController {
     public String report(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
 		if(insursmo == null){	
-			if(getUserName().contains("smo_rosno")) petitService.pgForm(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20");
+			if(getUserName().contains("smo_rosno")) petitService.pgForm(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16"
+					+ "smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
 			else if(getUserName().equals("smo_ingos")) petitService.pgForm(dateReport, "smo_ingoscall5003callnight5003");
 			else if(getUserName().equals("smo_simaz")) petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");
 			else {petitService.pgForm(dateReport, getUserName());}
@@ -356,35 +371,63 @@ public class PetitController {
 		else
 		{
 			if(insursmo.equals("smo_simaz")){petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");}
-			if(insursmo.equals("smo_rosno")){petitService.pgForm(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20");}
+			if(insursmo.equals("smo_rosno")){petitService.pgForm(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
+					+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
 			if(insursmo.equals("smo_ingos")){petitService.pgForm(dateReport, "smo_ingoscall5003callnight5003");}
 		}	
     	return "reporting";
 	}
 	
 	
-	@RequestMapping(value = "/generate/excel.xls", method = RequestMethod.GET)
-	public ModelAndView downloadExcel(HttpServletRequest request) {
-		// create some sample data
-		List<Book> listBooks = new ArrayList<Book>();
-		/*listBooks.add(new Book("Effective Java", "Joshua Bloch", "0321356683",
-				"May 28, 2008", 38.11F));
-		listBooks.add(new Book("Head First Java", "Kathy Sierra & Bert Bates",
-				"0596009208", "February 9, 2005", 30.80F));
-		listBooks.add(new Book("Java Generics and Collections",
-				"Philip Wadler", "0596527756", "Oct 24, 2006", 29.52F));
-		listBooks.add(new Book("Thinking in Java", "Bruce Eckel", "0596527756",
-				"February 20, 2006", 43.97F));
-		listBooks.add(new Book("Spring in Action", "Craig Walls", "1935182358",
-				"June 29, 2011", 31.98F));*/
-		List<Petit> listpetit = (List<Petit>)request.getAttribute("list_search");
-		System.out.println("@@@@@ "+listpetit);
-		
-		// return a view which will be resolved by an excel view resolver
-		return new ModelAndView("excelView", "listpetit", listpetit);
+	/**
+	 * Определяет входящие параметры для слоя сервиса. Далее в запрос
+	 * Отчет раздела III.Сведения о деятельности страховых представитлей
+	 * 
+	 * @param dateReport - переменная объекта содержащая данные для поиска 
+	 * @param insursmo - выбранная страховая (ТОЛЬКО ДЛЯ ТФОМС)
+	 * @param bindingResult
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws JRException
+	 */
+	@RequestMapping(value = "/report_strax3.html", method = RequestMethod.POST)
+    public String report_strax3(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
+		if(bindingResult.hasErrors()) return "reporting";
+		if(insursmo == null){	
+			if(getUserName().contains("smo_rosno")) petitService.report_strax3(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16"
+					+ "smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
+			else if(getUserName().equals("smo_ingos")) petitService.report_strax3(dateReport, "smo_ingoscall5003callnight5003");
+			else if(getUserName().equals("smo_simaz")) petitService.report_strax3(dateReport, "smo_simazcall5001callnight5001");
+			else {petitService.report_strax3(dateReport, getUserName());}
+		}
+		else
+		{
+			if(insursmo.equals("smo_simaz")){petitService.report_strax3(dateReport, "smo_simazcall5001callnight5001");}
+			if(insursmo.equals("smo_rosno")){petitService.report_strax3(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
+					+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
+			if(insursmo.equals("smo_ingos")){petitService.report_strax3(dateReport, "smo_ingoscall5003callnight5003");}
+		}	
+    	return "reporting";
 	}
 	
-	@RequestMapping(value = "/report_call", method = RequestMethod.POST)
+	
+	/**
+	 * Метод является "транзитом" для экспорта Excel из формы поиска.
+	 * 
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/generate/excel.xls", method = RequestMethod.GET)
+	public ModelAndView downloadExcel(HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+		PetitListWrapper petitlistwrapper = (PetitListWrapper) session.getAttribute("list_search");
+		List<Petit> listpetit1 = petitlistwrapper.getPetit();
+		return new ModelAndView("excelView", "listpetit", listpetit1);
+	}
+	
+	@RequestMapping(value = "/report_call.html", method = RequestMethod.POST)
     public String report_call(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
 		
@@ -422,17 +465,7 @@ public class PetitController {
 	
 	@RequestMapping(value = "/downloadreestr1117_1", method = RequestMethod.GET)
     public void reestr1(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        downloadFile(request, response, "\\resources\\doc_fond\\simaz_01.02.17.docx");
-	}
-	
-	@RequestMapping(value = "/downloadreestr1117_2", method = RequestMethod.GET)
-    public void reestr2(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        downloadFile(request, response, "\\resources\\doc_fond\\rosno_01.02.17.doc");
-	}
-	
-	@RequestMapping(value = "/downloadreestr1117_4", method = RequestMethod.GET)
-    public void reestr4(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        downloadFile(request, response, "\\resources\\doc_fond\\ingos_02.02.2017.doc");
+        downloadFile(request, response, "\\resources\\doc_fond\\all_01.02.2017.xlsx");
 	}
 	
 	@RequestMapping(value = "/downloadmanual", method = RequestMethod.GET)
@@ -454,6 +487,12 @@ public class PetitController {
     public void report_cc2(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         downloadFile(request, response, "\\reports\\contact_call2.xls");
 	}
+	
+	@RequestMapping(value = "/report_strax3_formreport", method = RequestMethod.GET)
+    public void report_strax3_formreport(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		File f = new File( servletcontext.getRealPath("/resources/report/report_strax3.xls"));
+        downloadFile(request, response, f.getPath());
+	}
 
 	private void downloadFile(HttpServletRequest request,
 			HttpServletResponse response, String filePath) throws FileNotFoundException,
@@ -467,8 +506,12 @@ public class PetitController {
         if(filePath.contains("doc_fond")){
         	fullPath = appPath + filePath;
         }else{
+        	if(filePath.contains("report_strax3")){
+        		fullPath = filePath;
+        	}else{
         //String fullPath = appPath + filePath ;      
-        fullPath = "C:\\Appeals3\\Appeal" + filePath ;
+        		fullPath = "C:\\Appeals3\\Appeal" + filePath ;
+        	}
         }
         File downloadFile = new File(fullPath);
         FileInputStream inputStream = new FileInputStream(downloadFile);
@@ -547,7 +590,7 @@ public class PetitController {
 	
    
     
-    @RequestMapping(value = "/more/refresh/{petitId}")
+   @RequestMapping(value = "/more/refresh/{petitId}")
     public String moreLoadPetit(@PathVariable("petitId") Integer petitId, ModelMap map) {
     	map.put("petit", petitService.getPetit(petitId));
     	return "petit";

@@ -471,9 +471,7 @@
             <li><a href="">Регламент</a></li>
             <li><a href="<c:url value="/downloadmanual" />">Инструкция пользователя</a></li>
             <li><a href="<c:url value="/downloadreestr" />">Реестр страховых представителей 25.09.16</a></li>
-            <li><a href="<c:url value="/downloadreestr1117_1" />">Реестр страховых представителей Симаз 01.02.17</a></li>
-            <li><a href="<c:url value="/downloadreestr1117_2" />">Реестр страховых представителей Росно 01.02.17</a></li>
-            <li><a href="<c:url value="/downloadreestr1117_4" />">Реестр страховых представителей Ингострах 01.02.17</a></li>
+            <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей на 01.02.17</a></li>
           </ul>
         </li>
       </ul>

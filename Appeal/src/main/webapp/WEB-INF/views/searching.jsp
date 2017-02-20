@@ -307,8 +307,8 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 
 	<table>
 		<tr>
-			<td><form:label path="num"><spring:message code="label.id" /></form:label></td>
-			<td><form:input path="num" /></td>
+			<td><form:label path="id"><spring:message code="label.id" /></form:label></td>
+			<td><form:input path="id" /></td>
 		
 			<!--  прячу	 -->
 			<td><form:hidden id="dateInput" path="dateInput" /></td>
@@ -330,10 +330,12 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			</form:select></td>
 			
 			<td><form:label path="presentId"><spring:message code="label.present" /></form:label></td>
-			<td><form:select path="presentId" id="presentIdhtml">
-				<form:option value="0" label="" />
-    			<form:options items="${presentList}"/>
-			</form:select></td>
+			<td>
+				<form:select path="presentId" id="presentIdhtml">
+					<form:option value="0" label="" />
+	    			<form:options items="${presentList}"/>
+				</form:select>
+			</td>
 			
 			
 			<td><form:label path="letterNum"><spring:message code="label.letterNum" /></form:label></td>
@@ -396,7 +398,14 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			<td><form:select id="type" path="typeId"></form:select></td>
 			<td><div id="inbound_div" style="display: -webkit-inline-box;"  title="Отметка покажет обращения которые в работе, т.е. либо мигают желтым,либо закрашены желтым. Если отметка не проставлена,то обращения которые завершены, в случае с  письменными жалобами - проставлена дата исходщего сообщения (т.е. отправлен ответ)">В работе <input type="checkbox" name="searchcheckinbound" id="searchcheckinbound"  value="checkinbound"></div></td>
 			<td><div id="overdueappeal_div" style="display: -webkit-inline-box;"  title="Наличие отметки покажет обращения у которых превышена дата окончательного или промежуточного ответа (в случае письменного обращения) или же в случае устного обращения покажет не завершенный статус (то есть можно допустить что устное обращение (звонок) не обратан или вовсе не было общения с обратившимся)">Просроченные обращения <input type="checkbox" name="overdueappeal" id="overdueappeal"  value="overdueappeal"></div></td>
-			
+			<sec:authorize access="hasAnyRole('ROLE_TFOMS')">
+			<td>
+				<form:select style="margin-left: 10px;" id="claim_inshur" path="blockger2016.claim_inshur" >
+					<option value="">С претензией к СМО</option>
+					<form:options items="${insurList}"/>
+				</form:select>
+			</td>	
+			</sec:authorize>
 		</tr>
 		<tr>			
 			<td><form:label path="causeId"><spring:message code="label.cause" /></form:label></td>
@@ -551,9 +560,9 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 <c:if test="${petitParam.propos ne ''}"><spring:message code="label.propos" /> - <c:out value="${petitParam.propos}"/>;&nbsp&nbsp&nbsp&nbsp</c:if>
 </h5><br>
 <h5>Найдено: ${searchListSize}</h5><br></c:if>
-<a href="generate/excel.xls">Generate Excel</a>  
+<a href="generate/excel.xls">Экспорт в Excel</a>  
 <c:if test="${!empty searchList}">
-	<table class="tab_search">
+	<table class="tab_search" style="margin-top:10px;">
 	<thead>
 		<tr>
 			<th><spring:message code="label.id" /></th>      

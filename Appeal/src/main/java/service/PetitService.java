@@ -77,5 +77,16 @@ public interface PetitService {
 	public void report_call(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
 	
 	public void report_overdue_appeal(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
+	
+	/**
+	 * Метод создает JDBC подключение и формирует отчет в из Jasperreport
+	 * 
+	 * @param dateReport - переменная объекта содержащая данные для поиска 
+	 * @param username
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * @throws JRException
+	 */
+	public void report_strax3(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
 
 }

@@ -15,7 +15,6 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
-import domain.Book;
 import domain.Petit;
 
 /**
@@ -23,17 +22,18 @@ import domain.Petit;
  * @author www.codejava.net
  *
  */
+
 public class ExcelBuilder extends AbstractExcelView {
 
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model,
 			HSSFWorkbook workbook, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		// get data model which is passed by the Spring container
+		
 		List<Petit> listpetits = (List<Petit>) model.get("listpetit");
 		
 		// create a new Excel sheet
-		HSSFSheet sheet = workbook.createSheet("Java Books");
+		HSSFSheet sheet = workbook.createSheet("Поиск");
 		sheet.setDefaultColumnWidth(30);
 		
 		// create style for header cells
@@ -48,6 +48,12 @@ public class ExcelBuilder extends AbstractExcelView {
 		
 		// create header row
 		HSSFRow header = sheet.createRow(0);
+		
+		for(int i = 0; i < listpetits.size(); i++){
+			listpetits.get(i);
+		}
+		
+		
 		
 		header.createCell(0).setCellValue("Book Title");
 		header.getCell(0).setCellStyle(style);

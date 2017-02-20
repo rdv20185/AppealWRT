@@ -193,16 +193,31 @@ public class PetitDAOImpl implements PetitDAO {
     	criteria.createAlias("p.blockger2016", "b");
     	
     	Method[] methods = Petit.class.getMethods();
+    	String fieldName,fieldName2 ; 
     	for (Method method : methods) {
     		if (isGetter(method)) {
-    			
-        		if(method.invoke(petit) != null && !"".equals(method.invoke(petit)) && !"getClass".equals(method.getName()) 
-        				&& !"0".equals(method.invoke(petit).toString())
-        				&& !"getDateBegin".equals(method.getName()) && !"getDateEnd".equals(method.getName())) {
-        			String fieldName = method.getName().replaceAll("get", "").substring(0, 1);
+        		if(method.invoke(petit) != null &&
+        		   !"".equals(method.invoke(petit)) &&
+        		   !"getClass".equals(method.getName()) &&
+        		   !"0".equals(method.invoke(petit).toString()) &&
+        		   !"getDateBegin".equals(method.getName()) &&
+        		   !"getDateEnd".equals(method.getName())) {
+        			
+        			
+        			fieldName = method.getName().replaceAll("get", "").substring(0, 1);
         			fieldName = fieldName.toLowerCase().concat(method.getName().replaceAll("get", "").substring(1));
         			
-        			criteria.add(Restrictions.eq(fieldName, method.invoke(petit)));
+        			
+        			if(method.getName().equals("getBlockger2016") && method.getReturnType().getMethods().length != 0){
+	        			for(Method method_s :method.getReturnType().getMethods()){
+	        				if (isGetter(method_s) && "getClaim_inshur".equals(method_s.getName()) &&  !method_s.invoke(petit.getBlockger2016()).equals("")) {
+	        					fieldName2 = method_s.getName().replaceAll("get", "").substring(0, 1);
+	        					fieldName2 = fieldName2.toLowerCase().concat(method_s.getName().replaceAll("get", "").substring(1));
+	        					//System.out.println("!!2 "+fieldName2+" --- "+ method_s.invoke(petit.getBlockger2016()));
+	        					criteria.add(Restrictions.eq("b."+fieldName2, method_s.invoke(petit.getBlockger2016())));
+	        				}	
+	        			}
+        			}else{ /*System.out.println("!! "+fieldName+" --- "+ method.invoke(petit));*/ criteria.add(Restrictions.eq("p."+fieldName, method.invoke(petit)));}
         		}
    		   	}
    	   	}

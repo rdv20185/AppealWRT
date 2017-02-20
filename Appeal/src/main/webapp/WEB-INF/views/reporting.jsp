@@ -29,6 +29,8 @@
 			$( "#dateEndCountDetail" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#db" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#de" ).datepicker({dateFormat:'dd.mm.yy'});
+			$( "#di3" ).datepicker({dateFormat:'dd.mm.yy'});
+			$( "#de3" ).datepicker({dateFormat:'dd.mm.yy'});
 			
 			
 		});
@@ -102,9 +104,31 @@
 </a>&nbsp;&nbsp;&nbsp;&nbsp;
 <br><br><hr/>
 
+<h3>Форма для раздела III. Сведения о деятельности страховых представителей</h3>
+<form:form method="post" action="report_strax3.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
+	<table cellspacing='15'>
+		<tr>
+			<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>
+			<form:input id="di3" path="dateBegin" class='reportParam' /></td>
+			<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
+			<form:input id="de3" path="dateEnd" class='reportParam' /></td>
+			<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
+			
+			<sec:authorize access="hasRole('ROLE_TFOMS')">
+				<td><form:checkbox path="insurcomp" value="smo_ingos"/>Ингосстрах</td>
+				<td><form:checkbox path="insurcomp" value="smo_rosno"/>Росно</td>
+				<td><form:checkbox path="insurcomp" value="smo_simaz"/>СимазМед</td>
+			</sec:authorize>
+		</tr>
+	</table>
+</form:form>
+<br>
+<a href="<c:url value="/report_strax3_formreport" />">Скачать</a>
+<br><br><hr/>
+
 <sec:authorize access="hasRole('ROLE_TFOMS')">
 <h3><spring:message code="label.call_centr" /></h3>
-<form:form method="post" action="report_call" commandName="dateReport" onsubmit="subDisableButton('submit');">
+<form:form method="post" action="report_call.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
 	<table cellspacing='15'>
 		<tr>
 			<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>
