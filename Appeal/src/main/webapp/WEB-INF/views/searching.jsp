@@ -598,9 +598,10 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		    <th  class="cuting3"><spring:message code="label.valid" /></th>
 		    <!-- <th><spring:message code="label.compens" /></th>-->
 		    <th  class="cuting3"><spring:message code="label.satisf" /></th>
+		    <th><spring:message code="label.compensSum" /></th>
 		    <!-- <th><spring:message code="label.compensSource" /></th>
 		    <th><spring:message code="label.compensCode" /></th>
-		    <th><spring:message code="label.compensSum" /></th>
+		    
 		    <th><spring:message code="label.propos" /></th>-->
 		    <th>Регистратор</th>
 		    <th>Исполнитель</th>
@@ -664,9 +665,10 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			    <td class="cuting3">${petit.valid.validName}</td>
 			    <!-- <td>${petit.compens}</td>-->
 			    <td class="cuting3">${petit.satisf}</td>
+			    <td>${petit.compensSum}</td>
 			    <!-- <td>${petit.compensSource}</td>
 			    <td>${petit.compensCode}</td>
-			    <td>${petit.compensSum}</td>
+			    
 			    <td>${petit.propos}</td>-->
 			    <td>${petit.blockger2016.regname}</td>
 				<td class="${cssClassonUser}">${petit.username}</td>	

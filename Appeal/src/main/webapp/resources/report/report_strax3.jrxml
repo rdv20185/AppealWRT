@@ -22,10 +22,10 @@
 			petit as (select * from t_petit_all t where  $P{username} like '%'||t.username||'%'),
 			blockger as (select * from t_block_ger_all bl),
             r1c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.source_id =2 and t.present_id = 1),
-            r2c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.username like '%'||'simaz'||'%' and t.present_id = 1 and (t2.regsource_id=3 or t2.regsource_id=4)),
+            r2c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.username like '%'||t.username||'%' and t.username  not like '%'||'call'||'%' and t.present_id = 1 and (t2.regsource_id=3 or t2.regsource_id=4)),
             r3c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.source_id =2 and t.present_id = 2),
             r4c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{beginning_of_the_year} and $P{dateEnd} and t.id = t2.id_ger and t.source_id =2 and t.present_id = 1),
-            r5c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{beginning_of_the_year} and $P{dateEnd} and t.id = t2.id_ger and t.username like '%'||'simaz'||'%' and t.present_id = 1 and (t2.regsource_id=3 or t2.regsource_id=4)),
+            r5c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{beginning_of_the_year} and $P{dateEnd} and t.id = t2.id_ger and t.username like '%'||t.username||'%' and t.username  not like '%'||'call'||'%'  and t.present_id = 1 and (t2.regsource_id=3 or t2.regsource_id=4)),
             r6c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{beginning_of_the_year} and $P{dateEnd} and t.id = t2.id_ger and t.source_id =2 and t.present_id = 2)
 
 

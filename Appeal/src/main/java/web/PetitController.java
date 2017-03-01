@@ -356,6 +356,8 @@ public class PetitController {
     	map.put("dateReport", new ReportParams());
         return "reporting";
     }
+    
+    
 
 	
 	@RequestMapping(value = "/report.html", method = RequestMethod.POST)

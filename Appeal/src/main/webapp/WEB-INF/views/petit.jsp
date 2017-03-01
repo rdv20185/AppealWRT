@@ -474,6 +474,9 @@
             <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей на 01.02.17</a></li>
           </ul>
         </li>
+        <sec:authorize access="hasAnyRole('ROLE_TFOMS')">
+        <li><a href="<c:url value="/reportingMEO.html" />">Отчеты МЭО</a></li>
+        </sec:authorize>
       </ul>
     </nav>
 
@@ -551,11 +554,11 @@
 		</form:select>
 	  </p>
 	  <p>
-		<form:label path="conectId"><spring:message code="label.conect" /></form:label>
-		<form:select path="conectId" id="connectid">
-			
-		<form:options items="${conectList}"/>
-		</form:select>  
+			<form:label path="conectId"><spring:message code="label.conect" /></form:label>
+				<form:select path="conectId" id="connectid">
+				<form:options items="${conectList}"/>
+			</form:select>  
+		
 		
 		<form:label path="presentId"><spring:message code="label.present" /></form:label>
 		<form:select id="presentId" onclick='changepresentId()' path="presentId">
