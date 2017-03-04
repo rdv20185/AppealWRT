@@ -79,7 +79,17 @@ public class BlockGER2016 {
 	private Date date_change;
 	// Ссылка на файл  звонка (ночного... )
 	private String filecall;
+	// видМП. Добавлено Кузнецовой ИН 02.03.17
+	private Integer typempid;
 	
+	public Integer getTypempid() {
+		return typempid;
+	}
+
+	public void setTypempid(Integer typempid) {
+		this.typempid = typempid;
+	}
+
 	public Date getDate_end() {
 		return date_end;
 	}
@@ -198,7 +208,7 @@ public class BlockGER2016 {
 				+ ", letter_out_date=" + letter_out_date + ", regsource_id="
 				+ regsource_id + ", regname=" + regname + ", regnum=" + regnum
 				+ ", date_create=" + date_create + ", date_change="
-				+ date_change + ",inbound_from="+ inbound_from +",claim_inshur="+ claim_inshur +" state=" + state + ",filecall ="+ filecall +"]";
+				+ date_change + ",inbound_from="+ inbound_from +",claim_inshur="+ claim_inshur +"typempid="+typempid+" state=" + state + ",filecall ="+ filecall +"]";
 	}
 
 	public Date getDate_close() {

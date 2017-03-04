@@ -35,6 +35,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libs/stomp-websocket/lib/stomp.min.js"></script>
 	<script type="text/javascript"  data-my_var_1="${principal.username}" src="${pageContext.request.contextPath}/resources/user/controller.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/expir_session.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/other.js"></script>
 	
 	
 	<c:url var="findTypesURL" value="/types" />
@@ -380,6 +381,10 @@
 	
 	<script>
 		$(function() {
+			$("#date_redirect").datepicker({dateFormat:'dd.mm.yy'});
+		});
+	
+		$(function() {
 			$( "#dateInput" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#dateInput" ).datepicker( "setDate", new Date());
 		});
@@ -682,6 +687,12 @@
 						<form:option value="0" label="" />
 		    			<form:options items="${hspList}"/>
 					</form:select>
+					
+					<form:label path="blockger2016.typempid">Вид МП</form:label>
+					<form:select path="blockger2016.typempid" id="typempid">
+						<form:options items="${typeMP}"/>
+					</form:select>
+					
                 </p>
                 <p>
 					<form:label path="moId"><spring:message code="label.mo" /></form:label>
@@ -748,33 +759,43 @@
 	      				<form:input id="date_receive" path="bloutboindletter2016.date_obtainAkt"/>
 	      			</p>
 	      			<p>
+	      			<div> id="div_subresponse">
 	      				<form:label path="bloutboindletter2016.many[0].date_subquery">Дата дополнительного запроса/ответа</form:label>
 	      				<form:input id="date_subresponse"  path="bloutboindletter2016.many[0].date_subquery"/>
 	      				<form:label path="bloutboindletter2016.many[0].note">Заметка</form:label>
 	      				<form:input type="text"  path="bloutboindletter2016.many[0].note"/>
+	      			</div>	
 	      			</p>
 	      			<p>
+	      			<button type="button" id="btn_add_subresponse" title="Добавить промежуточный ответ">+</button>
+	      			</p>
+	      			<p>
+	      			<div id="div_subresponse1">
 	      				<form:label path="bloutboindletter2016.many[1].date_subquery">Дата дополнительного запроса/ответа</form:label>
 	      				<form:input id="date_subresponse1"  path="bloutboindletter2016.many[1].date_subquery"/>
 	      				<form:label path="bloutboindletter2016.many[1].note">Заметка</form:label>
 	      				<form:input type="text"  path="bloutboindletter2016.many[1].note"/>
+      				</div>
 	      			</p>
 	      			<p>
+	      			<div id="div_subresponse2">
 	      				<form:label path="bloutboindletter2016.many[2].date_subquery">Дата дополнительного запроса/ответа</form:label>
 	      				<form:input id="date_subresponse2"  path="bloutboindletter2016.many[2].date_subquery"/>
 	      				<form:label path="bloutboindletter2016.many[2].note">Заметка</form:label>
 	      				<form:input type="text"  path="bloutboindletter2016.many[2].note"/>
+	      			</div>	
 	      			</p>
 	      			<p>	
-	      				<form:label path="bloutboindletter2016.date_response">Дата окончательного ответа</form:label>
+	      				<form:label path="bloutboindletter2016.date_response">Дата окончательного ответа гражданину</form:label>
 	      				<form:input id="date_response" path="bloutboindletter2016.date_response"/>
 	      				
 	      				<form:label path="bloutboindletter2016.numOutLetter">Номер письма</form:label>
 	      				<form:input path="bloutboindletter2016.numOutLetter"/>
 	      				
 	      				<form:label path="bloutboindletter2016.responsible">Отвественный</form:label>
-	      				<form:select path="bloutboindletter2016.responsible">
+	      				<form:select path="bloutboindletter2016.responsible" id="responsible">
 	      					<form:option value="" label="" />
+	      					<form:option value="kuznetsova" label="kuznetsova"/>
 							<form:option value="mityanina" label="mityanina" />
 							<form:option value="smyvin" label="smyvin" />
 							<form:option value="eremina" label="eremina" />
@@ -801,7 +822,43 @@
  							<form:option value="smo_rosno_18" label="smo_rosno_18" />
  							<form:option value="smo_rosno_19" label="smo_rosno_19" />
  							<form:option value="smo_rosno_20" label="smo_rosno_20" />
+ 							<form:option value="smo_rosno_21" label="smo_rosno_21" />
+ 							<form:option value="smo_rosno_22" label="smo_rosno_22" />
+ 							<form:option value="smo_rosno_23" label="smo_rosno_23" />
+ 							<form:option value="smo_rosno_24" label="smo_rosno_24" />
+ 							<form:option value="smo_rosno_25" label="smo_rosno_25" />
+ 							<form:option value="smo_rosno_26" label="smo_rosno_26" />
+ 							<form:option value="smo_rosno_27" label="smo_rosno_27" />
+ 							<form:option value="smo_rosno_28" label="smo_rosno_28" />
+ 							<form:option value="smo_rosno_29" label="smo_rosno_29" />
+ 							<form:option value="smo_rosno_30" label="smo_rosno_30" />
+ 							<form:option value="smo_rosno_31" label="smo_rosno_31" />
+ 							<form:option value="smo_rosno_32" label="smo_rosno_32" />
+ 							<form:option value="smo_rosno_33" label="smo_rosno_33" />
+ 							<form:option value="smo_rosno_34" label="smo_rosno_34" />
+ 							<form:option value="smo_rosno_35" label="smo_rosno_35" />
+ 							<form:option value="smo_rosno_36" label="smo_rosno_36" />
+ 							<form:option value="smo_rosno_37" label="smo_rosno_37" />
+ 							<form:option value="smo_rosno_38" label="smo_rosno_38" />
+ 							<form:option value="smo_rosno_39" label="smo_rosno_39" />
+ 							<form:option value="smo_rosno_40" label="smo_rosno_40" />
+ 							<form:option value="smo_rosno_41" label="smo_rosno_41" />
+ 							<form:option value="smo_rosno_42" label="smo_rosno_42" />
+ 							<form:option value="smo_rosno_43" label="smo_rosno_43" />
+ 							<form:option value="smo_rosno_44" label="smo_rosno_44" />
+ 							<form:option value="smo_rosno_45" label="smo_rosno_45" />
 						</form:select>
+                	</p>
+                	<p>
+                		<form:label path="bloutboindletter2016.date_redirect">Дата перенаправления для рассмотрения</form:label>
+	      				<form:input id="date_redirect" path="bloutboindletter2016.date_redirect"/>
+	      				
+	      				<form:label path="bloutboindletter2016.redirect_adress">Адресат</form:label>
+							<form:select path="bloutboindletter2016.redirect_adress" id="redirect_adress">
+								<form:option value="0" label="" />
+								<form:options items="${inbound_fromList}"/>
+							</form:select>
+							
                 	</p>
                 	
                 </div>

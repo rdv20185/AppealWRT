@@ -171,6 +171,14 @@ public class Fields {
 		
 		return getProperties(test);
 	}
+	
+	public static Map<Integer, String> getTypeMP() throws UnsupportedEncodingException {
+		String test = str+"TypeMP.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
+	}
 
 	private static Map<Integer, String> getProperties(String filename) {
 		Properties prop = new Properties();

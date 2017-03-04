@@ -754,23 +754,57 @@ function valid(){
 	 if($('#type').val() == 0){
 		$('.errorrep').append('<h3>Поле "Тип" обязательно для заполнения</h3>');
 		$('.errorrep').css({'display':'block'});
-		
+		$('#draggable').animate({
+	        scrollTop:  0
+    	});
 		return false;
 	}
 	else if($('#cause').val() == 0){
 		$('.errorrep').append('<h3>Поле "Причина" обязательно для заполнения</h3>');
 		$('.errorrep').css({'display':'block'});
-		
+		$('#draggable').animate({
+	        scrollTop:  0
+    	});
 		return false;
 	}
 	else if($('#inbound_from').val() == null && $('#inbound_from').is(':visible')){
-		$('.errorrep').append('<h3>Поле "Выбор отписавшего" обязательно для заполнения</h3>');
+		$('.errorrep').append('<h3>Поле "От кого" обязательно для заполнения</h3>');
 		$('.errorrep').css({'display':'block'});
-		
+		$('#draggable').animate({
+	        scrollTop:  0
+    	});
 		return false;
+	}
+	else if(	($('#date_redirect').val() != '' && $('#date_redirect').is(':visible')  ||  $('#redirect_adress').val() != 0) &&
+				($('#date_redirect').val() == '' ||  $('#redirect_adress').val() == 0)){
+		
+					$('.errorrep').append('<h3>При заполненом поле "Дата перенаправления для рассмотрения" и "Адресат" необходимо "Дата окончательного ответа гражданину","Номер","Ответственный"</h3>');
+					$('.errorrep').css({'display':'block'});
+					$('#draggable').animate({
+				        scrollTop:  0
+			    	});
+					return false;
+	}
+	else if(	(($('#redirect_adress').val() != 0 && $('#redirect_adress').is(':visible')) && $('#date_redirect').val() != '') && ($('#date_response').val() == 0 || $('#responsible').val() == 0)){
+			$('.errorrep').append('<h3>При заполненом поле "Дата перенаправления для рассмотрения" и "Адресат" необходимо "Дата окончательного ответа гражданину","Номер","Ответственный"</h3>');
+			$('.errorrep').css({'display':'block'});
+			$('#draggable').animate({
+		        scrollTop:  0
+	    	});
+			return false;
+	}
+    else if($('#moId').val() != 0 && ($('#hspId').val() == 0 || $('#typempid').val() == 0)){
+    	$('.errorrep').append('<h3>При заполненном поле "МО" заполнение полей "Вид МП" и "Тип МО" обязательно</h3>');
+    	$('.errorrep').css({'display':'block'});
+    	$('#draggable').animate({
+	        scrollTop:  0
+    	});
+    	return false;
 	}else{
 		$('.errorrep').empty();
 		$('.errorrep').css({'display':'none'});
+		alert('redirect_adress '+$('#date_redirect').val());
+		alert('======= '+(($('#date_redirect').val() != 0 && $('#date_redirect').is(':visible')) || $('#redirect_adress').val() != 0));
 		
 		return true;
 	}

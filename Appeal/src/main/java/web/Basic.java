@@ -144,6 +144,7 @@ public class Basic {
     	map.put("placeList", Fields.getPlace());
     	map.put("validList", Fields.getValid());
     	map.put("hspList", Fields.getHsp());
+    	map.put("typeMP", Fields.getTypeMP());
 
     	//map.put("dateReport", new ReportParams());
     	

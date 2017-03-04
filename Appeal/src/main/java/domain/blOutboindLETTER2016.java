@@ -55,6 +55,9 @@ public class blOutboindLETTER2016 {
 	//�������������
 	private String responsible;
 	
+	private String date_redirect;
+	private String redirect_adress;
+	
 	
 	private List<Outboundmany> many;
 	
@@ -213,11 +216,31 @@ public class blOutboindLETTER2016 {
 		builder.append(", numOutLetter=");
 		builder.append(numOutLetter);
 		builder.append(", responsible=");
+		builder.append(", date_redirect=");
+		builder.append(date_redirect);
+		builder.append(", redirect_adress=");
+		builder.append(redirect_adress);
 		builder.append(responsible);
 		builder.append(", many=");
 		builder.append(many);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public String getDate_redirect() {
+		return date_redirect;
+	}
+
+	public void setDate_redirect(String date_redirect) {
+		this.date_redirect = date_redirect;
+	}
+
+	public String getRedirect_adress() {
+		return redirect_adress;
+	}
+
+	public void setRedirect_adress(String redirect_adress) {
+		this.redirect_adress = redirect_adress;
 	}
 
 	
