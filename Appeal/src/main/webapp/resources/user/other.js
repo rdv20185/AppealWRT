@@ -4,10 +4,18 @@
 
 $(document).ready(function(){
 	
-	if(	$("[id*='div_subresponse'] input[id*='date_subresponse']").val() == ''){
-		$("[id*='div_subresponse']").css({'display':'none'});
-	}
-
+	/*
+	* Пустые поля прячем по "+"(добавить)
+	*/
+	$("[id*='div_subresponse']").each(function(){
+		if($(this).children("input:first").val() == ''){
+			$(this).css({'display':'none'});
+		}
+	})
+	
+	/*
+	*	Событие клик на кнопке "+" 
+	*/
 	$('#btn_add_subresponse').click(function add_subresponse(){
 		
 		let test = $("[id*='div_subresponse']");

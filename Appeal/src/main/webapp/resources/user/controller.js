@@ -803,8 +803,6 @@ function valid(){
 	}else{
 		$('.errorrep').empty();
 		$('.errorrep').css({'display':'none'});
-		alert('redirect_adress '+$('#date_redirect').val());
-		alert('======= '+(($('#date_redirect').val() != 0 && $('#date_redirect').is(':visible')) || $('#redirect_adress').val() != 0));
 		
 		return true;
 	}

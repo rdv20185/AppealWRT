@@ -750,8 +750,7 @@
       						<form:input id="date_passOmer" path="bloutboindletter2016.date_passmedDoc"/>
 					</p>
 					<p>
-
-							<form:label style="float:none;" path="bloutboindletter2016.date_querymedDoc">Дата запроса мед.документации</form:label><br>
+							<form:label style="float:none;" path="bloutboindletter2016.date_querymedDoc">Дата запроса мед.документации</form:label>
 		      				<form:input style="float:none;" id="date_med_doc" path="bloutboindletter2016.date_querymedDoc"/>
 					</p>                
 	      			<p>
@@ -759,7 +758,7 @@
 	      				<form:input id="date_receive" path="bloutboindletter2016.date_obtainAkt"/>
 	      			</p>
 	      			<p>
-	      			<div> id="div_subresponse">
+	      			<div id="div_response" style="font-size:12px;">
 	      				<form:label path="bloutboindletter2016.many[0].date_subquery">Дата дополнительного запроса/ответа</form:label>
 	      				<form:input id="date_subresponse"  path="bloutboindletter2016.many[0].date_subquery"/>
 	      				<form:label path="bloutboindletter2016.many[0].note">Заметка</form:label>
