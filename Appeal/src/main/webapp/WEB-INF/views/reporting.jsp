@@ -31,6 +31,8 @@
 			$( "#de" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#di3" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#de3" ).datepicker({dateFormat:'dd.mm.yy'});
+			$( "#db_1" ).datepicker({dateFormat:'dd.mm.yy'});
+			$( "#de_1" ).datepicker({dateFormat:'dd.mm.yy'});
 			
 			
 		});
@@ -148,6 +150,36 @@
 <a href="<c:url value="/report_cc2" />">
 	<spring:message code="label.call_calc" />
 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<br><br><hr/>
+</sec:authorize>
+
+
+
+<sec:authorize access="hasRole('ROLE_TFOMS')">
+<h3>Отчет по письменным обращениям граждан, поступившим в ТФОМС НСО</h3>
+<form:form method="post" action="report_1.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
+	<table cellspacing='15'>
+		<tr>
+			<h5>Введите период в который обращения поступили (зарегистрированы канцелярией)</h5>		
+		</tr>
+		<tr>
+			<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>
+			<form:input id="db_1" path="dateBegin" class='reportParam' /></td>
+			<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
+			<form:input id="de_1" path="dateEnd" class='reportParam' /></td>
+			
+			<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
+			
+			<td><form:checkbox path="insurcomp" value="smo_ingos"/>Ингосстрах</td>
+			<td><form:checkbox path="insurcomp" value="smo_rosno"/>Росно</td>
+			<td><form:checkbox path="insurcomp" value="smo_simaz"/>СимазМед</td>
+			
+		</tr>
+	</table>
+</form:form>
+<br>
+<a href="<c:url value="/report_1" />">Скачать</a>
 
 <br><br><hr/>
 </sec:authorize>

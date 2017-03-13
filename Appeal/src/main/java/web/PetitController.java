@@ -443,6 +443,42 @@ public class PetitController {
     	return "reporting";
 	}
 	
+	/**
+	 * Контродлер отрабатывает логику отчета "отчет по письменным обращениям граждан, поступившим в ТФОМС НСО"
+	 * 
+	 * @param dateReport  
+	 * @param bindingResult
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws JRException
+	 */
+	@RequestMapping(value = "/report_1.html", method = RequestMethod.POST)
+    public String report_1(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
+		if(bindingResult.hasErrors()) return "reporting";
+			
+			if(insursmo == null){	
+				if(getUserName().contains("smo_rosno")) petitService.report_1(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16"
+						+ "smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
+				else if(getUserName().equals("smo_ingos")) petitService.report_1(dateReport, "smo_ingoscall5003callnight5003");
+				else if(getUserName().equals("smo_simaz")) petitService.report_1(dateReport, "smo_simazcall5001callnight5001");
+				else {petitService.report_1(dateReport, getUserName());}
+			}
+			else
+			{
+				if(insursmo.equals("smo_simaz")){petitService.report_1(dateReport, "smo_simazcall5001callnight5001");}
+				if(insursmo.equals("smo_rosno")){petitService.report_1(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
+						+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
+				if(insursmo.equals("smo_ingos")){petitService.report_1(dateReport, "smo_ingoscall5003callnight5003");}
+			}	
+
+			
+			
+		
+			
+    	return "reporting";
+	}
+	
 	@RequestMapping(value = "/report_1_1", method = RequestMethod.GET)
     public void report_1_1(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         downloadFile(request, response, "\\reports\\pg_form_1_1.xls");
@@ -495,6 +531,12 @@ public class PetitController {
 		File f = new File( servletcontext.getRealPath("/resources/report/report_strax3.xls"));
         downloadFile(request, response, f.getPath());
 	}
+	
+	@RequestMapping(value = "/report_1", method = RequestMethod.GET)
+    public void report_1(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		File f = new File( servletcontext.getRealPath("/resources/report/report_letter_appeals.xls"));
+        downloadFile(request, response, f.getPath());
+	}
 
 	private void downloadFile(HttpServletRequest request,
 			HttpServletResponse response, String filePath) throws FileNotFoundException,
@@ -508,7 +550,7 @@ public class PetitController {
         if(filePath.contains("doc_fond")){
         	fullPath = appPath + filePath;
         }else{
-        	if(filePath.contains("report_strax3")){
+        	if(filePath.contains("report_strax3") || filePath.contains("report_letter_")){
         		fullPath = filePath;
         	}else{
         //String fullPath = appPath + filePath ;      

@@ -100,6 +100,14 @@ public class Fields {
 		return getProperties(test);
 	}
 	
+	public static Map<Integer, String> getConect_notCollLine() throws UnsupportedEncodingException {
+		String test = str+"conect_notCallLine.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
+	}
+	
 	public static Map<Integer, String> getConectforFL() throws UnsupportedEncodingException {
 		String test = str+"conectforfl.txt";
 		test = URLDecoder.decode(test, "UTF-8");

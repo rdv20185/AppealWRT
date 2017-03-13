@@ -11,7 +11,7 @@
  
     <task:scheduled-tasks scheduler="myScheduler">
         <task:scheduled ref="myBean" method="printMessage" cron="0 2 8 * * *" />
-        <!-- */30 * * * * * -->
+        <!-- <task:scheduled ref="myBean" method="printMessage" cron="*/30 * * * * *" /> -->
     </task:scheduled-tasks>
  
     <task:scheduler id="myScheduler"/>

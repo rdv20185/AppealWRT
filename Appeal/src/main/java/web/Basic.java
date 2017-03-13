@@ -92,13 +92,17 @@ public class Basic {
 				getUserName().equals("osipova")) {
 			
 													map.put("sourceList", source1);
-													map.put("conectList", Fields.getConect());
 													map.put("presentList", Fields.getPresent());
+													map.put("conectList", Fields.getConect());
 													
 				if(getUserName().equals("vasilyeva") || getUserName().equals("smyvin"))
 				{
 					map.put("listassign", Fields.getProperties());
-				}else{	map.put("listassign", Fields.getfirsttfoms());	}
+					//map.put("conectList", Fields.getConect());
+				}else{
+					map.put("listassign", Fields.getfirsttfoms());
+					//map.put("conectList", Fields.getConect_notCollLine());
+				}
 		} else {
 			if(getUserName().equals("ernso") 
 					|| getUserName().equals("call5001")
@@ -129,6 +133,7 @@ public class Basic {
 						map.put("listassign", Fields.getfirstingos());	
 					}
 
+					//map.put("conectList", Fields.getConect_notCollLine());
 					map.put("conectList", Fields.getConect());
 					map.put("presentList", Fields.getPresent());
 				}
@@ -162,7 +167,7 @@ public class Basic {
     	
     	
     	setupForm(mapm,request,new Petit());
-    	//nightcallsprocess(request);
+    	nightcallsprocess(request);
     	
     	List<Petit> pl = petitService.listPetit(getUserName()); 
     	for(Petit pt : pl)

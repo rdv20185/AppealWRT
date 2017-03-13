@@ -240,13 +240,11 @@ public class PetitServiceImpl implements PetitService {
     	Connection conn = connectForJasper();
 		Map mapReport = mapForJasper(dateReport, username);
 		JasperReport jasperReport = JasperCompileManager.compileReport(f.getPath());
-		System.out.println("f.getPath1 "+f.getPath());
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
 		JRXlsExporter exporter = new JRXlsExporter();
 		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(f.getPath().replace(".jrxml", ".xls")));
-		System.out.println("f.getPath2 "+f.getPath().replace(".jrxml", ".xls"));
 		exporter.exportReport();
 		
    		disconnectForJasper(conn);
@@ -280,6 +278,32 @@ public class PetitServiceImpl implements PetitService {
 		
    		disconnectForJasper(conn);
 	}
+    
+    /* (non-Javadoc)
+     * @see service.PetitService#report_1(domain.ReportParams, java.lang.String)
+     * отчет "Отчет по письменным обращениям граждан, поступившим в ТФОМС"
+     */
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void report_1(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
+    	
+    	File f = new File( servletcontext.getRealPath("/resources/report/report_letter_appeals.jrxml"));
+    	
+    	Connection conn = connectForJasper();
+		Map mapReport = mapForJasper(dateReport, username);
+		
+		JasperReport jasperReport = JasperCompileManager.compileReport(f.getPath());
+		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
+		JRXlsExporter exporter = new JRXlsExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(f.getPath().replace(".jrxml", ".xls")));
+		exporter.exportReport();
+		
+		
+   		disconnectForJasper(conn);
+	}
+    
     
     
     

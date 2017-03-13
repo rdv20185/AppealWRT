@@ -88,5 +88,15 @@ public interface PetitService {
 	 * @throws JRException
 	 */
 	public void report_strax3(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
+	
+	/**
+	 * Метод отрабатывает логику формирования данных перед запросом в базу для отчета "Отчет по письменным обращениям граждан, поступившим в ТФОМС НСО"
+	 * @param dateReport
+	 * @param username
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * @throws JRException
+	 */
+	public void report_1(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
 
 }
