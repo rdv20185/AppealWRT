@@ -29,6 +29,7 @@
 				<user name="smo_simaz" password="uyt765" authorities="ROLE_SMO" />
 				<user name="smo_rosno" password="wer457" authorities="ROLE_SMO" />
 				<user name="smo_ingos" password="rty579" authorities="ROLE_SMO" />
+				<user name="smo_ingos_01" password="rer0301" authorities="ROLE_SMO" />
 				<user name="mityanina" password="tre456" authorities="ROLE_TFOMS" />
 				<user name="popova" password="fds321" authorities="ROLE_TFOMS" />
 				<user name="eremina" password="nbv654" authorities="ROLE_TFOMS" />

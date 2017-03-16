@@ -476,7 +476,7 @@
             <li><a href="">Регламент</a></li>
             <li><a href="<c:url value="/downloadmanual" />">Инструкция пользователя</a></li>
             <li><a href="<c:url value="/downloadreestr" />">Реестр страховых представителей 25.09.16</a></li>
-            <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей на 01.02.17</a></li>
+            <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей на 15.03.17</a></li>
           </ul>
         </li>
         <sec:authorize access="hasAnyRole('ROLE_TFOMS')">
@@ -800,6 +800,7 @@
 							<form:option value="eremina" label="eremina" />
 							<form:option value="hamitov" label="hamitov" />
 							<form:option value="smo_simaz" label="smo_simaz" />
+ 							<form:option value="smo_ingos" label="smo_ingos" />
  							<form:option value="smo_ingos" label="smo_ingos" />
  							<form:option value="smo_rosno_01" label="smo_rosno_01" />
  							<form:option value="smo_rosno_02" label="smo_rosno_02" />

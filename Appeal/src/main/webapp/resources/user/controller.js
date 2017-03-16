@@ -395,9 +395,15 @@ function addJS(role){
 			event.preventDefault();
 			
 			if(btn == 'Завершить'){
-				if(valid()){
+				if(valid(role)){
 					new_body(btn,role);
 				}
+			}
+			else if(btn == 'Сохранить'){
+				if(valid_save(role)){
+					new_body(btn,role);
+				}
+				
 			}
 			else{
 				new_body(btn,role);
@@ -749,9 +755,21 @@ $container.append(userInfo);
 }
 
 
-function valid(){
+function valid(var_role){
+	
+	let n = var_role.indexOf("ROLE_ER");
+	 let n2 = var_role.indexOf("ROLE_ADMIN");
+	 
+	 if($('#connectid').val() == 7 && n < 0 && n2 < 0 ){
+			$('.errorrep').append('<h3>У Вас нет прав создавать обращение с типом "Горячая линия" в поле Связь</h3>');
+			$('.errorrep').css({'display':'block'});
+			$('#draggable').animate({
+		        scrollTop:  0
+	    	});
+			return false;
+	 }
 
-	 if($('#type').val() == 0){
+	 else if($('#type').val() == 0){
 		$('.errorrep').append('<h3>Поле "Тип" обязательно для заполнения</h3>');
 		$('.errorrep').css({'display':'block'});
 		$('#draggable').animate({
@@ -806,6 +824,28 @@ function valid(){
 		
 		return true;
 	}
+	
+}
+
+function valid_save(var_role){
+	
+	 let n = var_role.indexOf("ROLE_ER");
+	 let n2 = var_role.indexOf("ROLE_ADMIN");
+	 
+	 if($('#connectid').val() == 7 && n < 0 && n2 < 0 ){
+			$('.errorrep').append('<h3>У Вас нет прав создавать обращение с типом "Горячая линия" в поле Связь</h3>');
+			$('.errorrep').css({'display':'block'});
+			$('#draggable').animate({
+		        scrollTop:  0
+	    	});
+			return false;
+	 }
+	 else{
+		$('.errorrep').empty();
+		$('.errorrep').css({'display':'none'});
+		
+		return true;
+	 }
 	
 }
 

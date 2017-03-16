@@ -55,6 +55,7 @@ import res.TransferFiles;
 import service.PetitListWrapper;
 import service.PetitService;
 import util.Util;
+import util.Utilitys;
 
 @Controller
 public class Basic {
@@ -72,6 +73,8 @@ public class Basic {
 	
 	@Autowired
     private PetitService petitService;
+	@Autowired
+    private Utilitys utilitys;
 	@Autowired
     private ApplicationContext applicationContext;
 
@@ -128,7 +131,7 @@ public class Basic {
 					{
 						map.put("listassign", Fields.getfirstrosno());	
 					}
-					if(getUserName().equals("smo_ingos"))
+					if(getUserName().contains("smo_ingos"))
 					{
 						map.put("listassign", Fields.getfirstingos());	
 					}
@@ -283,6 +286,11 @@ public class Basic {
     		
     		if(petit.getTypeId() == 0){bindingResult.rejectValue("typeId", "error.petit", "Поле Тип обязательно для заполнения");}
     		if(petit.getCauseId() == 0){bindingResult.rejectValue("causeId", "error.petit", "Поле Причина обязательно для заполнения");}
+    		if(petit.getBlockger2016().getRegname().contains("call") && petit.getConectId() != 7	){bindingResult.rejectValue("causeId", "error.petit", "У Вас недостаточно прав изменить поле 'Связь' или поле 'Cвязь' имеет неправильное значение отличное от значения 'Горячая линия' ");}
+    		// доработать
+    		if(petit.getConectId() == 7	&& !petit.getBlockger2016().getRegname().contains("call") &&
+    		   !petit.getBlockger2016().getRegname().contains("vasilyeva") &&
+    		   !petit.getBlockger2016().getRegname().contains("smyvin")){bindingResult.rejectValue("causeId", "error.petit", "У Вас недостаточно прав для выбора в поле 'Cвязь' значения 'Горячая линия' ");}
     		
     		if(bindingResult.hasErrors()) { setupForm(mapm,request,petit); return "petit"; }
     	}
@@ -442,16 +450,30 @@ public class Basic {
 			if(overdueappeal == null){}
 			else if(overdueappeal != null){
 				
-					if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("")){
-						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
-						cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
+				
+					if(utilitys.valid(overdueappeal,listPetit.get(i))){
+						utilitys.processDate(listPetit.get(i));
+						Calendar startdate = utilitys.getCal();
+						Calendar enddate = utilitys.getCal2();
 						
-						if(Util.daysBetween(cal, cal2) < 30){
+						
+						if(utilitys.daysBetween(startdate, enddate) <= 30){
 							if(i == 0){listPetit.remove(i); i = 0;}
 							else{listPetit.remove(i);	i = i-1;}
+						}else{
+							Calendar startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 30,0);
+							
+							while(petitService.isCeleb(startdate_plus.getTime())){
+								startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
+							};
+							
+							System.out.println("@@@ "+startdate_plus.getTime()+" - "+enddate.getTime());
+							if(startdate_plus.before(enddate)){
+								System.out.println("## "+listPetit.get(i).getId());								
+							}
 						}
 					}
-					else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1){
+					else if(utilitys.valid(overdueappeal,listPetit.get(i))){
 								cal.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
 								cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
 								
@@ -460,7 +482,7 @@ public class Basic {
 									else{listPetit.remove(i);	i = i-1;}
 								}
 					}
-					else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1 ){
+					else if(utilitys.valid(overdueappeal,listPetit.get(i))){
 						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
 						cal2.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
 						
@@ -469,7 +491,7 @@ public class Basic {
 							else{listPetit.remove(i);	i = i-1;}
 						}
 					}
-					else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("") ){
+					else if(utilitys.valid(overdueappeal,listPetit.get(i))){
 						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
 						cal2.setTime(new Date());
 						
