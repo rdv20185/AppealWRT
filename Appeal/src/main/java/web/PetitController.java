@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
@@ -50,6 +51,7 @@ import res.Fields;
 import res.TransferFiles;
 import service.PetitListWrapper;
 import service.PetitService;
+import util.Utilitys;
 import domain.BlockGER2016;
 import domain.Cause;
 import domain.CauseL;
@@ -88,6 +90,8 @@ public class PetitController {
 	
 	@Autowired
     private PetitService petitService;
+	@Autowired
+    private Utilitys utilitys;
 	
 	@Autowired
     private ServletContext servletcontext;
@@ -164,8 +168,46 @@ public class PetitController {
 		return adds(petit,request,submitted,model);
     }
     
-    private @ResponseBody List<Petit> adds(Petit petit,HttpServletRequest request,String submitted,ModelMap model) throws UnsupportedEncodingException {
-		
+    private @ResponseBody List<Petit> adds(Petit petit,HttpServletRequest request,String submitted,ModelMap model) throws UnsupportedEncodingException, ParseException {
+    	
+    	{
+	    	DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+			Calendar cal  = Calendar.getInstance();
+			cal.setTime(df.parse(petit.getDateInput()));
+	    	
+	    	if(petit.getPresentId() == 1){
+	    		
+	    			Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
+					while(petitService.isCeleb(startdate_plus.getTime())){
+						startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
+					};
+					
+					petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
+	    	}
+	    	
+	    	if(petit.getPresentId() == 2){
+	    	
+	    		if(petit.getBlockger2016().getDate_end() == null && petit.getBloutboindletter2016().getDate_between().equals("")){
+	    		
+					Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
+					while(petitService.isCeleb(startdate_plus.getTime())){
+						startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
+					};
+					
+					petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
+					
+	    		}
+	    		
+	    		if(petit.getBlockger2016().getDate_end() == null && !petit.getBloutboindletter2016().getDate_between().equals("")){
+	    			Calendar startdate_plus = utilitys.daysPlus(cal, 60,0);
+					while(petitService.isCeleb(startdate_plus.getTime())){
+						startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
+					};
+					
+					petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
+	    		}
+	    	}
+    	}
 		/*
 		 * Ловим с клиента в переменную ff поле date_end
 		 */
@@ -186,7 +228,6 @@ public class PetitController {
 		 * Обрабатывается нажатие клавиши назначить в режиме редактирования ночным 
 		 */
 	   	
-		System.out.println("hjdthrf "+petit.getPresentId()+" "+para.trim()+" "+petit.getBlockger2016().getState());
 		
 		if(para.trim().equals("Сохранить"))
 		{
@@ -201,7 +242,7 @@ public class PetitController {
 	    		if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 3 ){
 	    			
 	    			DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
-	        		try { petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));} catch (ParseException e) {
+	        		try { petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 00:00:00.001")));} catch (ParseException e) {
 						e.printStackTrace();
 					}
 	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
@@ -375,7 +416,7 @@ public class PetitController {
 			if(insursmo.equals("smo_simaz")){petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");}
 			if(insursmo.equals("smo_rosno")){petitService.pgForm(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
 					+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
-			if(insursmo.equals("smo_ingos")){petitService.pgForm(dateReport, "smo_ingoscall5003callnight5003");}
+			if(insursmo.contains("smo_ingos")){petitService.pgForm(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");}
 		}	
     	return "reporting";
 	}
@@ -408,7 +449,7 @@ public class PetitController {
 			if(insursmo.equals("smo_simaz")){petitService.report_strax3(dateReport, "smo_simazcall5001callnight5001");}
 			if(insursmo.equals("smo_rosno")){petitService.report_strax3(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
 					+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
-			if(insursmo.equals("smo_ingos")){petitService.report_strax3(dateReport, "smo_ingoscall5003callnight5003");}
+			if(insursmo.contains("smo_ingos")){petitService.report_strax3(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");}
 		}	
     	return "reporting";
 	}
@@ -435,7 +476,7 @@ public class PetitController {
 		
 			if(getUserName().contains("smo_rosno")) petitService.report_call(dateReport, "smo_rosnocall5002callnight5002smo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19"
 					+ "smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
-			else if(getUserName().equals("smo_ingos")) petitService.report_call(dateReport, "smo_ingoscall5003callnight5003");
+			else if(getUserName().contains("smo_ingos")) petitService.report_call(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");
 			else if(getUserName().equals("smo_simaz")) petitService.report_call(dateReport, "smo_simazcall5001callnight5001");
 			else {petitService.report_call(dateReport, getUserName());}
 		
@@ -469,7 +510,7 @@ public class PetitController {
 				if(insursmo.equals("smo_simaz")){petitService.report_1(dateReport, "smo_simazcall5001callnight5001");}
 				if(insursmo.equals("smo_rosno")){petitService.report_1(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
 						+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
-				if(insursmo.equals("smo_ingos")){petitService.report_1(dateReport, "smo_ingoscall5003callnight5003");}
+				if(insursmo.contains("smo_ingos")){petitService.report_1(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");}
 			}	
 
 			

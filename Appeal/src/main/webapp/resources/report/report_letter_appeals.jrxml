@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pg_form_1_1" pageWidth="982" pageHeight="1200" columnWidth="942" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="ef9f9989-e419-45fd-b634-6e63c2b4c9e2">
 	<property name="ireport.zoom" value="1.6105100000000019"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="810"/>
+	<property name="ireport.y" value="432"/>
 	<style name="Arial_Normal" isDefault="true" fontName="Arial" fontSize="12" pdfFontName="c:\tahoma.ttf" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
 	<subDataset name="New Dataset 1" uuid="bf57778b-e755-4841-92f8-c2ba1e2d8bf4"/>
 	<parameter name="dateBegin" class="java.lang.String"/>
@@ -253,7 +253,255 @@
             r13c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=11 and t.source_id = 1),
             r13c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=11 and t.source_id = 1),
             r13c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=11 and t.source_id = 1),
-            r13c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=11 and t.source_id = 1)
+            r13c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=11 and t.source_id = 1),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            r50c1 as (select count(*) c from petit t where t.present_id = 2 and t.source_id = 2),
+            r50c2 as (select count(*) c from petit t where t.present_id = 2 and t.type_id = 1 and t.source_id = 2),
+            r50c3 as (select count(*) c from petit t where t.present_id = 2 and t.type_id = 3 and t.source_id = 2),
+            r50c4 as (select count(*) c from petit t where t.present_id = 2 and t.type_id = 2 and t.source_id = 2),
+            r50c5 as (select count(*) c from petit t where t.present_id = 2 and t.type_id = 4 and t.source_id = 2),
+            r50c6 as (select count(*) c from
+                      (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and t.source_id = 2
+                       union
+                       select t.id from petit t,outboundmess o where t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and t.source_id = 2
+                      )
+                    ),
+            r50c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.source_id = 2),
+            r50c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and t.source_id = 2),
+            r50c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and t.source_id = 2),
+            r50c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and t.source_id = 2),
+            r50c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and t.source_id = 2),
+            r50c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and t.source_id = 2),
+            r50c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress = 100 and t.source_id = 2),
+            r50c14 as (select count(*) c from petit t,outboundmess o,blockger bl where t.id = o.id_outletter and bl.id_ger=t.id and t.present_id = 2 and o.date_between is not null and bl.date_end is null and t.source_id = 2),
+            r50c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and t.source_id = 2),
+
+
+
+            r51c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=1 and t.source_id = 2),
+            r51c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=1 and t.source_id = 2),
+            r51c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=1 and t.source_id = 2),
+            r51c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=1 and t.source_id = 2),
+            r51c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=1 and t.source_id = 2),
+            r51c6 as (select count(*) c from
+                      (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=1 and t.source_id = 2
+                       union
+                       select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=1 and t.source_id = 2
+                      )
+                    ),
+            r51c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=1 and t.source_id = 2),
+            r51c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=1 and t.source_id = 2),
+            r51c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=1 and t.source_id = 2),
+            r51c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=1 and t.source_id = 2),
+            r51c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=1 and t.source_id = 2),
+            r51c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=1 and t.source_id = 2),
+            r51c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=1 and t.source_id = 2),
+            r51c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=1 and t.source_id = 2),
+            r51c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=1 and t.source_id = 2),
+
+
+            r52c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=2 and t.source_id = 2),
+            r52c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=2 and t.source_id = 2),
+            r52c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=2 and t.source_id = 2),
+            r52c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=2 and t.source_id = 2),
+            r52c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=2 and t.source_id = 2),
+            r52c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=2 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=2 and t.source_id = 2 )),
+            r52c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=2 and t.source_id = 2),
+            r52c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=2 and t.source_id = 2),
+            r52c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=2 and t.source_id = 2),
+            r52c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=2 and t.source_id = 2),
+            r52c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=2 and t.source_id = 2),
+            r52c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=2 and t.source_id = 2),
+            r52c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=2 and t.source_id = 2),
+            r52c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=2 and t.source_id = 2 and t.source_id = 2),
+            r52c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=2 and t.source_id = 2),
+
+
+
+            r53c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=3 and t.source_id = 2),
+            r53c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=3 and t.source_id = 2),
+            r53c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=3 and t.source_id = 2),
+            r53c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=3 and t.source_id = 2),
+            r53c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=3 and t.source_id = 2),
+            r53c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=3 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=3 and t.source_id = 2 )),
+            r53c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=3 and t.source_id = 2),
+            r53c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=3 and t.source_id = 2),
+            r53c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=3 and t.source_id = 2),
+            r53c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=3 and t.source_id = 2),
+            r53c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=3 and t.source_id = 2),
+            r53c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=3 and t.source_id = 2),
+            r53c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=3 and t.source_id = 2),
+            r53c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=3 and t.source_id = 2),
+            r53c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=3 and t.source_id = 2),
+
+
+
+            r54c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=4 and t.source_id = 2),
+            r54c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=4 and t.source_id = 2),
+            r54c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=4 and t.source_id = 2),
+            r54c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=4 and t.source_id = 2),
+            r54c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=4 and t.source_id = 2),
+            r54c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=4 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=4 and t.source_id = 2 )),
+            r54c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=4 and t.source_id = 2),
+            r54c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=4 and t.source_id = 2),
+            r54c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=4 and t.source_id = 2),
+            r54c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=4 and t.source_id = 2),
+            r54c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=4 and t.source_id = 2),
+            r54c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=4 and t.source_id = 2),
+            r54c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=4 and t.source_id = 2),
+            r54c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=4 and t.source_id = 2),
+            r54c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=4 and t.source_id = 2 and t.source_id = 2),
+
+
+            r55c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=5 and t.source_id = 2),
+            r55c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=5 and t.source_id = 2),
+            r55c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=5 and t.source_id = 2),
+            r55c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=5 and t.source_id = 2),
+            r55c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=5 and t.source_id = 2),
+            r55c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=5 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=5 and t.source_id = 2 )),
+            r55c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=5 and t.source_id = 2),
+            r55c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=5 and t.source_id = 2),
+            r55c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=5 and t.source_id = 2),
+            r55c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=5 and t.source_id = 2),
+            r55c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=5 and t.source_id = 2),
+            r55c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=5 and t.source_id = 2),
+            r55c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=5 and t.source_id = 2),
+            r55c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=5 and t.source_id = 2),
+            r55c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=5 and t.source_id = 2),
+
+
+
+            r56c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=6 and t.source_id = 2),
+            r56c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=6 and t.source_id = 2),
+            r56c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=6 and t.source_id = 2),
+            r56c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=6 and t.source_id = 2),
+            r56c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=6 and t.source_id = 2),
+            r56c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=6 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=6 and t.source_id = 2 )),
+            r56c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=6 and t.source_id = 2),
+            r56c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=6 and t.source_id = 2),
+            r56c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=6 and t.source_id = 2),
+            r56c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=6 and t.source_id = 2),
+            r56c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=6 and t.source_id = 2),
+            r56c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=6 and t.source_id = 2),
+            r56c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=6 and t.source_id = 2),
+            r56c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=6 and t.source_id = 2),
+            r56c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=6 and t.source_id = 2),
+
+
+            r57c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=7 and t.source_id = 2),
+            r57c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=7 and t.source_id = 2),
+            r57c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=7 and t.source_id = 2),
+            r57c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=7 and t.source_id = 2),
+            r57c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=7 and t.source_id = 2),
+            r57c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=7 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=7 and t.source_id = 2 )),
+            r57c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=7 and t.source_id = 2),
+            r57c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=7 and t.source_id = 2),
+            r57c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=7 and t.source_id = 2),
+            r57c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=7 and t.source_id = 2),
+            r57c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=7 and t.source_id = 2),
+            r57c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=7 and t.source_id = 2),
+            r57c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=7 and t.source_id = 2),
+            r57c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=7 and t.source_id = 2),
+            r57c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=7 and t.source_id = 2),
+
+
+            r58c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=8 and t.source_id = 2),
+            r58c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=8 and t.source_id = 2),
+            r58c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=8 and t.source_id = 2),
+            r58c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=8 and t.source_id = 2),
+            r58c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=8 and t.source_id = 2),
+            r58c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=8 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=8 and t.source_id = 2 )),
+            r58c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=8 and t.source_id = 2),
+            r58c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=8 and t.source_id = 2),
+            r58c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=8 and t.source_id = 2),
+            r58c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=8 and t.source_id = 2),
+            r58c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=8 and t.source_id = 2),
+            r58c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=8 and t.source_id = 2),
+            r58c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=8 and t.source_id = 2),
+            r58c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=8 and t.source_id = 2),
+            r58c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=8 and t.source_id = 2),
+
+
+            r59c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=9 and t.source_id = 2),
+            r59c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=9 and t.source_id = 2),
+            r59c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=9 and t.source_id = 2),
+            r59c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=9 and t.source_id = 2),
+            r59c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=9 and t.source_id = 2),
+            r59c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=9 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=9 and t.source_id = 2 )),
+            r59c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=9 and t.source_id = 2),
+            r59c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=9 and t.source_id = 2),
+            r59c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=9 and t.source_id = 2),
+            r59c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=9 and t.source_id = 2),
+            r59c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=9 and t.source_id = 2),
+            r59c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=9 and t.source_id = 2),
+            r59c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=9 and t.source_id = 2),
+            r59c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=9 and t.source_id = 2),
+            r59c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=9 and t.source_id = 2),
+
+
+            r60c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=10 and t.source_id = 2),
+            r60c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=10 and t.source_id = 2),
+            r60c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=10 and t.source_id = 2),
+            r60c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=10 and t.source_id = 2),
+            r60c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=10 and t.source_id = 2),
+            r60c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=10 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=10 and t.source_id = 2 )),
+            r60c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=10 and t.source_id = 2),
+            r60c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=10 and t.source_id = 2),
+            r60c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=10 and t.source_id = 2),
+            r60c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=10 and t.source_id = 2),
+            r60c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=10 and t.source_id = 2),
+            r60c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=10 and t.source_id = 2),
+            r60c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=10 and t.source_id = 2),
+            r60c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=10 and t.source_id = 2),
+            r60c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=10 and t.source_id = 2),
+
+            r61c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=100 and t.source_id = 2),
+            r61c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=100 and t.source_id = 2),
+            r61c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=100 and t.source_id = 2),
+            r61c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=100 and t.source_id = 2),
+            r61c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=100 and t.source_id = 2),
+            r61c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=100 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=100 and t.source_id = 2 )),
+            r61c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=100 and t.source_id = 2),
+            r61c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=100 and t.source_id = 2),
+            r61c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=100 and t.source_id = 2),
+            r61c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=100 and t.source_id = 2),
+            r61c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=100 and t.source_id = 2),
+            r61c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=100 and t.source_id = 2),
+            r61c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=100 and t.source_id = 2),
+            r61c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=100 and t.source_id = 2),
+            r61c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=100 and t.source_id = 2),
+
+
+            r62c1 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and bl.inbound_from=11 and t.source_id = 2),
+            r62c2 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 1 and bl.inbound_from=11 and t.source_id = 2),
+            r62c3 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 3 and bl.inbound_from=11 and t.source_id = 2),
+            r62c4 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 2 and bl.inbound_from=11 and t.source_id = 2),
+            r62c5 as (select count(*) c from petit t,blockger bl where t.id = bl.id_ger and t.present_id = 2 and t.type_id = 4 and bl.inbound_from=11 and t.source_id = 2),
+            r62c6 as (select count(*) c from (select t.id from petit t,blockger bl where t.id=bl.id_ger and t.present_id = 2 and bl.date_end is not null and bl.inbound_from=11 and t.source_id = 2 union select t.id from petit t,outboundmess o,blockger bl where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=11 and t.source_id = 2 )),
+            r62c7 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and bl.inbound_from=11 and t.source_id = 2),
+            r62c8 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 1 and bl.inbound_from=11 and t.source_id = 2),
+            r62c9 as (select count(*) c from petit t,blockger bl where t.present_id = 2 and t.id=bl.id_ger and bl.date_end is not null and t.valid_id = 2 and bl.inbound_from=11 and t.source_id = 2),
+            r62c10 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=8 and bl.inbound_from=11 and t.source_id = 2),
+            r62c11 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=6 and bl.inbound_from=11 and t.source_id = 2),
+            r62c12 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and o.redirect_adress=3 and bl.inbound_from=11 and t.source_id = 2),
+            r62c13 as (select count(*) c from petit t,blockger bl,outboundmess o where t.present_id = 2 and t.id=bl.id_ger and t.id=o.id_outletter and bl.date_end is not null and o.date_redirect is not null and  o.redirect_adress =100 and bl.inbound_from=11 and t.source_id = 2),
+            r62c14 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and o.date_between is not null and bl.inbound_from=11 and t.source_id = 2),
+            r62c15 as (select count(*) c from petit t,blockger bl,outboundmess o where t.id=bl.id_ger and t.id = o.id_outletter and t.present_id = 2 and bl.date_end is null and o.date_between is null and bl.inbound_from=11 and t.source_id = 2)
 
 
 
@@ -277,7 +525,24 @@
             r10c1.c r10c1,r10c2.c r10c2,r10c3.c r10c3,r10c4.c r10c4,r10c5.c r10c5,r10c6.c r10c6,r10c7.c r10c7,r10c8.c r10c8,r10c9.c r10c9,r10c10.c r10c10,r10c11.c r10c11,r10c12.c r10c12,r10c13.c r10c13,r10c14.c r10c14,r10c15.c r10c15,
             r11c1.c r11c1,r11c2.c r11c2,r11c3.c r11c3,r11c4.c r11c4,r11c5.c r11c5,r11c6.c r11c6,r11c7.c r11c7,r11c8.c r11c8,r11c9.c r11c9,r11c10.c r11c10,r11c11.c r11c11,r11c12.c r11c12,r11c13.c r11c13,r11c14.c r11c14,r11c15.c r11c15,
             r12c1.c r12c1,r12c2.c r12c2,r12c3.c r12c3,r12c4.c r12c4,r12c5.c r12c5,r12c6.c r12c6,r12c7.c r12c7,r12c8.c r12c8,r12c9.c r12c9,r12c10.c r12c10,r12c11.c r12c11,r12c12.c r12c12,r12c13.c r12c13,r12c14.c r12c14,r12c15.c r12c15,
-            r13c1.c r13c1,r13c2.c r13c2,r13c3.c r13c3,r13c4.c r13c4,r13c5.c r13c5,r13c6.c r13c6,r13c7.c r13c7,r13c8.c r13c8,r13c9.c r13c9,r13c10.c r13c10,r13c11.c r13c11,r13c12.c r13c12,r13c13.c r13c13,r13c14.c r13c14,r13c15.c r13c15
+            r13c1.c r13c1,r13c2.c r13c2,r13c3.c r13c3,r13c4.c r13c4,r13c5.c r13c5,r13c6.c r13c6,r13c7.c r13c7,r13c8.c r13c8,r13c9.c r13c9,r13c10.c r13c10,r13c11.c r13c11,r13c12.c r13c12,r13c13.c r13c13,r13c14.c r13c14,r13c15.c r13c15,
+			
+			
+			
+			
+			r50c1.c r50c1,r50c2.c r50c2,r50c3.c r50c3,r50c4.c r50c4,r50c5.c r50c5,r50c6.c r50c6,r50c7.c r50c7,r50c8.c r50c8,r50c9.c r50c9,r50c10.c r50c10,r50c11.c r50c11,r50c12.c r50c12,r50c13.c r50c13,r50c14.c r50c14,r50c15.c r50c15,
+            r51c1.c r51c1,r51c2.c r51c2,r51c3.c r51c3,r51c4.c r51c4,r51c5.c r51c5,r51c6.c r51c6,r51c7.c r51c7,r51c8.c r51c8,r51c9.c r51c9,r51c10.c r51c10,r51c11.c r51c11,r51c12.c r51c12,r51c13.c r51c13,r51c14.c r51c14,r51c15.c r51c15,
+            r52c1.c r52c1,r52c2.c r52c2,r52c3.c r52c3,r52c4.c r52c4,r52c5.c r52c5,r52c6.c r52c6,r52c7.c r52c7,r52c8.c r52c8,r52c9.c r52c9,r52c10.c r52c10,r52c11.c r52c11,r52c12.c r52c12,r52c13.c r52c13,r52c14.c r52c14,r52c15.c r52c15,
+            r53c1.c r53c1,r53c2.c r53c2,r53c3.c r53c3,r53c4.c r53c4,r53c5.c r53c5,r53c6.c r53c6,r53c7.c r53c7,r53c8.c r53c8,r53c9.c r53c9,r53c10.c r53c10,r53c11.c r53c11,r53c12.c r53c12,r53c13.c r53c13,r53c14.c r53c14,r53c15.c r53c15,
+            r54c1.c r54c1,r54c2.c r54c2,r54c3.c r54c3,r54c4.c r54c4,r54c5.c r54c5,r54c6.c r54c6,r54c7.c r54c7,r54c8.c r54c8,r54c9.c r54c9,r54c10.c r54c10,r54c11.c r54c11,r54c12.c r54c12,r54c13.c r54c13,r54c14.c r54c14,r54c15.c r54c15,
+            r55c1.c r55c1,r55c2.c r55c2,r55c3.c r55c3,r55c4.c r55c4,r55c5.c r55c5,r55c6.c r55c6,r55c7.c r55c7,r55c8.c r55c8,r55c9.c r55c9,r55c10.c r55c10,r55c11.c r55c11,r55c12.c r55c12,r55c13.c r55c13,r55c14.c r55c14,r55c15.c r55c15,
+            r56c1.c r56c1,r56c2.c r56c2,r56c3.c r56c3,r56c4.c r56c4,r56c5.c r56c5,r56c6.c r56c6,r56c7.c r56c7,r56c8.c r56c8,r56c9.c r56c9,r56c10.c r56c10,r56c11.c r56c11,r56c12.c r56c12,r56c13.c r56c13,r56c14.c r56c14,r56c15.c r56c15,
+            r57c1.c r57c1,r57c2.c r57c2,r57c3.c r57c3,r57c4.c r57c4,r57c5.c r57c5,r57c6.c r57c6,r57c7.c r57c7,r57c8.c r57c8,r57c9.c r57c9,r57c10.c r57c10,r57c11.c r57c11,r57c12.c r57c12,r57c13.c r57c13,r57c14.c r57c14,r57c15.c r57c15,
+            r58c1.c r58c1,r58c2.c r58c2,r58c3.c r58c3,r58c4.c r58c4,r58c5.c r58c5,r58c6.c r58c6,r58c7.c r58c7,r58c8.c r58c8,r58c9.c r58c9,r58c10.c r58c10,r58c11.c r58c11,r58c12.c r58c12,r58c13.c r58c13,r58c14.c r58c14,r58c15.c r58c15,
+            r59c1.c r59c1,r59c2.c r59c2,r59c3.c r59c3,r59c4.c r59c4,r59c5.c r59c5,r59c6.c r59c6,r59c7.c r59c7,r59c8.c r59c8,r59c9.c r59c9,r59c10.c r59c10,r59c11.c r59c11,r59c12.c r59c12,r59c13.c r59c13,r59c14.c r59c14,r59c15.c r59c15,
+            r60c1.c r60c1,r60c2.c r60c2,r60c3.c r60c3,r60c4.c r60c4,r60c5.c r60c5,r60c6.c r60c6,r60c7.c r60c7,r60c8.c r60c8,r60c9.c r60c9,r60c10.c r60c10,r60c11.c r60c11,r60c12.c r60c12,r60c13.c r60c13,r60c14.c r60c14,r60c15.c r60c15,
+            r61c1.c r61c1,r61c2.c r61c2,r61c3.c r61c3,r61c4.c r61c4,r61c5.c r61c5,r61c6.c r61c6,r61c7.c r61c7,r61c8.c r61c8,r61c9.c r61c9,r61c10.c r61c10,r61c11.c r61c11,r61c12.c r61c12,r61c13.c r61c13,r61c14.c r61c14,r61c15.c r61c15,
+            r62c1.c r62c1,r62c2.c r62c2,r62c3.c r62c3,r62c4.c r62c4,r62c5.c r62c5,r62c6.c r62c6,r62c7.c r62c7,r62c8.c r62c8,r62c9.c r62c9,r62c10.c r62c10,r62c11.c r62c11,r62c12.c r62c12,r62c13.c r62c13,r62c14.c r62c14,r62c15.c r62c15
 
 
         from
@@ -293,7 +558,22 @@
             r10c1,r10c2,r10c3,r10c4,r10c5,r10c6,r10c7,r10c8,r10c9,r10c10,r10c11,r10c12,r10c13,r10c14,r10c15,
             r11c1,r11c2,r11c3,r11c4,r11c5,r11c6,r11c7,r11c8,r11c9,r11c10,r11c11,r11c12,r11c13,r11c14,r11c15,
             r12c1,r12c2,r12c3,r12c4,r12c5,r12c6,r12c7,r12c8,r12c9,r12c10,r12c11,r12c12,r12c13,r12c14,r12c15,
-            r13c1,r13c2,r13c3,r13c4,r13c5,r13c6,r13c7,r13c8,r13c9,r13c10,r13c11,r13c12,r13c13,r13c14,r13c15]]>
+            r13c1,r13c2,r13c3,r13c4,r13c5,r13c6,r13c7,r13c8,r13c9,r13c10,r13c11,r13c12,r13c13,r13c14,r13c15,
+			
+			
+			r50c1,r50c2,r50c3,r50c4,r50c5,r50c6,r50c7,r50c8,r50c9,r50c10,r50c11,r50c12,r50c13,r50c14,r50c15,
+            r51c1,r51c2,r51c3,r51c4,r51c5,r51c6,r51c7,r51c8,r51c9,r51c10,r51c11,r51c12,r51c13,r51c14,r51c15,
+            r52c1,r52c2,r52c3,r52c4,r52c5,r52c6,r52c7,r52c8,r52c9,r52c10,r52c11,r52c12,r52c13,r52c14,r52c15,
+            r53c1,r53c2,r53c3,r53c4,r53c5,r53c6,r53c7,r53c8,r53c9,r53c10,r53c11,r53c12,r53c13,r53c14,r53c15,
+            r54c1,r54c2,r54c3,r54c4,r54c5,r54c6,r54c7,r54c8,r54c9,r54c10,r54c11,r54c12,r54c13,r54c14,r54c15,
+            r55c1,r55c2,r55c3,r55c4,r55c5,r55c6,r55c7,r55c8,r55c9,r55c10,r55c11,r55c12,r55c13,r55c14,r55c15,
+            r56c1,r56c2,r56c3,r56c4,r56c5,r56c6,r56c7,r56c8,r56c9,r56c10,r56c11,r56c12,r56c13,r56c14,r56c15,
+            r57c1,r57c2,r57c3,r57c4,r57c5,r57c6,r57c7,r57c8,r57c9,r57c10,r57c11,r57c12,r57c13,r57c14,r57c15,
+            r58c1,r58c2,r58c3,r58c4,r58c5,r58c6,r58c7,r58c8,r58c9,r58c10,r58c11,r58c12,r58c13,r58c14,r58c15,
+            r59c1,r59c2,r59c3,r59c4,r59c5,r59c6,r59c7,r59c8,r59c9,r59c10,r59c11,r59c12,r59c13,r59c14,r59c15,
+            r60c1,r60c2,r60c3,r60c4,r60c5,r60c6,r60c7,r60c8,r60c9,r60c10,r60c11,r60c12,r60c13,r60c14,r60c15,
+            r61c1,r61c2,r61c3,r61c4,r61c5,r61c6,r61c7,r61c8,r61c9,r61c10,r61c11,r61c12,r61c13,r61c14,r61c15,
+            r62c1,r62c2,r62c3,r62c4,r62c5,r62c6,r62c7,r62c8,r62c9,r62c10,r62c11,r62c12,r62c13,r62c14,r62c15]]>
 	</queryString>
 	<field name="r1c1" class="java.lang.Integer"/>
 	<field name="r1c2" class="java.lang.Integer"/>
@@ -490,6 +770,201 @@
 	<field name="r13c13" class="java.lang.Integer"/>
 	<field name="r13c14" class="java.lang.Integer"/>
 	<field name="r13c15" class="java.lang.Integer"/>
+	<field name="r50c1" class="java.lang.Integer"/>
+	<field name="r50c2" class="java.lang.Integer"/>
+	<field name="r50c3" class="java.lang.Integer"/>
+	<field name="r50c4" class="java.lang.Integer"/>
+	<field name="r50c5" class="java.lang.Integer"/>
+	<field name="r50c6" class="java.lang.Integer"/>
+	<field name="r50c7" class="java.lang.Integer"/>
+	<field name="r50c8" class="java.lang.Integer"/>
+	<field name="r50c9" class="java.lang.Integer"/>
+	<field name="r50c10" class="java.lang.Integer"/>
+	<field name="r50c11" class="java.lang.Integer"/>
+	<field name="r50c12" class="java.lang.Integer"/>
+	<field name="r50c13" class="java.lang.Integer"/>
+	<field name="r50c14" class="java.lang.Integer"/>
+	<field name="r50c15" class="java.lang.Integer"/>
+	<field name="r51c1" class="java.lang.Integer"/>
+	<field name="r51c2" class="java.lang.Integer"/>
+	<field name="r51c3" class="java.lang.Integer"/>
+	<field name="r51c4" class="java.lang.Integer"/>
+	<field name="r51c5" class="java.lang.Integer"/>
+	<field name="r51c6" class="java.lang.Integer"/>
+	<field name="r51c7" class="java.lang.Integer"/>
+	<field name="r51c8" class="java.lang.Integer"/>
+	<field name="r51c9" class="java.lang.Integer"/>
+	<field name="r51c10" class="java.lang.Integer"/>
+	<field name="r51c11" class="java.lang.Integer"/>
+	<field name="r51c12" class="java.lang.Integer"/>
+	<field name="r51c13" class="java.lang.Integer"/>
+	<field name="r51c14" class="java.lang.Integer"/>
+	<field name="r51c15" class="java.lang.Integer"/>
+	<field name="r52c1" class="java.lang.Integer"/>
+	<field name="r52c2" class="java.lang.Integer"/>
+	<field name="r52c3" class="java.lang.Integer"/>
+	<field name="r52c4" class="java.lang.Integer"/>
+	<field name="r52c5" class="java.lang.Integer"/>
+	<field name="r52c6" class="java.lang.Integer"/>
+	<field name="r52c7" class="java.lang.Integer"/>
+	<field name="r52c8" class="java.lang.Integer"/>
+	<field name="r52c9" class="java.lang.Integer"/>
+	<field name="r52c10" class="java.lang.Integer"/>
+	<field name="r52c11" class="java.lang.Integer"/>
+	<field name="r52c12" class="java.lang.Integer"/>
+	<field name="r52c13" class="java.lang.Integer"/>
+	<field name="r52c14" class="java.lang.Integer"/>
+	<field name="r52c15" class="java.lang.Integer"/>
+	<field name="r53c1" class="java.lang.Integer"/>
+	<field name="r53c2" class="java.lang.Integer"/>
+	<field name="r53c3" class="java.lang.Integer"/>
+	<field name="r53c4" class="java.lang.Integer"/>
+	<field name="r53c5" class="java.lang.Integer"/>
+	<field name="r53c6" class="java.lang.Integer"/>
+	<field name="r53c7" class="java.lang.Integer"/>
+	<field name="r53c8" class="java.lang.Integer"/>
+	<field name="r53c9" class="java.lang.Integer"/>
+	<field name="r53c10" class="java.lang.Integer"/>
+	<field name="r53c11" class="java.lang.Integer"/>
+	<field name="r53c12" class="java.lang.Integer"/>
+	<field name="r53c13" class="java.lang.Integer"/>
+	<field name="r53c14" class="java.lang.Integer"/>
+	<field name="r53c15" class="java.lang.Integer"/>
+	<field name="r54c1" class="java.lang.Integer"/>
+	<field name="r54c2" class="java.lang.Integer"/>
+	<field name="r54c3" class="java.lang.Integer"/>
+	<field name="r54c4" class="java.lang.Integer"/>
+	<field name="r54c5" class="java.lang.Integer"/>
+	<field name="r54c6" class="java.lang.Integer"/>
+	<field name="r54c7" class="java.lang.Integer"/>
+	<field name="r54c8" class="java.lang.Integer"/>
+	<field name="r54c9" class="java.lang.Integer"/>
+	<field name="r54c10" class="java.lang.Integer"/>
+	<field name="r54c11" class="java.lang.Integer"/>
+	<field name="r54c12" class="java.lang.Integer"/>
+	<field name="r54c13" class="java.lang.Integer"/>
+	<field name="r54c14" class="java.lang.Integer"/>
+	<field name="r54c15" class="java.lang.Integer"/>
+	<field name="r55c1" class="java.lang.Integer"/>
+	<field name="r55c2" class="java.lang.Integer"/>
+	<field name="r55c3" class="java.lang.Integer"/>
+	<field name="r55c4" class="java.lang.Integer"/>
+	<field name="r55c5" class="java.lang.Integer"/>
+	<field name="r55c6" class="java.lang.Integer"/>
+	<field name="r55c7" class="java.lang.Integer"/>
+	<field name="r55c8" class="java.lang.Integer"/>
+	<field name="r55c9" class="java.lang.Integer"/>
+	<field name="r55c10" class="java.lang.Integer"/>
+	<field name="r55c11" class="java.lang.Integer"/>
+	<field name="r55c12" class="java.lang.Integer"/>
+	<field name="r55c13" class="java.lang.Integer"/>
+	<field name="r55c14" class="java.lang.Integer"/>
+	<field name="r55c15" class="java.lang.Integer"/>
+	<field name="r56c1" class="java.lang.Integer"/>
+	<field name="r56c2" class="java.lang.Integer"/>
+	<field name="r56c3" class="java.lang.Integer"/>
+	<field name="r56c4" class="java.lang.Integer"/>
+	<field name="r56c5" class="java.lang.Integer"/>
+	<field name="r56c6" class="java.lang.Integer"/>
+	<field name="r56c7" class="java.lang.Integer"/>
+	<field name="r56c8" class="java.lang.Integer"/>
+	<field name="r56c9" class="java.lang.Integer"/>
+	<field name="r56c10" class="java.lang.Integer"/>
+	<field name="r56c11" class="java.lang.Integer"/>
+	<field name="r56c12" class="java.lang.Integer"/>
+	<field name="r56c13" class="java.lang.Integer"/>
+	<field name="r56c14" class="java.lang.Integer"/>
+	<field name="r56c15" class="java.lang.Integer"/>
+	<field name="r57c1" class="java.lang.Integer"/>
+	<field name="r57c2" class="java.lang.Integer"/>
+	<field name="r57c3" class="java.lang.Integer"/>
+	<field name="r57c4" class="java.lang.Integer"/>
+	<field name="r57c5" class="java.lang.Integer"/>
+	<field name="r57c6" class="java.lang.Integer"/>
+	<field name="r57c7" class="java.lang.Integer"/>
+	<field name="r57c8" class="java.lang.Integer"/>
+	<field name="r57c9" class="java.lang.Integer"/>
+	<field name="r57c10" class="java.lang.Integer"/>
+	<field name="r57c11" class="java.lang.Integer"/>
+	<field name="r57c12" class="java.lang.Integer"/>
+	<field name="r57c13" class="java.lang.Integer"/>
+	<field name="r57c14" class="java.lang.Integer"/>
+	<field name="r57c15" class="java.lang.Integer"/>
+	<field name="r58c1" class="java.lang.Integer"/>
+	<field name="r58c2" class="java.lang.Integer"/>
+	<field name="r58c3" class="java.lang.Integer"/>
+	<field name="r58c4" class="java.lang.Integer"/>
+	<field name="r58c5" class="java.lang.Integer"/>
+	<field name="r58c6" class="java.lang.Integer"/>
+	<field name="r58c7" class="java.lang.Integer"/>
+	<field name="r58c8" class="java.lang.Integer"/>
+	<field name="r58c9" class="java.lang.Integer"/>
+	<field name="r58c10" class="java.lang.Integer"/>
+	<field name="r58c11" class="java.lang.Integer"/>
+	<field name="r58c12" class="java.lang.Integer"/>
+	<field name="r58c13" class="java.lang.Integer"/>
+	<field name="r58c14" class="java.lang.Integer"/>
+	<field name="r58c15" class="java.lang.Integer"/>
+	<field name="r59c1" class="java.lang.Integer"/>
+	<field name="r59c2" class="java.lang.Integer"/>
+	<field name="r59c3" class="java.lang.Integer"/>
+	<field name="r59c4" class="java.lang.Integer"/>
+	<field name="r59c5" class="java.lang.Integer"/>
+	<field name="r59c6" class="java.lang.Integer"/>
+	<field name="r59c7" class="java.lang.Integer"/>
+	<field name="r59c8" class="java.lang.Integer"/>
+	<field name="r59c9" class="java.lang.Integer"/>
+	<field name="r59c10" class="java.lang.Integer"/>
+	<field name="r59c11" class="java.lang.Integer"/>
+	<field name="r59c12" class="java.lang.Integer"/>
+	<field name="r59c13" class="java.lang.Integer"/>
+	<field name="r59c14" class="java.lang.Integer"/>
+	<field name="r59c15" class="java.lang.Integer"/>
+	<field name="r60c1" class="java.lang.Integer"/>
+	<field name="r60c2" class="java.lang.Integer"/>
+	<field name="r60c3" class="java.lang.Integer"/>
+	<field name="r60c4" class="java.lang.Integer"/>
+	<field name="r60c5" class="java.lang.Integer"/>
+	<field name="r60c6" class="java.lang.Integer"/>
+	<field name="r60c7" class="java.lang.Integer"/>
+	<field name="r60c8" class="java.lang.Integer"/>
+	<field name="r60c9" class="java.lang.Integer"/>
+	<field name="r60c10" class="java.lang.Integer"/>
+	<field name="r60c11" class="java.lang.Integer"/>
+	<field name="r60c12" class="java.lang.Integer"/>
+	<field name="r60c13" class="java.lang.Integer"/>
+	<field name="r60c14" class="java.lang.Integer"/>
+	<field name="r60c15" class="java.lang.Integer"/>
+	<field name="r61c1" class="java.lang.Integer"/>
+	<field name="r61c2" class="java.lang.Integer"/>
+	<field name="r61c3" class="java.lang.Integer"/>
+	<field name="r61c4" class="java.lang.Integer"/>
+	<field name="r61c5" class="java.lang.Integer"/>
+	<field name="r61c6" class="java.lang.Integer"/>
+	<field name="r61c7" class="java.lang.Integer"/>
+	<field name="r61c8" class="java.lang.Integer"/>
+	<field name="r61c9" class="java.lang.Integer"/>
+	<field name="r61c10" class="java.lang.Integer"/>
+	<field name="r61c11" class="java.lang.Integer"/>
+	<field name="r61c12" class="java.lang.Integer"/>
+	<field name="r61c13" class="java.lang.Integer"/>
+	<field name="r61c14" class="java.lang.Integer"/>
+	<field name="r61c15" class="java.lang.Integer"/>
+	<field name="r62c1" class="java.lang.Integer"/>
+	<field name="r62c2" class="java.lang.Integer"/>
+	<field name="r62c3" class="java.lang.Integer"/>
+	<field name="r62c4" class="java.lang.Integer"/>
+	<field name="r62c5" class="java.lang.Integer"/>
+	<field name="r62c6" class="java.lang.Integer"/>
+	<field name="r62c7" class="java.lang.Integer"/>
+	<field name="r62c8" class="java.lang.Integer"/>
+	<field name="r62c9" class="java.lang.Integer"/>
+	<field name="r62c10" class="java.lang.Integer"/>
+	<field name="r62c11" class="java.lang.Integer"/>
+	<field name="r62c12" class="java.lang.Integer"/>
+	<field name="r62c13" class="java.lang.Integer"/>
+	<field name="r62c14" class="java.lang.Integer"/>
+	<field name="r62c15" class="java.lang.Integer"/>
 	<detail>
 		<band height="948" splitType="Stretch">
 			<textField>
@@ -3808,7 +4283,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Количство обращений, поступивших в СМОНСО"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Количство обращений, поступивших в СМО НСО"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="766" width="148" height="18" uuid="aaf009dc-bed3-44fe-a34a-dfa1c1e219cf"/>
@@ -4003,7 +4478,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="928" width="41" height="18" uuid="78992b1e-2f00-4325-ab1d-c38f8f1022cd"/>
@@ -4016,7 +4491,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="928" width="41" height="18" uuid="554f18b7-dd71-44fb-ad19-9ca4f074b121"/>
@@ -4029,7 +4504,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="748" width="41" height="18" uuid="888c8daf-0017-46af-9515-382b6e9bb3b4"/>
@@ -4042,7 +4517,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="766" width="41" height="18" uuid="3518e75b-c45d-4add-8702-402def212f04"/>
@@ -4055,7 +4530,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="892" width="41" height="18" uuid="40a40d51-238c-4504-bbe4-68523123d9f9"/>
@@ -4068,7 +4543,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="838" width="41" height="18" uuid="903ae5ac-0ee1-42e6-a3c1-dafdc92dff7b"/>
@@ -4081,7 +4556,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="784" width="41" height="18" uuid="6ccfc0ba-c590-49d0-9eb5-6196f598f1e1"/>
@@ -4094,7 +4569,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="766" width="41" height="18" uuid="611643d7-38ec-4b87-8b64-db84e2c2eefa"/>
@@ -4107,7 +4582,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="910" width="41" height="18" uuid="950e4e85-1e73-4d28-b648-c0b3d7a93504"/>
@@ -4120,7 +4595,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="874" width="41" height="18" uuid="93a8c29e-ea82-4d00-9c2d-49e01fd025b4"/>
@@ -4133,7 +4608,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="784" width="41" height="18" uuid="54799526-4a60-4abe-9682-b642733f8eb3"/>
@@ -4146,7 +4621,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="910" width="41" height="18" uuid="13d4f18a-c08a-4d4a-b27a-ddb28fb69c9c"/>
@@ -4159,7 +4634,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="748" width="41" height="18" uuid="e4166a25-e077-4fde-b197-5015a282f585"/>
@@ -4172,7 +4647,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="910" width="41" height="18" uuid="1ce326bd-40e0-4806-98c5-77fd2409cacc"/>
@@ -4185,7 +4660,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="892" width="41" height="18" uuid="f3a9bc16-71b8-4613-9674-c776a8e19188"/>
@@ -4198,7 +4673,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="892" width="41" height="18" uuid="44e005ca-fb3f-4370-bd8d-bf4df3486c3a"/>
@@ -4211,7 +4686,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="748" width="41" height="18" uuid="a4aadceb-7f5c-4f16-a40f-0c0a1fab41e3"/>
@@ -4224,7 +4699,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="838" width="41" height="18" uuid="796cd683-26d4-46db-83ff-18d948146a73"/>
@@ -4237,7 +4712,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="820" width="41" height="18" uuid="a12f2c73-0430-44f8-a028-91e9aea43d15"/>
@@ -4250,7 +4725,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="784" width="41" height="18" uuid="a4634ede-da0d-42ae-9f33-a88451397ae2"/>
@@ -4263,7 +4738,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="820" width="41" height="18" uuid="02814ddc-d347-4c5b-b8a8-083eebb8ab50"/>
@@ -4276,7 +4751,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="874" width="41" height="18" uuid="c641e01b-d4ec-4a77-8418-e4f9799a42f2"/>
@@ -4289,7 +4764,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="766" width="41" height="18" uuid="d17f0a4c-f6f9-4e4d-a3b9-c01e26c93126"/>
@@ -4302,7 +4777,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="766" width="41" height="18" uuid="245afe05-2111-4181-9bdf-8dbe532d83ec"/>
@@ -4315,7 +4790,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="928" width="41" height="18" uuid="9004c608-55e8-4b11-b82d-0af6913a1561"/>
@@ -4328,7 +4803,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="928" width="41" height="18" uuid="84cdef91-b33a-4db1-bcf5-947e37064371"/>
@@ -4341,7 +4816,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="820" width="41" height="18" uuid="7de80942-4000-4588-9ed8-36fa732ebc4e"/>
@@ -4354,7 +4829,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="838" width="41" height="18" uuid="b663128d-d679-42af-b5b8-afa161b786c1"/>
@@ -4367,7 +4842,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="856" width="41" height="18" uuid="d4ece4bd-d0eb-4a44-94dc-d732264e1275"/>
@@ -4380,7 +4855,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="784" width="41" height="18" uuid="f320bd12-4570-425b-93b5-e444eaa6cef6"/>
@@ -4393,7 +4868,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="910" width="41" height="18" uuid="2bad7148-139b-42ca-8d36-5c872e86b2a7"/>
@@ -4406,7 +4881,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="874" width="41" height="18" uuid="17d93b01-33a0-476f-afc8-c07d0042345e"/>
@@ -4419,7 +4894,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="838" width="41" height="18" uuid="f4216618-dc26-4958-b285-d48be2f40eb3"/>
@@ -4432,7 +4907,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="892" width="41" height="18" uuid="8244f30a-6ccb-4fbe-8814-5c43f53fde45"/>
@@ -4445,7 +4920,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="856" width="41" height="18" uuid="4e30e006-55a6-4230-9b74-09e7b9d357f5"/>
@@ -4458,7 +4933,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="802" width="41" height="18" uuid="c637a3c2-6ad0-49db-b4c7-9a71990c9a03"/>
@@ -4471,7 +4946,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="802" width="41" height="18" uuid="f6ae4527-3a6b-4bdf-9a57-460905730a98"/>
@@ -4484,7 +4959,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="802" width="41" height="18" uuid="7964a778-3af8-4afa-8f50-3c37e6340b33"/>
@@ -4497,7 +4972,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="309" y="856" width="41" height="18" uuid="47e9f262-c432-46ab-84db-c5082ccb93e1"/>
@@ -4510,7 +4985,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="856" width="41" height="18" uuid="817fe3ef-f6fa-443c-98ad-985379afafbe"/>
@@ -4523,7 +4998,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="748" width="41" height="18" uuid="aeb83726-cbfa-4130-8f9c-d3e13877adf9"/>
@@ -4536,7 +5011,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="874" width="41" height="18" uuid="39381f14-b4c9-4df8-bde7-353f6f36cacb"/>
@@ -4549,7 +5024,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="227" y="802" width="41" height="18" uuid="503177f6-380e-4889-b250-97d9e54302eb"/>
@@ -4562,7 +5037,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="838" width="59" height="18" uuid="7c6cd54a-397a-417d-83cf-6f4ebd1b7039"/>
@@ -4575,7 +5050,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="802" width="79" height="18" uuid="d0d2eaf3-83f3-45e1-a21e-dabc9ee07725"/>
@@ -4588,7 +5063,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="910" width="59" height="18" uuid="93a7f9d9-4ab5-455c-9ba0-5d5d8c787b39"/>
@@ -4601,7 +5076,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="928" width="79" height="18" uuid="f945d450-7543-446c-a0ac-7ad56ad8635c"/>
@@ -4614,7 +5089,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="838" width="79" height="18" uuid="451308f8-bcc9-4d16-ac82-cfdf547940b3"/>
@@ -4627,7 +5102,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="874" width="79" height="18" uuid="39db2484-1c88-49be-addc-78f2fcbb9c7d"/>
@@ -4640,7 +5115,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="892" width="59" height="18" uuid="42e5743a-9613-4997-b527-c01e7c1a3e16"/>
@@ -4653,7 +5128,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="748" width="59" height="18" uuid="4c30f485-f09c-4a7a-ba46-defcc656b946"/>
@@ -4666,7 +5141,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="784" width="59" height="18" uuid="83b47d10-8757-4a38-acd4-7b7b79fd897e"/>
@@ -4679,7 +5154,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="766" width="59" height="18" uuid="bbf287ce-b7c7-4abf-b2a3-7ce521acbc5d"/>
@@ -4692,7 +5167,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="874" width="59" height="18" uuid="3577f01a-8cb4-46cc-89b4-b06a39cc7f62"/>
@@ -4705,7 +5180,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="802" width="59" height="18" uuid="4c7bddee-d17d-4299-86b6-14117c0dab1a"/>
@@ -4718,7 +5193,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="766" width="79" height="18" uuid="8e856b23-6aa0-420c-80a3-614f2abe6c92"/>
@@ -4731,7 +5206,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="856" width="79" height="18" uuid="1919e683-1933-44c2-9f8a-3f6d28306db8"/>
@@ -4744,7 +5219,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="910" width="79" height="18" uuid="b7d5bdcb-ed86-4364-83f4-3bab08b6a8a9"/>
@@ -4757,7 +5232,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="748" width="79" height="18" uuid="1fbebf75-c9dd-4abf-9d4e-40d91cba3987"/>
@@ -4770,7 +5245,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="928" width="59" height="18" uuid="b6a1840b-022c-4d8a-b790-2a7a93e2b432"/>
@@ -4783,7 +5258,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="784" width="79" height="18" uuid="a89836a2-98b8-4830-a1df-ced58752b71d"/>
@@ -4796,7 +5271,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="856" width="59" height="18" uuid="9489cb98-2b27-4eff-ac2b-5bd5608386f1"/>
@@ -4809,7 +5284,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="820" width="79" height="18" uuid="792387e8-ed8b-4ed3-a702-71471902688a"/>
@@ -4822,7 +5297,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="470" y="820" width="59" height="18" uuid="f109a08f-f25b-4530-af12-c3ec52bba411"/>
@@ -4835,7 +5310,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="892" width="79" height="18" uuid="71eab5fc-ae29-4818-8107-26b4f58a211b"/>
@@ -4848,7 +5323,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="910" width="34" height="18" uuid="50525ec5-b38a-4a29-b3df-16965557d33a"/>
@@ -4861,7 +5336,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="766" width="79" height="18" uuid="4686e109-3a52-462d-957a-4b902b95b759"/>
@@ -4874,7 +5349,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="892" width="34" height="18" uuid="e5e854e8-d261-4d5e-ac3e-45ec92a6868a"/>
@@ -4887,7 +5362,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="838" width="79" height="18" uuid="d17d2fae-c679-413c-9f77-0286cfe2325b"/>
@@ -4900,7 +5375,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="856" width="34" height="18" uuid="9e4f62e9-e596-464f-bb28-9c54ede1f561"/>
@@ -4913,7 +5388,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="802" width="34" height="18" uuid="fcaab80f-5d59-4f78-a603-845cfa588b46"/>
@@ -4926,7 +5401,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="784" width="34" height="18" uuid="6314dbe9-6cca-4043-ae2b-4543c6505888"/>
@@ -4939,7 +5414,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="802" width="34" height="18" uuid="b6596116-da89-4497-9f07-4591611686df"/>
@@ -4952,7 +5427,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="748" width="34" height="18" uuid="1007bc4f-0596-4f84-8df0-b3f6c9923263"/>
@@ -4965,7 +5440,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="892" width="34" height="18" uuid="9f266d81-4a19-4725-8a67-fc9886da9e85"/>
@@ -4978,7 +5453,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="784" width="59" height="18" uuid="8c0126d2-ffa8-4c79-93a7-7a63bc54e224"/>
@@ -4991,7 +5466,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="820" width="59" height="18" uuid="f721f361-1157-41fe-98d2-778c0ad794d2"/>
@@ -5004,7 +5479,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="856" width="79" height="18" uuid="e032d517-ffa9-4daf-8c37-f0013e746d5c"/>
@@ -5017,7 +5492,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="856" width="79" height="18" uuid="2d559e5f-44fd-4d44-9388-df68bdedf867"/>
@@ -5030,7 +5505,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="802" width="79" height="18" uuid="0b3e04fd-2968-43fc-8239-329799372070"/>
@@ -5043,7 +5518,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="910" width="79" height="18" uuid="8dbdbbc1-b823-4048-b127-e73833303286"/>
@@ -5056,7 +5531,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="766" width="34" height="18" uuid="e03e5301-22f5-475d-bdf8-71da5636763c"/>
@@ -5069,7 +5544,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="892" width="34" height="18" uuid="e13b708f-aaf8-4306-b422-660073df9676"/>
@@ -5082,7 +5557,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="766" width="34" height="18" uuid="eaffba24-69bd-4585-bccf-590962337537"/>
@@ -5095,7 +5570,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="748" width="34" height="18" uuid="e1f4953e-60df-4d3e-b772-ba2ebcc15710"/>
@@ -5108,7 +5583,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="838" width="79" height="18" uuid="d56f0b90-61c8-41b5-8974-fb07f8c72c38"/>
@@ -5121,7 +5596,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="892" width="34" height="18" uuid="488f12e2-e982-429a-bd9e-d38901a2c759"/>
@@ -5134,7 +5609,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="748" width="59" height="18" uuid="4f3d5171-1cf2-4e6b-90c0-8008eff008e2"/>
@@ -5147,7 +5622,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="856" width="59" height="18" uuid="00a24623-427c-40e9-8598-8d0f4c7944d1"/>
@@ -5160,7 +5635,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="910" width="79" height="18" uuid="dab5ecaf-7a65-49b9-98c4-7e8cf49278fe"/>
@@ -5173,7 +5648,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="784" width="34" height="18" uuid="e67c5f09-e6a3-4412-9001-5c8897a6bb81"/>
@@ -5186,7 +5661,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="874" width="79" height="18" uuid="80293725-851d-4577-9bab-274cdba6c24c"/>
@@ -5199,7 +5674,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="748" width="34" height="18" uuid="96d536b6-d998-4d99-a147-f64484f038c9"/>
@@ -5212,7 +5687,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="928" width="79" height="18" uuid="b38470db-c6c6-4c59-a224-f4ecc9c00c30"/>
@@ -5225,7 +5700,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="892" width="79" height="18" uuid="fa070a84-cafd-428a-94a8-1d2fd02b6daf"/>
@@ -5238,7 +5713,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="928" width="34" height="18" uuid="9a11b87b-d345-4177-8302-c526390e83ec"/>
@@ -5251,7 +5726,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="892" width="59" height="18" uuid="b4db61b1-9f27-42d2-8a33-44aba8e29713"/>
@@ -5264,7 +5739,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="766" width="34" height="18" uuid="3ed37f65-e328-4195-ac3f-32c2e1b13c92"/>
@@ -5277,7 +5752,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="928" width="34" height="18" uuid="d617fbc6-43cb-4d8e-a0bb-1316a43b3cac"/>
@@ -5290,7 +5765,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="820" width="34" height="18" uuid="a9f3ffb5-7553-42b0-bc0b-7e9f7e493d3f"/>
@@ -5303,7 +5778,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="928" width="34" height="18" uuid="c75454c0-3b8e-4384-8182-3050c301a5de"/>
@@ -5316,7 +5791,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="802" width="34" height="18" uuid="25a36d26-41e9-4ee3-9773-13722e80a607"/>
@@ -5329,7 +5804,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="820" width="34" height="18" uuid="a2624be2-b7a4-4c7c-83f7-040abfff8356"/>
@@ -5342,7 +5817,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="766" width="79" height="18" uuid="a509c8bb-3f12-41f0-8ed0-20631aba34aa"/>
@@ -5355,7 +5830,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="802" width="79" height="18" uuid="c14de399-1783-41d6-b338-91a416a7c2b4"/>
@@ -5368,7 +5843,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="928" width="34" height="18" uuid="fdcced6b-a3ed-4a90-83a7-2e07b45fe044"/>
@@ -5381,7 +5856,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="910" width="34" height="18" uuid="84657009-0aae-49ad-a822-2585da5628b3"/>
@@ -5394,7 +5869,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="928" width="59" height="18" uuid="176f52f9-a34e-4b50-8f4c-fb86095a7db9"/>
@@ -5407,7 +5882,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="910" width="34" height="18" uuid="be4dd0b2-6df7-42f2-b8f4-a1383361e164"/>
@@ -5420,7 +5895,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="856" width="34" height="18" uuid="cceebc6e-cd31-42e0-b5c2-bb0d74b4a511"/>
@@ -5433,7 +5908,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="820" width="79" height="18" uuid="f9072815-1d0e-496d-ad2a-5ed302d08810"/>
@@ -5446,7 +5921,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="838" width="34" height="18" uuid="072becd6-00d5-45c7-a744-0eb7f0c711d1"/>
@@ -5459,7 +5934,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="784" width="34" height="18" uuid="548de738-344d-4bc1-a7ab-c988d215659e"/>
@@ -5472,7 +5947,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="910" width="59" height="18" uuid="e8e61160-dc52-4201-aab8-f1bb004149d1"/>
@@ -5485,7 +5960,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="748" width="79" height="18" uuid="7f35a77d-5fed-4d56-a3f6-52c174633d97"/>
@@ -5498,7 +5973,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="874" width="79" height="18" uuid="2f35d348-a9f8-43e6-b7a2-6343dbd1ce28"/>
@@ -5511,7 +5986,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="820" width="34" height="18" uuid="3181ebda-7d23-4856-a151-80ceac5fecdf"/>
@@ -5524,7 +5999,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="874" width="34" height="18" uuid="4609034c-fd85-4838-bc10-af2e2c158668"/>
@@ -5537,7 +6012,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="838" width="34" height="18" uuid="fb48c2d8-71b1-4437-a9bc-85cfd0018329"/>
@@ -5550,7 +6025,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="820" width="79" height="18" uuid="10efbfb4-8a2a-46e7-9cdd-463a21e80e88"/>
@@ -5563,7 +6038,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="802" width="59" height="18" uuid="408542e9-9d27-453c-9d1c-f479c9bd3162"/>
@@ -5576,7 +6051,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="910" width="34" height="18" uuid="6204caa6-f16f-46b9-8a71-d8b65158c000"/>
@@ -5589,7 +6064,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="862" y="784" width="79" height="18" uuid="72c63cce-29d1-483d-94ac-1b2755a007ed"/>
@@ -5602,7 +6077,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c15}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c15}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="874" width="59" height="18" uuid="3ac5bedf-c2ea-4386-ac2d-78d74e2167e0"/>
@@ -5615,7 +6090,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="784" width="79" height="18" uuid="72233306-08e8-49bf-a7d9-099dea619a02"/>
@@ -5628,7 +6103,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="802" width="34" height="18" uuid="e9d3c531-95a5-45a3-a1fb-7530ea0d857b"/>
@@ -5641,7 +6116,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="784" width="34" height="18" uuid="d160398f-0e27-469f-a828-e76c023291fe"/>
@@ -5654,7 +6129,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="874" width="34" height="18" uuid="91b55b1e-9b47-40cf-bb64-2984c344ea16"/>
@@ -5667,7 +6142,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="874" width="34" height="18" uuid="9050a691-7786-4934-b28b-f63086f1a9ee"/>
@@ -5680,7 +6155,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="856" width="34" height="18" uuid="28e1f6ee-b82b-40c4-a4c5-e30fd23e54c9"/>
@@ -5693,7 +6168,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="820" width="34" height="18" uuid="60e1cad5-9999-456d-8e80-18db3722cb30"/>
@@ -5706,7 +6181,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="874" width="34" height="18" uuid="6aa36a76-9e07-438c-8914-1cecf69abdcc"/>
@@ -5719,7 +6194,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="928" width="79" height="18" uuid="9fbae3e8-c9af-452c-af90-582319e4fff3"/>
@@ -5732,7 +6207,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="748" width="34" height="18" uuid="a8a64325-76c9-42f9-8338-65af3fd64a3a"/>
@@ -5745,7 +6220,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="766" width="59" height="18" uuid="ae1fa36b-663a-42cc-b825-b3c8e8d04128"/>
@@ -5758,7 +6233,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="588" y="838" width="59" height="18" uuid="0f62b254-aef6-4e9b-a848-ce1843fdb6a9"/>
@@ -5771,7 +6246,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c9}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="749" y="838" width="34" height="18" uuid="07b9797d-7cf9-449f-a426-3e0975e1cc06"/>
@@ -5784,7 +6259,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c13}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c13}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="748" width="79" height="18" uuid="cfaaec68-6476-4f92-b64b-5ce89ae0f7d0"/>
@@ -5797,7 +6272,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="783" y="892" width="79" height="18" uuid="d643f36c-c3eb-4889-8d2c-e2622d0cd5a5"/>
@@ -5810,7 +6285,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c14}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="715" y="766" width="34" height="18" uuid="fccf0c66-c876-4d90-a54b-5861ea3096f1"/>
@@ -5823,7 +6298,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c12}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="647" y="838" width="34" height="18" uuid="80e34e2c-7227-4812-b9fb-d7cc8bef014e"/>
@@ -5836,7 +6311,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c10}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="681" y="856" width="34" height="18" uuid="bdeb883d-cdae-45c0-a993-a084bf0dbd26"/>
@@ -5849,7 +6324,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c11}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="874" width="59" height="18" uuid="c5b19665-4d64-42ca-ac1b-884d4fc72537"/>
@@ -5862,7 +6337,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r13c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r59c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="784" width="59" height="18" uuid="6f4c09d1-90fc-4675-90b5-fcc0c8e5f8c3"/>
@@ -5875,7 +6350,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r54c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="766" width="59" height="18" uuid="b2a86dd5-7e27-4cca-98fc-41617a7d04be"/>
@@ -5888,7 +6363,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r4c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r53c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="838" width="59" height="18" uuid="43f5bf78-aa94-4335-a213-cf33856b91ea"/>
@@ -5901,7 +6376,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r8c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r57c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="802" width="59" height="18" uuid="b85c14a3-28f0-4893-8591-7f9d832883d0"/>
@@ -5914,7 +6389,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r6c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r55c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="910" width="59" height="18" uuid="feb4b0a9-264c-43c9-83b3-38f963a63ac8"/>
@@ -5927,7 +6402,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r11c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r61c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="856" width="59" height="18" uuid="47f6fa99-b2e5-4b90-b7db-e7cbded9c899"/>
@@ -5940,7 +6415,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r9c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r58c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="928" width="59" height="18" uuid="3947f32f-1b9e-4140-8e39-ef38292ff5bc"/>
@@ -5953,7 +6428,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r12c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r62c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="820" width="59" height="18" uuid="2296e893-21f5-42b2-ae2e-a05bba092507"/>
@@ -5966,7 +6441,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r7c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r56c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="748" width="59" height="18" uuid="221916d5-156c-46ca-9615-377ab36563c0"/>
@@ -5979,7 +6454,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r3c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r52c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="529" y="892" width="59" height="18" uuid="cfdd2b0c-08f6-4a3e-ba69-5f90d2b198e3"/>
@@ -5992,7 +6467,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r10c8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r60c8}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="391" y="676" width="79" height="18" uuid="a7e98969-017e-4d15-a4b0-2229a6b9a56e"/>
@@ -6616,7 +7091,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="14" isBold="true" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Отчет по письменным обращениям граждан, поступившим в ТФОМС НСО"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Отчет по письменным обращениям граждан, поступившим в СМО НСО"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

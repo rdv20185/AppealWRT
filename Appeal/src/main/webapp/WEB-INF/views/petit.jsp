@@ -386,7 +386,7 @@
 	
 		$(function() {
 			$( "#dateInput" ).datepicker({dateFormat:'dd.mm.yy'});
-			$( "#dateInput" ).datepicker( "setDate", new Date());
+			if(location.href.indexOf("Appeal/refresh/") < 0) $( "#dateInput" ).datepicker( "setDate", new Date());
 		});
 		$(function() {
 			$( "#datebetween" ).datepicker({dateFormat:'dd.mm.yy'});
@@ -528,6 +528,7 @@
 	<form:errors path="*" cssClass="errorblock" element="div" />
 	<form:hidden path="id" name='id'/>
 	<form:hidden path="blockger2016.filecall"/>
+	<form:hidden path="blockger2016.date_plan_end"/> 
 	<form:hidden path="num"/>
 
 <h1>
@@ -548,9 +549,18 @@
 	      <form:input id="dateInput" path="dateInput"/>
 	   	</c:if>
 	   	<c:if test="${petit.id ne null}">
-			<spring:message code="label.id" />&nbsp<c:out value="${petit.num}" />&nbsp&nbsp&nbsp&nbsp
-			<spring:message code="label.dateInput" />&nbsp<c:out value="${petit.dateInput}" />
-			<form:hidden id="tupin" path="dateInput" value="${petit.dateInput}"/>
+			<spring:message code="label.id" /><c:out value="${petit.num}" />
+			
+			
+			<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+				<form:label style="font-weight: bold;" path="dateInput"><spring:message code="label.dateInput" /></form:label>
+	      		<form:input id="dateInput" path="dateInput"/>	  
+			</sec:authorize>
+			
+			<sec:authorize access="!hasAnyRole('ROLE_ADMIN')">
+				<spring:message code="label.dateInput" /><c:out value="${petit.dateInput}" />
+				<form:hidden id="tupin" path="dateInput" value="${petit.dateInput}"/>	  
+			</sec:authorize>
 	   	</c:if>
 	   	
 	 	<form:label path="sourceId"><spring:message code="label.source" /></form:label>
@@ -744,9 +754,24 @@
 </sec:authorize>                
                 <div class="hide2">
 					<p>
+					<c:if test="${petit.bloutboindletter2016.date_between eq null}">
 							<form:label style="float:left;" path="bloutboindletter2016.date_between">Дата промежуточного ответа</form:label>
 		      				<form:input style="float:left;" id="datebetween"  path="bloutboindletter2016.date_between"/>
-							<form:label path="bloutboindletter2016.date_passmedDoc">Дата передачи мед.документации в ОМЭР</form:label>
+					</c:if>
+					<c:if test="${petit.bloutboindletter2016.date_between ne null}">
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+							<form:label style="float:left;" path="bloutboindletter2016.date_between">Дата промежуточного ответа</form:label>
+		      				<form:input style="float:left;" id="datebetween"  path="bloutboindletter2016.date_between"/>
+						</sec:authorize>
+						
+						<sec:authorize access="!hasAnyRole('ROLE_ADMIN')">
+							<form:label style="float:left;" path="bloutboindletter2016.date_between">Дата промежуточного ответа</form:label>
+							<div style="float:left; font-size:13px;"><c:out value="${petit.bloutboindletter2016.date_between}" /></div>
+							<form:hidden path="bloutboindletter2016.date_between" value="${petit.bloutboindletter2016.date_between}"/>
+						</sec:authorize>
+				   	</c:if>
+							
+							<form:label style="font-size:13px;" path="bloutboindletter2016.date_passmedDoc">Дата передачи мед.документации в ОМЭР</form:label>
       						<form:input id="date_passOmer" path="bloutboindletter2016.date_passmedDoc"/>
 					</p>
 					<p>
@@ -766,7 +791,7 @@
 	      			</div>	
 	      			</p>
 	      			<p>
-	      			<button type="button" id="btn_add_subresponse" title="Добавить промежуточный ответ">+</button>
+	      			<button type="button" id="btn_add_subresponse" title="Добавить дату дополнительного запроса/ответа">+</button>
 	      			</p>
 	      			<p>
 	      			<div id="div_subresponse1">
@@ -801,7 +826,7 @@
 							<form:option value="hamitov" label="hamitov" />
 							<form:option value="smo_simaz" label="smo_simaz" />
  							<form:option value="smo_ingos" label="smo_ingos" />
- 							<form:option value="smo_ingos" label="smo_ingos" />
+ 							<form:option value="smo_ingos_01" label="smo_ingos_01" />
  							<form:option value="smo_rosno_01" label="smo_rosno_01" />
  							<form:option value="smo_rosno_02" label="smo_rosno_02" />
  							<form:option value="smo_rosno_03" label="smo_rosno_03" />

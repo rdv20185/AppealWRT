@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -34,39 +35,46 @@ public class Utilitys {
 	 * getDate_end() дата окончательного ответа
 	 * getDate_between() дата промежуточного ответа  
 	 */
-	public boolean valid(String overdueappeal,Petit petit){
+	public int valid(String overdueappeal,Petit petit){
 		
 		if(overdueappeal != null && petit.getBlockger2016().getDate_end() != null && petit.getBloutboindletter2016().getDate_between().equals("")){
-			return true;
+			return 1;
 		}
 		if(overdueappeal != null && petit.getBlockger2016().getDate_end() != null && petit.getBloutboindletter2016().getDate_between().length() > 1){
-			return true;
+			return 2;
 		}
 		if(overdueappeal != null && petit.getBlockger2016().getDate_end() == null && petit.getBloutboindletter2016().getDate_between().length() > 1 ){
-			return true;
+			return 3;
 		}
 		if(overdueappeal != null && petit.getBlockger2016().getDate_end() == null && petit.getBloutboindletter2016().getDate_between().equals("") ){
-			return true;
+			return 4;
 		}
 		
 		
-		return false;
+		return 0;
 	}
 	
 	/**
 	 * Метод преобразует в объект Calendar строковую данные и данные объекта Date
 	 * @param petit Объект с необходимыми датами getDateInput() и getDate_end() 
+	 * Если getDate_end() == null (в случае если обращение является еще в работе)
+	 * присваиваем текущюю дату, т.е. рассматриваем на текущий день.
 	 * @throws ParseException
 	 */
 	public void processDate(Petit petit) throws ParseException{
 		
 		getCal().setTime(df.parse(petit.getDateInput().substring(0, 11).trim()));
-		getCal2().setTime(petit.getBlockger2016().getDate_end());
+		
+		if(petit.getBlockger2016().getDate_end() == null){
+			getCal2().setTime(new Date());
+		}else{
+			getCal2().setTime(petit.getBlockger2016().getDate_end());
+		}
 		
 	}
 	
 	/**
-	 * 
+	 * Расчет дней между датами. Примечание: не учитывает праздничне дни.
 	 * @param startDate
 	 * @param endDate
 	 * @return
@@ -81,6 +89,18 @@ public class Utilitys {
 		  return daysBetween;  
 	} 
 	
+	/**
+	 * Метод смещает дату на определеное количиство дней (count_days,tehnick_count_date).
+	 * count_days - дата, непосредственно на которую смещаем дату
+	 * tehnick_count_date - техническая,предназначена для смещения на случай колибровки расчета
+	 * дата. То есть с логике разделена дата увеличения и дата технического увеличения (для колибровки, пристредки, отладки) с целью
+	 * чтобы было понятно какое количество дней для чего используется.
+	 * 
+	 * @param startDate
+	 * @param count_days
+	 * @param tehnick_count_date
+	 * @return
+	 */
 	public Calendar daysPlus(Calendar startDate,int count_days,int tehnick_count_date){
 		startDate.add(Calendar.DATE, tehnick_count_date);
 		startDate.add(Calendar.DATE, count_days);

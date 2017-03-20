@@ -37,6 +37,8 @@ public class BlockGER2016 {
 	//дата завершения обращения
 	@Temporal(TemporalType.DATE)
 	private Date date_end;
+	//крайняя дата когда должен быть дан ответ
+	private String date_plan_end;
 	// Дата Закрытия обращения
 	@Temporal(TemporalType.DATE)
 	private Date date_close;
@@ -208,7 +210,7 @@ public class BlockGER2016 {
 				+ ", letter_out_date=" + letter_out_date + ", regsource_id="
 				+ regsource_id + ", regname=" + regname + ", regnum=" + regnum
 				+ ", date_create=" + date_create + ", date_change="
-				+ date_change + ",inbound_from="+ inbound_from +",claim_inshur="+ claim_inshur +"typempid="+typempid+" state=" + state + ",filecall ="+ filecall +"]";
+				+ date_change + ",inbound_from="+ inbound_from +",date_plan_end="+ date_plan_end +",claim_inshur="+ claim_inshur +"typempid="+typempid+" state=" + state + ",filecall ="+ filecall +"]";
 	}
 
 	public Date getDate_close() {
@@ -225,6 +227,14 @@ public class BlockGER2016 {
 
 	public void setFilecall(String filecall) {
 		this.filecall = filecall;
+	}
+
+	public String getDate_plan_end() {
+		return date_plan_end;
+	}
+
+	public void setDate_plan_end(String date_plan_end) {
+		this.date_plan_end = date_plan_end;
 	}
 
 	
