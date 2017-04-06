@@ -593,7 +593,7 @@ function table(response,role){
     $container.empty();
 	
 	 userInfo =  
-		 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th  class='cuting2'>РЕГИСТРАТОР</th><th>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
+		 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th  class='cuting2'>ДАТА ОТВЕТА</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th  class='cuting2'>РЕГИСТРАТОР</th><th>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
 	
 	$.each(response, function(index, value) {
 									
@@ -612,18 +612,24 @@ function table(response,role){
 	if(value.blockger2016.state == 3 || value.blockger2016.state == 4){
 		var cssClass = "someclass3";
 	}
-	var type ='';
+	let type ='';
+	let type2 ='';
 	if (value.typeId == 1) type = 'ЖАЛОБА';
 	if (value.typeId == 2) type = 'ЗАЯВЛЕНИЕ';
 	if (value.typeId == 3) type = 'КОНСУЛЬТАЦИЯ';
 	if (value.typeId == 4) type = 'ПРЕДЛОЖЕНИЕ';
+	
+	if (value.presentId == 1) type2 = '';
+	if (value.presentId == 2) type2 = value.blockger2016.date_plan_end;
+	
+	
 	
 	if (value.surname == null) value.surname = '';
 	if (value.name == null) value.name = '';
 	if (value.patrony == null) value.patrony = '';
 	if (value.tel == null) value.tel = '';
 	
-	userInfo +="<tr class="+cssClass+"><td class='cuting2'>"+value.id+"</td><td class='cuting2'>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td class='cuting2'>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting2'>"+value.patrony+"</td><td class='cuting'>"+value.tel+"</td><td class='cuting2'>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
+	userInfo +="<tr class="+cssClass+"><td class='cuting2'>"+value.id+"</td><td class='cuting2'>"+value.dateInput+"</td><td  class='cuting2'>"+type2+"</td><td class='cuting2'>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting2'>"+value.patrony+"</td><td class='cuting'>"+value.tel+"</td><td class='cuting2'>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
 	
 	if(value.blockger2016.state != 4){
 		userInfo +="<td><a href='nightcallfile/"+value.id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a onclick=del('"+value.id+"','"+role+"') id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td><td><a id='iddel' href='refresh/"+value.id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
@@ -682,7 +688,7 @@ function tablews(response,role){
     $container.empty();
 	
 	 userInfo =  
-	 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th>ДАТА ИЗМЕНЕНИЯ</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th  class='cuting2'>РЕГИСТРАТОР</th><th>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
+	 "<thead><tr><th class='cuting2'>НОМЕР</th><th class='cuting2'>ДАТА ПОСТУПЛЕНИЯ</th><th  class='cuting2'>ДАТА ОТВЕТА</th><th class='cuting2'>ТИП</th><th>ФАМИЛИЯ</th><th>ИМЯ</th><th class='cuting2'>ОТЧЕСТВО</th><th>ТЕЛЕФОН</th><th  class='cuting2'>РЕГИСТРАТОР</th><th>ИСПОЛНИТЕЛЬ</th><th></th><th></th><th></th><th></th></tr></thead><tbody>";
 	
 	$.each(response, function(index, value) {
 									
@@ -707,12 +713,15 @@ function tablews(response,role){
 	if (value.typeId == 3) type = 'КОНСУЛЬТАЦИЯ';
 	if (value.typeId == 4) type = 'ПРЕДЛОЖЕНИЕ';
 	
+	if (value.presentId == 1) type2 = '';
+	if (value.presentId == 2) type2 = value.blockger2016.date_plan_end;
+	
 	if (value.surname == null) value.surname = '';
 	if (value.name == null) value.name = '';
 	if (value.patrony == null) value.patrony = '';
 	if (value.tel == null) value.tel = '';
 	
-	userInfo +="<tr class="+cssClass+"><td class='cuting2'>"+value.id+"</td><td class='cuting2'>"+value.dateInput+"</td><td>"+value.blockger2016.date_change+"</td><td class='cuting2'>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting2'>"+value.patrony+"</td><td class='cuting'>"+value.tel+"</td><td class='cuting2'>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
+	userInfo +="<tr class="+cssClass+"><td class='cuting2'>"+value.id+"</td><td class='cuting2'>"+value.dateInput+"</td><td  class='cuting2'>"+type2+"</td><td class='cuting2'>"+type+"</td><td class='cuting'>"+value.surname+"</td><td class='cuting'>"+value.name+"</td><td class='cuting2'>"+value.patrony+"</td><td class='cuting'>"+value.tel+"</td><td class='cuting2'>"+value.blockger2016.regname+"</td><td class="+cssClassonUser+">"+value.username+"</td>";
 	
 	if(value.blockger2016.state != 4){
 		userInfo +="<td><a href='nightcallfile/"+value.id+"' title='Прослушать'><i class='fa fa-headphones fa-2x'></i></a></td> <td><a onclick=del('"+value.id+"','"+role+"') id='iddel' title='Удалить'><i class='fa fa-trash-o fa-2x'></i></a></td><td><a id='iddel' href='refresh/"+value.id+"' title='Редактировать'><i class='fa fa-pencil-square-o  fa-2x' aria-hidden='true'></i></a></td>";
@@ -785,6 +794,18 @@ function valid(var_role){
     	});
 		return false;
 	}
+	else if(($('#type').val() == 1 && $('#cause').val() == 2 && $('#rectif1').val() == 0) ||
+			($('#type').val() == 1 && $('#cause').val() == 4 && $('#rectif1').val() == 0) ||
+			($('#type').val() == 1 && $('#cause').val() == 11 && $('#rectif1').val() == 0)||
+			($('#type').val() == 1 && $('#cause').val() == 13 && $('#rectif1').val() == 0)){
+		
+		$('.errorrep').append('<h3>Поле "Уточнение1" обязательно для заполнения</h3>');
+		$('.errorrep').css({'display':'block'});
+		$('#draggable').animate({
+	        scrollTop:  0
+    	});
+		return false;
+	}
 	else if($('#inbound_from').val() == null && $('#inbound_from').is(':visible')){
 		$('.errorrep').append('<h3>Поле "От кого" обязательно для заполнения</h3>');
 		$('.errorrep').css({'display':'block'});
@@ -803,7 +824,8 @@ function valid(var_role){
 			    	});
 					return false;
 	}
-	else if(	(($('#redirect_adress').val() != 0 && $('#redirect_adress').is(':visible')) && $('#date_redirect').val() != '') && ($('#date_response').val() == 0 || $('#responsible').val() == 0)){
+	else if(	(($('#redirect_adress').val() != 0 && $('#redirect_adress').is(':visible')) && $('#date_redirect').val() != '') &&
+				($('#date_response').val() == 0 || $('#responsible').val() == 0)){
 			$('.errorrep').append('<h3>При заполненом поле "Дата перенаправления для рассмотрения" и "Адресат" необходимо "Дата окончательного ответа гражданину","Номер","Ответственный"</h3>');
 			$('.errorrep').css({'display':'block'});
 			$('#draggable').animate({

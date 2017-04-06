@@ -29,6 +29,7 @@ public class Utilitys {
 	
 	
 	/**
+	 * Метод возвращает флаг исхода одного из условий для вычисления даты просроченного обращения.
 	 * @param overdueappeal  Флаг просроченного сообщения (вкл/выкл) То есть выбираем или нет просроченные обращения.
 	 * @param petit  Объект обращения
 	 * @return Возвращает true если срабатывает одно из условий алгоритма "просроченного обращения"
@@ -47,6 +48,30 @@ public class Utilitys {
 			return 3;
 		}
 		if(overdueappeal != null && petit.getBlockger2016().getDate_end() == null && petit.getBloutboindletter2016().getDate_between().equals("") ){
+			return 4;
+		}
+		
+		
+		return 0;
+	}
+	
+	/**
+	 * Метод возвращает флаг исхода одного из условий для вычисления даты просроченного обращения.
+	 * @param petit Объект обращения
+	 * @return Возвращает true если срабатывает одно из условий алгоритма "просроченного обращения"
+	 */
+	public int valid(Petit petit){
+		
+		if(petit.getBlockger2016().getDate_end() != null && petit.getBloutboindletter2016().getDate_between().equals("")){
+			return 1;
+		}
+		if(petit.getBlockger2016().getDate_end() != null && petit.getBloutboindletter2016().getDate_between().length() > 1){
+			return 2;
+		}
+		if(petit.getBlockger2016().getDate_end() == null && petit.getBloutboindletter2016().getDate_between().length() > 1 ){
+			return 3;
+		}
+		if(petit.getBlockger2016().getDate_end() == null && petit.getBloutboindletter2016().getDate_between().equals("") ){
 			return 4;
 		}
 		

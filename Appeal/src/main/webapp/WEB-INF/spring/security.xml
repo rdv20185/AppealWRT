@@ -5,6 +5,7 @@
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
       
     <http auto-config="true" >
+    <csrf disabled="false"/>
         <intercept-url pattern="/" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('ER') or hasRole('SMO')" />
         <intercept-url pattern="/index*" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('ER') or hasRole('SMO') or hasRole('NIGHT')" />
 		<intercept-url pattern="/add*" access="hasRole('ADMIN') or hasRole('TFOMS') or hasRole('ER') or hasRole('SMO') or hasRole('NIGHT')" />

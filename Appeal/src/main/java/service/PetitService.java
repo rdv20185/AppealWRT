@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import net.sf.jasperreports.engine.JRException;
 import domain.CauseL;
 import domain.ReportParams;
@@ -25,6 +27,7 @@ public interface PetitService {
 	
     public void addPetit(Petit petit);
 
+    @Transactional
     public List<Petit> listPetit(String username);
 
     public void removePetit(Integer id);
@@ -98,5 +101,20 @@ public interface PetitService {
 	 * @throws JRException
 	 */
 	public void report_1(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
+	
+	/**
+	 * Метод обновляет поле date_paln_end (райняя дата ответа) в таблице BlockGER2016
+	 * @param id
+	 * @param date
+	 */
+	public void updateDatePlan(String id, String date);
+	
+	/**
+	 * Метод создает дату планового ответа (дату после которой пойдет просрочка) взависимости условия формирования даты отсрочки
+	 * @param listPetit
+	 * @throws ParseException
+	 */
+	@Transactional
+	public void createDate_plan(List<Petit> listPetit) throws ParseException;
 
 }

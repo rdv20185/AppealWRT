@@ -29,4 +29,11 @@ public interface PetitDAO {
 	
 	public void updateLastDate(Callnight_markerday  cm);
 	
+	/**
+	 * Метод обновляет плановую дату ответа
+	 * @param id
+	 * @param plan_date - пдановая дата ответа
+	 */
+	public void update_PlaneDateField(String id, String plan_date);
+	
 }

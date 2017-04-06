@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+ 
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -32,17 +33,21 @@ import javax.validation.Valid;
 import net.sf.jasperreports.engine.JRException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -76,6 +81,7 @@ import domain.Ter;
 import domain.Type;
 import domain.TypeL;
 import ftp.FTPDownloadFileDemo;
+import exceptions.ValidationForRest;
 
 /**
  * @author pylypiv.sergey
@@ -99,115 +105,56 @@ public class PetitController {
     public PetitController() {
     	
     }
+    
+    @ResponseStatus(value=HttpStatus.NOT_FOUND, reason="ValidException occured")
+    @ExceptionHandler(ValidationForRest.class)
+	public void handleEmployeeNotFoundException(HttpServletRequest request, Exception ex){
+    	ex.printStackTrace();
+	}	
    
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public @ResponseBody List<Petit> addPetit(Petit petit,String submitted,HttpServletRequest request,ModelMap model) throws ParseException, InterruptedException, IOException {
+    public @ResponseBody List<Petit> addPetit(Petit petit,String submitted,HttpServletRequest request,ModelMap model, Authentication aut) throws ParseException, InterruptedException, IOException, ValidationForRest {
 
     	
-    	/*petit.setSurname(new String(petit.getSurname().getBytes("ISO-8859-1"),"UTF-8"));
-    	petit.setName(new String(petit.getName().getBytes("ISO-8859-1"),"UTF-8"));
-    	petit.setPatrony(new String(petit.getPatrony().getBytes("ISO-8859-1"),"UTF-8"));
-    	if(petit.getLetterNum() !=null)
-    	petit.setLetterNum(new String(petit.getLetterNum().getBytes("ISO-8859-1"),"UTF-8"));
-    	if(petit.getLetterDate() !=null)
-    	petit.setLetterDate(new String(petit.getLetterDate().getBytes("ISO-8859-1"),"UTF-8"));
-    	petit.setPolicy(new String(petit.getPolicy().getBytes("ISO-8859-1"),"UTF-8"));
-    	petit.setAdress(new String(petit.getAdress().getBytes("ISO-8859-1"),"UTF-8"));
-    	if(petit.getSatisf() !=null)
-    	petit.setSatisf(new String(petit.getSatisf().getBytes("ISO-8859-1"),"UTF-8"));
-    	if(petit.getCompens() !=null)
-    	petit.setCompens(new String(petit.getCompens().getBytes("ISO-8859-1"),"UTF-8"));
-    	if(petit.getCompensSource() !=null)
-    	petit.setCompensSource(new String(petit.getCompensSource().getBytes("ISO-8859-1"),"UTF-8"));
-    	if(petit.getCompensCode() !=null)
-    	petit.setCompensCode(new String(petit.getCompensCode().getBytes("ISO-8859-1"),"UTF-8"));
-    	if(petit.getCompensSum() !=null)
-    	petit.setCompensSum(new String(petit.getCompensSum().getBytes("ISO-8859-1"),"UTF-8"));
-    	if(petit.getCauseNote() !=null)
-    	petit.setCauseNote(new String(petit.getCauseNote().getBytes("ISO-8859-1"),"UTF-8"));
-    	petit.setUsername(new String(petit.getUsername().getBytes("ISO-8859-1"),"UTF-8"));
-    	
-    	
-    	petit.getBloutboindletter2016().setResponsible(new String(petit.getBloutboindletter2016().getResponsible().getBytes("ISO-8859-1"),"UTF-8"));
-    	petit.getBloutboindletter2016().setNumOutLetter(new String(petit.getBloutboindletter2016().getNumOutLetter().getBytes("ISO-8859-1"),"UTF-8"));
-    	
-    	petit.getBloutboindletter2016().getMany().get(0).setNote(new String(petit.getBloutboindletter2016().getMany().get(0).getNote().getBytes("ISO-8859-1"),"UTF-8"));
-    	petit.getBloutboindletter2016().getMany().get(1).setNote(new String(petit.getBloutboindletter2016().getMany().get(1).getNote().getBytes("ISO-8859-1"),"UTF-8"));
-    	petit.getBloutboindletter2016().getMany().get(2).setNote(new String(petit.getBloutboindletter2016().getMany().get(2).getNote().getBytes("ISO-8859-1"),"UTF-8"));
-    	*/
-    	
-    	String para = submitted;//new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
-    	/* ловим с клиЕнта нажатую кнопку
-    	 * ЕСЛИ с клиента прилетает письменное обращение petit.getConectId() ==2  и дата исходящего пустая getDate_response() то статус = 2(в работе) и date_end = ""
-    	 * Если письменное и дата ответа не пустая то статус = 3
-    	 */
-    	if(para.trim().equals("Завершить")){
-    		if(petit.getPresentId() == 2 && petit.getBloutboindletter2016().getDate_response().equals("")){
-    			petit.getBlockger2016().setState(2);
-    			if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
-         		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
-    		}else{
-    			
-    			if(petit.getPresentId() == 2 && !petit.getBloutboindletter2016().getDate_response().equals(""))
-    			{
-    				petit.getBlockger2016().setState(3);
-    				
-    	  		  	DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
-	        		petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));
-	        		
-	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+    	String para = submitted;
+		validRest(para,petit);
+	    	
+	    	//$('#moId').val() != 0 && ($('#hspId').val() == 0 || $('#typempid').val() == 0)
+	    	
+	    	
+	    	if(para.trim().equals("Завершить")){
+	    		if(petit.getPresentId() == 2 && petit.getBloutboindletter2016().getDate_response().equals("")){
+	    			petit.getBlockger2016().setState(2);
+	    			if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
 	         		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
-    			}
-    			else{
-		    			petit.getBlockger2016().setState(3);
-		        		petit.getBlockger2016().setDate_end(new Date());
-    			}
-    		}
-    	}
+	    		}else{
+	    			
+	    			if(petit.getPresentId() == 2 && !petit.getBloutboindletter2016().getDate_response().equals(""))
+	    			{
+	    				petit.getBlockger2016().setState(3);
+	    				
+	    	  		  	DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
+		        		petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));
+		        		
+		        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
+		         		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
+	    			}
+	    			else{
+			    			petit.getBlockger2016().setState(3);
+			        		petit.getBlockger2016().setDate_end(new Date());
+	    			}
+	    		}
+	    	}
+	    	
+			return adds(petit,request,submitted,model);
     	
-		return adds(petit,request,submitted,model);
     }
     
     private @ResponseBody List<Petit> adds(Petit petit,HttpServletRequest request,String submitted,ModelMap model) throws UnsupportedEncodingException, ParseException {
     	
-    	{
-	    	DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-			Calendar cal  = Calendar.getInstance();
-			cal.setTime(df.parse(petit.getDateInput()));
-	    	
-	    	if(petit.getPresentId() == 1){
-	    		
-	    			Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
-					while(petitService.isCeleb(startdate_plus.getTime())){
-						startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
-					};
-					
-					petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
-	    	}
-	    	
-	    	if(petit.getPresentId() == 2){
-	    	
-	    		if(petit.getBlockger2016().getDate_end() == null && petit.getBloutboindletter2016().getDate_between().equals("")){
-	    		
-					Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
-					while(petitService.isCeleb(startdate_plus.getTime())){
-						startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
-					};
-					
-					petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
-					
-	    		}
-	    		
-	    		if(petit.getBlockger2016().getDate_end() == null && !petit.getBloutboindletter2016().getDate_between().equals("")){
-	    			Calendar startdate_plus = utilitys.daysPlus(cal, 60,0);
-					while(petitService.isCeleb(startdate_plus.getTime())){
-						startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
-					};
-					
-					petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
-	    		}
-	    	}
-    	}
+    	
+    	petit = createDatePlan(petit);
+    	
 		/*
 		 * Ловим с клиента в переменную ff поле date_end
 		 */
@@ -778,4 +725,117 @@ public class PetitController {
 	    
 		return pl;
     }
+	
+	/**
+	 * Метод выщитывает дату планового ответа (дату предельного ответа после которой пойдет просрочка ответа по обращению)
+	 * @param petit - ссылка на объект в котором устанавливается дата
+	 * @return
+	 * @throws ParseException
+	 */
+	private Petit createDatePlan(Petit petit) throws ParseException{
+
+    	DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		Calendar cal  = Calendar.getInstance();
+		cal.setTime(df.parse(petit.getDateInput()));
+    	
+    	if(petit.getPresentId() == 1){
+    		
+    			Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
+				while(petitService.isCeleb(startdate_plus.getTime())){
+					startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
+				};
+				
+				petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
+    	}
+    	
+    	if(petit.getPresentId() == 2){
+    	
+    		if(petit.getBlockger2016().getDate_end() == null && petit.getBloutboindletter2016().getDate_between().equals("")){
+    		
+				Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
+				while(petitService.isCeleb(startdate_plus.getTime())){
+					startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
+				};
+				
+				petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
+				
+    		}
+    		
+    		if(petit.getBlockger2016().getDate_end() == null && !petit.getBloutboindletter2016().getDate_between().equals("")){
+    			
+    			Calendar startdate_plus = utilitys.daysPlus(cal, 60,0);
+				while(petitService.isCeleb(startdate_plus.getTime())){
+					startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
+				};
+				
+				petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
+    		}
+    		if(petit.getBlockger2016().getDate_end() != null && petit.getBloutboindletter2016().getDate_between().equals("")){
+    			
+    			Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
+				while(petitService.isCeleb(startdate_plus.getTime())){
+					startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
+				};
+				
+				petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
+				
+    		}
+    		if(petit.getBlockger2016().getDate_end() != null && !petit.getBloutboindletter2016().getDate_between().equals("")){
+    			
+    			Calendar startdate_plus = utilitys.daysPlus(cal, 60,0);
+				while(petitService.isCeleb(startdate_plus.getTime())){
+					startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
+				};
+				
+				petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
+    		}
+    		
+    	}
+	
+    	return petit;
+	}
+	
+	
+	/**
+	 * Метол проверяет на валидность объект который "прищел" с клиента. Так как у нас проверка валидности есть еще и на клиенте то этот метол в основном нужен для
+	 * проверки REST запросов, то есть которые пришли не с клиента (непосредственно сайта) а обычным http запросом
+	 * @param para - флаг нажатой кнопки
+	 * @param petit - ссылка на объект который пришел с REST
+	 * @return
+	 * @throws ValidationForRest
+	 */
+	private Petit validRest(String para,Petit petit) throws ValidationForRest{
+		
+		if(para.trim().equals("Завершить")){
+    		
+    		if(petit.getTypeId() == 0) { throw new ValidationForRest("The type is requare field");}
+			else if(petit.getCauseId() == 0){throw new ValidationForRest("The CauseId is requare field");}
+			else if((petit.getTypeId() == 1 && petit.getCauseId() == 2 && petit.getRectif1Id() == 0) ||
+					(petit.getTypeId() == 1 && petit.getCauseId() == 4 && petit.getRectif1Id() == 0) ||
+					(petit.getTypeId() == 1 && petit.getCauseId() == 11 && petit.getRectif1Id() == 0)||
+					(petit.getTypeId() == 1 && petit.getCauseId() == 13 && petit.getRectif1Id() == 0)){
+				throw new ValidationForRest("The Rectif1Id is requare field");
+			}
+			else if(petit.getBlockger2016().getInbound_from() == null && petit.getTypeId()== 1 && petit.getPresentId() == 2){throw new ValidationForRest("The getInbound_from is requare field");}
+			else if((petit.getBloutboindletter2016().getDate_redirect() != null &&
+					!petit.getBloutboindletter2016().getDate_redirect().equals("") ||
+					petit.getBloutboindletter2016().getRedirect_adress() !=null &&
+					!petit.getBloutboindletter2016().getRedirect_adress().equals("0"))
+					&&
+					(petit.getBloutboindletter2016().getDate_redirect().equals("") ||
+					 petit.getBloutboindletter2016().getRedirect_adress().equals("0"))
+					){throw new ValidationForRest("The Redirect_adress && Date_redirect is requare field");}
+			else if(petit.getPresentId() == 2 &&
+					!petit.getBloutboindletter2016().getRedirect_adress().equals("0") &&
+			 		!petit.getBloutboindletter2016().getDate_redirect().equals("")
+			 		&&
+			 		(petit.getBloutboindletter2016().getDate_response().equals("") || petit.getBloutboindletter2016().getResponsible().equals(""))
+			 		){throw new ValidationForRest("The getResponsible is requare field");}		
+			else if(petit.getMoId() !=0 &&
+					(petit.getHspId() == 0 || petit.getBlockger2016().getTypempid() == 0)){
+				throw new ValidationForRest("The getTypempid is requare field");
+			}
+	}
+		return petit;
+	}
 }

@@ -36,6 +36,18 @@ public class PetitDAOImpl implements PetitDAO {
         
     }
     
+    /* (non-Javadoc)
+     * @see dao.PetitDAO#update_PlaneDateField(java.lang.String, java.lang.String)
+     */
+    @Override
+    public void update_PlaneDateField(String id, String plan_date) {
+    	Integer id_i = Integer.valueOf(id);
+    	Query query = null;
+    	query = sessionFactory.getCurrentSession().createQuery("update BlockGER2016 t2 set t2.date_plan_end=:plan_date wherem t2.idblockger2016=:id_i");
+        query.setParameter("id_i", id_i);
+        query.setParameter("plan_date", plan_date);
+        query.executeUpdate();
+    }
     
 
     @SuppressWarnings("unchecked")
@@ -82,10 +94,18 @@ public class PetitDAOImpl implements PetitDAO {
  	           query.setMaxResults(100);
  	    	}
     	
-		if(username.equals("hamitov") || username.equals("mityanina") || username.equals("eremina"))
+		if(username.equals("hamitov"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
-			"from Petit where (username = :username or username='"+"ТФОМС"+"')  order by id desc");
+			"select r from Petit r where (r.username = :username or r.username='"+"ТФОМС"+"')  order by id desc");
+			query.setParameter("username", username);
+			query.setMaxResults(100);
+    	}
+		
+		if(username.equals("mityanina") || username.equals("eremina"))
+    	{
+			query = sessionFactory.getCurrentSession().createQuery(
+			"select r from Petit r where (r.username = :username or r.username='"+"ТФОМС"+"')  order by r.blockger2016.state asc,to_date(r.blockger2016.date_plan_end,'dd.MM.yyyy') asc");
 			query.setParameter("username", username);
 			query.setMaxResults(100);
     	}
@@ -128,40 +148,9 @@ public class PetitDAOImpl implements PetitDAO {
 		
 		if(username.equals("vasilyeva") || username.equals("smyvin"))
     	{
-			query = sessionFactory.getCurrentSession().createQuery(
-		/*	"from Petit where (username = :username or username='"+"ТФОМС"+"' "
-					+ "or username='"+"СИМАЗ"+"' "
-					+ "or username like '%'||'"+"smo_rosno"+"'||'%' "
-					+ "or username='"+"ИНГОССТРАХ"+"' "
-					+ "or username='"+"smo_ingos"+"' "
-					+ "or username='"+"smo_simaz"+"' "
-					+ "or username='"+"smo_rosno"+"'"
-					+ "or username='"+"hamitov"+"' "
-					+ "or username='"+"mityanina"+"' "
-					+ "or username='"+"kuznetsova"+"' "
-					+ "or username='"+"vasilyeva"+"' "
-					+ "or username='"+"smyvin"+"' "
-					+ "or username='"+"ernso"+"' "
-					+ "or username='"+"call5001"+"' "
-					+ "or username='"+"call5002"+"' "
-					+ "or username='"+"call5003"+"' "
-					+ "or username='"+"callnight5001"+"' "
-					+ "or username='"+"callnight5002"+"' "
-					+ "or username='"+"callnight5003"+"' "
-					+ "or username='"+"auto"+"' "
-					+ "or username='"+"eremina"+"')  order by id desc");
-			query.setParameter("username", username);
-		*/	
-			"from Petit order by id desc");
+			query = sessionFactory.getCurrentSession().createQuery("from Petit order by id desc");
 			query.setMaxResults(100);
     	}
-	        		    		
-	        		    		/*
-						    	query = sessionFactory.getCurrentSession().createQuery(
-						    			"from Petit where username = :username and to_char(date_input, 'yyyy')>=to_char(sysdate, 'yyyy')  order by substr(num,0,2) desc,to_number(substr(num,4)) desc");
-						    			//"from Petit where username = :username  order by substr(num,0,2) desc,to_number(substr(num,4)) desc");
-						        query.setParameter("username", username);
-						        */
         return query.list();
     }
 
@@ -259,13 +248,13 @@ public class PetitDAOImpl implements PetitDAO {
     	
     	
     	if(username.contains("smo_ingos")) {
-    		criteria.add( Restrictions.in( "username", new String[] { "smo_ingos","smo_ingos_01", "call5003", "callnight5003" } ) );
+    		criteria.add( Restrictions.in( "username", new String[] { "ИНГОССТРАХ","smo_ingos","smo_ingos_01", "call5003", "callnight5003" } ) );
     	}
     	if(username.equals("smo_simaz")) {
-    		criteria.add( Restrictions.in( "username", new String[] { "smo_simaz", "call5001", "callnight5001" } ) );
+    		criteria.add( Restrictions.in( "username", new String[] { "СИМАЗ","smo_simaz", "call5001", "callnight5001" } ) );
     	}
     	if(username.contains("smo_rosno")) {
-    		criteria.add( Restrictions.in( "username", new String[] { "smo_rosno", "smo_rosno_01","smo_rosno_02", "smo_rosno_03","smo_rosno_04", "smo_rosno_05","smo_rosno_06", "smo_rosno_07",
+    		criteria.add( Restrictions.in( "username", new String[] { "РОСНО","smo_rosno", "smo_rosno_01","smo_rosno_02", "smo_rosno_03","smo_rosno_04", "smo_rosno_05","smo_rosno_06", "smo_rosno_07",
     				"smo_rosno_08", "smo_rosno_09","smo_rosno_10", "smo_rosno_11","smo_rosno_12", "smo_rosno_13","smo_rosno_14", "smo_rosno_15","smo_rosno_16","smo_rosno_17", "smo_rosno_18","smo_rosno_19", "smo_rosno_20",
     				"smo_rosno_21", "smo_rosno_22","smo_rosno_23", "smo_rosno_24","smo_rosno_25", "smo_rosno_26","smo_rosno_27", "smo_rosno_28","smo_rosno_29","smo_rosno_30", "smo_rosno_31","smo_rosno_32", "smo_rosno_33",
     				"smo_rosno_34", "smo_rosno_35","smo_rosno_36", "smo_rosno_37","smo_rosno_38", "smo_rosno_39","smo_rosno_40", "smo_rosno_41","smo_rosno_","smo_rosno_42", "smo_rosno_43","smo_rosno_44", "smo_rosno_45",

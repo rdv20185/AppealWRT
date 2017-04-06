@@ -7,7 +7,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -32,6 +34,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import util.Utilitys;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +51,7 @@ import domain.Rectif3L;
 import domain.Rectif4L;
 import domain.ReportParams;
 import domain.TypeL;
+import domain.blOutboindLETTER2016;
  
 @Service
 public class PetitServiceImpl implements PetitService {
@@ -56,10 +60,17 @@ public class PetitServiceImpl implements PetitService {
     private PetitDAO petitDAO;
     @Autowired
     private ServletContext servletcontext;
+    @Autowired
+    private Utilitys utilitys;
  
     @Transactional
     public void addPetit(Petit petit) {
     	petitDAO.addPetit(petit);
+    }
+    
+    @Transactional
+    public void updateDatePlan(String id, String date) {
+    	petitDAO.update_PlaneDateField(id, date);
     }
  
     @Transactional
@@ -483,6 +494,110 @@ public class PetitServiceImpl implements PetitService {
 		if (celebr.get(0).getWeekand().equals("1") || celebr.get(0).getCelebr().equals("1")) {return true;}
 		else{ return false;}
 		
+	}
+	
+	
+	/**
+	 * Метод обновляет плановую дату ответа (после которой пойдет просрочка ответа) в зависимости от того какие поля заполнены 
+	 * @param listPetit 
+	 * @throws ParseException
+	 */
+	@Transactional
+	public void createDate_plan(List<Petit> listPetit) throws ParseException{
+		
+		Calendar startdate = null;
+		Calendar enddate = null;
+		Calendar startdate_plus = null;
+		DateFormat df2 = new SimpleDateFormat("dd.MM.yyyy");
+		
+		for(int i = 0; i < listPetit.size();i ++){
+			if (listPetit.get(i).getBloutboindletter2016() == null) listPetit.get(i).setBloutboindletter2016(new blOutboindLETTER2016());
+			if (listPetit.get(i).getBloutboindletter2016().getDate_between() == null) listPetit.get(i).getBloutboindletter2016().setDate_between("");
+			listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(0, 11));
+			
+			if(utilitys.valid(listPetit.get(i)) == 1){
+				utilitys.processDate(listPetit.get(i));
+				startdate = utilitys.getCal();
+				enddate = utilitys.getCal2();
+				
+				startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 30,0);
+				
+				while(isCeleb(startdate_plus.getTime())){
+					startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
+				};
+				
+				enddate.set(Calendar.HOUR_OF_DAY, 0);							
+				enddate.set(Calendar.MINUTE, 0);
+				enddate.set(Calendar.SECOND, 0);
+				enddate.set(Calendar.MILLISECOND, 0);
+				
+				//System.out.println("@@@ "+ i + " -- "+ listPetit.get(i).getId()+" - "+startdate_plus.getTime()+" - "+df2.format(startdate_plus.getTime())+" - "+listPetit.get(i).getDateEnd());
+				updateDatePlan(listPetit.get(i).getId().toString(), df2.format(startdate_plus.getTime()));
+				
+			}
+			else if(utilitys.valid(listPetit.get(i)) == 2){
+				utilitys.processDate(listPetit.get(i));
+				startdate = utilitys.getCal();
+				enddate = utilitys.getCal2();
+				
+				startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 60,0);
+				
+				while(isCeleb(startdate_plus.getTime())){
+					startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
+				};
+				
+				enddate.set(Calendar.HOUR_OF_DAY, 0);							
+				enddate.set(Calendar.MINUTE, 0);
+				enddate.set(Calendar.SECOND, 0);
+				enddate.set(Calendar.MILLISECOND, 0);
+				
+				//System.out.println("@@@ "+ i + " -- "+ listPetit.get(i).getId()+" - "+startdate_plus.getTime()+" - "+df2.format(startdate_plus.getTime())+" - "+listPetit.get(i).getDateEnd());
+				updateDatePlan(listPetit.get(i).getId().toString(), df2.format(startdate_plus.getTime()));
+				
+			}
+			else if(utilitys.valid(listPetit.get(i)) == 3){
+				utilitys.processDate(listPetit.get(i));
+				startdate = utilitys.getCal();
+				enddate = utilitys.getCal2();
+	
+				
+				startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 60,0);
+				
+				while(isCeleb(startdate_plus.getTime())){
+					startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
+				};
+				
+				enddate.set(Calendar.HOUR_OF_DAY, 0);							
+				enddate.set(Calendar.MINUTE, 0);
+				enddate.set(Calendar.SECOND, 0);
+				enddate.set(Calendar.MILLISECOND, 0);
+				
+				//System.out.println("@@@ "+ i + " -- "+ listPetit.get(i).getId()+" - "+startdate_plus.getTime()+" - "+df2.format(startdate_plus.getTime())+" - "+listPetit.get(i).getDateEnd());
+				updateDatePlan(listPetit.get(i).getId().toString(), df2.format(startdate_plus.getTime()));
+
+			}
+			else if(utilitys.valid(listPetit.get(i)) == 4){
+				utilitys.processDate(listPetit.get(i));
+				startdate = utilitys.getCal();
+				enddate = utilitys.getCal2();
+	
+				
+				startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 30,0);
+				
+				while(isCeleb(startdate_plus.getTime())){
+					startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
+				};
+				
+				enddate.set(Calendar.HOUR_OF_DAY, 0);							
+				enddate.set(Calendar.MINUTE, 0);
+				enddate.set(Calendar.SECOND, 0);
+				enddate.set(Calendar.MILLISECOND, 0);
+				
+				//System.out.println("@@@ "+ i + " -- "+ listPetit.get(i).getId()+" - "+startdate_plus.getTime()+" - "+df2.format(startdate_plus.getTime())+" - "+listPetit.get(i).getDateEnd());
+				updateDatePlan(listPetit.get(i).getId().toString(), df2.format(startdate_plus.getTime()));
+				
+			}
+		}
 	}
 	
     

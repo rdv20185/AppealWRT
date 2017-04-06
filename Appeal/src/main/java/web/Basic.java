@@ -280,7 +280,7 @@ public class Basic {
     
     @RequestMapping(value = "/refresh/add", method = RequestMethod.POST)
     public String refreshAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request, ModelMap mapm) throws UnsupportedEncodingException, ParseException {
-    	{
+    {
 	    	DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			Calendar cal  = Calendar.getInstance();
 			cal.setTime(df.parse(petit.getDateInput()));
@@ -318,15 +318,22 @@ public class Basic {
 	    	}
     	}
     	
+    	
     	String pa = request.getParameter("submit");
     	
-    	if(pa.trim().equals("Завершить")){
+    	if(pa.trim().equals("Завершить") || pa.trim().equals("Изменить")){
     		
     		if(petit.getTypeId() == 0){bindingResult.rejectValue("typeId", "error.petit", "Поле Тип обязательно для заполнения");}
     		if(petit.getCauseId() == 0){bindingResult.rejectValue("causeId", "error.petit", "Поле Причина обязательно для заполнения");}
+    		if((petit.getTypeId() == 1 && petit.getCauseId() == 2 && petit.getRectif1Id() ==0) ||
+			   (petit.getTypeId() == 1 && petit.getCauseId() == 4 && petit.getRectif1Id() ==0) ||
+			   (petit.getTypeId() == 1 && petit.getCauseId() == 11 && petit.getRectif1Id() ==0)||
+			   (petit.getTypeId() == 1 && petit.getCauseId() == 13 && petit.getRectif1Id() ==0)){bindingResult.rejectValue("Rectif1Id", "error.petit", "Поле 'Уточнение1' обязательно для заполнения");}
+    		
+    		
     		if(petit.getBlockger2016().getRegname().contains("call") && petit.getConectId() != 7	){bindingResult.rejectValue("causeId", "error.petit", "У Вас недостаточно прав изменить поле 'Связь' или поле 'Cвязь' имеет неправильное значение отличное от значения 'Горячая линия' ");}
     		// доработать
-    		if(petit.getConectId() == 7	&& !petit.getBlockger2016().getRegname().contains("call") &&
+    		if(petit.getConectId() == 7	&& !petit.getBlockger2016().getRegname().contains("call") &&  !petit.getBlockger2016().getRegname().contains("auto") &&
     		   !petit.getBlockger2016().getRegname().contains("vasilyeva") &&
     		   !petit.getBlockger2016().getRegname().contains("smyvin")){bindingResult.rejectValue("causeId", "error.petit", "У Вас недостаточно прав для выбора в поле 'Cвязь' значения 'Горячая линия' ");}
     		
@@ -473,121 +480,12 @@ public class Basic {
 		petitService.setSearchParams(petit);
 		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound,overdueappeal);
 		
-		
-		for (int i = 0; i < listPetit.size(); i++) {
-			if (listPetit.get(i).getBloutboindletter2016() == null) listPetit.get(i).setBloutboindletter2016(new blOutboindLETTER2016());
-			if (listPetit.get(i).getBloutboindletter2016().getDate_between() == null) listPetit.get(i).getBloutboindletter2016().setDate_between("");
-			listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(0, 11));
-			
-			if(overdueappeal == null){}
-			else if(overdueappeal != null){
-				
-					if(utilitys.valid(overdueappeal,listPetit.get(i)) == 1){
-						utilitys.processDate(listPetit.get(i));
-						Calendar startdate = utilitys.getCal();
-						Calendar enddate = utilitys.getCal2();
-						
-						Calendar startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 30,0);
-						
-						while(petitService.isCeleb(startdate_plus.getTime())){
-							startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
-						};
-						
-						enddate.set(Calendar.HOUR_OF_DAY, 0);							
-						enddate.set(Calendar.MINUTE, 0);
-						enddate.set(Calendar.SECOND, 0);
-						enddate.set(Calendar.MILLISECOND, 0);
-						
-						
-						if(!enddate.after(startdate_plus)){
-							if(i == 0){listPetit.remove(i); i = 0;}
-							else{listPetit.remove(i);	i = i-1;}
-							//System.out.println("@@@ 1 "+startdate_plus.getTime()+" - "+enddate.getTime()+" -- "+i);
-						}
-						
-					}
-					else if(utilitys.valid(overdueappeal,listPetit.get(i)) == 2){
-						utilitys.processDate(listPetit.get(i));
-						Calendar startdate = utilitys.getCal();
-						Calendar enddate = utilitys.getCal2();
-						
-						Calendar startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 60,0);
-						
-						while(petitService.isCeleb(startdate_plus.getTime())){
-							startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
-						};
-						
-						enddate.set(Calendar.HOUR_OF_DAY, 0);							
-						enddate.set(Calendar.MINUTE, 0);
-						enddate.set(Calendar.SECOND, 0);
-						enddate.set(Calendar.MILLISECOND, 0);
-						
-						
-						if(!enddate.after(startdate_plus)){
-							if(i == 0){listPetit.remove(i); i = 0;}
-							else{listPetit.remove(i);	i = i-1;}
-							//System.out.println("@@@ 2 "+startdate_plus.getTime()+" - "+enddate.getTime()+" -- "+i);
-						}
-					}
-					else if(utilitys.valid(overdueappeal,listPetit.get(i)) == 3){
-						utilitys.processDate(listPetit.get(i));
-						Calendar startdate = utilitys.getCal();
-						Calendar enddate = utilitys.getCal2();
-
-						
-						Calendar startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 60,0);
-						
-						while(petitService.isCeleb(startdate_plus.getTime())){
-							startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
-						};
-						
-						enddate.set(Calendar.HOUR_OF_DAY, 0);							
-						enddate.set(Calendar.MINUTE, 0);
-						enddate.set(Calendar.SECOND, 0);
-						enddate.set(Calendar.MILLISECOND, 0);
-						
-						
-						if(!enddate.after(startdate_plus)){
-							if(i == 0){listPetit.remove(i); i = 0;}
-							else{listPetit.remove(i);	i = i-1;}
-							//System.out.println("@@@ 3 "+startdate_plus.getTime()+" - "+enddate.getTime()+" -- "+i);
-						}
-					}
-					else if(utilitys.valid(overdueappeal,listPetit.get(i)) == 4){
-						utilitys.processDate(listPetit.get(i));
-						Calendar startdate = utilitys.getCal();
-						Calendar enddate = utilitys.getCal2();
-
-						
-						Calendar startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 30,0);
-						
-						while(petitService.isCeleb(startdate_plus.getTime())){
-							startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
-						};
-						
-						enddate.set(Calendar.HOUR_OF_DAY, 0);							
-						enddate.set(Calendar.MINUTE, 0);
-						enddate.set(Calendar.SECOND, 0);
-						enddate.set(Calendar.MILLISECOND, 0);
-						
-						
-						if(!enddate.after(startdate_plus)){
-							if(i == 0){listPetit.remove(i); i = 0;}
-							else{listPetit.remove(i);	i = i-1;}
-							//System.out.println("@@@ 4 "+startdate_plus.getTime()+" - "+enddate.getTime()+" -- "+i);
-						}
-					}
-					
-					if(i == listPetit.size()-1){	listPetit.remove(0); i = i-1;}
-					
-			}		
-		}
-		
+		//petitService.createDate_plan(listPetit);
+		listPetit = processListPetit(listPetit,overdueappeal);
 		
 		PetitListWrapper pt = new PetitListWrapper();
 		pt.setPetit(listPetit);
 		session.setAttribute("list_search", pt);
-		
 		
 		if(listPetit.size() <= 10000) {
 			map.put("searchList", listPetit);
@@ -598,4 +496,108 @@ public class Basic {
 		
 		return"searching";
 	}
+    
+    
+    /**
+     * Метод удалят объекты из коллекции которые не удовлетворяют условиям логики.
+     * Проверяеи поля дат. "До" или "После" одна дата относительно другой
+     * @param listPetit - коллекция с объектами
+     * @param overdueappeal - флаг "просроченные сообщения"
+     * @return - коллекцию с актуальными объектами (которые удовлетворяют критерию поиска)
+     * @throws ParseException
+     */
+    private List<Petit> processListPetit(List<Petit> listPetit, String overdueappeal) throws ParseException{
+    	
+    	if(overdueappeal != null){
+    		
+	    	Calendar enddate = null;
+			Calendar startdate_plus = null;
+			DateFormat df2 = new SimpleDateFormat("dd.MM.yyyy");
+	    	
+	    	for (int i = 0; i < listPetit.size(); i++) {
+	    		
+				if (listPetit.get(i).getBloutboindletter2016() == null) listPetit.get(i).setBloutboindletter2016(new blOutboindLETTER2016());
+				if (listPetit.get(i).getBloutboindletter2016().getDate_between() == null) listPetit.get(i).getBloutboindletter2016().setDate_between("");
+				listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(0, 11));
+			    
+				if(utilitys.valid(overdueappeal,listPetit.get(i)) == 1){
+					utilitys.processDate(listPetit.get(i));
+					enddate = utilitys.getCal2();
+					
+					utilitys.getCal().setTime(df2.parse(listPetit.get(i).getBlockger2016().getDate_plan_end().trim()));
+					startdate_plus = utilitys.getCal();
+					
+					enddate.set(Calendar.HOUR_OF_DAY, 0);							
+					enddate.set(Calendar.MINUTE, 0);
+					enddate.set(Calendar.SECOND, 0);
+					enddate.set(Calendar.MILLISECOND, 0);
+					
+					if(!enddate.after(startdate_plus)){
+						if(i == 0){listPetit.remove(i); i = 0;}
+						else{listPetit.remove(i);	i = i-1;}
+						//System.out.println("@@@ 1 "+startdate_plus.getTime()+" - "+enddate.getTime()+" -- "+i);
+					}
+					
+				}
+				else if(utilitys.valid(overdueappeal,listPetit.get(i)) == 2){
+					utilitys.processDate(listPetit.get(i));
+					enddate = utilitys.getCal2();
+					
+					utilitys.getCal().setTime(df2.parse(listPetit.get(i).getBlockger2016().getDate_plan_end().trim()));
+					startdate_plus = utilitys.getCal();
+					
+					enddate.set(Calendar.HOUR_OF_DAY, 0);							
+					enddate.set(Calendar.MINUTE, 0);
+					enddate.set(Calendar.SECOND, 0);
+					enddate.set(Calendar.MILLISECOND, 0);
+					
+					if(!enddate.after(startdate_plus)){
+						if(i == 0){listPetit.remove(i); i = 0;}
+						else{listPetit.remove(i);	i = i-1;}
+						//System.out.println("@@@ 2 "+startdate_plus.getTime()+" - "+enddate.getTime()+" -- "+i);
+					}
+				}
+				else if(utilitys.valid(overdueappeal,listPetit.get(i)) == 3){
+					utilitys.processDate(listPetit.get(i));
+					enddate = utilitys.getCal2();
+	
+					
+					utilitys.getCal().setTime(df2.parse(listPetit.get(i).getBlockger2016().getDate_plan_end().trim()));
+					startdate_plus = utilitys.getCal();
+					
+					enddate.set(Calendar.HOUR_OF_DAY, 0);							
+					enddate.set(Calendar.MINUTE, 0);
+					enddate.set(Calendar.SECOND, 0);
+					enddate.set(Calendar.MILLISECOND, 0);
+					
+					if(!enddate.after(startdate_plus)){
+						if(i == 0){listPetit.remove(i); i = 0;}
+						else{listPetit.remove(i);	i = i-1;}
+						//System.out.println("@@@ 3 "+startdate_plus.getTime()+" - "+enddate.getTime()+" -- "+i);
+					}
+				}
+				else if(utilitys.valid(overdueappeal,listPetit.get(i)) == 4){
+					utilitys.processDate(listPetit.get(i));
+					enddate = utilitys.getCal2();
+					
+					utilitys.getCal().setTime(df2.parse(listPetit.get(i).getBlockger2016().getDate_plan_end().trim()));
+					startdate_plus = utilitys.getCal();
+					
+					enddate.set(Calendar.HOUR_OF_DAY, 0);							
+					enddate.set(Calendar.MINUTE, 0);
+					enddate.set(Calendar.SECOND, 0);
+					enddate.set(Calendar.MILLISECOND, 0);
+					
+					if(!enddate.after(startdate_plus)){
+						if(i == 0){listPetit.remove(i); i = 0;}
+						else{listPetit.remove(i);	i = i-1;}
+						//System.out.println("@@@ 4 "+startdate_plus.getTime()+" - "+enddate.getTime()+" -- "+i);
+					}
+				}
+				 					
+				if(i == listPetit.size()-1 && overdueappeal != null){	listPetit.remove(0); i = i-1;}
+			}
+    	}	
+    	return listPetit;
+    }
 }
