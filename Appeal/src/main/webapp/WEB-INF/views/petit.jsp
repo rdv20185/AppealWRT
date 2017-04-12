@@ -476,7 +476,7 @@
             <li><a href="">Регламент</a></li>
             <li><a href="<c:url value="/downloadmanual" />">Инструкция пользователя</a></li>
             <li><a href="<c:url value="/downloadreestr" />">Реестр страховых представителей 25.09.16</a></li>
-            <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей на 15.03.17</a></li>
+            <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей на 10.04.17</a></li>
           </ul>
         </li>
         <sec:authorize access="hasAnyRole('ROLE_TFOMS')">

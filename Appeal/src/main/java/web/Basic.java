@@ -481,7 +481,74 @@ public class Basic {
 		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound,overdueappeal);
 		
 		//petitService.createDate_plan(listPetit);
-		listPetit = processListPetit(listPetit,overdueappeal);
+
+		/*временный блок
+		 * 
+		 *	listPetit = processListPetit(listPetit,overdueappeal); 
+		 * 
+		 * */
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df2 = new SimpleDateFormat("dd.MM.yyyy");
+		Calendar cal  = Calendar.getInstance();
+		Calendar cal2  = Calendar.getInstance();
+		for (int i = 0; i < listPetit.size(); i++) {
+			if (listPetit.get(i).getBloutboindletter2016() == null) listPetit.get(i).setBloutboindletter2016(new blOutboindLETTER2016());
+			if (listPetit.get(i).getBloutboindletter2016().getDate_between() == null) listPetit.get(i).getBloutboindletter2016().setDate_between("");
+			listPetit.get(i).setDateInput(listPetit.get(i).getDateInput().substring(0, 11));
+			
+			if(overdueappeal == null){}
+			else if(overdueappeal != null){
+				
+					if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("")){
+						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
+						cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
+						
+						if(Util.daysBetween(cal, cal2) < 30){
+							if(i == 0){listPetit.remove(i); i = 0;}
+							else{listPetit.remove(i);	i = i-1;}
+						}
+					}
+					else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() != null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1){
+								cal.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
+								cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
+								
+								if(Util.daysBetween(cal, cal2) < 30){
+									if(i == 0){listPetit.remove(i); i = 0;}
+									else{listPetit.remove(i);	i = i-1;}
+								}
+					}
+					else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().length() > 1 ){
+						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
+						cal2.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
+						
+						if(Util.daysBetween(cal, cal2) < 30){
+							if(i == 0){listPetit.remove(i); i = 0;}
+							else{listPetit.remove(i);	i = i-1;}
+						}
+					}
+					else if(overdueappeal != null && listPetit.get(i).getBlockger2016().getDate_end() == null && listPetit.get(i).getBloutboindletter2016().getDate_between().equals("") ){
+						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
+						cal2.setTime(new Date());
+						
+						if(Util.daysBetween(cal, cal2) < 30){
+							if(i == 0){listPetit.remove(i); i = 0;}
+							else{listPetit.remove(i);	i = i-1;}
+						}
+					}
+					
+					if(i == listPetit.size()-1){	listPetit.remove(0); i = i-1;}
+					
+			}		
+		}
+		
+		/*	/временный блок конец
+		 * 
+		 * 
+		 * 
+		 * */
+		
+
 		
 		PetitListWrapper pt = new PetitListWrapper();
 		pt.setPetit(listPetit);
