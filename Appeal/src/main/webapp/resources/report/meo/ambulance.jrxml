@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pg_form_1_1" pageWidth="1000" pageHeight="1200" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="ef9f9989-e419-45fd-b634-6e63c2b4c9e2">
+	<property name="ireport.zoom" value="1.4641000000000015"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Arial_Normal" isDefault="true" fontName="Arial" fontSize="12" pdfFontName="c:\tahoma.ttf" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+	<parameter name="dateBegin" class="java.lang.String"/>
+	<parameter name="dateEnd" class="java.lang.String"/>
+	<parameter name="username" class="java.lang.String"/>
+	<parameter name="01_notdtp" class="java.lang.String"/>
+	<parameter name="01_dtp" class="java.lang.String"/>
+	<parameter name="02_notdtp" class="java.lang.String"/>
+	<parameter name="02_dtp" class="java.lang.String"/>
+	<parameter name="03_notdtp" class="java.lang.String"/>
+	<parameter name="03_dtp" class="java.lang.String"/>
+	<parameter name="04_notdtp" class="java.lang.String"/>
+	<parameter name="04_dtp" class="java.lang.String"/>
+	<parameter name="today" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("dd.MM.yyyy").format(new Date().getTime())]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select hc.lpu as ID from hospcard hc where rownum = 1]]>
+	</queryString>
+	<field name="ID" class="java.lang.String"/>
+	<detail>
+		<band height="292" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="168" width="268" height="18" uuid="fc66d328-1ad6-45d9-8117-d92dffa531f7"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="112" width="45" height="56" uuid="a42f9b67-2d34-4558-b2b2-92b82047c71a"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["№ строки"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="168" width="45" height="18" uuid="a5573d34-54c6-47df-afbf-d836cb092014"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="112" width="268" height="56" uuid="80a74d73-0c08-4456-ad19-5b77877490a5"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Время доезда бригад сокорой медицинской помощи"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="659" height="39" uuid="7e10e740-e88c-4687-824d-97ea761ed7f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Распределение числа выездов бригад скорой медицинской помощи по времени доезда "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="40" width="659" height="18" uuid="64a1ad6d-86ea-465d-b075-60d8143c0b1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Территориальный фонд обязательного медицинского страхования Новосибирской области"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="58" width="659" height="18" uuid="b29d1161-7ee1-42b4-9d4d-4809876dcd7d"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="8" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(наименование субъекта Российской Федерации)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="94" width="659" height="18" uuid="6011add5-0255-408c-93a1-807683d53f00"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="8" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["отчетный период"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="76" width="659" height="18" uuid="dca9e775-a8e9-4d10-925c-159acb94c951"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateBegin}+ " - " +$P{dateEnd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="168" width="173" height="18" uuid="c9bac7b7-957d-4c40-a55c-1af47bfe5328"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["3"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="132" width="173" height="36" uuid="6bb178d5-b9c2-41db-b947-731a9a2b5092"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["до места выезда, количество случаев"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="168" width="173" height="18" uuid="689c03b6-0572-4be5-8cb0-d90f6497f5e8"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["4"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="132" width="173" height="36" uuid="bd80afff-a7e7-440a-a348-a656746cdf74"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["до места дорожно-транспортного проишествия, количество случаев"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="186" width="173" height="26" uuid="d967ad4f-f7e9-43f6-89f8-2a80eb6db168"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{01_notdtp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="186" width="45" height="26" uuid="df325042-4b04-43de-8522-8d0250e34fe2"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="186" width="268" height="26" uuid="decd25c5-3020-427f-ada9-662039f00036"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["до 20 минут"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="186" width="173" height="26" uuid="7ea9543f-b125-45c1-b891-128deeaa6747"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{01_dtp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="212" width="45" height="26" uuid="9728b6db-d828-43a5-ad49-4301b72bcc24"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="212" width="268" height="26" uuid="bca10ba7-bfb8-4b74-80a5-64e87ddc63dc"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["от 21 до 40 минут"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="238" width="268" height="26" uuid="85cb4045-8c0d-432e-aa86-47ef37dc8a60"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["от 41 до 60 минут"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="238" width="45" height="26" uuid="8ca5b002-b2e5-4e45-b9b6-809bbe5d5d25"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["3"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="264" width="268" height="26" uuid="2cbe77bc-361d-4dc6-bf20-feeb626c4dac"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["более 60 минут"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="264" width="45" height="26" uuid="82a9509a-7464-421d-9919-4dfc016a03ee"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["4"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="499" y="-21" width="105" height="20" uuid="44e74b60-13e7-4410-a358-585364758410"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Дата формирования :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="604" y="-21" width="55" height="20" uuid="89b62ed7-eda2-4312-adab-724f712f31a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{today}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="212" width="173" height="26" uuid="202192ac-b0fb-46b3-a06f-60be0df2fef3"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{02_notdtp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="212" width="173" height="26" uuid="346b98eb-c634-4b8c-ac20-57faa041d948"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{02_dtp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="238" width="173" height="26" uuid="e2a0b9dc-81a9-4d5b-9cf0-26e9ce6c0ff2"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{03_notdtp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="238" width="173" height="26" uuid="4882b07a-7e35-4a07-ba30-73aa08253941"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{03_dtp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="264" width="173" height="26" uuid="84c21437-8ed4-4de7-a44c-4a4cee8ca99d"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{04_dtp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="264" width="173" height="26" uuid="ddad4561-bd37-4132-afa5-cfa4909ef2c6"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{04_notdtp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="112" width="346" height="20" uuid="3f760746-d4bd-44cf-a352-5afa81d327af"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Число выездов бригад скорой медицинской помощи по времени"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

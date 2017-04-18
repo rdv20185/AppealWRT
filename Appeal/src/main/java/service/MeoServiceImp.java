@@ -100,6 +100,64 @@ public class MeoServiceImp implements MeoService {
    		
 	}
     
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void report_ambulance(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
+    	try{
+    	Map mapReport = mapForJasper(dateReport, username);
+    	
+    	Connection conn = connectForJasper();
+    	ResultSet rs = null;
+    	PreparedStatement stmt = null;
+    	
+    	File sql_file = new File( servletcontext.getRealPath("/resources/sql/Ambulance.sql"));
+        InputStream is = new FileInputStream(sql_file);
+        
+        //String dateBegin_edit = dateReport.getDateBegin().substring(6)+dateReport.getDateBegin().substring(3,5);
+        //String dateEnd_edit = dateReport.getDateBegin().substring(6)+dateReport.getDateBegin().substring(3,5);
+        String query = Util.importSQL(is).replace("201701", "'"+dateReport.getDateBegin()+"'").replace("201702", "'"+dateReport.getDateEnd()+"'");
+        System.out.println("@@ "+ query);
+        //System.out.println(query);
+        stmt = conn.prepareStatement(query);
+        rs = stmt.executeQuery();
+        
+        BigDecimal dou = new BigDecimal(0);
+        BigDecimal abortion_on_mp_summ = new BigDecimal(0);
+        
+        while (rs.next()) {
+        	System.out.println(rs.getString(1)+" - "+rs.getString(2)+" - "+rs.getString(3));
+        	
+        	mapReport.put(rs.getString(1)+"_notdtp", rs.getString(2));
+        	mapReport.put(rs.getString(1)+"_dtp", rs.getString(3));
+        	
+        	//if("Abortion_summ".contains(rs.getString(2)+"_summ") && !rs.getString(1).equals("O07")){ dou = dou.add(new BigDecimal(rs.getString(4))); }
+        	//if("Abortion_on_MP_summ".contains(rs.getString(2) + "_summ")){	abortion_on_mp_summ = abortion_on_mp_summ.add(new BigDecimal(rs.getString(4)));	}
+        }
+        
+        stmt.close();
+        rs.close();
+        
+        
+		
+		File f = new File( servletcontext.getRealPath("/resources/report/meo/ambulance.jrxml"));
+		
+		JasperReport jasperReport = JasperCompileManager.compileReport(f.getPath());
+		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
+		//JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport);
+		
+		JRXlsExporter exporter = new JRXlsExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(f.getPath().replace(".jrxml", ".xls")));
+		exporter.exportReport();
+		
+        disconnectForJasper(conn);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
+   		
+	}
+    
 
 	private void disconnectForJasper(Connection conn) throws SQLException {
 		conn.close();

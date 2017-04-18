@@ -67,6 +67,22 @@ public class MEOcontroller {
 		File f = new File( servletcontext.getRealPath("/resources/report/meo/report_meo_abortion.xls"));
         downloadFile(request, response, f.getPath());
 	}
+    
+    @RequestMapping(value = "/report_meo_ambulance.html", method = RequestMethod.POST)
+    public String report_meo_ambulance(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
+		if(bindingResult.hasErrors()) return "reporting_meo";
+		
+			 meoService.report_ambulance(dateReport, "");
+			
+			
+    	return "reporting_meo";
+	}
+    
+    @RequestMapping(value = "/cooked_report_meo_ambulance", method = RequestMethod.GET)
+    public void report_ambulance(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		File f = new File( servletcontext.getRealPath("/resources/report/meo/ambulance.xls"));
+        downloadFile(request, response, f.getPath());
+	}
 
 	private void downloadFile(HttpServletRequest request,
 			HttpServletResponse response, String filePath) throws FileNotFoundException,

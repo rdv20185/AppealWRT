@@ -92,6 +92,19 @@ public interface PetitService {
 	 */
 	public void report_strax3(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
 	
+	
+	/**
+	 * Метод создает JDBC подключение и формирует отчет в из Jasperreport
+	 * Отчет по работе экспертизы качества медицинской помощи, проведенной по случаям оказания мп 
+	 * при злокачественных новообразованиях, сопровождающихся выраженным болевым синдромом
+	 * @param dateReport - даты периода
+	 * @param username - имя пользователя
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * @throws JRException
+	 */
+	public void report_drugs(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
+	
 	/**
 	 * Метод отрабатывает логику формирования данных перед запросом в базу для отчета "Отчет по письменным обращениям граждан, поступившим в ТФОМС НСО"
 	 * @param dateReport

@@ -21,6 +21,10 @@
 		$(function() {
 			$( "#db" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#de" ).datepicker({dateFormat:'dd.mm.yy'});
+			
+			$( "#db_am" ).datepicker({dateFormat:'yymm'});
+			$( "#de_am" ).datepicker({dateFormat:'yymm'});
+			
 		});
 	</script>
 	<script>
@@ -77,6 +81,26 @@
 	</form:form>
 	<br>
 	<a href="<c:url value="/cooked_report_meo_abortion" />">Скачать</a>
+	<br><br><hr/>
+	
+	<h3>Распределение числа выездов бригад скорой медицинской помощи ПО ВРЕМЕНИ доезда</h3>
+	<h5  style="margin:3px; color: red;">Выборка работает по дате подачи реестров (не по дате лечения)<br>
+	ПРИМЕЧАНИЕ: Даты для полного годового отчета будут с 202501 по 202601 (необходим первый месяц следующего  года)</h5>
+	<form:form method="post" action="report_meo_ambulance.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
+		<table cellspacing='15'>
+			<tr>
+				<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>
+				<form:input id="db_am" path="dateBegin" class='reportParam' /></td>
+				<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
+				<form:input id="de_am" path="dateEnd" class='reportParam' /></td>
+				
+				<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
+				
+			</tr>
+		</table>
+	</form:form>
+	<br>
+	<a href="<c:url value="/cooked_report_meo_ambulance" />">Скачать</a>
 	<br><br><hr/>
 	</sec:authorize>
 </div>

@@ -1056,7 +1056,7 @@
 		    <th>Имя</th>
 			<th class="cuting2"><spring:message code="label.patrony" /></th>
 			<th><spring:message code="label.tel" /></th>
-		    <th class="cuting2">Регистратор</th></th>
+		    <th>Регистратор</th></th>
 		    <th>Исполнитель</th>
 			<th></th>
 			<th></th>
@@ -1145,7 +1145,7 @@
 			    <td  class="cuting2">${petit.patrony}</td>
 			    <td>${petit.tel}</td>
 				<!-- <td style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap; max-width: 65px;">${petit.ter.terName}</td> -->
-				<td class="cuting2">${petit.blockger2016.regname}</td>
+				<td>${petit.blockger2016.regname}</td>
 				<td class="${cssClassonUser}">${petit.username}</td>
 				
 				
