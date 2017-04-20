@@ -69,7 +69,8 @@ public class MeoServiceImp implements MeoService {
         	mapReport.put(rs.getString(1)+"_"+rs.getString(2)+"_summ", rs.getString(4));
         	
         	if("Abortion_summ".contains(rs.getString(2)+"_summ") && !rs.getString(1).equals("O07")){ dou = dou.add(new BigDecimal(rs.getString(4))); }
-        	if("Abortion_on_MP_summ".contains(rs.getString(2) + "_summ")){	abortion_on_mp_summ = abortion_on_mp_summ.add(new BigDecimal(rs.getString(4)));	}
+        	// 20.04.2017 Добавлено условие && !rs.getString(1).equals("O07") (до снятия отчета)
+        	if("Abortion_on_MP_summ".contains(rs.getString(2) + "_summ") && !rs.getString(1).equals("O07")){	abortion_on_mp_summ = abortion_on_mp_summ.add(new BigDecimal(rs.getString(4)));	}
         }
         
         mapReport.put("all_summ", dou);

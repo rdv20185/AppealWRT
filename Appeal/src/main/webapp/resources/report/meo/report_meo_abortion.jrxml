@@ -631,7 +631,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{all_on_mp_summ}-$P{O07_Abortion_summ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{all_on_mp_summ}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="366" y="316" width="153" height="26" uuid="b4b9b350-9be9-4d17-b423-ef1c167e8500"/>
