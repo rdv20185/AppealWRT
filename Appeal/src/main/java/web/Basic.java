@@ -279,8 +279,9 @@ public class Basic {
     }
     
     @RequestMapping(value = "/refresh/add", method = RequestMethod.POST)
-    public String refreshAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request, ModelMap mapm) throws UnsupportedEncodingException, ParseException {
+    public String refreshAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request, ModelMap mapm) throws UnsupportedEncodingException, ParseException, InterruptedException {
     {
+    	
 	    	DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			Calendar cal  = Calendar.getInstance();
 			cal.setTime(df.parse(petit.getDateInput()));
@@ -324,6 +325,7 @@ public class Basic {
     	if(pa.trim().equals("Завершить") || pa.trim().equals("Изменить")){
     		
     		if(petit.getTypeId() == 0){bindingResult.rejectValue("typeId", "error.petit", "Поле Тип обязательно для заполнения");}
+    		if(petit.getMoId() != 0 && petit.getBlockger2016().getTypempid() == 0){bindingResult.rejectValue("typeId", "error.petit", "Поле Вид МП обязательно для заполнения при заполненом поле МО");}
     		if(petit.getCauseId() == 0){bindingResult.rejectValue("causeId", "error.petit", "Поле Причина обязательно для заполнения");}
     		if((petit.getTypeId() == 1 && petit.getCauseId() == 2 && petit.getRectif1Id() ==0) ||
 			   (petit.getTypeId() == 1 && petit.getCauseId() == 4 && petit.getRectif1Id() ==0) ||
@@ -481,6 +483,7 @@ public class Basic {
 		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound,overdueappeal);
 		
 		//petitService.createDate_plan(listPetit);
+		listPetit = processListPetit(listPetit,overdueappeal);
 
 		/*временный блок
 		 * 
@@ -488,7 +491,7 @@ public class Basic {
 		 * 
 		 * */
 		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		/*DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		DateFormat df2 = new SimpleDateFormat("dd.MM.yyyy");
 		Calendar cal  = Calendar.getInstance();
 		Calendar cal2  = Calendar.getInstance();
@@ -504,7 +507,7 @@ public class Basic {
 						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
 						cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
 						
-						if(Util.daysBetween(cal, cal2) < 30){
+						if(Util.daysBetween(cal, cal2) < 31){
 							if(i == 0){listPetit.remove(i); i = 0;}
 							else{listPetit.remove(i);	i = i-1;}
 						}
@@ -513,7 +516,7 @@ public class Basic {
 								cal.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
 								cal2.setTime(listPetit.get(i).getBlockger2016().getDate_end());
 								
-								if(Util.daysBetween(cal, cal2) < 30){
+								if(Util.daysBetween(cal, cal2) < 31){
 									if(i == 0){listPetit.remove(i); i = 0;}
 									else{listPetit.remove(i);	i = i-1;}
 								}
@@ -522,7 +525,7 @@ public class Basic {
 						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
 						cal2.setTime(df2.parse(listPetit.get(i).getBloutboindletter2016().getDate_between().trim()));
 						
-						if(Util.daysBetween(cal, cal2) < 30){
+						if(Util.daysBetween(cal, cal2) < 31){
 							if(i == 0){listPetit.remove(i); i = 0;}
 							else{listPetit.remove(i);	i = i-1;}
 						}
@@ -531,7 +534,7 @@ public class Basic {
 						cal.setTime(df.parse(listPetit.get(i).getDateInput().substring(0, 11).trim()));
 						cal2.setTime(new Date());
 						
-						if(Util.daysBetween(cal, cal2) < 30){
+						if(Util.daysBetween(cal, cal2) < 31){
 							if(i == 0){listPetit.remove(i); i = 0;}
 							else{listPetit.remove(i);	i = i-1;}
 						}
@@ -540,7 +543,7 @@ public class Basic {
 					if(i == listPetit.size()-1){	listPetit.remove(0); i = i-1;}
 					
 			}		
-		}
+		}*/
 		
 		/*	/временный блок конец
 		 * 

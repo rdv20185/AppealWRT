@@ -476,7 +476,7 @@
             <li><a href="">Регламент</a></li>
             <li><a href="<c:url value="/downloadmanual" />">Инструкция пользователя</a></li>
             <li><a href="<c:url value="/downloadreestr" />">Реестр страховых представителей 25.09.16</a></li>
-            <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей на 10.04.17</a></li>
+            <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей</a></li>
           </ul>
         </li>
         <sec:authorize access="hasAnyRole('ROLE_TFOMS')">
@@ -530,6 +530,9 @@
 	<form:hidden path="blockger2016.filecall"/>
 	<form:hidden path="blockger2016.date_plan_end"/> 
 	<form:hidden path="num"/>
+	<c:if test="${petit.blockger2016.date_end ne null}">
+		<form:hidden path="blockger2016.date_end" />
+	</c:if> 
 
 <h1>
 	<c:if test="${petit.id eq null}">

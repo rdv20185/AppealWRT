@@ -222,7 +222,7 @@ public class PetitDAOImpl implements PetitDAO {
     	if(searchcheckinbound == null){
 		    	try {
 			    	if(p.matcher(petit.getDateBegin()).matches()) {
-						criteria.add(Restrictions.ge("b.date_end", df.parse(petit.getDateBegin().concat(" 0:00:01.0"))	));
+						criteria.add(Restrictions.ge("b.date_end", df.parse(petit.getDateBegin().concat(" 0:00:00.0"))	));
 			    	}
 			    	if(p.matcher(petit.getDateEnd()).matches()) {
 			    		criteria.add(Restrictions.le("b.date_end", df.parse(petit.getDateEnd().concat(" 23:59:00.0"))	));

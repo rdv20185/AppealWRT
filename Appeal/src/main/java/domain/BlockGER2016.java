@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,7 +36,8 @@ public class BlockGER2016 {
 	}
 	
 	//дата завершения обращения
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date date_end;
 	//крайняя дата когда должен быть дан ответ
 	private String date_plan_end;
