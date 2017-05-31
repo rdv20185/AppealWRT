@@ -32,6 +32,7 @@
  		<mapping class="domain.Callnight_markerday"></mapping>
  		<mapping class="domain.Calendar"></mapping>
  			<mapping class="domain.Petit"></mapping>
+ 			<mapping class="domain.CdrQuery"></mapping>
  		
 	</session-factory>
 </hibernate-configuration>

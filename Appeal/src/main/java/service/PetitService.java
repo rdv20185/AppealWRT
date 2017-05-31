@@ -1,5 +1,6 @@
 package service;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -91,6 +92,13 @@ public interface PetitService {
 	 * @throws JRException
 	 */
 	public void report_strax3(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
+	
+	
+	/**
+	 * Метод инициализирует объект cdrQuery(Entity) и предает на слой DAO
+	 * @param map
+	 */
+	public void createcdr(Map<String,String> map) throws UnsupportedEncodingException;
 	
 	
 	/**

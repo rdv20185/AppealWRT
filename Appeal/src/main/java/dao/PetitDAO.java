@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Callnight_markerday;
+import domain.CdrQuery;
 import domain.Petit;
 
 public interface PetitDAO {
@@ -35,5 +36,7 @@ public interface PetitDAO {
 	 * @param plan_date - пдановая дата ответа
 	 */
 	public void update_PlaneDateField(String id, String plan_date);
+	
+	public void addCdrQuery(CdrQuery model);
 	
 }

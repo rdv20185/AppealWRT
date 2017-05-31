@@ -3,6 +3,7 @@ package service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,7 @@ import app.Appeal;
 import dao.PetitDAO;
 import domain.Callnight_markerday;
 import domain.CauseL;
+import domain.CdrQuery;
 import domain.Petit;
 import domain.Rectif1L;
 import domain.Rectif2L;
@@ -615,6 +618,30 @@ public class PetitServiceImpl implements PetitService {
 				
 			}
 		}
+	}
+
+	@Override
+	public void createcdr(Map<String, String> map) throws UnsupportedEncodingException {
+		
+		Set s = map.entrySet();
+	    Iterator it = s.iterator();
+	    String mas[];
+	    CdrQuery cdrquery;
+	    
+	    while ( it.hasNext() ) {
+	    	
+	       Map.Entry entry = (Map.Entry) it.next();
+	       String key = (String) entry.getKey();
+	       String value = (String) entry.getValue();
+	       if(value.contains("88002221515") || value.contains("5001") || value.contains("5002") || value.contains("5003")){
+	    	   
+	    	   mas = new String(value.getBytes("CP1251"),"UTF-8").substring(1).replaceAll("\\?", "И").split(";");
+	    	   cdrquery = new CdrQuery(mas[0], mas[1], mas[2], mas[3], mas[4], mas[5], mas[6], mas[7], mas[8], mas[9], mas[10], mas[11], mas[12], mas[13], mas[14], mas[15], mas[16], mas[17], mas[18], mas[19], mas[20], mas[21], mas[22]);
+	    	   petitDAO.addCdrQuery(cdrquery);
+	       }
+	    }
+		 
+		
 	}
 	
     

@@ -162,13 +162,6 @@ public class Basic {
     @RequestMapping("/index")
     public String listPetits(Map<String, Object> map,HttpServletRequest request,ModelMap mapm) throws UnsupportedEncodingException {
     	
-    	//String[] beanNames = applicationContext.getBeanDefinitionNames();
-
-       // for (String beanName : beanNames) {
-       //     System.out.println(beanName + " : " + applicationContext.getBean(beanName).getClass().toString());
-      //  }
-    	
-    	
     	setupForm(mapm,request,new Petit());
     	nightcallsprocess(request);
     	
@@ -569,7 +562,7 @@ public class Basic {
     
     
     /**
-     * Метод удалят объекты из коллекции которые не удовлетворяют условиям логики.
+     * Метод удаляет объекты из коллекции которые не удовлетворяют условиям логики.
      * Проверяеи поля дат. "До" или "После" одна дата относительно другой
      * @param listPetit - коллекция с объектами
      * @param overdueappeal - флаг "просроченные сообщения"

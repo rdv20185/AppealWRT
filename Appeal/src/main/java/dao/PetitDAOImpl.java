@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import org.hibernate.Criteria;
@@ -19,8 +20,10 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Callnight_markerday;
+import domain.CdrQuery;
 import domain.Outboundmany;
 import domain.Petit;
 
@@ -34,6 +37,13 @@ public class PetitDAOImpl implements PetitDAO {
     	
         sessionFactory.getCurrentSession().saveOrUpdate(petit);
         
+    }
+    
+    @Transactional
+	public void addCdrQuery(CdrQuery model) {
+	    	
+	        sessionFactory.getCurrentSession().saveOrUpdate(model);
+	        
     }
     
     /* (non-Javadoc)
@@ -105,10 +115,19 @@ public class PetitDAOImpl implements PetitDAO {
 		if(username.equals("mityanina") || username.equals("eremina"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
-			"select r from Petit r where (r.username = :username or r.username='"+"ТФОМС"+"')  order by r.blockger2016.state asc,to_date(r.blockger2016.date_plan_end,'dd.MM.yyyy') asc, id desc");
-					/*	+ " union all"
-		    + " select r from Petit r where r.blockger2016.state >= 3 and (r.username = :username or r.username='"+"ТФОМС"+"')  order by id desc");*/			query.setParameter("username", username);
-			query.setMaxResults(100);
+			"select r from Petit r where  r.blockger2016.state < 3 and (r.username = :username or r.username='"+"ТФОМС"+"')  order by r.blockger2016.state asc,to_date(r.blockger2016.date_plan_end,'dd.MM.yyyy') asc, id desc");
+			query.setParameter("username", username);
+			query.setMaxResults(50);
+			List<Petit> ls = new ArrayList<Petit>(100);
+			ls.addAll(query.list());
+			
+			query = sessionFactory.getCurrentSession().createQuery("select r from Petit r where r.blockger2016.state >= 3 and (r.username = :username or r.username='"+"ТФОМС"+"')  order by to_date(r.blockger2016.date_end,'dd.MM.yyyy') desc");
+			query.setParameter("username", username);
+			query.setMaxResults(50);
+			ls.addAll(query.list());
+			
+			return ls;
+			
     	}
     	
     	if(username.equals("kuznetsova"))

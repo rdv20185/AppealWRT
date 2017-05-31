@@ -8,11 +8,17 @@
  
  
     <context:component-scan base-package="service.nightcall" />
+    <context:component-scan base-package="service.billing_cdr" />
  
     <task:scheduled-tasks scheduler="myScheduler">
+    	
         <task:scheduled ref="myBean" method="printMessage" cron="0 2 8 * * *" />
         <!-- <task:scheduled ref="myBean" method="printMessage" cron="*/30 * * * * *" /> -->
+        
+        <!-- CDR queries -->
+        <task:scheduled ref="billingcdr" method="run" cron="*/30 * * * * *" />
     </task:scheduled-tasks>
+    
  
     <task:scheduler id="myScheduler"/>
  
