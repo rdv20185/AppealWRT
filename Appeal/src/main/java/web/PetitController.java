@@ -80,6 +80,8 @@ import domain.Source;
 import domain.Ter;
 import domain.Type;
 import domain.TypeL;
+import domain.Subtype;
+
 import ftp.FTPDownloadFileDemo;
 import exceptions.ValidationForRest;
 
@@ -222,6 +224,14 @@ public class PetitController {
 			
 		}else{
 			petit.setBloutboindletter2016(null);
+		}
+		
+		// Add entity to subtype
+		if(petit.getSubtype() != null){
+			for(int i=0; i < petit.getSubtype().size(); i++){
+				Subtype sb = petit.getSubtype().get(i);
+			}
+			petit.getSubtype().get(0).setPetit(petit);
 		}
 		
 		
@@ -394,7 +404,7 @@ public class PetitController {
 		if(insursmo == null){	
 			if(getUserName().contains("smo_rosno")) petitService.report_strax3(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16"
 					+ "smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
-			else if(getUserName().equals("smo_ingos")) petitService.report_strax3(dateReport, "smo_ingoscall5003callnight5003");
+			else if(getUserName().equals("smo_ingos")) petitService.report_strax3(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");
 			else if(getUserName().equals("smo_simaz")) petitService.report_strax3(dateReport, "smo_simazcall5001callnight5001");
 			else {petitService.report_strax3(dateReport, getUserName());}
 		}

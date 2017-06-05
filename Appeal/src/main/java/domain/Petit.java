@@ -1,8 +1,11 @@
 package domain;
 
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,11 +24,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 
 @Entity
 @Table(name = "T_PETIT")
-public class Petit {
+public class Petit implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -34,6 +41,23 @@ public class Petit {
 	@Pattern(regexp = "(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}", message="Дата поступления должна быть в формате дд.мм.гггг")
 	@Column(name = "DATE_INPUT")
     private String dateInput;
+	
+	@OneToMany(mappedBy="petit_sub", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@ElementCollection(targetClass= Subtype.class)
+	@Column(name = "id_types")
+	@JsonIgnore
+	private List<Subtype> subtype;
+	
+	
+	
+	
+	public List<Subtype> getSubtype() {
+		return subtype;
+	}
+	
+	public void setSubtype(List<Subtype> subtype) {
+		this.subtype = subtype;
+	}
 	
     @Column(name = "SOURCE_ID")
     private int sourceId;
@@ -224,6 +248,9 @@ public class Petit {
 		this.blockger2016 = blockger2016;
 	}
 
+	
+	
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="TER_ID", referencedColumnName = "TER_ID", insertable = false, updatable = false)
 	private Ter ter;
@@ -676,7 +703,7 @@ public class Petit {
 		this.num = num;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Petit [id=" + id + ", dateInput=" + dateInput + ", sourceId="
 				+ sourceId + ", presentId=" + presentId + ", conectId="
@@ -703,7 +730,7 @@ public class Petit {
 				+ cause + ", rectif1=" + rectif1 + ", rectif2=" + rectif2
 				+ ",bloutboindletter2016="+ bloutboindletter2016+", rectif3=" + rectif3 + ", rectif4=" + rectif4 + ", insur="
 				+ insur + ", mo=" + mo + ", hsp=" + hsp + "]";
-	}
+	}*/
 
 	public blOutboindLETTER2016 getBloutboindletter2016() {
 		return bloutboindletter2016;
@@ -711,6 +738,131 @@ public class Petit {
 
 	public void setBloutboindletter2016(blOutboindLETTER2016 bloutboindletter2016) {
 		this.bloutboindletter2016 = bloutboindletter2016;
+	}
+
+	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Petit [id=");
+		builder.append(id);
+		builder.append(", dateInput=");
+		builder.append(dateInput);
+		builder.append(", subtype=");
+		builder.append(subtype);
+		builder.append(", sourceId=");
+		builder.append(sourceId);
+		builder.append(", presentId=");
+		builder.append(presentId);
+		builder.append(", conectId=");
+		builder.append(conectId);
+		builder.append(", intermedId=");
+		builder.append(intermedId);
+		builder.append(", typeId=");
+		builder.append(typeId);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", surname=");
+		builder.append(surname);
+		builder.append(", patrony=");
+		builder.append(patrony);
+		builder.append(", policy=");
+		builder.append(policy);
+		builder.append(", tel=");
+		builder.append(tel);
+		builder.append(", adress=");
+		builder.append(adress);
+		builder.append(", terId=");
+		builder.append(terId);
+		builder.append(", terAnswerId=");
+		builder.append(terAnswerId);
+		builder.append(", last1=");
+		builder.append(last1);
+		builder.append(", last2=");
+		builder.append(last2);
+		builder.append(", moId=");
+		builder.append(moId);
+		builder.append(", hspId=");
+		builder.append(hspId);
+		builder.append(", insurId=");
+		builder.append(insurId);
+		builder.append(", placeId=");
+		builder.append(placeId);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", causeId=");
+		builder.append(causeId);
+		builder.append(", rectif1Id=");
+		builder.append(rectif1Id);
+		builder.append(", rectif2Id=");
+		builder.append(rectif2Id);
+		builder.append(", rectif3Id=");
+		builder.append(rectif3Id);
+		builder.append(", rectif4Id=");
+		builder.append(rectif4Id);
+		builder.append(", validId=");
+		builder.append(validId);
+		builder.append(", compens=");
+		builder.append(compens);
+		builder.append(", satisf=");
+		builder.append(satisf);
+		builder.append(", compensSource=");
+		builder.append(compensSource);
+		builder.append(", compensCode=");
+		builder.append(compensCode);
+		builder.append(", compensSum=");
+		builder.append(compensSum);
+		builder.append(", propos=");
+		builder.append(propos);
+		builder.append(", letterNum=");
+		builder.append(letterNum);
+		builder.append(", letterDate=");
+		builder.append(letterDate);
+		builder.append(", dateBegin=");
+		builder.append(dateBegin);
+		builder.append(", dateEnd=");
+		builder.append(dateEnd);
+		builder.append(", causeNote=");
+		builder.append(causeNote);
+		builder.append(", num=");
+		builder.append(num);
+		builder.append(", source=");
+		builder.append(source);
+		builder.append(", present=");
+		builder.append(present);
+		builder.append(", conect=");
+		builder.append(conect);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", blockger2016=");
+		builder.append(blockger2016);
+		builder.append(", bloutboindletter2016=");
+		builder.append(bloutboindletter2016);
+		builder.append(", ter=");
+		builder.append(ter);
+		builder.append(", terAnswer=");
+		builder.append(terAnswer);
+		builder.append(", valid=");
+		builder.append(valid);
+		builder.append(", cause=");
+		builder.append(cause);
+		builder.append(", rectif1=");
+		builder.append(rectif1);
+		builder.append(", rectif2=");
+		builder.append(rectif2);
+		builder.append(", rectif3=");
+		builder.append(rectif3);
+		builder.append(", rectif4=");
+		builder.append(rectif4);
+		builder.append(", insur=");
+		builder.append(insur);
+		builder.append(", mo=");
+		builder.append(mo);
+		builder.append(", hsp=");
+		builder.append(hsp);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }

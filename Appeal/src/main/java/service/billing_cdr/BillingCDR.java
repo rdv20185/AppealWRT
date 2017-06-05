@@ -54,10 +54,20 @@ public void run() throws ParseException, IOException {
 	    Calendar cal = Calendar.getInstance();
 	    cal.setTime(date);
 	    int year = cal.get(Calendar.YEAR);
-	    int month = cal.get(Calendar.MONTH);
-	    // 
+	    
+	    String month;
+		if (cal.get(Calendar.DAY_OF_MONTH) == 1){
+			// january start with 0 
+			month = String.valueOf(cal.get(Calendar.MONTH));}
+		else{
+			cal.add(Calendar.MONTH, +1); 
+			month = String.valueOf(cal.get(Calendar.MONTH));}
+		
+		month = (month.length() == 1) ? "0"+month : month; 
+		
 	    cal.add(Calendar.DAY_OF_MONTH, -1);
-	    int day = cal.get(Calendar.DAY_OF_MONTH);
+	    String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+	    day = (day.length() == 1) ? "0"+day : day;
 
 	    String []mas = null;
 	    Map<String, String> treeMap = new TreeMap<String, String>();
@@ -65,7 +75,7 @@ public void run() throws ParseException, IOException {
 	    
 	  	ftpclient= ftp_datasource.getConnection();
 	  	directoryFrom = Option.getDirectory("dirfromcdr");
-	  	String apendix = "cdr"+year+"0"+(month+1)+day+"/";
+	  	String apendix = "cdr"+year+month+day+"/";
 	  	
 	  	if(logger.isInfoEnabled()){ logger.info("-> process from directory "+directoryFrom+apendix);}
 	  	

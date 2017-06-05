@@ -61,6 +61,9 @@ public class ExcelBuilder extends AbstractExcelView {
 		header.createCell(3).setCellValue("Тип МО");
 		header.getCell(3).setCellStyle(style);
 		
+		header.createCell(3).setCellValue("Связь");
+		header.getCell(3).setCellStyle(style);
+		
 		header.createCell(4).setCellValue("Представление");
 		header.getCell(4).setCellStyle(style);
 		
@@ -112,20 +115,21 @@ public class ExcelBuilder extends AbstractExcelView {
 			aRow.createCell(1).setCellValue(petit.getDateInput());
 			aRow.createCell(2).setCellValue(petit.getSource().getSourceName());
 			aRow.createCell(3).setCellValue(petit.getHsp().getHspName());
-			aRow.createCell(4).setCellValue(petit.getPresent().getPresentName());
-			aRow.createCell(5).setCellValue(petit.getLetterNum());
-			aRow.createCell(6).setCellValue(petit.getMo().getMoName());
-			aRow.createCell(7).setCellValue(petit.getType().getTypeName());
-			aRow.createCell(8).setCellValue(petit.getSurname());
-			aRow.createCell(9).setCellValue(petit.getName());
-			aRow.createCell(10).setCellValue(petit.getTer().getTerId());
-			aRow.createCell(11).setCellValue(petit.getCause().getCauseName());
-			aRow.createCell(12).setCellValue(petit.getRectif1().getRectif1Name());
-			aRow.createCell(13).setCellValue(petit.getValid().getValidName());
-			aRow.createCell(14).setCellValue(petit.getSatisf());
-			aRow.createCell(15).setCellValue(petit.getCompensSum());
-			aRow.createCell(16).setCellValue(petit.getBlockger2016().getRegname());
-			aRow.createCell(17).setCellValue(petit.getUsername());
+			aRow.createCell(4).setCellValue(petit.getConect().getConectName());
+			aRow.createCell(5).setCellValue(petit.getPresent().getPresentName());
+			aRow.createCell(6).setCellValue(petit.getLetterNum());
+			aRow.createCell(7).setCellValue(petit.getMo().getMoName());
+			aRow.createCell(8).setCellValue(petit.getType().getTypeName());
+			aRow.createCell(9).setCellValue(petit.getSurname());
+			aRow.createCell(10).setCellValue(petit.getName());
+			aRow.createCell(11).setCellValue(petit.getTer().getTerId());
+			aRow.createCell(12).setCellValue(petit.getCause().getCauseName());
+			aRow.createCell(13).setCellValue(petit.getRectif1().getRectif1Name());
+			aRow.createCell(14).setCellValue(petit.getValid().getValidName());
+			aRow.createCell(15).setCellValue(petit.getSatisf());
+			aRow.createCell(16).setCellValue(petit.getCompensSum());
+			aRow.createCell(17).setCellValue(petit.getBlockger2016().getRegname());
+			aRow.createCell(18).setCellValue(petit.getUsername());
 		}
 	}
 

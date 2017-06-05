@@ -16,7 +16,7 @@
         <!-- <task:scheduled ref="myBean" method="printMessage" cron="*/30 * * * * *" /> -->
         
         <!-- CDR queries -->
-        <task:scheduled ref="billingcdr" method="run" cron="*/30 * * * * *" />
+        <task:scheduled ref="billingcdr" method="run" cron="0 2 3 * * *" />
     </task:scheduled-tasks>
     
  

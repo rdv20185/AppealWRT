@@ -33,6 +33,7 @@
  		<mapping class="domain.Calendar"></mapping>
  			<mapping class="domain.Petit"></mapping>
  			<mapping class="domain.CdrQuery"></mapping>
+ 			<mapping class="domain.Subtype"></mapping>
  		
 	</session-factory>
 </hibernate-configuration>

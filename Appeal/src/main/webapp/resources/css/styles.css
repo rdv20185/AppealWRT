@@ -227,6 +227,8 @@ ul#navigation .contact a    {
     text-shadow: 2px 3px #000000;
 }
 
-[id^="div_subresponse"]{
+[id^="div_subresponse"],[id^="div_subtype"]{
+	font-family: 'Times New Roman', Times, serif; /* Шрифт с засечками */
+    font-style: italic; /* Курсивное начертание */
 	font-size: 12px;
 }

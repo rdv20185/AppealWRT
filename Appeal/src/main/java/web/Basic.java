@@ -82,7 +82,7 @@ public class Basic {
 	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) throws UnsupportedEncodingException {
 		
     	map.put("petit", petit);
-    	
+    
 		if(getUserName().equals("sasha") ||
 				getUserName().equals("mityanina") ||
 				getUserName().equals("vasilyeva") ||
