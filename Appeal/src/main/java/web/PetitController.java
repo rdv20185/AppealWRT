@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.SQLException;
@@ -228,10 +229,15 @@ public class PetitController {
 		
 		// Add entity to subtype
 		if(petit.getSubtype() != null){
+			
 			for(int i=0; i < petit.getSubtype().size(); i++){
 				Subtype sb = petit.getSubtype().get(i);
+				if(sb.getSubcause() != null || sb.getSubrectif() != null){
+					petit.getSubtype().get(i).setPetit(petit);
+				}
+				
 			}
-			petit.getSubtype().get(0).setPetit(petit);
+			
 		}
 		
 		

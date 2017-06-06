@@ -1,6 +1,7 @@
 package web;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -57,6 +58,12 @@ import service.PetitService;
 import util.Util;
 import util.Utilitys;
 
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.stream.Collectors;
+import service.xml.Converter;
+
 @Controller
 public class Basic {
 	
@@ -77,6 +84,8 @@ public class Basic {
     private Utilitys utilitys;
 	@Autowired
     private ApplicationContext applicationContext;
+	@Autowired
+	Converter coverter;
 
 	//@ModelAttribute
 	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) throws UnsupportedEncodingException {
@@ -165,7 +174,29 @@ public class Basic {
     	setupForm(mapm,request,new Petit());
     	nightcallsprocess(request);
     	
-    	List<Petit> pl = petitService.listPetit(getUserName()); 
+    	List<Petit> pl = new ArrayList<Petit>();//petitService.listPetit(getUserName());
+    	pl.add(new Petit());
+    	
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        System.out.println(name);
+        
+        Set<String> roles = auth.getAuthorities().stream()
+        	     .map(r -> r.getAuthority()).collect(Collectors.toSet());
+        
+        System.out.println(roles);
+        
+        try {
+			coverter.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+        
+    	
+    	
     	for(Petit pt : pl)
     	{
     		if(pt.getDateInput() !=null)

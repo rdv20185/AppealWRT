@@ -499,6 +499,17 @@ function new_body(btn,role){
 				   this.reset();
 				   $('#inbound_from').fadeOut();
 				});
+				// прячем доп причины
+				let test = $("[id*='div_subtype']");
+				for(let i = 0;i < test.length; i++){
+					if(test[i].style.display == 'block'){
+						let ch = test[i].children[1];
+						ch.disabled = true;
+						ch = test[i].children[3];
+						ch.disabled = true;
+						test[i].style.display='none';
+					}	
+				}
 				// добовляем п умолчанию dateInput
 				$( "#dateInput" ).datepicker( "setDate", new Date());
 		        
@@ -673,6 +684,17 @@ $container.append(userInfo);
 $("form").each(function(){
    this.reset();
 });
+// прячем доп причины
+let test = $("[id*='div_subtype']");
+for(let i = 0;i < test.length; i++){
+	if(test[i].style.display == 'block'){
+		let ch = test[i].children[1];
+		ch.disabled = true;
+		ch = test[i].children[3];
+		ch.disabled = true;
+		test[i].style.display='none';
+	}	
+}
 // добовляем п умолчанию dateInput
 $( "#dateInput" ).datepicker( "setDate", new Date());
 

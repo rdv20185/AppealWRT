@@ -205,27 +205,6 @@
 	</script>
 	
 	<script type="text/javascript">
-	$(document).ready(function() { 
-		$('#cause').change(
-			function() {
-				$.getJSON('${findRectifs1URL}', {
-					causeName : $(this).val(),
-					ajax : 'true'
-				}, function(data) {
-					var html = '<option value="0"></option>';
-					var len = data.length;
-					for ( var i = 0; i < len; i++) {
-						html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-					}
-					html += '</option>';
-
-					$('#rectif1').html(html);
-				});
-			});
-		});
-	</script>
-	
-	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#rectif1").change(onSelectChange);
 		});
@@ -659,6 +638,8 @@
 				</span>
 			<form:select id="rectif1" path="rectif1Id" onchange="document.getElementById('rectif1Warning').hidden = true;"></form:select>
 	</p>
+	
+<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_SMO','ROLE_ADMIN')">	
 	<p>
 	   <button type="button" id="btn_add_subtype" title="Добавить причину">+</button>
 	</p>
@@ -669,7 +650,7 @@
 					<form:select class="subcause_cl" id="subcause" path="subtype[0].subcause" disabled="true"></form:select>
 					
 	      			<form:label path="subtype[0].subrectif">Уточнение</form:label>
-					<form:select id="sub_cause" path="subtype[0].subrectif" disabled="true"></form:select>
+					<form:select class="subrectif_cl" id="subrectif" path="subtype[0].subrectif" disabled="true"></form:select>
 						
       				</div>
 	</p>
@@ -680,7 +661,7 @@
 						<form:select  class="subcause_cl" id="subcause" path="subtype[1].subcause" disabled="true"></form:select>
 					
 	      				<form:label path="subtype[1].subrectif">Уточнение</form:label>
-						<form:select id="sub_cause" path="subtype[1].subrectif"  disabled="true"></form:select>
+						<form:select class="subrectif_cl" id="subrectif" path="subtype[1].subrectif"  disabled="true"></form:select>
 	      				
 	      			</div>	
 	</p>
@@ -691,10 +672,11 @@
 						<form:select class="subcause_cl" id="subcause" path="subtype[2].subcause" disabled="true"></form:select>
 					
 	      				<form:label path="subtype[2].subrectif">Уточнение</form:label>
-						<form:select id="sub_cause" path="subtype[2].subrectif" disabled="true"></form:select>
+						<form:select class="subrectif_cl" id="subrectif" path="subtype[2].subrectif" disabled="true"></form:select>
 	      				
 	      			</div>	
 	</p>
+</sec:authorize>	
 </fieldset>
 <sec:authorize access="hasAnyRole('ROLE_TFOMS','DEVELOPER','ROLE_SMO','ROLE_ADMIN')">
 <fieldset class="row777">

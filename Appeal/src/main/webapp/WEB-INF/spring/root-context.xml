@@ -25,6 +25,11 @@
 	<context:component-scan base-package="util" />
 	<context:component-scan base-package="ftp" />
 	
+    
+    <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller" >
+         <property name="mappingLocation" value="classpath:mapping.xml" />
+    </bean>
+	
 	
 	
 	<!-- Файл с настройками ресурсов для работы с данными (Data Access Resources) -->
