@@ -83,10 +83,7 @@ public class Basic {
 	@Autowired
     private Utilitys utilitys;
 	@Autowired
-    private ApplicationContext applicationContext;
-	@Autowired
 	Converter coverter;
-
 	//@ModelAttribute
 	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) throws UnsupportedEncodingException {
 		
@@ -174,9 +171,9 @@ public class Basic {
     	setupForm(mapm,request,new Petit());
     	nightcallsprocess(request);
     	
-    	List<Petit> pl = new ArrayList<Petit>();//petitService.listPetit(getUserName());
-    	pl.add(new Petit());
+    	List<Petit> pl = petitService.listPetit(getUserName());
     	
+    	/*test*/
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         System.out.println(name);
@@ -186,12 +183,10 @@ public class Basic {
         
         System.out.println(roles);
         
-        try {
-			coverter.load();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        
+			
+			System.out.println("ddd "+coverter.getMap().get("ROLE_TFOMS"));
+		
         
         
         
