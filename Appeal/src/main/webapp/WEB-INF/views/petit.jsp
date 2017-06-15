@@ -35,7 +35,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libs/stomp-websocket/lib/stomp.min.js"></script>
 	<script type="text/javascript"  data-my_var_1="${principal.username}" src="${pageContext.request.contextPath}/resources/user/controller.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/expir_session.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/other.js"></script>
+	<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/other.js"></script> --%>
 	
 	
 	<c:url var="findTypesURL" value="/types" />
@@ -94,6 +94,25 @@
 		
 	$(document).ready(function() {
 		
+		/*
+		* Пустые поля прячем по "+"(добавить)
+		*/
+		$("[id*='div_subresponse'],[id*='div_subtype']").each(function(){
+			//alert($(this).children("input:first").val())
+			if($(this).children("input:first").val() == '' || $(this).children("input:first").val() === undefined){
+				$(this).css({'display':'none'});
+			}
+		})
+		
+		$("[id*='div_subtype']").each(function(){
+			
+			var $t = $(this).children()[1];
+			//alert('ds '+$( "t option:selected" ).text());
+			if($( "t option:selected" ).text() == ''){
+				$(this).css({'display':'none'});
+			}
+		})
+		
 		$('#testclick').click(function(event){
 			$('#info_socket').finish();
 			$('#info_socket').animate({opacity: 0.2}, 0 );
@@ -135,6 +154,7 @@
 				&& user != 'callnight5001'
 				&& user != 'callnight5002'
 				&& user != 'callnight5003'){
+				
 				$.getJSON('${findTypesURL}', {
 					ajax : 'true'
 				}, function(data) {
@@ -144,9 +164,66 @@
 						html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 					}
 					html += '</option>';
-	
+					
 					$('#type').html(html);
+					
+					var fg = '${petit.type.typeName}';
+					if(fg != ''){
+						fg = fg.substr(0,1).toUpperCase()+fg.substr(1).toLowerCase();
+						$("#type option:contains('"+fg+"')").prop('selected', true);
+						$.getScript(document.location.origin+"/Appeal/resources/user/other.js",function(){
+							/* alert('${petit.subtype[0].subcause}'); */
+							
+							$('#type').trigger("change",['${petit.cause.causeName}','${petit.rectif1.rectif1Name}',
+								'${petit.subtype[0].subcause}','${petit.subtype[0].subrectif}',
+								'${petit.subtype[1].subcause}','${petit.subtype[1].subrectif}',
+								'${petit.subtype[2].subcause}','${petit.subtype[2].subrectif}']);
+							
+							/* <c:forEach items="${petit.subtype}" var="pt">
+					    		$('#btn_add_subtype').trigger("click",['${pt.subcause}']);
+							</c:forEach> */
+						});
+						
+					}else{
+						$.getScript(document.location.origin+"/Appeal/resources/user/other.js",function(){});
+					}
+					
 				});
+			}else{
+				$('#type').change(
+						function() {
+							$.getJSON('${findCausesURL}', {
+								typeName : $(this).val(),
+								ajax : 'true'
+							}, function(data) {
+								var html = '<option value="0"></option>';
+								var len = data.length;
+								for ( var i = 0; i < len; i++) {
+									html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+								}
+								html += '</option>';
+			
+								$('#cause').html(html);
+							});
+						});
+				
+				
+				$('#cause').change(
+						function() {
+							$.getJSON('${findRectifs1URL}', {
+								causeName : $(this).val(),
+								ajax : 'true'
+							}, function(data) {
+								var html = '<option value="0"></option>';
+								var len = data.length;
+								for ( var i = 0; i < len; i++) {
+									html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+								}
+								html += '</option>';
+
+								$('#rectif1').html(html);
+							});
+						});
 			}
 
 			if(user =='callnight5001' || user =='callnight5002' || user =='callnight5003')
@@ -443,7 +520,7 @@
             <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей</a></li>
           </ul>
         </li>
-        <sec:authorize access="hasAnyRole('ROLE_TFOMS')">
+        <sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
         <li><a href="<c:url value="/reportingMEO.html" />">Отчеты МЭО</a></li>
         </sec:authorize>
       </ul>
@@ -604,7 +681,9 @@
 				<span id="typeWarning" style="color:#ff8000">!
 					<span style="font-size:8">${petit.type.typeName}</span>
 				</span>
-			<form:select id="type" path="typeId" onchange="document.getElementById('typeWarning').hidden = true;"></form:select>
+			<form:select   id="type" path="typeId" onchange="document.getElementById('typeWarning').hidden = true;">
+				
+			</form:select>
 			
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_ER')">
@@ -617,7 +696,7 @@
 			<form:option value="3" label="Консультация" />
 			</form:select>
 	</sec:authorize>
-	<sec:authorize access="hasAnyRole('ROLE_TFOMS')">
+	<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 			<form:select style="margin-left: 100px;" id="claim_inshur" path="blockger2016.claim_inshur">
 			<option value="" disabled selected>Претензия к СМО</option>
 			<form:options items="${insurList}"/>
@@ -641,16 +720,19 @@
 	
 <sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_SMO','ROLE_ADMIN')">	
 	<p>
-	   <button type="button" id="btn_add_subtype" title="Добавить причину">+</button>
+	  <div>
+	   <div style="float:left;"><button type="button" id="btn_add_subtype" title="Добавить причину">+</button></div>
+	   <div style="float: left; font-size: 11px; font-style: oblique; margin-top: 3px; margin-left: 13px;">Добавить дополнительную причину (только для Жалоб)</div>
+	   </div>
 	</p>
 	<p>
 	      			<div id="div_subtype1">
 	      			
 	      			<form:label path="subtype[0].subcause">Причина</form:label>
-					<form:select class="subcause_cl" id="subcause" path="subtype[0].subcause" disabled="true"></form:select>
+					<form:select class="subcause_cl" id="subcause0" path="subtype[0].subcause" disabled="true"></form:select>
 					
 	      			<form:label path="subtype[0].subrectif">Уточнение</form:label>
-					<form:select class="subrectif_cl" id="subrectif" path="subtype[0].subrectif" disabled="true"></form:select>
+					<form:select class="subrectif_cl" id="subrectif0" path="subtype[0].subrectif" disabled="true"></form:select>
 						
       				</div>
 	</p>
@@ -658,10 +740,10 @@
 	      			<div id="div_subtype2">
 	      				
 	      				<form:label path="subtype[1].subcause">Причина</form:label>
-						<form:select  class="subcause_cl" id="subcause" path="subtype[1].subcause" disabled="true"></form:select>
+						<form:select  class="subcause_cl" id="subcause1" path="subtype[1].subcause" disabled="true"></form:select>
 					
 	      				<form:label path="subtype[1].subrectif">Уточнение</form:label>
-						<form:select class="subrectif_cl" id="subrectif" path="subtype[1].subrectif"  disabled="true"></form:select>
+						<form:select class="subrectif_cl" id="subrectif1" path="subtype[1].subrectif"  disabled="true"></form:select>
 	      				
 	      			</div>	
 	</p>
@@ -669,10 +751,10 @@
 	      			<div id="div_subtype3">
 	      				
 	      				<form:label path="subtype[2].subcause">Причина</form:label>
-						<form:select class="subcause_cl" id="subcause" path="subtype[2].subcause" disabled="true"></form:select>
+						<form:select class="subcause_cl" id="subcause2" path="subtype[2].subcause" disabled="true"></form:select>
 					
 	      				<form:label path="subtype[2].subrectif">Уточнение</form:label>
-						<form:select class="subrectif_cl" id="subrectif" path="subtype[2].subrectif" disabled="true"></form:select>
+						<form:select class="subrectif_cl" id="subrectif2" path="subtype[2].subrectif" disabled="true"></form:select>
 	      				
 	      			</div>	
 	</p>
@@ -982,7 +1064,7 @@
   <c:if test="${petit.id eq null}">
 	<form:hidden path="blockger2016.state" value="${1}" />
 	
-	<sec:authorize access="hasRole('ROLE_TFOMS')">
+	<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 		<form:hidden path="blockger2016.regsource_id" value="${1}" />
 		<form:hidden path="blockger2016.regname" value="${principal.username}" />
 	</sec:authorize>
@@ -1202,7 +1284,13 @@
 </section>
 </c:if>
 <br>
-
-	
+<script>
+$(document).ready(function() {
+	//$("#type").hover(function(){
+		//alert('sd');
+		//$("#type option:contains('Жалоба')").prop('selected', true);
+	//});	
+});	
+</script>
 </body>
 </html>

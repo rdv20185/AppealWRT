@@ -3,6 +3,7 @@ package service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -24,6 +25,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 
@@ -36,9 +38,12 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import service.xml.Converter;
 import util.Utilitys;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,6 +58,7 @@ import domain.Rectif2L;
 import domain.Rectif3L;
 import domain.Rectif4L;
 import domain.ReportParams;
+import domain.Subtype;
 import domain.TypeL;
 import domain.blOutboindLETTER2016;
  
@@ -65,10 +71,17 @@ public class PetitServiceImpl implements PetitService {
     private ServletContext servletcontext;
     @Autowired
     private Utilitys utilitys;
+    @Autowired
+	Converter coverter;
  
     @Transactional
     public void addPetit(Petit petit) {
     	petitDAO.addPetit(petit);
+    }
+    
+    @Transactional
+    public void deleteSubType(Integer id) {
+    	petitDAO.deleteByIdSubtype(id);
     }
     
     @Transactional
@@ -77,8 +90,8 @@ public class PetitServiceImpl implements PetitService {
     }
  
     @Transactional
-    public List<Petit> listPetit(String username) {
-        return petitDAO.listPetit(username);
+    public List<Petit> listPetit(String username,Set<String> role) {
+        return petitDAO.listPetit(username,role);
     }
  
     @Transactional
@@ -190,9 +203,9 @@ public class PetitServiceImpl implements PetitService {
 	}
 	
     @Transactional
-    public List<Petit> listSearch(String username, String searchcheckinbound, String overdueappeal) throws Throwable {
+    public List<Petit> listSearch(String username, String searchcheckinbound, String overdueappeal,Set<String> role) throws Throwable {
     	
-    	List<Petit> lp = petitDAO.listSearch(petit, username,searchcheckinbound,overdueappeal);
+    	List<Petit> lp = petitDAO.listSearch(petit, username,searchcheckinbound,overdueappeal,role);
     	
     	if (lp != null) {
     		return lp;
@@ -443,17 +456,23 @@ public class PetitServiceImpl implements PetitService {
 
 	private Map mapForJasper(ReportParams dateReport, String username) {
 		Map mapReport = mapForJasper(dateReport);
-		if(username.equals("sasha") ||
-				username.equals("mityanina") ||
-				username.equals("smyvin") ||
-				username.equals("vasilyeva") ||
-				username.equals("popova") ||
-				username.equals("eremina") ||
-				username.equals("hamitov")) {
-			username = "smyvinkuznetsovasashamityaninavasilyevapopovaereminahamitovfilimonovaosipovasmo_simazcall5001callnight5001smo_rosnocall5002callnight5002smo_ingossmo_ingos_01call5003callnight5003"
-					+ "smo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19"
-					+ "smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45";
+
+		if(getRole().contains("ROLE_TFOMS") || getRole().contains("ROLE_ADMIN")){
+			
+			StringBuffer s = new StringBuffer();
+			s.append(coverter.getMap().get("ROLE_TFOMS").toString());
+			s.append(coverter.getMap().get("ROLE_ADMIN").toString());
+			s.append(coverter.getMap().get("ROLE_SIMAZ").toString());
+			s.append(coverter.getMap().get("ROLE_ER5001").toString());
+			s.append(coverter.getMap().get("ROLE_ROSNO").toString());
+			s.append(coverter.getMap().get("ROLE_ER5002").toString());
+			s.append(coverter.getMap().get("ROLE_INGOS").toString());
+			s.append(coverter.getMap().get("ROLE_ER5003").toString());
+			username = s.toString();
+			
+			System.out.println("User names fo jasper report (for log) \n"+ username);
 		}
+		
 		mapReport.put("username", username);
 		return mapReport;
 	}
@@ -511,6 +530,7 @@ public class PetitServiceImpl implements PetitService {
 	@Transactional
 	public boolean isCeleb(Date date) throws ParseException {
 		List<domain.Calendar> celebr = petitDAO.getCeleb(date);
+		System.out.println("test "+ celebr);
 		if (celebr.get(0).getWeekand().equals("1") || celebr.get(0).getCelebr().equals("1")) {return true;}
 		else{ return false;}
 		
@@ -642,6 +662,15 @@ public class PetitServiceImpl implements PetitService {
 	    }
 		 
 		
+	}
+	
+	private Set<String> getRole() {
+		
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> roles = auth.getAuthorities().stream()
+        .map(r -> r.getAuthority()).collect(Collectors.toSet());
+        
+        return roles;
 	}
 	
     

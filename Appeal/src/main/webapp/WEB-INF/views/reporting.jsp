@@ -85,7 +85,7 @@
 			<form:input id="dateEnd" path="dateEnd" class='reportParam' /></td>
 			<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
 			
-			<sec:authorize access="hasRole('ROLE_TFOMS')">
+			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 				<td><form:checkbox path="insurcomp" value="smo_ingos"/>Ингосстрах</td>
 				<td><form:checkbox path="insurcomp" value="smo_rosno"/>Росно</td>
 				<td><form:checkbox path="insurcomp" value="smo_simaz"/>СимазМед</td>
@@ -118,7 +118,7 @@
 			<form:input id="de3" path="dateEnd" class='reportParam' /></td>
 			<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
 			
-			<sec:authorize access="hasRole('ROLE_TFOMS')">
+			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 				<td><form:checkbox path="insurcomp" value="smo_ingos"/>Ингосстрах</td>
 				<td><form:checkbox path="insurcomp" value="smo_rosno"/>Росно</td>
 				<td><form:checkbox path="insurcomp" value="smo_simaz"/>СимазМед</td>
@@ -140,7 +140,7 @@
 			<form:input id="de_2" path="dateEnd" class='reportParam' /></td>
 			<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
 			
-			<sec:authorize access="hasRole('ROLE_TFOMS')">
+			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 				<td><form:checkbox path="insurcomp" value="smo_ingos"/>Ингосстрах</td>
 				<td><form:checkbox path="insurcomp" value="smo_rosno"/>Росно</td>
 				<td><form:checkbox path="insurcomp" value="smo_simaz"/>СимазМед</td>
@@ -152,7 +152,7 @@
 <a href="<c:url value="/report_drugs.html" />">Скачать</a>
 <br><br><hr/>
 
-<sec:authorize access="hasRole('ROLE_TFOMS')">
+<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 <h3><spring:message code="label.call_centr" /></h3>
 <form:form method="post" action="report_call.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
 	<table cellspacing='15'>
@@ -180,7 +180,7 @@
 
 
 
-<sec:authorize access="hasRole('ROLE_TFOMS')">
+<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 <h3>Отчет по письменным обращениям граждан, поступившим в ТФОМС НСО</h3>
 <form:form method="post" action="report_1.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
 	<table cellspacing='15'>

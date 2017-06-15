@@ -398,7 +398,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			<td><form:select id="type" path="typeId"></form:select></td>
 			<td><div id="inbound_div" style="display: -webkit-inline-box;"  title="Отметка покажет обращения которые в работе, т.е. либо мигают желтым,либо закрашены желтым. Если отметка не проставлена,то обращения которые завершены, в случае с  письменными жалобами - проставлена дата исходщего сообщения (т.е. отправлен ответ)">В работе <input type="checkbox" name="searchcheckinbound" id="searchcheckinbound"  value="checkinbound"></div></td>
 			<td><div id="overdueappeal_div" style="display: -webkit-inline-box;"  title="Наличие отметки покажет обращения у которых превышена дата окончательного или промежуточного ответа (в случае письменного обращения) или же в случае устного обращения покажет не завершенный статус (то есть можно допустить что устное обращение (звонок) не обратан или вовсе не было общения с обратившимся)">Просроченные обращения <input type="checkbox" name="overdueappeal" id="overdueappeal"  value="overdueappeal"></div></td>
-			<sec:authorize access="hasAnyRole('ROLE_TFOMS')">
+			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 			<td>
 				<form:select style="margin-left: 10px;" id="claim_inshur" path="blockger2016.claim_inshur" >
 					<option value="">С претензией к СМО</option>
@@ -567,6 +567,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		<tr>
 			<th><spring:message code="label.id" /></th>      
 		    <th><spring:message code="label.dateInput" /></th>
+		    <th>Дата завершения обращения</th>
    		    <!-- <th><spring:message code="label.dateBegin" /></th>
 		    <th><spring:message code="label.dateEnd" /></th>-->  
 		    <th><spring:message code="label.source" /></th>
@@ -633,7 +634,8 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		
 			<tr  class="${cssClass}">
 				<td  align="center">${petit.id} ${petit.num}</td>      
-			    <td>${petit.dateInput}</td>       
+			    <td>${petit.dateInput}</td>
+			    <td>${petit.blockger2016.date_end}</td>
 				<!-- <td>${petit.dateBegin}</td>
 			    <td>${petit.dateEnd}</td>-->  
 			    <td>${petit.source.sourceName}</td>

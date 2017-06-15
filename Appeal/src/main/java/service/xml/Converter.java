@@ -39,9 +39,15 @@ public class Converter {
 		
    }
 
+   /**
+    * Метод парсит xml конфиг spring security
+	 * @return роль в качестве ключа, которому соответствуют логины
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
    @PostConstruct
-	private Map<String,List<String>> process() throws ParserConfigurationException, SAXException, IOException{
-		
+	private Map<String,List<String>> process() throws ParserConfigurationException, SAXException, IOException{ 
 			 
 		 File fXmlFile = new File(servletcontext.getRealPath("/WEB-INF/spring/security.xml"));
 		 Map<String,List<String>> map  = new HashMap<String,List<String>>();

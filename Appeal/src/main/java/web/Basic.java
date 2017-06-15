@@ -2,6 +2,7 @@ package web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -48,6 +49,7 @@ import domain.Rectif2;
 import domain.Rectif3;
 import domain.Rectif4;
 import domain.Source;
+import domain.Subtype;
 import domain.Ter;
 import domain.Type;
 import domain.blOutboindLETTER2016;
@@ -82,73 +84,56 @@ public class Basic {
     private PetitService petitService;
 	@Autowired
     private Utilitys utilitys;
-	@Autowired
-	Converter coverter;
+	
 	//@ModelAttribute
 	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) throws UnsupportedEncodingException {
 		
     	map.put("petit", petit);
+    	
+    	if(getRole().contains("ROLE_ADMIN")){
+			map.put("sourceList", source1);
+			map.put("presentList", Fields.getPresent());
+			map.put("conectList", Fields.getConect());
+			map.put("listassign", Fields.getProperties());
+		}
     
-		if(getUserName().equals("sasha") ||
-				getUserName().equals("mityanina") ||
-				getUserName().equals("vasilyeva") ||
-				getUserName().equals("smyvin") ||
-				getUserName().equals("popova") ||
-				getUserName().equals("kuznetsova") ||
-				getUserName().equals("eremina") ||
-				getUserName().equals("hamitov") ||
-				getUserName().equals("filimonova") ||
-				getUserName().equals("osipova")) {
-			
-													map.put("sourceList", source1);
-													map.put("presentList", Fields.getPresent());
-													map.put("conectList", Fields.getConect());
-													
-				if(getUserName().equals("vasilyeva") || getUserName().equals("smyvin"))
-				{
-					map.put("listassign", Fields.getProperties());
-					//map.put("conectList", Fields.getConect());
-				}else{
-					map.put("listassign", Fields.getfirsttfoms());
-					//map.put("conectList", Fields.getConect_notCollLine());
-				}
-		} else {
-			if(getUserName().equals("ernso") 
-					|| getUserName().equals("call5001")
-					|| getUserName().equals("call5002")
-					|| getUserName().equals("call5003")
-					|| getUserName().equals("callnight5001")
-					|| getUserName().equals("callnight5002")
-					|| getUserName().equals("callnight5003"))
-			{
-				if(getUserName().equals("ernso")){map.put("sourceList", source3);}else{map.put("sourceList", source2);}
-				map.put("listassign", Fields.getProperties());
-				map.put("conectList", Fields.getConectforFL());
-				map.put("presentList", Fields.getPresentforFL());
-				
-			}else{
-					map.put("sourceList", source2);
-					
-					if(getUserName().equals("smo_simaz"))
-					{
-						map.put("listassign", Fields.getfirstsimaz());	
-					}
-					if(getUserName().contains("smo_rosno"))
-					{
-						map.put("listassign", Fields.getfirstrosno());	
-					}
-					if(getUserName().contains("smo_ingos"))
-					{
-						map.put("listassign", Fields.getfirstingos());	
-					}
-
-					//map.put("conectList", Fields.getConect_notCollLine());
-					map.put("conectList", Fields.getConect());
-					map.put("presentList", Fields.getPresent());
-				}
-			
+    	if(getRole().contains("ROLE_TFOMS")){
+			map.put("sourceList", source1);
+			map.put("presentList", Fields.getPresent());
+			map.put("conectList", Fields.getConect());
+			map.put("listassign", Fields.getfirsttfoms());
 		}
     	
+    	if(getRole().contains("ROLE_ER"))
+		{
+			if(getUserName().equals("ernso")){map.put("sourceList", source3);}else{map.put("sourceList", source2);}
+			map.put("listassign", Fields.getProperties());
+			map.put("conectList", Fields.getConectforFL());
+			map.put("presentList", Fields.getPresentforFL());
+			
+		}
+    		
+    	if(getRole().contains("ROLE_SIMAZ") && !getRole().contains("ROLE_TECH_ER")){
+    		map.put("listassign", Fields.getfirstsimaz());
+    		map.put("sourceList", source2);
+    		map.put("conectList", Fields.getConect());
+			map.put("presentList", Fields.getPresent());
+    	}
+				
+		if(getRole().contains("ROLE_ROSNO") && !getRole().contains("ROLE_TECH_ER")){
+			map.put("listassign", Fields.getfirstrosno());
+			map.put("sourceList", source2);
+			map.put("conectList", Fields.getConect());
+			map.put("presentList", Fields.getPresent());
+		}
+		if(getRole().contains("ROLE_INGOS") && !getRole().contains("ROLE_TECH_ER")){
+			map.put("listassign", Fields.getfirstingos());
+			map.put("sourceList", source2);
+			map.put("conectList", Fields.getConect());
+			map.put("presentList", Fields.getPresent());
+		}
+
+		
 		map.put("inbound_fromList", Fields.getInbound_from());
     	map.put("intermedList", Fields.getIntermed());
     	map.put("typeList", Fields.getType());
@@ -159,7 +144,7 @@ public class Basic {
     	map.put("validList", Fields.getValid());
     	map.put("hspList", Fields.getHsp());
     	map.put("typeMP", Fields.getTypeMP());
-
+    	
     	//map.put("dateReport", new ReportParams());
     	
 		return map;
@@ -171,31 +156,20 @@ public class Basic {
     	setupForm(mapm,request,new Petit());
     	nightcallsprocess(request);
     	
-    	List<Petit> pl = petitService.listPetit(getUserName());
-    	
-    	/*test*/
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        System.out.println(name);
-        
-        Set<String> roles = auth.getAuthorities().stream()
-        	     .map(r -> r.getAuthority()).collect(Collectors.toSet());
-        
-        System.out.println(roles);
-        
-        
-			
-			System.out.println("ddd "+coverter.getMap().get("ROLE_TFOMS"));
-		
-        
-        
-        
-    	
-    	
+    	List<Petit> pl = petitService.listPetit(getUserName(),getRole());
+    	StringBuilder sb = new StringBuilder();
     	for(Petit pt : pl)
     	{
-    		if(pt.getDateInput() !=null)
-    		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
+    		if(pt.getDateInput() !=null){
+    			sb.append(pt.getDateInput().substring(8, 10));
+    			sb.append(".");
+    			sb.append(pt.getDateInput().substring(5, 7));
+    			sb.append(".");
+    			sb.append(pt.getDateInput().substring(0, 4));
+    			pt.setDateInput(sb.toString());
+    			sb.delete(0, sb.length());
+    		}
+    		// + "." +  + "." + );
     	}
         map.put("petitList", pl);
     	
@@ -209,9 +183,18 @@ public class Basic {
 		return name;
 	}
     
+    private Set<String> getRole() {
+		
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> roles = auth.getAuthorities().stream()
+        .map(r -> r.getAuthority()).collect(Collectors.toSet());
+        
+        return roles;
+	}
+    
     private void nightcallsprocess(HttpServletRequest request){
     	String path = request.getServletContext().getRealPath("/")+"night_calls_working";
-    	String path_worked =request.getServletContext().getRealPath("/")+"night_calls_worked"; /*"D:/Java/Tomcat7/TomCat7/night_calls_worked/";*/ 
+    	String path_worked =/*request.getServletContext().getRealPath("/")+"night_calls_worked"; */"D:/Java/Tomcat7/TomCat7/night_calls_worked/"; 
     	File f = new File(path);
     	if(f.isAbsolute()){
     		if(f.list().length != 0){
@@ -455,6 +438,17 @@ public class Basic {
 			petit.setBloutboindletter2016(null);
 		}
 		
+				// Add entity to subtype
+				petitService.deleteSubType(petit.getId());
+				if(petit.getSubtype() != null){
+						for(int i=0; i < petit.getSubtype().size(); i++){
+							Subtype sb = petit.getSubtype().get(i);
+							if(sb.getSubcause() != null || sb.getSubrectif() != null){
+								petit.getSubtype().get(i).setPetit(petit);
+							}
+						}
+				}
+		
 		
 	    petit.getBlockger2016().setPetit(petit);
 	    
@@ -499,7 +493,7 @@ public class Basic {
 
 		//searching
 		petitService.setSearchParams(petit);
-		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound,overdueappeal);
+		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound,overdueappeal,getRole());
 		
 		//petitService.createDate_plan(listPetit);
 		listPetit = processListPetit(listPetit,overdueappeal);

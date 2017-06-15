@@ -1,24 +1,26 @@
 package dao;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import domain.Callnight_markerday;
 import domain.CdrQuery;
 import domain.Petit;
+import domain.Subtype;
 
 public interface PetitDAO {
 
     public void addPetit(Petit petit);
 
-    public List<Petit> listPetit(String username);
+    public List<Petit> listPetit(String username, Set<String> role );
 
     public void removePetit(Integer id);
     
-    public List<Petit> listSearch(Petit petit, String username, String searchcheckinbound, String overdueappeal) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, Throwable;
 
 	public Petit getPetit(Integer petitId);
 	
@@ -39,4 +41,8 @@ public interface PetitDAO {
 	
 	public void addCdrQuery(CdrQuery model);
 	
-}
+	public List<Petit> listSearch(Petit petit, String username, String searchcheckinbound, String overdueappeal,Set<String> role) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException;
+	
+	public void deleteByIdSubtype(Integer id);
+	
+}	

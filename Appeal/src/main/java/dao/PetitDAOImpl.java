@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -9,8 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -26,19 +30,34 @@ import domain.Callnight_markerday;
 import domain.CdrQuery;
 import domain.Outboundmany;
 import domain.Petit;
+import domain.Subtype;
+import service.xml.Converter;
 
 @Repository
 public class PetitDAOImpl implements PetitDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
-    
+    @Autowired
+	Converter coverter;
+
     public void addPetit(Petit petit) {
     	
         sessionFactory.getCurrentSession().saveOrUpdate(petit);
         
     }
+   
+    @Override
+    public void deleteByIdSubtype(Integer id) {
+    	
+    	Query query = null;
+    	query = sessionFactory.getCurrentSession().createQuery("delete Subtype t2 where t2.petit_sub.id =:id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
     
+          
+
     @Transactional
 	public void addCdrQuery(CdrQuery model) {
 	    	
@@ -61,24 +80,9 @@ public class PetitDAOImpl implements PetitDAO {
     
 
     @SuppressWarnings("unchecked")
-    public List<Petit> listPetit(String username) {
+    public List<Petit> listPetit(String username, Set<String> role ) {
     	Query query = null;
     	
-    	if(username.equals("ernso"))
-    	{
-    		query = sessionFactory.getCurrentSession().createQuery(
-        			"select t from Petit t, BlockGER2016 t2 where (t.username = :username or t.username='"+"ТФОМС"+"' or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"')and t.id=t2.idblockger2016 and t2.regname='"+"ernso"+"' order by t.id desc");
-            query.setParameter("username", username);
-            query.setMaxResults(100);
-    	}
-    	
-    	if(username.equals("callnight5001") || username.equals("callnight5002") || username.equals("callnight5003")){
-    		query = sessionFactory.getCurrentSession().createQuery(
-        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username = '"+"callnight5003"+"' or t.username = '"+"ТФОМС"+"' or t.username = '"+"callnight5001"+"' or t.username = '"+"callnight5002"+"' or t.username='"+"auto"+"'   or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"') and"
-        					+ " t.id=t2.idblockger2016 and (t2.regname='"+"auto"+"' or t2.regname='"+"callnight5001"+"' or t2.regname='"+"callnight5002"+"' or t2.regname='"+"callnight5003"+"')  order by t.id desc");
-            query.setParameter("username", username);
-            query.setMaxResults(100);
-    	}
     	
     	if(username.equals("call5001"))
     	{
@@ -141,32 +145,48 @@ public class PetitDAOImpl implements PetitDAO {
     	}
 		
 		
-		
-		if(username.contains("smo_ingos"))
+		if(role.contains("ROLE_INGOS"))
     	{
+			String str = ""; 
+			for(int i=0;i < coverter.getMap().get("ROLE_INGOS").size(); i++){
+				str += "username='"+coverter.getMap().get("ROLE_INGOS").get(i)+"'";
+				if(coverter.getMap().get("ROLE_INGOS").size() - 1 != i) str +=" or ";
+			}
+			System.out.println("SSS "+str);
 			query = sessionFactory.getCurrentSession().createQuery(
-			"from Petit where (username like '%'||'"+"smo_ingos"+"'||'%' or username='"+"ИНГОССТРАХ"+"') order by id desc");
-            //query.setParameter("username", username);
+			"from Petit where "+str+" order by id desc");
             query.setMaxResults(100);
     	}
 		
-		if(username.contains("smo_rosno"))
+		if(role.contains("ROLE_ROSNO"))
     	{
+			String str = ""; 
+			for(int i=0;i < coverter.getMap().get("ROLE_ROSNO").size(); i++){
+				str += "username='"+coverter.getMap().get("ROLE_ROSNO").get(i)+"'";
+				if(coverter.getMap().get("ROLE_ROSNO").size() - 1 != i) str +=" or ";
+			}
+			System.out.println("SSS "+str);
 			query = sessionFactory.getCurrentSession().createQuery(
-			"from Petit where (username like '%'||'"+"smo_rosno"+"'||'%' or username='"+"РОСНО"+"')  order by  id desc");
-          //  query.setParameter("username", username);
+			"from Petit where "+str+" order by  id desc");
 			query.setMaxResults(100);
     	}
 		
-		if(username.equals("smo_simaz"))
+
+		if(role.contains("ROLE_SIMAZ"))
     	{
+			String str = ""; 
+			for(int i=0;i < coverter.getMap().get("ROLE_SIMAZ").size(); i++){
+				str += "username='"+coverter.getMap().get("ROLE_SIMAZ").get(i)+"'";
+				if(coverter.getMap().get("ROLE_SIMAZ").size() - 1 != i) str +=" or ";
+			}
+			System.out.println("SSS "+str);
 			query = sessionFactory.getCurrentSession().createQuery(
-			"from Petit where (username = :username or username='"+"СИМАЗ"+"') order by  id desc");
-            query.setParameter("username", username);
+			"from Petit where "+str+" order by  id desc");
             query.setMaxResults(100);
     	}
 		
-		if(username.equals("vasilyeva") || username.equals("smyvin"))
+		
+		if(role.contains("ROLE_ADMIN"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery("from Petit order by id desc");
 			query.setMaxResults(100);
@@ -196,7 +216,7 @@ public class PetitDAOImpl implements PetitDAO {
     }
     
     @SuppressWarnings("unchecked")
-	public List<Petit> listSearch(Petit petit, String username, String searchcheckinbound, String overdueappeal) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	public List<Petit> listSearch(Petit petit, String username, String searchcheckinbound, String overdueappeal,Set<String> role) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
     	
     	Criteria criteria =  sessionFactory.getCurrentSession().createCriteria(Petit.class,"p");
     	criteria.createAlias("p.blockger2016", "b");
@@ -267,25 +287,33 @@ public class PetitDAOImpl implements PetitDAO {
     	
     	
     	
-    	if(username.contains("smo_ingos")) {
-    		criteria.add( Restrictions.in( "username", new String[] { "ИНГОССТРАХ","smo_ingos","smo_ingos_01", "call5003", "callnight5003" } ) );
+    	if(role.contains("ROLE_INGOS")) {
+    		
+    		criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_INGOS","ROLE_ER5003") ) );
     	}
-    	if(username.equals("smo_simaz")) {
-    		criteria.add( Restrictions.in( "username", new String[] { "СИМАЗ","smo_simaz", "call5001", "callnight5001" } ) );
+    	if(role.contains("ROLE_SIMAZ")) {
+    		
+    		criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_SIMAZ","ROLE_ER5001") ) );
     	}
-    	if(username.contains("smo_rosno")) {
-    		criteria.add( Restrictions.in( "username", new String[] { "РОСНО","smo_rosno", "smo_rosno_01","smo_rosno_02", "smo_rosno_03","smo_rosno_04", "smo_rosno_05","smo_rosno_06", "smo_rosno_07",
-    				"smo_rosno_08", "smo_rosno_09","smo_rosno_10", "smo_rosno_11","smo_rosno_12", "smo_rosno_13","smo_rosno_14", "smo_rosno_15","smo_rosno_16","smo_rosno_17", "smo_rosno_18","smo_rosno_19", "smo_rosno_20",
-    				"smo_rosno_21", "smo_rosno_22","smo_rosno_23", "smo_rosno_24","smo_rosno_25", "smo_rosno_26","smo_rosno_27", "smo_rosno_28","smo_rosno_29","smo_rosno_30", "smo_rosno_31","smo_rosno_32", "smo_rosno_33",
-    				"smo_rosno_34", "smo_rosno_35","smo_rosno_36", "smo_rosno_37","smo_rosno_38", "smo_rosno_39","smo_rosno_40", "smo_rosno_41","smo_rosno_","smo_rosno_42", "smo_rosno_43","smo_rosno_44", "smo_rosno_45",
-    				"call5002", "callnight5002" } ) );
+    	if(role.contains("ROLE_ROSNO")) {
+    		
+    		criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_ROSNO","ROLE_ER5002") ) );
     	}
     	
     	criteria.addOrder(Order.desc("id"));
-    	
     	criteria.setMaxResults(10000);
 
     	return criteria.list();
+    }
+    
+    private String[] getUsernameOfRole(String role1,String role2){
+    	
+		String[] stringArray =  coverter.getMap().get(role1).toArray(new String[0]);
+		String[] stringArray2 =  coverter.getMap().get(role2).toArray(new String[0]);
+		String[] both = Stream.concat(Arrays.stream(stringArray), Arrays.stream(stringArray2)).toArray(String[]::new);
+		
+		System.out.println("Search on usernames (for log) "+ Arrays.toString(both));
+		return both;
     }
     
     public static boolean isGetter(Method method) {

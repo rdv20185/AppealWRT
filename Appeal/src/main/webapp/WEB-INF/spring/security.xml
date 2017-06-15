@@ -25,12 +25,19 @@
     <authentication-manager >
         <authentication-provider>
             <user-service>
-                <user name="smyvin" password="kjh987" authorities="ROLE_ADMIN,ROLE_TFOMS" />
-				<user name="vasilyeva" password="uhb567" authorities="ROLE_ADMIN,ROLE_TFOMS" />
-				<user name="smo_simaz" password="uyt765" authorities="ROLE_SMO" />
-				<user name="smo_rosno" password="wer457" authorities="ROLE_SMO" />
-				<user name="smo_ingos" password="rty579" authorities="ROLE_SMO" />
-				<user name="smo_ingos_01" password="rer0301" authorities="ROLE_SMO" />
+                <user name="smyvin" password="kjh987" authorities="ROLE_ADMIN" />
+				<user name="vasilyeva" password="uhb567" authorities="ROLE_ADMIN" />
+				
+				<user name="smo_simaz" password="uyt765" authorities="ROLE_SMO,ROLE_SIMAZ" />
+				<user name="smo_simaz_sp1_01" password="tfuyt765" authorities="ROLE_SMO,ROLE_SIMAZ,ROLE_SIMAZ_SP1,ROLE_SMO_SP1" />
+				<user name="smo_simaz_sp2_01" password="tauyt765" authorities="ROLE_SMO,ROLE_SIMAZ,ROLE_SIMAZ_SP2,ROLE_SMO_SP2" />
+				
+				
+				<user name="smo_ingos" password="werwe4" authorities="ROLE_SMO,ROLE_INGOS" />
+				<user name="smo_ingos_01" password="4354rers" authorities="ROLE_SMO,ROLE_INGOS" />
+				<user name="smo_ingos_sp1_01" password="asrty579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp2_01" password="sarty579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				
 				<user name="mityanina" password="tre456" authorities="ROLE_TFOMS" />
 				<user name="popova" password="fds321" authorities="ROLE_TFOMS" />
 				<user name="eremina" password="nbv654" authorities="ROLE_TFOMS" />
@@ -38,60 +45,119 @@
 				<user name="kuznetsova" password="zxc567" authorities="ROLE_TFOMS" />
 				<user name="filimonova" password="lkj098" authorities="ROLE_TFOMS" />
 				<user name="osipova" password="jkl890" authorities="ROLE_TFOMS" />
-				<user name="ernso" password="123" authorities="ROLE_ER" />
-				<user name="call5001" password="5001" authorities="ROLE_ER" />
-				<user name="call5002" password="5002" authorities="ROLE_ER" />
-				<user name="call5003" password="5003" authorities="ROLE_ER" />
-				<user name="callnight5001" password="night5001" authorities="ROLE_ER,ROLE_NIGHT" />
-				<user name="callnight5002" password="night5002" authorities="ROLE_ER,ROLE_NIGHT" />
-				<user name="callnight5003" password="night5003" authorities="ROLE_ER,ROLE_NIGHT" />
 				
-				<user name="smo_rosno_01" password="fsdr456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_02" password="dfswer456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_03" password="gfr456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_04" password="wfhd54" authorities="ROLE_SMO" />
-				<user name="smo_rosno_05" password="rfsd43" authorities="ROLE_SMO" />
-				<user name="smo_rosno_06" password="34dsf6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_07" password="23f456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_08" password="34ggd56" authorities="ROLE_SMO" />
-				<user name="smo_rosno_09" password="3242r456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_10" password="654rgtf" authorities="ROLE_SMO" />
-				<user name="smo_rosno_11" password="423fsfg456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_12" password="234fsg6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_13" password="qwedfg32" authorities="ROLE_SMO" />
-				<user name="smo_rosno_14" password="fgdf3456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_15" password="42r456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_16" password="23as6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_17" password="34gfd6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_18" password="3423gfsdg" authorities="ROLE_SMO" />
-				<user name="smo_rosno_19" password="345gd6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_20" password="wer36" authorities="ROLE_SMO" />
 				
-				<user name="smo_rosno_21" password="wer21" authorities="ROLE_SMO" />
-				<user name="smo_rosno_22" password="wer22" authorities="ROLE_SMO" />
-				<user name="smo_rosno_23" password="wer23" authorities="ROLE_SMO" />
-				<user name="smo_rosno_24" password="wer24" authorities="ROLE_SMO" />
-				<user name="smo_rosno_25" password="fsdr25" authorities="ROLE_SMO" />
-				<user name="smo_rosno_26" password="dfswer26" authorities="ROLE_SMO" />
-				<user name="smo_rosno_27" password="gfr24" authorities="ROLE_SMO" />
-				<user name="smo_rosno_28" password="wfhddf" authorities="ROLE_SMO" />
-				<user name="smo_rosno_29" password="rfsd43dfg" authorities="ROLE_SMO" />
-				<user name="smo_rosno_30" password="34dsf6fg45t" authorities="ROLE_SMO" />
-				<user name="smo_rosno_31" password="23f54f6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_32" password="34ggf6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_33" password="3242tertg6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_34" password="6543242f" authorities="ROLE_SMO" />
-				<user name="smo_rosno_35" password="423fsuio56" authorities="ROLE_SMO" />
-				<user name="smo_rosno_36" password="234fsg6gf" authorities="ROLE_SMO" />
-				<user name="smo_rosno_37" password="qweredfg32" authorities="ROLE_SMO" />
-				<user name="smo_rosno_38" password="feergdf3456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_39" password="42tyr456" authorities="ROLE_SMO" />
-				<user name="smo_rosno_40" password="23atyus6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_41" password="34gf877d6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_42" password="3423gkjkfsdg" authorities="ROLE_SMO" />
-				<user name="smo_rosno_43" password="345gd9iy6" authorities="ROLE_SMO" />
-				<user name="smo_rosno_44" password="wer36ytu" authorities="ROLE_SMO" />
-				<user name="smo_rosno_45" password="wer36546" authorities="ROLE_SMO" />
+				<user name="РОСНО" password="rosno" authorities="ROLE_ER,ROLE_ALLER,ROLE_ROSNO" />
+				<user name="СИМАЗ" password="simaz" authorities="ROLE_ER,ROLE_ALLER,ROLE_SIMAZ" />
+				<user name="ИНГОССТРАХ" password="ingos" authorities="ROLE_ER,ROLE_ALLER,ROLE_INGOS" />
+				
+			    <!-- Роль ROLE_TECH_ER - техническая. Необходима для исключения учеток под данной ролью из под роли ROLE_SIMAZ,ROLE_ROSNO,ROLE_INGOS -->
+				<user name="ernso" password="123" authorities="ROLE_ER,ROLE_TECH_ER" />
+				<user name="call5001" password="5001" authorities="ROLE_ER,ROLE_ER5001,ROLE_SIMAZ_SP1,ROLE_SMO_SP1,ROLE_TECH_ER" />
+				<user name="call5002" password="5002" authorities="ROLE_ER,ROLE_ER5002,ROLE_ROSNO_SP1,ROLE_SMO_SP1,ROLE_TECH_ER" />
+				<user name="call5003" password="5003" authorities="ROLE_ER,ROLE_ER5003,ROLE_INGOS_SP1,ROLE_SMO_SP1,ROLE_TECH_ER" />
+				<user name="callnight5001" password="night5001" authorities="ROLE_ER,ROLE_ER5001,ROLE_NIGHT,ROLE_SIMAZ_SP1,ROLE_SMO_SP1,ROLE_TECH_ER" />
+				<user name="callnight5002" password="night5002" authorities="ROLE_ER,ROLE_ER5002,ROLE_NIGHT,ROLE_ROSNO_SP1,ROLE_SMO_SP1,ROLE_TECH_ER" />
+				<user name="callnight5003" password="night5003" authorities="ROLE_ER,ROLE_ER5003,ROLE_NIGHT,ROLE_INGOS_SP1,ROLE_SMO_SP1,ROLE_TECH_ER" />
+				
+				<user name="smo_rosno" password="wer457" authorities="ROLE_SMO,ROLE_ROSNO" />
+				
+				<user name="smo_rosno_01" password="fsdr456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_02" password="dfswer456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_03" password="gfr456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_04" password="wfhd54" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_05" password="rfsd43" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_06" password="34dsf6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_07" password="23f456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_08" password="34ggd56" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_09" password="3242r456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				
+				<user name="smo_rosno_10" password="654rgtf" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_11" password="423fsfg456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_12" password="234fsg6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_13" password="qwedfg32" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_14" password="fgdf3456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_15" password="42r456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_16" password="23as6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_17" password="34gfd6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_18" password="3423gfsdg" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_19" password="345gd6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_20" password="wer36" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_21" password="wer21" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_22" password="wer22" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_23" password="wer23" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_24" password="wer24" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_25" password="fsdr25" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_26" password="dfswer26" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_27" password="gfr24" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_28" password="wfhddf" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_29" password="rfsd43dfg" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_30" password="34dsf6fg45t" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_31" password="23f54f6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_32" password="34ggf6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_33" password="3242tertg6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_34" password="6543242f" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_35" password="423fsuio56" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_36" password="234fsg6gf" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_37" password="qweredfg32" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_38" password="feergdf3456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_39" password="42tyr456" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_40" password="23atyus6" authorities="ROLE_SMO,ROLE_ROSNO" />
+	 			<user name="smo_rosno_41" password="34gf877d6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_42" password="3423gkjkfsdg" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_43" password="345gd9iy6" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_44" password="wer36ytu" authorities="ROLE_SMO,ROLE_ROSNO" />
+				<user name="smo_rosno_45" password="wer36546" authorities="ROLE_SMO,ROLE_ROSNO" />
+				
+				
+				
+				<user name="smo_rosno_01_sp2_01" password="fsdr456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_02_sp2_02" password="dfswer456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_03_sp2_03" password="gfr456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_04_sp2_04" password="wfhd54" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_05_sp2_05" password="rfsd43" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_06_sp2_06" password="34dsf6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_07_sp2_07" password="23f456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_09_sp2_08" password="3242r456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_20_sp2_09" password="wer36" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				
+				<user name="smo_rosno_08_sp1_01" password="34ggd56" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_10_sp1_02" password="654rgtf" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_11_sp1_03" password="423fsfg456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_12_sp1_04" password="234fsg6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_13_sp1_05" password="qwedfg32" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_14_sp1_06" password="fgdf3456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_15_sp1_07" password="42r456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_16_sp1_08" password="23as6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_18_sp1_09" password="3423gfsdg" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_19_sp1_010" password="345gd6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_21_sp1_011" password="wer21" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_22_sp1_012" password="wer22" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_23_sp1_013" password="wer23" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_24_sp1_014" password="wer24" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_25_sp1_015" password="fsdr25" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_26_sp1_016" password="dfswer26" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_27_sp1_017" password="gfr24" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_28_sp1_018" password="wfhddf" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_29_sp1_019" password="rfsd43dfg" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_30_sp1_020" password="34dsf6fg45t" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_31_sp1_021" password="23f54f6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_32_sp1_022" password="34ggf6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_33_sp1_023" password="3242tertg6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_34_sp1_024" password="6543242f" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_35_sp1_025" password="423fsuio56" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_36_sp1_026" password="234fsg6gf" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_37_sp1_027" password="qweredfg32" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_38_sp1_028" password="feergdf3456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_39_sp1_029" password="42tyr456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_40_sp1_030" password="23atyus6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_17_sp1_031" password="34gfd6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_41_sp1_032" password="34gf877d6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_42_sp1_033" password="3423gkjkfsdg" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+<!-- 			
+				<user name="smo_rosno_43" password="345gd9iy6" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_44" password="wer36ytu" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				<user name="smo_rosno_45" password="wer36546" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" /> -->
 				
             </user-service>
         </authentication-provider>

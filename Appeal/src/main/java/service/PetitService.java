@@ -1,5 +1,6 @@
 package service;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.sf.jasperreports.engine.JRException;
 import domain.CauseL;
 import domain.ReportParams;
+import domain.Subtype;
 import domain.Petit;
 import domain.Rectif1L;
 import domain.Rectif2L;
@@ -29,7 +31,7 @@ public interface PetitService {
     public void addPetit(Petit petit);
 
     @Transactional
-    public List<Petit> listPetit(String username);
+    public List<Petit> listPetit(String username,Set<String> role);
 
     public void removePetit(Integer id);
 
@@ -47,7 +49,7 @@ public interface PetitService {
 
 	void setSearchParams(Petit petit);
 	
-	public List<Petit> listSearch(String username, String searchcheckinbound, String overdueappeal) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, Throwable;
+	public List<Petit> listSearch(String username, String searchcheckinbound, String overdueappeal,Set<String> role) throws Throwable;
 	
 	public void pgForm(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
 
@@ -137,5 +139,8 @@ public interface PetitService {
 	 */
 	@Transactional
 	public void createDate_plan(List<Petit> listPetit) throws ParseException;
+	
+	public void deleteSubType(Integer id);
+	
 
 }

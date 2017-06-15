@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.Set;
  
 
@@ -57,6 +58,7 @@ import res.Fields;
 import res.TransferFiles;
 import service.PetitListWrapper;
 import service.PetitService;
+import service.xml.Converter;
 import util.Utilitys;
 import domain.BlockGER2016;
 import domain.Cause;
@@ -101,9 +103,10 @@ public class PetitController {
     private PetitService petitService;
 	@Autowired
     private Utilitys utilitys;
-	
 	@Autowired
     private ServletContext servletcontext;
+    @Autowired
+	Converter coverter;
 	
     public PetitController() {
     	
@@ -309,6 +312,15 @@ public class PetitController {
 	    String name = user.getUsername();
 		return name;
 	}
+   
+   private Set<String> getRole() {
+		
+   	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       Set<String> roles = auth.getAuthorities().stream()
+       .map(r -> r.getAuthority()).collect(Collectors.toSet());
+       
+       return roles;
+	}
 	
    @RequestMapping(value = "/types", method = RequestMethod.GET)
 	public @ResponseBody
@@ -367,29 +379,51 @@ public class PetitController {
 	@RequestMapping(value = "/report.html", method = RequestMethod.POST)
     public String report(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
-		if(insursmo == null){	
-			if(getUserName().contains("smo_rosno")) petitService.pgForm(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16"
-					+ "smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
-			else if(getUserName().contains("smo_ingos")) petitService.pgForm(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");
-			else if(getUserName().equals("smo_simaz")) petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");
+		
+		if(insursmo == null){
+			
+			if(getRole().contains("ROLE_ROSNO")){
+				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}else
+			
+			if(getRole().contains("ROLE_INGOS")){
+				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}else
+			
+			if(getRole().contains("ROLE_SIMAZ")){
+				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
+			
 			else {petitService.pgForm(dateReport, getUserName());}
 		}
-		else
-		{
-			if(insursmo.equals("smo_simaz")){petitService.pgForm(dateReport, "smo_simazcall5001callnight5001");}
-			if(insursmo.equals("smo_rosno")){petitService.pgForm(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
-					+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
-			if(insursmo.contains("smo_ingos")){petitService.pgForm(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");}
+		else{
+			
+			if(insursmo.equals("smo_simaz")){
+				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
+			
+			if(insursmo.equals("smo_rosno")){
+				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
+			
+			if(insursmo.contains("smo_ingos")){
+				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
 		}	
     	return "reporting";
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	/**
@@ -407,20 +441,50 @@ public class PetitController {
 	@RequestMapping(value = "/report_strax3.html", method = RequestMethod.POST)
     public String report_strax3(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
+		
 		if(insursmo == null){	
-			if(getUserName().contains("smo_rosno")) petitService.report_strax3(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16"
-					+ "smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
-			else if(getUserName().equals("smo_ingos")) petitService.report_strax3(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");
-			else if(getUserName().equals("smo_simaz")) petitService.report_strax3(dateReport, "smo_simazcall5001callnight5001");
-			else {petitService.report_strax3(dateReport, getUserName());}
+			
+			if(getRole().contains("ROLE_ROSNO")){
+				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}else
+			
+			if(getRole().contains("ROLE_INGOS")){
+				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}else
+			
+			if(getRole().contains("ROLE_SIMAZ")){
+				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
+			
+			else {petitService.pgForm(dateReport, getUserName());}
 		}
-		else
-		{
-			if(insursmo.equals("smo_simaz")){petitService.report_strax3(dateReport, "smo_simazcall5001callnight5001");}
-			if(insursmo.equals("smo_rosno")){petitService.report_strax3(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
-					+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
-			if(insursmo.contains("smo_ingos")){petitService.report_strax3(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");}
+		else{
+			
+			if(insursmo.equals("smo_simaz")){
+				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
+			
+			if(insursmo.equals("smo_rosno")){
+				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
+			
+			if(insursmo.contains("smo_ingos")){
+				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
 		}	
+		
     	return "reporting";
 	}
 	
@@ -440,25 +504,55 @@ public class PetitController {
 	@RequestMapping(value = "/drugs.html", method = RequestMethod.POST)
     public String report_drugs(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
-		if(insursmo == null){	
-			if(getUserName().contains("smo_rosno")) petitService.report_drugs(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16"
-					+ "smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
-			else if(getUserName().equals("smo_ingos")) petitService.report_drugs(dateReport, "smo_ingoscall5003callnight5003");
-			else if(getUserName().equals("smo_simaz")) petitService.report_drugs(dateReport, "smo_simazcall5001callnight5001");
-			else {petitService.report_drugs(dateReport, getUserName());}
+		
+		if(insursmo == null){
+			
+			if(getRole().contains("ROLE_ROSNO")){
+				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}else
+			
+			if(getRole().contains("ROLE_INGOS")){
+				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}else
+			
+			if(getRole().contains("ROLE_SIMAZ")){
+				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
+			
+			else {petitService.pgForm(dateReport, getUserName());}
 		}
-		else
-		{
-			if(insursmo.equals("smo_simaz")){petitService.report_drugs(dateReport, "smo_simazcall5001callnight5001");}
-			if(insursmo.equals("smo_rosno")){petitService.report_drugs(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
-					+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
-			if(insursmo.contains("smo_ingos")){petitService.report_drugs(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");}
+		else{
+			
+			if(insursmo.equals("smo_simaz")){
+				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
+			
+			if(insursmo.equals("smo_rosno")){
+				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
+			
+			if(insursmo.contains("smo_ingos")){
+				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+				petitService.pgForm(dateReport,users);
+			}
 		}	
     	return "reporting";
 	}
 	
 	@RequestMapping(value = "/report_drugs.html", method = RequestMethod.GET)
     public void report_drugs(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		
 		File f = new File( servletcontext.getRealPath("/resources/report/drugs.xls"));
         downloadFile(request, response, f.getPath());
 	}
@@ -474,6 +568,7 @@ public class PetitController {
 	 */
 	@RequestMapping(value = "/generate/excel.xls", method = RequestMethod.GET)
 	public ModelAndView downloadExcel(HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+		
 		PetitListWrapper petitlistwrapper = (PetitListWrapper) session.getAttribute("list_search");
 		List<Petit> listpetit1 = petitlistwrapper.getPetit();
 		return new ModelAndView("excelView", "listpetit", listpetit1);
@@ -481,13 +576,28 @@ public class PetitController {
 	
 	@RequestMapping(value = "/report_call.html", method = RequestMethod.POST)
     public String report_call(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
+		
 		if(bindingResult.hasErrors()) return "reporting";
 		
-			if(getUserName().contains("smo_rosno")) petitService.report_call(dateReport, "smo_rosnocall5002callnight5002smo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19"
-					+ "smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
-			else if(getUserName().contains("smo_ingos")) petitService.report_call(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");
-			else if(getUserName().equals("smo_simaz")) petitService.report_call(dateReport, "smo_simazcall5001callnight5001");
-			else {petitService.report_call(dateReport, getUserName());}
+		if(getRole().contains("ROLE_ROSNO")){
+			String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+			System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+			petitService.pgForm(dateReport,users);
+		}else
+		
+		if(getRole().contains("ROLE_INGOS")){
+			String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+			System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+			petitService.pgForm(dateReport,users);
+		}else
+		
+		if(getRole().contains("ROLE_SIMAZ")){
+			String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+			System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+			petitService.pgForm(dateReport,users);
+		}
+		
+		else {petitService.pgForm(dateReport, getUserName());}
 		
 			
     	return "reporting";
@@ -508,23 +618,47 @@ public class PetitController {
 		if(bindingResult.hasErrors()) return "reporting";
 			
 			if(insursmo == null){	
-				if(getUserName().contains("smo_rosno")) petitService.report_1(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16"
-						+ "smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");
-				else if(getUserName().equals("smo_ingos")) petitService.report_1(dateReport, "smo_ingoscall5003callnight5003");
-				else if(getUserName().equals("smo_simaz")) petitService.report_1(dateReport, "smo_simazcall5001callnight5001");
-				else {petitService.report_1(dateReport, getUserName());}
+				
+				if(getRole().contains("ROLE_ROSNO")){
+					String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+					petitService.pgForm(dateReport,users);
+				}else
+				
+				if(getRole().contains("ROLE_INGOS")){
+					String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+					petitService.pgForm(dateReport,users);
+				}else
+				
+				if(getRole().contains("ROLE_SIMAZ")){
+					String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+					petitService.pgForm(dateReport,users);
+				}
+				
+				else {petitService.pgForm(dateReport, getUserName());}
 			}
 			else
 			{
-				if(insursmo.equals("smo_simaz")){petitService.report_1(dateReport, "smo_simazcall5001callnight5001");}
-				if(insursmo.equals("smo_rosno")){petitService.report_1(dateReport, "call5002callnight5002smo_rosnosmo_rosno_01smo_rosno_02smo_rosno_03smo_rosno_04smo_rosno_05smo_rosno_06smo_rosno_07smo_rosno_08smo_rosno_09smo_rosno_10smo_rosno_11smo_rosno_12smo_rosno_13smo_rosno_14smo_rosno_15smo_rosno_16smo_rosno_17smo_rosno_18smo_rosno_19smo_rosno_20smo_rosno_21smo_rosno_22smo_rosno_23smo_rosno_24smo_rosno_25smo_rosno_26smo_rosno_27smo_rosno_28smo_rosno_29smo_rosno_30smo_rosno_31smo_rosno_32"
-						+ "smo_rosno_33smo_rosno_34smo_rosno_35smo_rosno_36smo_rosno_37smo_rosno_38smo_rosno_39smo_rosno_40smo_rosno_41smo_rosno_42smo_rosno_43smo_rosno_44smo_rosno_45");}
-				if(insursmo.contains("smo_ingos")){petitService.report_1(dateReport, "smo_ingossmo_ingos_01call5003callnight5003");}
+				if(insursmo.equals("smo_simaz")){
+					String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+					petitService.pgForm(dateReport,users);
+				}
+				
+				if(insursmo.equals("smo_rosno")){
+					String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+					petitService.pgForm(dateReport,users);
+				}
+				
+				if(insursmo.contains("smo_ingos")){
+					String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+					petitService.pgForm(dateReport,users);
+				}
 			}	
-
-			
-			
-		
 			
     	return "reporting";
 	}
@@ -697,7 +831,7 @@ public class PetitController {
     @RequestMapping("/delete")
 	public @ResponseBody List<Petit> deletePetit(@RequestParam Integer petitId,ModelMap model) {
 		petitService.removePetit(petitId);
-		List<Petit> pl = petitService.listPetit(getUserName());
+		List<Petit> pl = petitService.listPetit(getUserName(),getRole());
 		for(Petit pt : pl)
     	{
     		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
@@ -713,7 +847,7 @@ public class PetitController {
     @RequestMapping("/allist")
 	public @ResponseBody List<Petit> allPetit(ModelMap model) {
 		
-		List<Petit> pl = petitService.listPetit(getUserName());
+		List<Petit> pl = petitService.listPetit(getUserName(),getRole());
 		for(Petit pt : pl)
     	{
     		pt.setDateInput(pt.getDateInput().substring(8, 10) + "." + pt.getDateInput().substring(5, 7) + "." + pt.getDateInput().substring(0, 4));
@@ -734,7 +868,7 @@ public class PetitController {
     	pt.getBlockger2016().setState(3);
     	petitService.addPetit(pt);
     	
-    	List<Petit> pl = petitService.listPetit(getUserName());
+    	List<Petit> pl = petitService.listPetit(getUserName(),getRole());
     	
     	for(Petit pt2 : pl)
     	{
