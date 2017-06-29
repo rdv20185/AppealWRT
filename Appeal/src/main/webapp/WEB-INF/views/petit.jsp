@@ -173,7 +173,7 @@
 						$("#type option:contains('"+fg+"')").prop('selected', true);
 						$.getScript(document.location.origin+"/Appeal/resources/user/other.js",function(){
 							/* alert('${petit.subtype[0].subcause}'); */
-							
+						//alert('TEst 1 '+${petit.subtype[0].subcause}+'\n'+${petit.subtype[0].subrectif}+'\n'+ ${petit.subtype[1].subcause}+'\n'+${petit.subtype[1].subrectif});							
 							$('#type').trigger("change",['${petit.cause.causeName}','${petit.rectif1.rectif1Name}',
 								'${petit.subtype[0].subcause}','${petit.subtype[0].subrectif}',
 								'${petit.subtype[1].subcause}','${petit.subtype[1].subrectif}',
@@ -722,7 +722,8 @@
 	<p>
 	  <div>
 	   <div style="float:left;"><button type="button" id="btn_add_subtype" title="Добавить причину">+</button></div>
-	   <div style="float: left; font-size: 11px; font-style: oblique; margin-top: 3px; margin-left: 13px;">Добавить дополнительную причину (только для Жалоб)</div>
+	   <div style="float:left; height: 21px; width: 24px; margin-left: 3px;"><button type="button" id="btn_del_subtype" title="Удалить причину">-</button></div>
+	   <div style="float: left; font-size: 11px; font-style: oblique; margin-top: 3px; margin-left: 13px;">Добавить/Удалить дополнительную причину (только для Жалоб)</div>
 	   </div>
 	</p>
 	<p>
@@ -734,6 +735,66 @@
 	      			<form:label path="subtype[0].subrectif">Уточнение</form:label>
 					<form:select class="subrectif_cl" id="subrectif0" path="subtype[0].subrectif" disabled="true"></form:select>
 						
+						
+				<p>
+					<form:label path="subtype[0].subhspId">Тип МО</form:label>							
+					<form:select path="subtype[0].subhspId" disabled="true">
+						<form:option  disabled="disabled" value="0" label="" />
+		    			<form:options items="${hspList}"/>
+					</form:select>
+					
+					<form:label path="subtype[0].subtypempid">Вид МП</form:label>
+					<form:select path="subtype[0].subtypempid" disabled="true">
+						<form:options disabled="disabled" items="${typeMP}"/>
+					</form:select>
+					
+                </p>
+                <p>
+                	<form:label path="subtype[0].submoId">МО</form:label>
+					<form:select path="subtype[0].submoId" disabled="true">
+						<form:option disabled="disabled" value="0" label="" />
+    					<form:options items="${moList}"/>
+					</form:select>
+			
+					<form:label path="subtype[0].subinsurId">CМО</form:label>
+					<form:select path="subtype[0].subinsurId" disabled="true">
+						<form:option disabled="disabled" value="0" label="" />
+    					<form:options items="${insurList}"/>
+					</form:select>
+                </p>
+                <p>
+                	<form:label path="subtype[0].subvalidId">Обоснованность</form:label>
+					<form:select path="subtype[0].subvalidId" disabled="true">
+						<form:option disabled="disabled" value="0" label="" />
+    					<form:options items="${validList}"/>
+					</form:select>
+	
+					<form:label path="subtype[0].subcompens" disabled="true">Компенсация</form:label>
+					<form:input  type="number"  step="any" class="css-input" path="subtype[0].subcompens" pattern="\d{1,6}\.?\d{1,2}" title="Используйте точку/Два знака после точки" disabled="true" />
+	
+	
+					<form:label path="subtype[0].subsatisf" disabled="true">Удовлетворена</form:label>
+					<form:select class="css-input" path="subtype[0].subsatisf" disabled="true">
+	      					<form:option disabled="disabled" value="" label="" />
+							<form:option value="ДА" label="ДА" />
+							<form:option value="НЕТ" label="НЕТ" />
+					</form:select>
+	
+	
+					<form:label path="subtype[0].subcompensSource" >Источник компенсации</form:label>
+					<form:input class="css-input" path="subtype[0].subcompensSource" placeholder="СМО МО или ТФОМС" disabled="true"/>
+	
+					<form:label path="subtype[0].subcompensCode">Код компенсации</form:label>
+					<form:input class="css-input" path="subtype[0].subcompensCode" placeholder="Код дефекта" disabled="true"/>
+	
+	
+					<form:label path="subtype[0].subcompensSum">Сумма компенсации</form:label>
+					<form:input type="number"  step="any"  class="css-input" path="subtype[0].subcompensSum" pattern="\d{1,6}\.?\d{1,2}" title="Используйте точку/Два знака после точки"  disabled="true"/>
+                </p>
+                <p>
+					<form:label style="width: 144px;" path="subtype[0].subcauseNote"><spring:message code="label.causeNote" /></form:label>
+					<form:textarea rows="2" cols="100" value="0" path="subtype[0].subcauseNote"  disabled="true"/>
+                </p>
       				</div>
 	</p>
 	<p>
@@ -744,6 +805,66 @@
 					
 	      				<form:label path="subtype[1].subrectif">Уточнение</form:label>
 						<form:select class="subrectif_cl" id="subrectif1" path="subtype[1].subrectif"  disabled="true"></form:select>
+	      			
+	      		<p>
+					<form:label path="subtype[1].subhspId">Тип МО</form:label>							
+					<form:select path="subtype[1].subhspId" disabled="true">
+						<form:option  disabled="disabled" value="0" label="" />
+		    			<form:options items="${hspList}"/>
+					</form:select>
+					
+					<form:label path="subtype[1].subtypempid">Вид МП</form:label>
+					<form:select path="subtype[1].subtypempid" disabled="true">
+						<form:options  disabled="disabled" items="${typeMP}"/>
+					</form:select>
+					
+                </p>
+                <p>
+                	<form:label path="subtype[1].submoId">МО</form:label>
+					<form:select path="subtype[1].submoId" disabled="true">
+						<form:option  disabled="disabled" value="0" label="" />
+    					<form:options items="${moList}"/>
+					</form:select>
+			
+					<form:label path="subtype[1].subinsurId">CМО</form:label>
+					<form:select path="subtype[1].subinsurId" disabled="true">
+						<form:option  disabled="disabled" value="0" label="" />
+    					<form:options items="${insurList}"/>
+					</form:select>
+                </p>
+                <p>
+                	<form:label path="subtype[1].subvalidId">Обоснованность</form:label>
+					<form:select path="subtype[1].subvalidId" disabled="true">
+						<form:option  disabled="disabled" value="0" label="" />
+    					<form:options items="${validList}"/>
+					</form:select>
+	
+					<form:label path="subtype[1].subcompens" disabled="true">Компенсация</form:label>
+					<form:input type="number"  step="any" class="css-input" path="subtype[1].subcompens" pattern="\d{1,6}\.?\d{1,2}" title="Используйте точку/Два знака после точки"  disabled="true"/>
+	
+	
+					<form:label path="subtype[1].subsatisf" disabled="true">Удовлетворена</form:label>
+					<form:select class="css-input" path="subtype[1].subsatisf"  disabled="true">
+	      					<form:option  disabled="disabled" value="" label="" />
+							<form:option value="ДА" label="ДА" />
+							<form:option value="НЕТ" label="НЕТ" />
+					</form:select>
+	
+	
+					<form:label path="subtype[1].subcompensSource" >Источник компенсации</form:label>
+					<form:input class="css-input" path="subtype[1].subcompensSource" placeholder="СМО МО или ТФОМС" disabled="true"/>
+	
+					<form:label path="subtype[1].subcompensCode">Код компенсации</form:label>
+					<form:input class="css-input" path="subtype[1].subcompensCode" placeholder="Код дефекта" disabled="true"/>
+	
+	
+					<form:label path="subtype[1].subcompensSum">Сумма компенсации</form:label>
+					<form:input type="number"  step="any" class="css-input" path="subtype[1].subcompensSum" pattern="\d{1,6}\.?\d{1,2}" title="Используйте точку/Два знака после точки"  disabled="true"/>
+                </p>
+                <p>
+					<form:label style="width: 144px;" path="subtype[1].subcauseNote"><spring:message code="label.causeNote" /></form:label>
+					<form:textarea rows="2" cols="100" value="0" path="subtype[1].subcauseNote"  disabled="true"/>
+                </p>
 	      				
 	      			</div>	
 	</p>
@@ -755,8 +876,67 @@
 					
 	      				<form:label path="subtype[2].subrectif">Уточнение</form:label>
 						<form:select class="subrectif_cl" id="subrectif2" path="subtype[2].subrectif" disabled="true"></form:select>
-	      				
-	      			</div>	
+	      			
+	      		<p>
+					<form:label path="subtype[2].subhspId">Тип МО</form:label>							
+					<form:select path="subtype[2].subhspId" disabled="true">
+						<form:option  disabled="disabled" value="0" label="" />
+		    			<form:options items="${hspList}"/>
+					</form:select>
+					
+					<form:label path="subtype[2].subtypempid">Вид МП</form:label>
+					<form:select path="subtype[2].subtypempid" disabled="true">
+						<form:options  disabled="disabled" items="${typeMP}"/>
+					</form:select>
+					
+                </p>
+                <p>
+                	<form:label path="subtype[2].submoId">МО</form:label>
+					<form:select path="subtype[2].submoId" disabled="true">
+						<form:option  disabled="disabled" value="0" label="" />
+    					<form:options items="${moList}"/>
+					</form:select>
+			
+					<form:label path="subtype[2].subinsurId">CМО</form:label>
+					<form:select path="subtype[2].subinsurId" disabled="true">
+						<form:option  disabled="disabled" value="0" label="" />
+    					<form:options items="${insurList}"/>
+					</form:select>
+                </p>
+                <p>
+                	<form:label path="subtype[2].subvalidId">Обоснованность</form:label>
+					<form:select path="subtype[2].subvalidId" disabled="true">
+						<form:option  disabled="disabled" value="0" label="" />
+    					<form:options items="${validList}"/>
+					</form:select>
+	
+					<form:label path="subtype[2].subcompens" disabled="true">Компенсация</form:label>
+					<form:input type="number"  step="any" class="css-input" path="subtype[2].subcompens" pattern="\d{1,6}\.?\d{1,2}" title="Используйте точку/Два знака после точки"  disabled="true"/>
+	
+	
+					<form:label path="subtype[2].subsatisf" disabled="true">Удовлетворена</form:label>
+					<form:select class="css-input" path="subtype[2].subsatisf" disabled="true">
+	      					<form:option  disabled="disabled" value="" label="" />
+							<form:option value="ДА" label="ДА" />
+							<form:option value="НЕТ" label="НЕТ" />
+					</form:select>
+	
+	
+					<form:label path="subtype[2].subcompensSource" >Источник компенсации</form:label>
+					<form:input class="css-input" path="subtype[2].subcompensSource" placeholder="СМО МО или ТФОМС" disabled="true"/>
+	
+					<form:label path="subtype[2].subcompensCode">Код компенсации</form:label>
+					<form:input class="css-input" path="subtype[2].subcompensCode" placeholder="Код дефекта" disabled="true"/>
+	
+	
+					<form:label path="subtype[2].subcompensSum">Сумма компенсации</form:label>
+					<form:input type="number"  step="any" class="css-input" path="subtype[2].subcompensSum" pattern="\d{1,6}\.?\d{1,2}" title="Используйте точку/Два знака после точки"  disabled="true"/>
+                </p>
+                <p>
+					<form:label style="width: 144px;" path="subtype[2].subcauseNote"><spring:message code="label.causeNote" /></form:label>
+					<form:textarea rows="2" cols="100" value="0" path="subtype[2].subcauseNote"  disabled="true"/>
+                </p>	
+	      		</div>	
 	</p>
 </sec:authorize>	
 </fieldset>
@@ -908,59 +1088,8 @@
 	      				<form:label path="bloutboindletter2016.responsible">Отвественный</form:label>
 	      				<form:select path="bloutboindletter2016.responsible" id="responsible">
 	      					<form:option value="" label="" />
-	      					<form:option value="kuznetsova" label="kuznetsova"/>
-							<form:option value="mityanina" label="mityanina" />
-							<form:option value="smyvin" label="smyvin" />
-							<form:option value="eremina" label="eremina" />
-							<form:option value="hamitov" label="hamitov" />
-							<form:option value="smo_simaz" label="smo_simaz" />
- 							<form:option value="smo_ingos" label="smo_ingos" />
- 							<form:option value="smo_ingos_01" label="smo_ingos_01" />
- 							<form:option value="smo_rosno_01" label="smo_rosno_01" />
- 							<form:option value="smo_rosno_02" label="smo_rosno_02" />
- 							<form:option value="smo_rosno_03" label="smo_rosno_03" />
- 							<form:option value="smo_rosno_04" label="smo_rosno_04" />
- 							<form:option value="smo_rosno_05" label="smo_rosno_05" />
- 							<form:option value="smo_rosno_06" label="smo_rosno_06" />
- 							<form:option value="smo_rosno_07" label="smo_rosno_07" />
- 							<form:option value="smo_rosno_08" label="smo_rosno_08" />
- 							<form:option value="smo_rosno_09" label="smo_rosno_09" />
- 							<form:option value="smo_rosno_10" label="smo_rosno_10" />
- 							<form:option value="smo_rosno_11" label="smo_rosno_11" />
- 							<form:option value="smo_rosno_12" label="smo_rosno_12" />
- 							<form:option value="smo_rosno_13" label="smo_rosno_13" />
- 							<form:option value="smo_rosno_14" label="smo_rosno_14" />
- 							<form:option value="smo_rosno_15" label="smo_rosno_15" />
- 							<form:option value="smo_rosno_16" label="smo_rosno_16" />
- 							<form:option value="smo_rosno_17" label="smo_rosno_17" />
- 							<form:option value="smo_rosno_18" label="smo_rosno_18" />
- 							<form:option value="smo_rosno_19" label="smo_rosno_19" />
- 							<form:option value="smo_rosno_20" label="smo_rosno_20" />
- 							<form:option value="smo_rosno_21" label="smo_rosno_21" />
- 							<form:option value="smo_rosno_22" label="smo_rosno_22" />
- 							<form:option value="smo_rosno_23" label="smo_rosno_23" />
- 							<form:option value="smo_rosno_24" label="smo_rosno_24" />
- 							<form:option value="smo_rosno_25" label="smo_rosno_25" />
- 							<form:option value="smo_rosno_26" label="smo_rosno_26" />
- 							<form:option value="smo_rosno_27" label="smo_rosno_27" />
- 							<form:option value="smo_rosno_28" label="smo_rosno_28" />
- 							<form:option value="smo_rosno_29" label="smo_rosno_29" />
- 							<form:option value="smo_rosno_30" label="smo_rosno_30" />
- 							<form:option value="smo_rosno_31" label="smo_rosno_31" />
- 							<form:option value="smo_rosno_32" label="smo_rosno_32" />
- 							<form:option value="smo_rosno_33" label="smo_rosno_33" />
- 							<form:option value="smo_rosno_34" label="smo_rosno_34" />
- 							<form:option value="smo_rosno_35" label="smo_rosno_35" />
- 							<form:option value="smo_rosno_36" label="smo_rosno_36" />
- 							<form:option value="smo_rosno_37" label="smo_rosno_37" />
- 							<form:option value="smo_rosno_38" label="smo_rosno_38" />
- 							<form:option value="smo_rosno_39" label="smo_rosno_39" />
- 							<form:option value="smo_rosno_40" label="smo_rosno_40" />
- 							<form:option value="smo_rosno_41" label="smo_rosno_41" />
- 							<form:option value="smo_rosno_42" label="smo_rosno_42" />
- 							<form:option value="smo_rosno_43" label="smo_rosno_43" />
- 							<form:option value="smo_rosno_44" label="smo_rosno_44" />
- 							<form:option value="smo_rosno_45" label="smo_rosno_45" />
+	      					<form:options items="${responsible}"/>
+	      					
 						</form:select>
                 	</p>
                 	<p>

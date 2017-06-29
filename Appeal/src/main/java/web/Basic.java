@@ -84,6 +84,8 @@ public class Basic {
     private PetitService petitService;
 	@Autowired
     private Utilitys utilitys;
+	@Autowired
+	Converter coverter;
 	
 	//@ModelAttribute
 	public  ModelMap setupForm(ModelMap map,HttpServletRequest request,Petit petit) throws UnsupportedEncodingException {
@@ -95,6 +97,7 @@ public class Basic {
 			map.put("presentList", Fields.getPresent());
 			map.put("conectList", Fields.getConect());
 			map.put("listassign", Fields.getProperties());
+			map.put("responsible" , coverter.getMap().get("ROLE_ADMIN"));
 		}
     
     	if(getRole().contains("ROLE_TFOMS")){
@@ -102,6 +105,7 @@ public class Basic {
 			map.put("presentList", Fields.getPresent());
 			map.put("conectList", Fields.getConect());
 			map.put("listassign", Fields.getfirsttfoms());
+			map.put("responsible" , coverter.getMap().get("ROLE_TFOMS"));
 		}
     	
     	if(getRole().contains("ROLE_ER"))
@@ -118,6 +122,7 @@ public class Basic {
     		map.put("sourceList", source2);
     		map.put("conectList", Fields.getConect());
 			map.put("presentList", Fields.getPresent());
+			map.put("responsible" , coverter.getMap().get("ROLE_SIMAZ_SP2"));
     	}
 				
 		if(getRole().contains("ROLE_ROSNO") && !getRole().contains("ROLE_TECH_ER")){
@@ -125,12 +130,14 @@ public class Basic {
 			map.put("sourceList", source2);
 			map.put("conectList", Fields.getConect());
 			map.put("presentList", Fields.getPresent());
+			map.put("responsible" , coverter.getMap().get("ROLE_ROSNO_SP2"));
 		}
 		if(getRole().contains("ROLE_INGOS") && !getRole().contains("ROLE_TECH_ER")){
 			map.put("listassign", Fields.getfirstingos());
 			map.put("sourceList", source2);
 			map.put("conectList", Fields.getConect());
 			map.put("presentList", Fields.getPresent());
+			map.put("responsible" , coverter.getMap().get("ROLE_INGOS_SP2"));
 		}
 
 		

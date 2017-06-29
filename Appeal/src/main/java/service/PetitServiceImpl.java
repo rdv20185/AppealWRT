@@ -26,6 +26,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletContext;
 
@@ -218,7 +219,8 @@ public class PetitServiceImpl implements PetitService {
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	public void pgForm(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
     	Connection conn = connectForJasper();
-		Map mapReport = mapForJasper(dateReport, username);
+		Map<String, Object> mapReport = mapForJasper(dateReport, username);
+		
 		JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\pg_form_1_1dop.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
@@ -255,6 +257,27 @@ public class PetitServiceImpl implements PetitService {
 	}
     
     
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void power_sp1_sp2(ReportParams dateReport, String username[]) throws SQLException, ClassNotFoundException, JRException {
+    	
+    	File f = new File( servletcontext.getRealPath("/resources/report/power_sp1_sp2.jrxml"));
+    	
+    	Connection conn = connectForJasper();
+		Map<String, Object> mapReport = mapForJasper(dateReport, username);
+		
+		JasperReport jasperReport = JasperCompileManager.compileReport(f.getPath());
+		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
+		JRXlsExporter exporter = new JRXlsExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(f.getPath().replace(".jrxml", ".xls")));
+		exporter.exportReport();
+		
+   		disconnectForJasper(conn);
+	}
+    
+    
     /* (non-Javadoc)
      * @see service.PetitService#report_strax3(domain.ReportParams, java.lang.String)
      */
@@ -265,7 +288,7 @@ public class PetitServiceImpl implements PetitService {
     	File f = new File( servletcontext.getRealPath("/resources/report/report_strax3.jrxml"));
     	
     	Connection conn = connectForJasper();
-		Map mapReport = mapForJasper(dateReport, username);
+		Map<String, Object> mapReport = mapForJasper(dateReport, username);
 		JasperReport jasperReport = JasperCompileManager.compileReport(f.getPath());
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
@@ -284,7 +307,7 @@ public class PetitServiceImpl implements PetitService {
     	File f = new File( servletcontext.getRealPath("/resources/report/drugs.jrxml"));
     	
     	Connection conn = connectForJasper();
-		Map mapReport = mapForJasper(dateReport, username);
+		Map<String, Object> mapReport = mapForJasper(dateReport, username);
 		JasperReport jasperReport = JasperCompileManager.compileReport(f.getPath());
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport, conn);
@@ -303,7 +326,7 @@ public class PetitServiceImpl implements PetitService {
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	public void report_call(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
     	Connection conn = connectForJasper();
-		Map mapReport = mapForJasper(dateReport, username);
+		Map<String, Object> mapReport = mapForJasper(dateReport, username);
 		
 		JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\contact_call.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
@@ -336,7 +359,7 @@ public class PetitServiceImpl implements PetitService {
     	File f = new File( servletcontext.getRealPath("/resources/report/report_letter_appeals.jrxml"));
     	
     	Connection conn = connectForJasper();
-		Map mapReport = mapForJasper(dateReport, username);
+		Map<String, Object> mapReport = mapForJasper(dateReport, username);
 		
 		JasperReport jasperReport = JasperCompileManager.compileReport(f.getPath());
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
@@ -388,7 +411,7 @@ public class PetitServiceImpl implements PetitService {
 	public void reportAppealPay(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
     	
     	Connection conn = connectForJasper();
-		Map mapReport = mapForJasper(dateReport, username);
+		Map<String, Object> mapReport = mapForJasper(dateReport, username);
 			
 		JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\appeal_pay.jrxml");
 		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
@@ -410,7 +433,7 @@ public class PetitServiceImpl implements PetitService {
 	public void reportConsultOther(ReportParams dateReport) throws SQLException, ClassNotFoundException, JRException {
 	
     	Connection conn = connectForJasper();
-		Map mapReport = mapForJasper(dateReport);
+		Map<String, Object> mapReport = mapForJasper(dateReport);
 		
 		JasperReport jasperReport;
 		if(dateReport.isClinic()) jasperReport = JasperCompileManager.compileReport("C:\\Appeals3\\Appeal\\reports\\consult_other.jrxml");
@@ -431,7 +454,7 @@ public class PetitServiceImpl implements PetitService {
 	public void reportCountDetail(ReportParams dateReport) throws SQLException, ClassNotFoundException, JRException {
 	
     	Connection conn = connectForJasper();
-		Map mapReport = mapForJasper(dateReport);
+		Map<String, Object> mapReport = mapForJasper(dateReport);
 		
 		String report = "C:\\Appeals3\\Appeal\\reports\\count_detail.jrxml";
 		if(dateReport.isClinic()) report = "C:\\Appeals3\\Appeal\\reports\\count_detail_polyclinic.jrxml";
@@ -454,10 +477,13 @@ public class PetitServiceImpl implements PetitService {
 		conn.close();
 	}
 
-	private Map mapForJasper(ReportParams dateReport, String username) {
-		Map mapReport = mapForJasper(dateReport);
+	
+	private Map<String, Object> mapForJasper(ReportParams dateReport, String username) {
+		Map<String, Object> mapReport = mapForJasper(dateReport);
 
-		if(getRole().contains("ROLE_TFOMS") || getRole().contains("ROLE_ADMIN")){
+
+		if(coverter.getMap().get("ROLE_TFOMS").toString().contains(username) ||
+		   coverter.getMap().get("ROLE_ADMIN").toString().contains(username)){
 			
 			StringBuffer s = new StringBuffer();
 			s.append(coverter.getMap().get("ROLE_TFOMS").toString());
@@ -470,15 +496,40 @@ public class PetitServiceImpl implements PetitService {
 			s.append(coverter.getMap().get("ROLE_ER5003").toString());
 			username = s.toString();
 			
-			System.out.println("User names fo jasper report (for log) \n"+ username);
+			System.out.println("User names fo jasper report through mapForJasper (for log) \n"+ username);
 		}
 		
 		mapReport.put("username", username);
 		return mapReport;
 	}
 	
-	private Map mapForJasper(ReportParams dateReport) {
-		Map mapReport = new HashMap();
+	
+	
+	private Map<String, Object> mapForJasper(ReportParams dateReport, String username[]) {
+		Map<String, Object> mapReport = mapForJasper(dateReport);
+		
+		if(coverter.getMap().get("ROLE_TFOMS").toString().contains(username[0]) || coverter.getMap().get("ROLE_TFOMS").toString().contains(username[1]) ||
+		   coverter.getMap().get("ROLE_ADMIN").toString().contains(username[0]) || coverter.getMap().get("ROLE_ADMIN").toString().contains(username[1])){
+			
+			mapReport.put("username_sp1", coverter.getMap().get("ROLE_SMO_SP1").toString());
+			System.out.println("User names fo jasper report SP1 (for log) \n"+ coverter.getMap().get("ROLE_SMO_SP1").toString());
+			
+			mapReport.put("username_sp2", coverter.getMap().get("ROLE_SMO_SP2").toString());
+			System.out.println("User names fo jasper report SP2 (for log) \n"+ coverter.getMap().get("ROLE_SMO_SP2").toString());
+		}else{
+			mapReport.put("username_sp1", username[0]);
+			System.out.println("User names fo jasper report SP1 (for log) \n"+ username[0]);
+			
+			mapReport.put("username_sp2", username[1]);
+			System.out.println("User names fo jasper report SP2 (for log) \n"+ username[1]);
+		}
+		
+		return mapReport;
+	}
+
+	
+	private Map<String, Object> mapForJasper(ReportParams dateReport) {
+		Map<String, Object> mapReport = new HashMap<String, Object>();
 		mapReport.put("dateBegin", dateReport.getDateBegin());
 		mapReport.put("dateEnd", dateReport.getDateEnd());
 		return mapReport;
@@ -665,7 +716,6 @@ public class PetitServiceImpl implements PetitService {
 	}
 	
 	private Set<String> getRole() {
-		
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Set<String> roles = auth.getAuthorities().stream()
         .map(r -> r.getAuthority()).collect(Collectors.toSet());

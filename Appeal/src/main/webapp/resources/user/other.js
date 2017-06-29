@@ -20,7 +20,22 @@ $(document).ready(function(){
 		}
 	});
 	
-
+	/*
+	 * Кнопка добавления доп причин "-"  
+	 */
+	
+	$('#btn_del_subtype').click(function(){
+		let test = $("[id*='div_subtype']");
+		for(let i = test.length-1;i >= 0; i--){
+			if(test[i].style.display == 'block'){
+				test[i].style.display='none';
+				$('#'+test[i].id).find('input, textarea, button, select').attr('disabled','disabled');
+				
+				return;
+			}
+		}
+	});
+	
 	/*
 	 * Кнопка добавления доп причин "+"  
 	 */
@@ -34,39 +49,42 @@ $(document).ready(function(){
 				if(test[i].style.display == 'none'){
 					if(a == undefined){
 						test[i].style.display='block';
-						let ch = test[i].children[1];
+						/*let ch = test[i].children[1];
 						ch.disabled = false;
 						ch = test[i].children[3];
-						ch.disabled = false;
-					}
-					if(a != undefined && a !='' && a != 0){
-						test[i].style.display='block';
-						let ch = test[i].children[1];
-						ch.disabled = false;
-						ch = test[i].children[3];
-						ch.disabled = false;
-					}
-					if($('#type option:selected').text() != ''){
+						ch.disabled = false;*/
+						$('#'+test[i].id).find('input, textarea, button, select').removeAttr('disabled');
 						
-						// если тригер на событие клик был вызван руками
-						if(a === undefined){ $('#type').trigger("change");}
-						if(a != undefined && a!='' && a != 0){
-									$('select[id="'+test[i].children[1].id+'"]').val(a);
-									
-									if(b != undefined && b!='' ){
-										//$('.subcause_cl').trigger("change",[test[i].children[3].id,a,b]);
-										eventChangeSubRefctif(test[i].children[3].id,a,b);
-									}
+						if($('#type option:selected').text() != ''){
+							$('#type').trigger("change");
 						}
 						
 					}
-					
+					if(a != undefined && a !='' && a != 0){
+						test[i].style.display='block';
+						/*let ch = test[i].children[1];
+						ch.disabled = false;
+						ch = test[i].children[3];
+						ch.disabled = false;*/
+						$('#'+test[i].id).find('input, textarea, button, select').removeAttr('disabled');
+						
+						console.log('trst '+i+'  '+test.length);
+						$('select[id="'+test[i].children[1].id+'"]').val(a);
+						
+						if(b != undefined && b!='' ){
+							//$('.subcause_cl').trigger("change",[test[i].children[3].id,a,b]);
+							eventChangeSubRefctif(test[i].children[3].id,a,b);
+						}
+					}
 					return;
+					
+					
 				}
 			}
 		}
 	});
 	
+	/*прогружаем селекты (подпричины) выпадающими списками*/
 	function mySandwich(html, callback) {
 		if($('.subcause_cl option:selected').text() == ''){$('.subcause_cl').html(html);}
 
@@ -119,7 +137,11 @@ $(document).ready(function(){
 				// с- id subcause; d- id subrectif
 				mySandwich(html, function(){
 					if(c != undefined){ $('#btn_add_subtype').trigger("click",[c,d]);}
-					if(e != undefined){ $('#btn_add_subtype').trigger("click",[e,s]);}
+					
+						//$('#btn_add_subtype').queue(function() {
+							if(e != undefined){$('#btn_add_subtype').trigger("click",[e,s]);}
+							//$('#btn_add_subtype').dequeue();
+						//});
 					if(p != undefined){ $('#btn_add_subtype').trigger("click",[p,z]);}
 				});
 				

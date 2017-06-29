@@ -108,6 +108,14 @@ public class PetitDAOImpl implements PetitDAO {
  	           query.setMaxResults(100);
  	    	}
     	
+    	if(username.equals("callnight5001") || username.equals("callnight5002") || username.equals("callnight5003")){
+    		query = sessionFactory.getCurrentSession().createQuery(
+        			"select t from Petit t, BlockGER2016 t2  where (t.username = :username or t.username = '"+"callnight5003"+"' or t.username = '"+"ТФОМС"+"' or t.username = '"+"callnight5001"+"' or t.username = '"+"callnight5002"+"' or t.username='"+"auto"+"'   or t.username='"+"СИМАЗ"+"' or t.username='"+"РОСНО"+"' or t.username='"+"ИНГОССТРАХ"+"') and"
+        					+ " t.id=t2.idblockger2016 and (t2.regname='"+"auto"+"' or t2.regname='"+"callnight5001"+"' or t2.regname='"+"callnight5002"+"' or t2.regname='"+"callnight5003"+"')  order by t.id desc");
+            query.setParameter("username", username);
+            query.setMaxResults(100);
+    	}
+    	
 		if(username.equals("hamitov"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(

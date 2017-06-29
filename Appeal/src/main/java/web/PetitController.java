@@ -17,11 +17,13 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.Set;
  
 
@@ -231,6 +233,7 @@ public class PetitController {
 		}
 		
 		// Add entity to subtype
+		System.out.println("############# "+petit.getSubtype());
 		if(petit.getSubtype() != null){
 			
 			for(int i=0; i < petit.getSubtype().size(); i++){
@@ -425,6 +428,69 @@ public class PetitController {
     	return "reporting";
 	}
 	
+	/**
+	 * Отчет нагрузки СП1 СП2. Дата начала отчета должна быть не ранее 16.06.2017 (с этой даты начали отлеживать нагрузку,
+	 * поменяли логины и добавили роли для персонификации 1-го 2-го уровней.
+	 * @param dateReport - дата начала отчета (не ранее 16.06.2017)
+	 * @param insursmo  - флаг СМО
+	 * @param bindingResult
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws JRException
+	 */
+	@RequestMapping(value = "/report_power_sp.html", method = RequestMethod.POST)
+    public String report_power_sp(@ModelAttribute("dateReport") @Valid ReportParams dateReport,@RequestParam(value = "insurcomp",required=false) String insursmo, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
+		if(bindingResult.hasErrors()) return "reporting";
+		
+		if(insursmo == null){
+			
+			if(getRole().contains("ROLE_ROSNO")){
+				String []users = {coverter.getMap().get("ROLE_ROSNO_SP1").toString(),coverter.getMap().get("ROLE_ROSNO_SP2").toString()};
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+ Arrays.toString(users) );
+				petitService.power_sp1_sp2(dateReport,users);
+			}else
+			
+			if(getRole().contains("ROLE_INGOS")){
+				String[] users = {coverter.getMap().get("ROLE_INGOS_SP1").toString(),coverter.getMap().get("ROLE_INGOS_SP2").toString()};
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
+				petitService.power_sp1_sp2(dateReport,users);
+			}else
+			
+			if(getRole().contains("ROLE_SIMAZ")){
+				String[] users = {coverter.getMap().get("ROLE_SIMAZ_SP1").toString(), coverter.getMap().get("ROLE_SIMAZ_SP2").toString()};
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
+				petitService.power_sp1_sp2(dateReport,users);
+			}
+			
+			else { 
+				String [] user ={getUserName(),""};
+				petitService.power_sp1_sp2(dateReport,user );
+			}
+		}
+		else{
+			
+			if(insursmo.equals("smo_simaz")){
+				String[] users = {coverter.getMap().get("ROLE_SIMAZ_SP1").toString(), coverter.getMap().get("ROLE_SIMAZ_SP2").toString()};
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
+				petitService.power_sp1_sp2(dateReport,users);
+			}
+			
+			if(insursmo.equals("smo_rosno")){
+				String []users = {coverter.getMap().get("ROLE_ROSNO_SP1").toString(),coverter.getMap().get("ROLE_ROSNO_SP2").toString()};
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
+				petitService.power_sp1_sp2(dateReport,users);
+			}
+			
+			if(insursmo.contains("smo_ingos")){
+				String[] users = {coverter.getMap().get("ROLE_INGOS_SP1").toString(),coverter.getMap().get("ROLE_INGOS_SP2").toString()};
+				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
+				petitService.power_sp1_sp2(dateReport,users);
+			}
+		}	
+    	return "reporting";
+	}
+	
 	
 	/**
 	 * Определяет входящие параметры для слоя сервиса. Далее в запрос
@@ -447,41 +513,41 @@ public class PetitController {
 			if(getRole().contains("ROLE_ROSNO")){
 				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_strax3(dateReport,users);
 			}else
 			
 			if(getRole().contains("ROLE_INGOS")){
 				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_strax3(dateReport,users);
 			}else
 			
 			if(getRole().contains("ROLE_SIMAZ")){
 				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_strax3(dateReport,users);
 			}
 			
-			else {petitService.pgForm(dateReport, getUserName());}
+			else {petitService.report_strax3(dateReport, getUserName());}
 		}
 		else{
 			
 			if(insursmo.equals("smo_simaz")){
 				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_strax3(dateReport,users);
 			}
 			
 			if(insursmo.equals("smo_rosno")){
 				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_strax3(dateReport,users);
 			}
 			
 			if(insursmo.contains("smo_ingos")){
 				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_strax3(dateReport,users);
 			}
 		}	
 		
@@ -510,41 +576,41 @@ public class PetitController {
 			if(getRole().contains("ROLE_ROSNO")){
 				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_drugs(dateReport,users);
 			}else
 			
 			if(getRole().contains("ROLE_INGOS")){
 				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_drugs(dateReport,users);
 			}else
 			
 			if(getRole().contains("ROLE_SIMAZ")){
 				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_drugs(dateReport,users);
 			}
 			
-			else {petitService.pgForm(dateReport, getUserName());}
+			else {petitService.report_drugs(dateReport, getUserName());}
 		}
 		else{
 			
 			if(insursmo.equals("smo_simaz")){
 				String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_drugs(dateReport,users);
 			}
 			
 			if(insursmo.equals("smo_rosno")){
 				String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_drugs(dateReport,users);
 			}
 			
 			if(insursmo.contains("smo_ingos")){
 				String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-				petitService.pgForm(dateReport,users);
+				petitService.report_drugs(dateReport,users);
 			}
 		}	
     	return "reporting";
@@ -582,22 +648,22 @@ public class PetitController {
 		if(getRole().contains("ROLE_ROSNO")){
 			String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
 			System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-			petitService.pgForm(dateReport,users);
+			petitService.report_call(dateReport,users);
 		}else
 		
 		if(getRole().contains("ROLE_INGOS")){
 			String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
 			System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-			petitService.pgForm(dateReport,users);
+			petitService.report_call(dateReport,users);
 		}else
 		
 		if(getRole().contains("ROLE_SIMAZ")){
 			String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
 			System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-			petitService.pgForm(dateReport,users);
+			petitService.report_call(dateReport,users);
 		}
 		
-		else {petitService.pgForm(dateReport, getUserName());}
+		else {petitService.report_call(dateReport, getUserName());}
 		
 			
     	return "reporting";
@@ -622,41 +688,41 @@ public class PetitController {
 				if(getRole().contains("ROLE_ROSNO")){
 					String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
 					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-					petitService.pgForm(dateReport,users);
+					petitService.report_1(dateReport,users);
 				}else
 				
 				if(getRole().contains("ROLE_INGOS")){
 					String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
 					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-					petitService.pgForm(dateReport,users);
+					petitService.report_1(dateReport,users);
 				}else
 				
 				if(getRole().contains("ROLE_SIMAZ")){
 					String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
 					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-					petitService.pgForm(dateReport,users);
+					petitService.report_1(dateReport,users);
 				}
 				
-				else {petitService.pgForm(dateReport, getUserName());}
+				else {petitService.report_1(dateReport, getUserName());}
 			}
 			else
 			{
 				if(insursmo.equals("smo_simaz")){
 					String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
 					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-					petitService.pgForm(dateReport,users);
+					petitService.report_1(dateReport,users);
 				}
 				
 				if(insursmo.equals("smo_rosno")){
 					String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
 					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-					petitService.pgForm(dateReport,users);
+					petitService.report_1(dateReport,users);
 				}
 				
 				if(insursmo.contains("smo_ingos")){
 					String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
 					System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
-					petitService.pgForm(dateReport,users);
+					petitService.report_1(dateReport,users);
 				}
 			}	
 			
@@ -716,6 +782,13 @@ public class PetitController {
         downloadFile(request, response, f.getPath());
 	}
 	
+	
+	@RequestMapping(value = "/report_power_sp_file", method = RequestMethod.GET)
+    public void report_power_sp_file(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		File f = new File( servletcontext.getRealPath("/resources/report/power_sp1_sp2.xls"));
+        downloadFile(request, response, f.getPath());
+	}
+	
 	@RequestMapping(value = "/report_1", method = RequestMethod.GET)
     public void report_1(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		File f = new File( servletcontext.getRealPath("/resources/report/report_letter_appeals.xls"));
@@ -734,7 +807,8 @@ public class PetitController {
         if(filePath.contains("doc_fond")){
         	fullPath = appPath + filePath;
         }else{
-        	if(filePath.contains("report_strax3") || filePath.contains("report_letter_") || filePath.contains("drugs")){
+        	if(filePath.contains("report_strax3") || filePath.contains("report_letter_") || filePath.contains("drugs") ||
+        			filePath.contains("power_sp1_sp2")){
         		fullPath = filePath;
         	}else{
         //String fullPath = appPath + filePath ;      
@@ -781,7 +855,26 @@ public class PetitController {
     public String reportAppealPay(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws SQLException, ServletException, IOException, ClassNotFoundException, JRException {
 		if(bindingResult.hasErrors()) return "reporting";
 		
-		petitService.reportAppealPay(dateReport, getUserName());
+		if(getRole().contains("ROLE_ROSNO")){
+			String users = coverter.getMap().get("ROLE_ROSNO").toString()+coverter.getMap().get("ROLE_ER5002").toString();
+			System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+			petitService.reportAppealPay(dateReport,users);
+		}else
+		
+		if(getRole().contains("ROLE_INGOS")){
+			String users = coverter.getMap().get("ROLE_INGOS").toString()+coverter.getMap().get("ROLE_ER5003").toString();
+			System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+			petitService.reportAppealPay(dateReport,users);
+		}else
+		
+		if(getRole().contains("ROLE_SIMAZ")){
+			String users = coverter.getMap().get("ROLE_SIMAZ").toString()+coverter.getMap().get("ROLE_ER5001").toString();
+			System.out.println("Users name " + getClass().getName()+ " for log \n"+users );
+			petitService.reportAppealPay(dateReport,users);
+		}
+		
+		else {petitService.reportAppealPay(dateReport, getUserName());}
+		
     	return "reporting";
 	}
 	

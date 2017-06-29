@@ -142,5 +142,7 @@ public interface PetitService {
 	
 	public void deleteSubType(Integer id);
 	
+	public void power_sp1_sp2(ReportParams dateReport, String username[]) throws SQLException, ClassNotFoundException, JRException;
+		
 
 }

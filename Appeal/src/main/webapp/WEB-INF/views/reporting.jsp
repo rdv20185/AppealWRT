@@ -108,6 +108,32 @@
 </a>&nbsp;&nbsp;&nbsp;&nbsp;
 <br><br><hr/>
 
+<h3>Нагрузка на страхового представителя 1-го и 2-го уровня</h3>
+<form:form method="post" action="report_power_sp.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
+	<table cellspacing='15'>
+		<tr>
+		<td>Минимальная дата должна быть не ранее  16.06.2017</td>
+		</tr>
+		<tr>
+			<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>
+			<form:input id="dateBegin" path="dateBegin" class='reportParam' /></td>
+			<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
+			<form:input id="dateEnd" path="dateEnd" class='reportParam' /></td>
+			<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
+			
+			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
+				<td><form:checkbox path="insurcomp" value="smo_ingos"/>Ингосстрах</td>
+				<td><form:checkbox path="insurcomp" value="smo_rosno"/>Росно</td>
+				<td><form:checkbox path="insurcomp" value="smo_simaz"/>СимазМед</td>
+			</sec:authorize>
+		</tr>
+	</table>
+</form:form>
+<br>
+<a href="<c:url value="/report_power_sp_file" />">Скачать</a>
+
+<br><br><hr/>
+
 <h3>Форма для раздела III. Сведения о деятельности страховых представителей</h3>
 <form:form method="post" action="report_strax3.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
 	<table cellspacing='15'>
