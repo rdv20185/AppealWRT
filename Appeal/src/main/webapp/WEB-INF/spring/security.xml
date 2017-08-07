@@ -27,6 +27,7 @@
             <user-service>
                 <user name="smyvin" password="kjh987" authorities="ROLE_ADMIN" />
 				<user name="vasilyeva" password="uhb567" authorities="ROLE_ADMIN" />
+				<user name="tkach" password="fdf342" authorities="ROLE_ADMIN" />
 				
 				<user name="smo_simaz" password="dsadaf" authorities="ROLE_SMO,ROLE_SIMAZ" />
 				<user name="smo_simaz_sp1_01" password="tfuyt765" authorities="ROLE_SMO,ROLE_SIMAZ,ROLE_SIMAZ_SP1,ROLE_SMO_SP1" />

@@ -718,7 +718,93 @@
 			<form:select id="rectif1" path="rectif1Id" onchange="document.getElementById('rectif1Warning').hidden = true;"></form:select>
 	</p>
 	
-<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_SMO','ROLE_ADMIN')">	
+</fieldset>	
+<sec:authorize access="hasAnyRole('ROLE_TFOMS','DEVELOPER','ROLE_SMO','ROLE_ADMIN')">
+<fieldset class="row777">
+                <legend>Подробнее</legend>
+                <div class="hide">
+                <p>
+                	
+						<form:label path="rectif2Id"><spring:message code="label.rectif2" /></form:label>
+						<span id="rectif2Warning" style="color:#ff8000;font-size:8">${petit.rectif2.rectif2Name}</span>
+						<form:select id="rectif2" path="rectif2Id" onchange="document.getElementById('rectif2Warning').hidden = true;"></form:select>
+						
+						<form:label path="rectif3Id"><spring:message code="label.rectif3" /></form:label>
+						<span id="rectif3Warning" style="color:#ff8000;font-size:8">${petit.rectif3.rectif3Name}</span>
+						<form:select id="rectif3" path="rectif3Id" onchange="document.getElementById('rectif3Warning').hidden = true;"></form:select>
+
+						<form:label path="rectif4Id"><spring:message code="label.rectif4" /></form:label>
+						<span id="rectif4Warning" style="color:#ff8000;font-size:8">${petit.rectif4.rectif4Name}</span>
+						<form:select id="rectif4" path="rectif4Id" onchange="document.getElementById('rectif4Warning').hidden = true;" ></form:select>
+                	
+                </p>
+                <p>
+							
+					<form:label path="hspId"><spring:message code="label.hsp" /></form:label>
+					<form:select path="hspId">
+						<form:option value="0" label="" />
+		    			<form:options items="${hspList}"/>
+					</form:select>
+					
+					<form:label path="blockger2016.typempid">Вид МП</form:label>
+					<form:select path="blockger2016.typempid" id="typempid">
+						<form:options items="${typeMP}"/>
+					</form:select>
+					
+                </p>
+                <p>
+					<form:label path="moId"><spring:message code="label.mo" /></form:label>
+					<form:select path="moId">
+						<form:option value="0" label="" />
+    					<form:options items="${moList}"/>
+					</form:select>
+			
+					<form:label path="insurId"><spring:message code="label.insur" /></form:label>
+					<form:select path="insurId">
+						<form:option value="0" label="" />
+    					<form:options items="${insurList}"/>
+					</form:select>
+                </p>
+                <p>
+					<form:label path="validId"><spring:message code="label.valid" /></form:label>
+					<form:select path="validId">
+						<form:option value="0" label="" />
+    					<form:options items="${validList}"/>
+					</form:select>
+	
+					<form:label path="compens"><spring:message code="label.compens" /></form:label>
+					<form:input class="css-input" path="compens" />
+	
+					<form:label path="satisf"><spring:message code="label.satisf" /></form:label>
+					<form:select class="css-input" path="satisf">
+	      					<form:option value="" label="" />
+							<form:option value="ДА" label="ДА" />
+							<form:option value="НЕТ" label="НЕТ" />
+					</form:select>
+	
+					<form:label path="compensSource"><spring:message code="label.compensSource" /></form:label>
+					<form:input class="css-input" path="compensSource" placeholder="СМО МО или ТФОМС"/>
+	
+					<form:label path="compensCode"><spring:message code="label.compensCode" /></form:label>
+					<form:input class="css-input" path="compensCode" placeholder="Код дефекта"/>
+	
+					<form:label path="compensSum"><spring:message code="label.compensSum" /></form:label>
+					<form:input class="css-input" path="compensSum" pattern="^[^.]*$" title="Не используйте точку"/>
+                </p>
+                <p>
+					<form:label style="width: 144px;" path="causeNote"><spring:message code="label.causeNote" /></form:label>
+					<form:textarea rows="2" cols="100" value="0" path="causeNote" />
+                </p>
+                </div>
+                <p>
+                	<input class='btn-slide' type="button" value="<spring:message code="label.more"/>"/>
+                </p><br>
+                </fieldset>
+</sec:authorize>    	
+	
+	
+<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_SMO','ROLE_ADMIN')">
+<fieldset  class="row777">	
 	<p>
 	  <div>
 	   <div style="float:left;"><button type="button" id="btn_add_subtype" title="Добавить причину">+</button></div>
@@ -940,87 +1026,7 @@
 	</p>
 </sec:authorize>	
 </fieldset>
-<sec:authorize access="hasAnyRole('ROLE_TFOMS','DEVELOPER','ROLE_SMO','ROLE_ADMIN')">
-<fieldset class="row777">
-                <legend>Подробнее</legend>
-                <div class="hide">
-                <p>
-                	
-						<form:label path="rectif2Id"><spring:message code="label.rectif2" /></form:label>
-						<span id="rectif2Warning" style="color:#ff8000;font-size:8">${petit.rectif2.rectif2Name}</span>
-						<form:select id="rectif2" path="rectif2Id" onchange="document.getElementById('rectif2Warning').hidden = true;"></form:select>
-						
-						<form:label path="rectif3Id"><spring:message code="label.rectif3" /></form:label>
-						<span id="rectif3Warning" style="color:#ff8000;font-size:8">${petit.rectif3.rectif3Name}</span>
-						<form:select id="rectif3" path="rectif3Id" onchange="document.getElementById('rectif3Warning').hidden = true;"></form:select>
-
-						<form:label path="rectif4Id"><spring:message code="label.rectif4" /></form:label>
-						<span id="rectif4Warning" style="color:#ff8000;font-size:8">${petit.rectif4.rectif4Name}</span>
-						<form:select id="rectif4" path="rectif4Id" onchange="document.getElementById('rectif4Warning').hidden = true;" ></form:select>
-                	
-                </p>
-                <p>
-							
-					<form:label path="hspId"><spring:message code="label.hsp" /></form:label>
-					<form:select path="hspId">
-						<form:option value="0" label="" />
-		    			<form:options items="${hspList}"/>
-					</form:select>
-					
-					<form:label path="blockger2016.typempid">Вид МП</form:label>
-					<form:select path="blockger2016.typempid" id="typempid">
-						<form:options items="${typeMP}"/>
-					</form:select>
-					
-                </p>
-                <p>
-					<form:label path="moId"><spring:message code="label.mo" /></form:label>
-					<form:select path="moId">
-						<form:option value="0" label="" />
-    					<form:options items="${moList}"/>
-					</form:select>
-			
-					<form:label path="insurId"><spring:message code="label.insur" /></form:label>
-					<form:select path="insurId">
-						<form:option value="0" label="" />
-    					<form:options items="${insurList}"/>
-					</form:select>
-                </p>
-                <p>
-					<form:label path="validId"><spring:message code="label.valid" /></form:label>
-					<form:select path="validId">
-						<form:option value="0" label="" />
-    					<form:options items="${validList}"/>
-					</form:select>
-	
-					<form:label path="compens"><spring:message code="label.compens" /></form:label>
-					<form:input class="css-input" path="compens" />
-	
-					<form:label path="satisf"><spring:message code="label.satisf" /></form:label>
-					<form:select class="css-input" path="satisf">
-	      					<form:option value="" label="" />
-							<form:option value="ДА" label="ДА" />
-							<form:option value="НЕТ" label="НЕТ" />
-					</form:select>
-	
-					<form:label path="compensSource"><spring:message code="label.compensSource" /></form:label>
-					<form:input class="css-input" path="compensSource" placeholder="СМО МО или ТФОМС"/>
-	
-					<form:label path="compensCode"><spring:message code="label.compensCode" /></form:label>
-					<form:input class="css-input" path="compensCode" placeholder="Код дефекта"/>
-	
-					<form:label path="compensSum"><spring:message code="label.compensSum" /></form:label>
-					<form:input class="css-input" path="compensSum" pattern="^[^.]*$" title="Не используйте точку"/>
-                </p>
-                <p>
-					<form:label style="width: 144px;" path="causeNote"><spring:message code="label.causeNote" /></form:label>
-					<form:textarea rows="2" cols="100" value="0" path="causeNote" />
-                </p>
-                </div>
-                <p>
-                	<input class='btn-slide' type="button" value="<spring:message code="label.more"/>"/>
-                </p><br>
-</sec:authorize>                
+            
                 <div class="hide2">
 					<p>
 					<c:if test="${petit.bloutboindletter2016.date_between eq null}">
