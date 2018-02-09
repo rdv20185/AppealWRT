@@ -95,6 +95,8 @@ public class MeoServiceImp implements MeoService {
 		exporter.exportReport();
 		
         disconnectForJasper(conn);
+		
+		
     	}catch (Exception e) {
     		e.printStackTrace();
 		}

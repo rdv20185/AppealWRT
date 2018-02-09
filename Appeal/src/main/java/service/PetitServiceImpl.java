@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.ServletContext;
+import javax.xml.bind.JAXBException;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRTextElement;
@@ -47,12 +48,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import app.Appeal;
 import dao.PetitDAO;
 import domain.Callnight_markerday;
 import domain.CauseL;
 import domain.CdrQuery;
+import domain.IRPLIST;
 import domain.Petit;
 import domain.Rectif1L;
 import domain.Rectif2L;
@@ -721,6 +724,27 @@ public class PetitServiceImpl implements PetitService {
         .map(r -> r.getAuthority()).collect(Collectors.toSet());
         
         return roles;
+	}
+
+	@Override
+	public List<Petit> parseArchiveFile(File file) throws IOException, JAXBException {
+		
+		List<Petit> ls = null ;
+		 
+		if(file.getName().contains(".zip")){
+			
+			List<File> xml_file = utilitys.extractArchive(file);
+	        List<IRPLIST> model = utilitys.unmarshal(xml_file);
+	        ls = utilitys.transformToEntity(model);
+		
+			
+		}else if(file.getName().contains(".rar")){
+			
+		}
+
+		
+
+		return ls;
 	}
 	
     

@@ -30,17 +30,17 @@ public class FTPDownloadFileDemo {
     	FTPClient ftpClient = new FTPClient();
     	
     	try {
-	        String 	server = Option.getDirectory("ftp_server");
-	        int port = Integer.valueOf(Option.getDirectory("ftp_port"));
-	        String user = Option.getDirectory("username");
-	        String pass = Option.getDirectory("pass");
+	        String 	server = Option.getDirectory("ftp_server","directoriesftp.properties");
+	        int port = Integer.valueOf(Option.getDirectory("ftp_port","directoriesftp.properties"));
+	        String user = Option.getDirectory("username","directoriesftp.properties");
+	        String pass = Option.getDirectory("pass","directoriesftp.properties");
         	
             ftpClient.connect(server, port);
             ftpClient.login(user, pass);
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
             
-            String directoryFrom = Option.getDirectory("dirfrom"); 
+            String directoryFrom = Option.getDirectory("dirfrom","directoriesftp.properties"); 
             FTPFile[] files = ftpClient.listFiles(directoryFrom);
             for (FTPFile file : files) {
                 String details = file.getName();
@@ -69,7 +69,7 @@ public class FTPDownloadFileDemo {
                 			String remoteFile = fi.getName();
 	                			
 	                			String remoteFile1 = remotePath+"/"+remoteFile;
-	                			String directoryTo = Option.getDirectory("dirTo");
+	                			String directoryTo = Option.getDirectory("dirTo","directoriesftp.properties");
 	                			File downloadFile1 = new File(directoryTo+remoteFile);
 	                            OutputStream outputStream1 = new BufferedOutputStream(new FileOutputStream(downloadFile1));
 	                            boolean success = ftpClient.retrieveFile(remoteFile1, outputStream1);

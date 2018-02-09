@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pg_form_1_1" pageWidth="1000" pageHeight="1200" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="ef9f9989-e419-45fd-b634-6e63c2b4c9e2">
-	<property name="ireport.zoom" value="1.4641000000000015"/>
+	<property name="ireport.zoom" value="1.3310000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="147"/>
 	<style name="Arial_Normal" isDefault="true" fontName="Arial" fontSize="12" pdfFontName="c:\tahoma.ttf" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
 	<subDataset name="New Dataset 1" uuid="bf57778b-e755-4841-92f8-c2ba1e2d8bf4"/>
 	<parameter name="dateBegin" class="java.lang.String"/>
@@ -15,33 +15,47 @@
 		<defaultValueExpression><![CDATA[new SimpleDateFormat("dd.MM.yyyy").format(new Date().getTime())]]></defaultValueExpression>
 	</parameter>
 	<parameter name="beginning_of_the_year" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new String("01.01.")+(new SimpleDateFormat("yyyy").format($P{CurrentDate})).toString()]]></defaultValueExpression>
+	<!--	<defaultValueExpression><![CDATA[new String("01.01.")+(new SimpleDateFormat("yyyy").format($P{CurrentDate})).toString()]]></defaultValueExpression> -->
+			<defaultValueExpression><![CDATA[new String("01.01.")+new String($P{dateEnd}).substring(6)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[with
 			petit as (select * from t_petit_all t where  $P{username} like '%'||t.username||'%'),
 			blockger as (select * from t_block_ger_all bl),
             r1c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.source_id =2 and t.present_id = 1),
-            r2c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.username like '%'||t.username||'%' and t.username  not like '%'||'call'||'%' and t.present_id = 1 and (t2.regsource_id=3 or t2.regsource_id=4)),
+            r2c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.username  like '%'||'sp2'||'%' and t.present_id = 1 and (t2.regname like '%'||'sp1'||'%' or t2.regname like '%'||'call'||'%' or  t2.regname='auto')),
             r3c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.source_id =2 and t.present_id = 2),
             r4c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{beginning_of_the_year} and $P{dateEnd} and t.id = t2.id_ger and t.source_id =2 and t.present_id = 1),
-            r5c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{beginning_of_the_year} and $P{dateEnd} and t.id = t2.id_ger and t.username like '%'||t.username||'%' and t.username  not like '%'||'call'||'%'  and t.present_id = 1 and (t2.regsource_id=3 or t2.regsource_id=4)),
-            r6c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{beginning_of_the_year} and $P{dateEnd} and t.id = t2.id_ger and t.source_id =2 and t.present_id = 2)
-
+            r5c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between '16.06.2017' and $P{dateEnd} and t.id = t2.id_ger and t.username  like '%'||'sp2'||'%' and t.present_id = 1 and (t2.regname like '%'||'sp1'||'%' or t2.regname like '%'||'call'||'%' or  t2.regname='auto')),
+            r5c1d as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{beginning_of_the_year} and '15.06.2017' and t.id = t2.id_ger and (t.username  not like '%'||'call'||'%' ) and t.present_id = 1  and (t2.regsource_id=3 or t2.regsource_id=4)),
+            r6c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{beginning_of_the_year} and $P{dateEnd} and t.id = t2.id_ger and t.source_id =2 and t.present_id = 2),
+            r7c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and (t.conect_id = 7 or t.conect_id = 1)),
+            r8c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.username  like '%'||'sp1'||'%' and t.present_id = 1  and (t.conect_id = 7 or t.conect_id = 1)),
+            r9c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and  t.username like '%'||'callnight'||'%' and t.present_id = 1 and (t.conect_id = 7 or t.conect_id = 1) ),
+            r10c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and t.username  like '%'||'call'||'%' and t.username not like '%'||'callnight'||'%' and t.present_id = 1 and (t.conect_id = 7 or t.conect_id = 1)),
+            r11c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and (t.username  like '%'||'call'||'%' or t.username  like '%'||'sp1'||'%') and t.present_id = 1  and (t.conect_id = 7 or t.conect_id = 1)),
+            r12c1 as (select count(*) c from petit t,blockger t2 where trunc(t2.date_end) between $P{dateBegin} and $P{dateEnd} and t.id = t2.id_ger and (t.username  like '%'||'sp2'||'%' and t2.regname like '%'||'sp2'||'%') and t.present_id = 1  and (t.conect_id = 7 or t.conect_id = 1))
 
         select
-			r1c1.c r1c1,r2c1.c r2c1,r3c1.c r3c1,r4c1.c r4c1,r5c1.c r5c1,r6c1.c r6c1
+			r1c1.c r1c1,r2c1.c r2c1,r3c1.c r3c1,r4c1.c r4c1,r5c1.c r5c1,r5c1d.c r5c1d,r6c1.c r6c1,r7c1.c r7c1,r8c1.c r8c1,r9c1.c r9c1,r10c1.c r10c1,r11c1.c r11c1,r12c1.c r12c1
 		from
-			r1c1,r2c1,r3c1,r4c1,r5c1,r6c1]]>
+			r1c1,r2c1,r3c1,r4c1,r5c1,r5c1d,r6c1,r7c1,r8c1,r9c1,r10c1,r11c1,r12c1]]>
 	</queryString>
 	<field name="r1c1" class="java.lang.Integer"/>
 	<field name="r2c1" class="java.lang.Integer"/>
 	<field name="r3c1" class="java.lang.Integer"/>
 	<field name="r4c1" class="java.lang.Integer"/>
 	<field name="r5c1" class="java.lang.Integer"/>
+	<field name="r5c1d" class="java.lang.Integer"/>
 	<field name="r6c1" class="java.lang.Integer"/>
+	<field name="r7c1" class="java.lang.Integer"/>
+	<field name="r8c1" class="java.lang.Integer"/>
+	<field name="r9c1" class="java.lang.Integer"/>
+	<field name="r10c1" class="java.lang.Integer"/>
+	<field name="r11c1" class="java.lang.Integer"/>
+	<field name="r12c1" class="java.lang.Integer"/>
 	<detail>
-		<band height="311" splitType="Stretch">
+		<band height="666" splitType="Stretch">
 			<textField>
 				<reportElement x="377" y="95" width="92" height="18" uuid="e9320cd4-7eb5-47da-8641-2150f2cd3cb9"/>
 				<box>
@@ -599,7 +613,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{r5c1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{r5c1}+$F{r5c1d}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="377" y="239" width="92" height="18" uuid="319babb5-959c-4a27-9879-b0aa37bbcd23"/>
@@ -954,6 +968,248 @@
 					<font fontName="Times New Roman" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Дата формирования :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="387" width="310" height="24" uuid="23583176-1b17-4932-baff-ee52b9cbaf2c"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Показатель"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="387" width="105" height="24" uuid="d81f96b9-ec47-4e8a-8a66-ef494d818aaf"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["за отчетный периол"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="465" width="310" height="18" uuid="0e0d4c14-aa26-476c-9c0e-670e9e0e6933"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ОП1"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="501" width="105" height="18" uuid="ca9917bc-b9c8-482a-afd8-71acbdccc257"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r8c1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="483" width="310" height="18" uuid="b12dff7e-8ce2-43ca-aa32-1f0d2a90daf5"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ОП1 ночные"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="483" width="105" height="18" uuid="9f4488b3-c9af-4f86-b8df-0ff15d86e6f1"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r9c1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="411" width="310" height="18" uuid="1aaca30f-f364-4d40-92e1-b65cad39f18b"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Количество звонков поступивших в СМО и закрытыз СП1, всего"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="411" width="105" height="18" uuid="f87c1ba7-5fd9-41da-bda7-6c328dab8d58"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r7c1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="465" width="105" height="18" uuid="e740927f-5e9b-4208-a486-fffca57658f1"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r10c1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="501" width="310" height="18" uuid="72d13256-8b49-4e39-8b6c-ea3cd0cba736"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["СП1"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="537" width="310" height="29" uuid="40c2debc-4063-4a62-98cb-0dae04d00af6"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Уровень обращений застрахованных лиц, чья проблема решена специалистами СМО (СП1) с первого обращения"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="537" width="105" height="29" uuid="562c9c26-06a9-47d6-8333-ee50f7beebd5"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Math.round(new Double($F{r11c1})/new Double($F{r7c1})*1000)/10.0 + "%"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="566" width="669" height="43" uuid="7d2ade91-b4b8-45d6-a08f-d66713283a41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["* количество звонков, поступивших в СМО и закрытыз СП1, отображаются корректно после даты перехода на деление сп1 и сп2 с 15.06.2017"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="311" width="659" height="43" uuid="42f5b3c3-18fc-4b34-ba64-00456b39c2c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["* 15.06.2017- дата перехода на деление сп1 и сп2. Данный алгоритм сбора информации с учетом деления. Данные,  сформированные ранее этой даты, считаются по старому алгоритму. Значения по году суммируются."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="354" width="415" height="33" uuid="ae9bd0c7-d729-43c0-a7d5-86c50756178d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["СПРАВОЧНО"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="447" width="415" height="18" uuid="f34a9169-052c-4153-aa87-34d93fd84aee"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["в том числе:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="429" width="105" height="18" uuid="87e5f823-8c26-4a47-8558-6e6d3638215b"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r11c1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="429" width="310" height="18" uuid="59524a67-8028-46a0-8e85-612ed2ca7a08"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Рассмотрено с первого обращения, всего:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="519" width="105" height="18" uuid="cb358199-c39b-4a1b-8d3e-1444dce6301a"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r12c1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="519" width="310" height="18" uuid="8ace026a-2bcb-4cb5-8827-7f420d384349"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["СП2"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

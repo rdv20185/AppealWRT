@@ -1,14 +1,32 @@
 package util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.springframework.stereotype.Component;
 
+import domain.BlockGER2016;
+import domain.IRPLIST;
+import domain.IRPLIST.IRP;
 import domain.Petit;
+import ftp.Option;
 
 
 /**
@@ -80,7 +98,7 @@ public class Utilitys {
 	}
 	
 	/**
-	 * Метод преобразует в объект Calendar строковую данные и данные объекта Date
+	 * Метод преобразует в объект Calendar строкову данные и данные объекта Date
 	 * @param petit Объект с необходимыми датами getDateInput() и getDate_end() 
 	 * Если getDate_end() == null (в случае если обращение является еще в работе)
 	 * присваиваем текущюю дату, т.е. рассматриваем на текущий день.
@@ -170,6 +188,115 @@ public class Utilitys {
 
 	public void setCal2(Calendar cal2) {
 		this.cal2 = cal2;
+	}
+
+
+	/**
+	 * Метод разархивации 
+	 * @param bytes
+	 * @return массив файлов из архива
+	 * @throws IOException 
+	 */
+	public List<File> extractArchive(File file) throws IOException {
+		
+		String pathStoreExractFiles = Option.getDirectory("directoryExtractFiles","directories.properties");
+		
+		byte[] buffer = new byte[1024];
+		
+		ZipInputStream zis =new ZipInputStream(new FileInputStream(file));
+		ZipEntry ze = zis.getNextEntry();
+		List<File> ls_file = new ArrayList<File>();
+		
+		
+		while(ze!=null){
+
+	    	   String fileName = ze.getName();
+	           File newFile = new File(pathStoreExractFiles + File.separator + fileName);
+
+//	           System.out.println("file unzip : "+ newFile.getAbsoluteFile());
+
+	            //create all non exists folders
+	            //else you will hit FileNotFoundException for compressed folder
+	            //new File(newFile.getParent()).mkdirs();
+
+	            FileOutputStream fos = new FileOutputStream(newFile);
+
+	            int len;
+	            while ((len = zis.read(buffer)) > 0) {
+	            	fos.write(buffer, 0, len);
+	            }
+
+	            fos.close();
+	            ls_file.add(newFile);
+	            ze = zis.getNextEntry();
+	    	}
+
+		zis.closeEntry();
+		zis.close();
+		
+
+		return ls_file;
+	}
+
+
+	/**
+	 * @param xml_file
+	 * @return возвращает parsed xml в объект 
+	 * @throws JAXBException 
+	 * @throws FileNotFoundException 
+	 */
+	public List<IRPLIST> unmarshal(List<File> xml_file) throws FileNotFoundException, JAXBException {
+		
+		JAXBContext context = JAXBContext.newInstance(IRPLIST.class);
+        Unmarshaller um = context.createUnmarshaller();
+        IRPLIST irplist = null;
+        List<IRPLIST> ls = new ArrayList<IRPLIST>();
+		
+		for(File f : xml_file){
+			
+	        irplist = (IRPLIST) um.unmarshal(new FileReader(f.getAbsolutePath()));
+	        ls.add(irplist);
+	        
+	        	System.out.println(ls);	
+		}
+		
+		return ls;
+	}
+
+
+	/**
+	 * Метод "перекодировки" из xml объекта в entity объект
+	 * @param model
+	 * @return коллекцию объектов
+	 */
+	public List<Petit> transformToEntity(List<IRPLIST> model) {
+		
+		List<Petit> list_p = new ArrayList<Petit>();
+		Petit p = null;
+		
+		for(IRPLIST m : model){
+			for(IRP irp : m.getIRP()){
+				
+				p = new Petit();
+				//p.setDateInput(irp.getDATECREATE());
+				
+				p.setPresentId(1);
+				p.setUsername("!!!!!!");
+				
+				p.getBlockger2016().setRegname("!!!!!!!!!!");
+				p.getBlockger2016().setDate_end(new Date());
+				
+				p.getBlockger2016().setState(4);
+				p.getBlockger2016().setPetit(p);
+				
+				p.setBloutboindletter2016(null);
+				
+				list_p.add(p);
+			}
+		}
+		
+		
+		return null;
 	}
 
 

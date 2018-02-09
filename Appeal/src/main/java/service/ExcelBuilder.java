@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import domain.Petit;
+import res.Fields;
 
 /**
  * This class builds an Excel spreadsheet document using Apache POI library.
@@ -55,56 +56,80 @@ public class ExcelBuilder extends AbstractExcelView {
 		header.createCell(1).setCellValue("Дата поступления");
 		header.getCell(1).setCellStyle(style);
 		
-		header.createCell(2).setCellValue("Источник");
+		header.createCell(2).setCellValue("Дата закрытия");
 		header.getCell(2).setCellStyle(style);
 		
-		header.createCell(3).setCellValue("Тип МО");
+		header.createCell(3).setCellValue("Источник");
 		header.getCell(3).setCellStyle(style);
 		
-		header.createCell(3).setCellValue("Связь");
-		header.getCell(3).setCellStyle(style);
-		
-		header.createCell(4).setCellValue("Представление");
+		header.createCell(4).setCellValue("Тип МО");
 		header.getCell(4).setCellStyle(style);
 		
-		header.createCell(5).setCellValue("Номер письма");
+		header.createCell(5).setCellValue("Связь");
 		header.getCell(5).setCellStyle(style);
 		
-		header.createCell(6).setCellValue("МО");
+		header.createCell(6).setCellValue("Представление");
 		header.getCell(6).setCellStyle(style);
 		
-		header.createCell(7).setCellValue("Тип");
+		header.createCell(7).setCellValue("Номер письма");
 		header.getCell(7).setCellStyle(style);
 		
-		header.createCell(8).setCellValue("Фамилия");
+		header.createCell(8).setCellValue("МО");
 		header.getCell(8).setCellStyle(style);
 		
-		header.createCell(9).setCellValue("Имя");
+		header.createCell(9).setCellValue("Тип");
 		header.getCell(9).setCellStyle(style);
 		
-		header.createCell(10).setCellValue("Территория");
+		header.createCell(10).setCellValue("Фамилия");
 		header.getCell(10).setCellStyle(style);
 		
-		header.createCell(11).setCellValue("Причина");
+		header.createCell(11).setCellValue("Имя");
 		header.getCell(11).setCellStyle(style);
 		
-		header.createCell(12).setCellValue("Уточнение");
+		header.createCell(12).setCellValue("Территория");
 		header.getCell(12).setCellStyle(style);
 		
-		header.createCell(13).setCellValue("Обоснованность");
+		header.createCell(13).setCellValue("Причина");
 		header.getCell(13).setCellStyle(style);
 		
-		header.createCell(14).setCellValue("Удовлетворенность");
+		header.createCell(14).setCellValue("Уточнение");
 		header.getCell(14).setCellStyle(style);
 		
-		header.createCell(15).setCellValue("Сумма компенсации");
+		header.createCell(15).setCellValue("Обоснованность");
 		header.getCell(15).setCellStyle(style);
 		
-		header.createCell(16).setCellValue("Регистратор");
+		header.createCell(16).setCellValue("Удовлетворенность");
 		header.getCell(16).setCellStyle(style);
 		
-		header.createCell(17).setCellValue("Исподнитель");
+		header.createCell(17).setCellValue("Сумма компенсации");
 		header.getCell(17).setCellStyle(style);
+		
+		header.createCell(18).setCellValue("Регистратор");
+		header.getCell(18).setCellStyle(style);
+		
+		header.createCell(19).setCellValue("Исподнитель");
+		header.getCell(19).setCellStyle(style);
+		
+		// -------------------------------------------
+		
+		header.createCell(20).setCellValue("От кого");
+		header.getCell(20).setCellStyle(style);
+		
+		header.createCell(21).setCellValue("Номер письма");
+		header.getCell(21).setCellStyle(style);
+		
+		header.createCell(22).setCellValue("Дата перенаправления для рассмотрения");
+		header.getCell(22).setCellStyle(style);
+		
+		header.createCell(23).setCellValue("Адресат (кому направлено)");
+		header.getCell(23).setCellStyle(style);
+		
+		header.createCell(24).setCellValue("Дата заакрытия расчетная");
+		header.getCell(24).setCellStyle(style);
+		
+		header.createCell(25).setCellValue("Номер исходящий для ответа гражданину");
+		header.getCell(25).setCellStyle(style);
+		
 		
 		// create data rows
 		int rowCount = 1;
@@ -113,23 +138,57 @@ public class ExcelBuilder extends AbstractExcelView {
 			HSSFRow aRow = sheet.createRow(rowCount++);
 			aRow.createCell(0).setCellValue(petit.getId());
 			aRow.createCell(1).setCellValue(petit.getDateInput());
-			aRow.createCell(2).setCellValue(petit.getSource().getSourceName());
-			aRow.createCell(3).setCellValue(petit.getHsp().getHspName());
-			aRow.createCell(4).setCellValue(petit.getConect().getConectName());
-			aRow.createCell(5).setCellValue(petit.getPresent().getPresentName());
-			aRow.createCell(6).setCellValue(petit.getLetterNum());
-			aRow.createCell(7).setCellValue(petit.getMo().getMoName());
-			aRow.createCell(8).setCellValue(petit.getType().getTypeName());
-			aRow.createCell(9).setCellValue(petit.getSurname());
-			aRow.createCell(10).setCellValue(petit.getName());
-			aRow.createCell(11).setCellValue(petit.getTer().getTerId());
-			aRow.createCell(12).setCellValue(petit.getCause().getCauseName());
-			aRow.createCell(13).setCellValue(petit.getRectif1().getRectif1Name());
-			aRow.createCell(14).setCellValue(petit.getValid().getValidName());
-			aRow.createCell(15).setCellValue(petit.getSatisf());
-			aRow.createCell(16).setCellValue(petit.getCompensSum());
-			aRow.createCell(17).setCellValue(petit.getBlockger2016().getRegname());
-			aRow.createCell(18).setCellValue(petit.getUsername());
+			if(petit.getBlockger2016().getDate_end() != null) { aRow.createCell(2).setCellValue(petit.getBlockger2016().getDate_end());}
+			else{ aRow.createCell(2).setCellValue(""); }
+			aRow.createCell(3).setCellValue(petit.getSource().getSourceName());
+			aRow.createCell(4).setCellValue(petit.getHsp().getHspName());
+			aRow.createCell(5).setCellValue(petit.getConect().getConectName());
+			aRow.createCell(6).setCellValue(petit.getPresent().getPresentName());
+			aRow.createCell(7).setCellValue(petit.getLetterNum());
+			aRow.createCell(8).setCellValue(petit.getMo().getMoName());
+			aRow.createCell(9).setCellValue(petit.getType().getTypeName());
+			aRow.createCell(10).setCellValue(petit.getSurname());
+			aRow.createCell(11).setCellValue(petit.getName());
+			aRow.createCell(12).setCellValue(petit.getTer().getTerId());
+			aRow.createCell(13).setCellValue(petit.getCause().getCauseName());
+			aRow.createCell(14).setCellValue(petit.getRectif1().getRectif1Name());
+			aRow.createCell(15).setCellValue(petit.getValid().getValidName());
+			aRow.createCell(16).setCellValue(petit.getSatisf());
+			aRow.createCell(17).setCellValue(petit.getCompensSum());
+			aRow.createCell(18).setCellValue(petit.getBlockger2016().getRegname());
+			aRow.createCell(19).setCellValue(petit.getUsername());
+			
+			if(petit.getBlockger2016().getInbound_from() != null){
+			Map<Integer,String> map = Fields.getInbound_from();
+			aRow.createCell(20).setCellValue(map.get(Integer.valueOf(petit.getBlockger2016().getInbound_from())));}
+			else{ aRow.createCell(20).setCellValue(""); }
+			
+			if(petit.getLetterNum() != null){
+				aRow.createCell(21).setCellValue(petit.getLetterNum());}
+				else{ aRow.createCell(21).setCellValue(""); }
+			
+			if(petit.getBloutboindletter2016() != null){
+			if(petit.getBloutboindletter2016().getDate_redirect() != null){
+				aRow.createCell(22).setCellValue(petit.getBloutboindletter2016().getDate_redirect());}
+				else{ aRow.createCell(22).setCellValue(""); }
+			}else{	aRow.createCell(22).setCellValue(""); }
+			
+			if(petit.getBloutboindletter2016() != null){
+				if(petit.getBloutboindletter2016().getRedirect_adress() != null){
+					Map<Integer,String> map = Fields.getInbound_from();
+					aRow.createCell(23).setCellValue(map.get(Integer.valueOf(petit.getBloutboindletter2016().getRedirect_adress())));}
+					else{ aRow.createCell(23).setCellValue(""); }
+				}else{	aRow.createCell(23).setCellValue(""); }
+			
+			if(petit.getBlockger2016().getDate_plan_end() != null){
+				aRow.createCell(24).setCellValue(petit.getBlockger2016().getDate_plan_end());
+			}
+			
+			if(petit.getBloutboindletter2016() != null){
+				if(petit.getBloutboindletter2016().getNumOutLetter() != null){
+					aRow.createCell(25).setCellValue(petit.getBloutboindletter2016().getNumOutLetter());
+			}
+				}
 		}
 	}
 

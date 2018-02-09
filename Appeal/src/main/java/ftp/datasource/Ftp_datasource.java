@@ -31,10 +31,10 @@ public class Ftp_datasource {
 		
 		ftpClient = new FTPClient();
 		
-		String 	server = Option.getDirectory("ftp_server");
-        int port = Integer.valueOf(Option.getDirectory("ftp_port"));
-        String user = Option.getDirectory("username");
-        String pass = Option.getDirectory("pass");
+		String 	server = Option.getDirectory("ftp_server","directoriesftp.properties");
+        int port = Integer.valueOf(Option.getDirectory("ftp_port","directoriesftp.properties"));
+        String user = Option.getDirectory("username","directoriesftp.properties");
+        String pass = Option.getDirectory("pass","directoriesftp.properties");
     	
         ftpClient.connect(server, port);
         ftpClient.login(user, pass);

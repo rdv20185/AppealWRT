@@ -124,7 +124,7 @@ public class PetitDAOImpl implements PetitDAO {
 			query.setMaxResults(100);
     	}
 		
-		if(username.equals("mityanina") || username.equals("eremina"))
+		if(username.equals("mityanina") || username.equals("eremina") || username.equals("user_1"))
     	{
 			query = sessionFactory.getCurrentSession().createQuery(
 			"select r from Petit r where  r.blockger2016.state < 3 and (r.username = :username or r.username='"+"ТФОМС"+"')  order by r.blockger2016.state asc,to_date(r.blockger2016.date_plan_end,'dd.MM.yyyy') asc, id desc");

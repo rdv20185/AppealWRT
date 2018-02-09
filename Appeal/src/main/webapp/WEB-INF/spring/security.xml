@@ -27,17 +27,85 @@
             <user-service>
                 <user name="smyvin" password="kjh987" authorities="ROLE_ADMIN" />
 				<user name="vasilyeva" password="uhb567" authorities="ROLE_ADMIN" />
-				<user name="tkach" password="fdf342" authorities="ROLE_ADMIN" />
+				
 				
 				<user name="smo_simaz" password="dsadaf" authorities="ROLE_SMO,ROLE_SIMAZ" />
 				<user name="smo_simaz_sp1_01" password="tfuyt765" authorities="ROLE_SMO,ROLE_SIMAZ,ROLE_SIMAZ_SP1,ROLE_SMO_SP1" />
 				<user name="smo_simaz_sp2_01" password="tauyt765" authorities="ROLE_SMO,ROLE_SIMAZ,ROLE_SIMAZ_SP2,ROLE_SMO_SP2" />
+				<user name="smo_simaz_sp3_01" password="gdf765" authorities="ROLE_SMO,ROLE_SIMAZ,ROLE_SIMAZ_SP3,ROLE_SMO_SP3" />
 				
 				
 				<user name="smo_ingos" password="fdgft" authorities="ROLE_SMO,ROLE_INGOS" />
 				<user name="smo_ingos_01" password="tery" authorities="ROLE_SMO,ROLE_INGOS" />
 				<user name="smo_ingos_sp1_01" password="asrty579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
-				<user name="smo_ingos_sp2_01" password="sarty579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp1_02" password="afdsty579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_03" password="asdfs33d" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_04" password="asd34dfs" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_05" password="ahu34dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_06" password="ah5dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_07" password="ahu7ss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_08" password="ah984dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_09" password="ahhfg4dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_10" password="ahu456dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_11" password="ahu375fss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_12" password="ahu354fss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_13" password="ahu365fss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_14" password="ahu388fss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_15" password="fgfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_16" password="53u34dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_17" password="a764dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_18" password="a734dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_19" password="ah84dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_20" password="ah46s" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_21" password="a454dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_22" password="ahu56ss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_23" password="a64dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_24" password="ahu76ss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_25" password="a45dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_26" password="a67ss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_27" password="a67fss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_28" password="ahu76ss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_29" password="a567dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_30" password="ahu567s" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_31" password="ah453fss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_32" password="a457fss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_33" password="a88s" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_34" password="ah64jhs" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_35" password="a53fss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_36" password="ah767ss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_37" password="a7657dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_38" password="ahu34675s" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_39" password="ahu67s" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				<user name="smo_ingos_sp1_40" password="a567dfss" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP1,ROLE_SMO_SP1" />
+				
+				
+				
+				<user name="smo_ingos_sp2_01" password="sart79" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_02" password="sa79" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_03" password="sa9" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_04" password="sajhj79" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_05" password="sartkly59" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_06" password="sarjk79" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_07" password="s579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_08" password="sar789789" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_09" password="sart9" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_10" password="sart9" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_11" password="fsjjhhdf4" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_12" password="adaghg" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_13" password="vgfsg" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_14" password="edggsfg" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_15" password="gfg43gf" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_16" password="dfsdf123" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_17" password="hjk7" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_18" password="jkjhki76" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				<user name="smo_ingos_sp2_19" password="kjhk756" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP2,ROLE_SMO_SP2" />
+				
+				<user name="smo_ingos_sp3_01" password="fhg579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP3,ROLE_SMO_SP3" />
+				<user name="smo_ingos_sp3_02" password="fh239" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP3,ROLE_SMO_SP3" />
+				<user name="smo_ingos_sp3_03" password="f3579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP3,ROLE_SMO_SP3" />
+				<user name="smo_ingos_sp3_04" password="fh3279" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP3,ROLE_SMO_SP3" />
+				<user name="smo_ingos_sp3_05" password="f3579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP3,ROLE_SMO_SP3" />
+				<user name="smo_ingos_sp3_06" password="fh4579" authorities="ROLE_SMO,ROLE_INGOS,ROLE_INGOS_SP3,ROLE_SMO_SP3" />
 				
 				<user name="mityanina" password="tre456" authorities="ROLE_TFOMS" />
 				<user name="popova" password="fds321" authorities="ROLE_TFOMS" />
@@ -46,6 +114,7 @@
 				<user name="kuznetsova" password="zxc567" authorities="ROLE_TFOMS" />
 				<user name="filimonova" password="lkj098" authorities="ROLE_TFOMS" />
 				<user name="osipova" password="jkl890" authorities="ROLE_TFOMS" />
+				<user name="user_1" password="fdf342" authorities="ROLE_TFOMS" />
 				
 				
 				<user name="РОСНО" password="rosno" authorities="ROLE_ER,ROLE_ALLER,ROLE_ROSNO" />
@@ -121,6 +190,11 @@
 				<user name="smo_rosno_07_sp2_07" password="23f456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
 				<user name="smo_rosno_09_sp2_08" password="3242r456" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
 				<user name="smo_rosno_20_sp2_09" password="wer36" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
+				
+				<user name="smo_rosno_01_sp3_01" password="wer36" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP3,ROLE_SMO_SP3" />
+				<user name="smo_rosno_01_sp3_02" password="rer16" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP3,ROLE_SMO_SP3" />
+				<user name="smo_rosno_01_sp1_01_mcw" password="34ggd56mcw" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
+				<user name="smo_rosno_01_sp2_01_mcw" password="wer36mcw" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP2,ROLE_SMO_SP2" />
 				
 				<user name="smo_rosno_08_sp1_01" password="34ggd56" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />
 				<user name="smo_rosno_10_sp1_02" password="654rgtf" authorities="ROLE_SMO,ROLE_ROSNO,ROLE_ROSNO_SP1,ROLE_SMO_SP1" />

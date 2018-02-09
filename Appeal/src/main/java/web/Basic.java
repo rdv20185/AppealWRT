@@ -291,6 +291,10 @@ public class Basic {
     public String refreshAddPetit(@ModelAttribute("petit") @Valid Petit petit, BindingResult bindingResult,HttpServletRequest request, ModelMap mapm) throws UnsupportedEncodingException, ParseException, InterruptedException {
     {
     	
+	    	petit.setSurname(petit.getSurname().toUpperCase());
+	    	petit.setName(petit.getName().toUpperCase());
+	    	petit.setPatrony(petit.getPatrony().toUpperCase());
+    	
 	    	DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			Calendar cal  = Calendar.getInstance();
 			cal.setTime(df.parse(petit.getDateInput()));
@@ -475,6 +479,10 @@ public class Basic {
     		@RequestParam(required=false) String searchcheckinbound,
     		@RequestParam(required=false) String overdueappeal,
     		HttpSession session) throws Throwable {
+    	
+    	if(petit.getSurname() != null) petit.setSurname(petit.getSurname().toUpperCase());
+    	if(petit.getName() != null) petit.setName(petit.getName().toUpperCase());
+    	if(petit.getPatrony() != null) petit.setPatrony(petit.getPatrony().toUpperCase());
     	
     	//searching parameters
     	int t = petit.getTypeId(), c = petit.getCauseId(), 

@@ -12,6 +12,5 @@
 
 	<mvc:annotation-driven />
 
-
 	 
 </beans>

@@ -520,6 +520,12 @@
             <li><a href="<c:url value="/downloadreestr1117_1" />">Сводный реестр страховых представителей</a></li>
           </ul>
         </li>
+        <li><a href="" class="submenu-link">Остальное</a>
+          <ul class="submenu">
+            <li><a href=""></a></li>
+            <li><a  id="opener">Загрузка звонков</a></li>
+          </ul>
+        </li>
         <sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
         <li><a href="<c:url value="/reportingMEO.html" />">Отчеты МЭО</a></li>
         </sec:authorize>
@@ -1355,7 +1361,12 @@
 			    <%-- <td>${petit.blockger2016.date_change}</td> --%>
 			    <c:if test="${(petit.presentId == 2)}">
 			    
+			    <c:if test="${(petit.blockger2016.date_end == null)}">
 			    <td class="cuting2">${petit.blockger2016.date_plan_end}</td>
+			    </c:if>
+			    <c:if test="${(petit.blockger2016.date_end != null)}">
+			    <td class="cuting2">${petit.blockger2016.date_end}</td>
+			    </c:if>
 			    </c:if>
 			    <c:if test="${(petit.presentId == 1 )}">
 			    	<td  class="cuting2"></td>
@@ -1419,8 +1430,141 @@
 </section>
 </c:if>
 <br>
+
+<div id="dialog-message" title="Процедура загрузки звонков">
+  <p>
+    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+    Процедура загрузки звонков позволяет загружать файлы в формате xml. Необходима для пакетного обмена результатами совершенных звонков застрахованных лиц. Формат пакетов на основе приказа №79.
+  </p>
+  <p>
+    <div class="container">
+    <h2>Загрузить звоноки</h2>
+    <hr>
+    <!-- File Upload From -->
+    <form name ="submit_file" action="fileUpload_hotcall" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <input class="form-control" type="file" name="file">
+      </div>
+      <br>
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">загрузить</button>
+      </div>
+    </form>
+    <br />
+
+    <!-- Bootstrap Progress bar -->
+    <div class="progress">
+      <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar"
+        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
+    </div>
+    <!-- <div id="progressbar"><div class="progress-label">Загрузка...</div></div> -->
+
+    <!-- Alert -->
+    <div id="alertMsg" style="color: red;font-size: 18px;"></div>
+  </div>
+  </p>
+</div>
+
 <script>
 $(document).ready(function() {
+	
+	$(function() {
+		$('button[type=submit]').click(function(e) {
+			e.preventDefault();
+			//Disable submit button
+			$(this).prop('disabled',true);
+			
+			var filename = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '');
+			console.log('filename '+filename);
+			if(filename.indexOf('zip') < 0 && filename.indexOf('rar') < 0){
+				$('#alertMsg').text('Необходим файл с расширением *.zip или *.rar');
+				$('button[type=submit]').prop('disabled',false);
+				
+				throw "Bad extanshion";
+				
+			}
+			
+			var form = document.forms["submit_file"];
+			var formData = new FormData(form);
+				
+			// Ajax call for file uploaling
+			var ajaxReq = $.ajax({
+				url : 'fileUpload_hotcall?${_csrf.parameterName}=${_csrf.token}',
+				type : 'POST',
+				data : formData,
+				cache : false,
+				contentType : false,
+				processData : false,
+				xhr: function(){
+					//Get XmlHttpRequest object
+					 var xhr = $.ajaxSettings.xhr() ;
+					
+					//Set onprogress event handler 
+					 xhr.upload.onprogress = function(event){
+						var perc = Math.round((event.loaded / event.total) * 100);
+						$('#progressBar').text(perc + '%');
+						$('#progressBar').css('width',perc + '%');
+					 };
+					 return xhr ;
+				},
+				beforeSend: function( xhr ) {
+					//Reset alert message and progress bar
+					$('#alertMsg').text('');
+					$('#progressBar').text('');
+					$('#progressBar').css('width','0%');
+                }
+			});
+
+			// Called on success of file upload
+			ajaxReq.done(function(msg) {
+				$('#alertMsg').text(msg);
+				$('input[type=file]').val('');
+				$('button[type=submit]').prop('disabled',false);
+			});
+			
+			// Called on failure of file upload
+			ajaxReq.fail(function(jqXHR) {
+				$('#alertMsg').text('Возникла ощибка\n'+jqXHR.responseText+'('+jqXHR.status+
+						' - '+jqXHR.statusText+')');
+				$('button[type=submit]').prop('disabled',false);
+			});
+		});
+	});
+	
+	
+	 
+	$( function() {
+	    $( "#dialog-message" ).dialog({
+	    	resizable: false,
+	        height: "auto",
+	        width: 600,
+	      autoOpen: false,
+	      show: {
+	        effect: "blind",
+	        duration: 1000
+	      },
+	      hide: {
+	        effect: "explode",
+	        duration: 1000
+	      },
+	      modal: true,
+	      buttons: {
+	        Ok: function() {
+	          $( this ).dialog( "close" );
+	        }
+	      }
+	    });
+	 
+	    $( "#opener" ).on( "click", function() {
+	      $( "#dialog-message" ).dialog( "open" );
+	    });
+	  } );
+	
+	
+	
+	
+   
+	
 	//$("#type").hover(function(){
 		//alert('sd');
 		//$("#type option:contains('Жалоба')").prop('selected', true);

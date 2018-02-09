@@ -91,7 +91,7 @@ public void run() throws ParseException, IOException {
 		    
 		    
 		  	ftpclient= ftp_datasource.getConnection();
-		  	directoryFrom = Option.getDirectory("dirfromcdr");
+		  	directoryFrom = Option.getDirectory("dirfromcdr","directoriesftp.properties");
 		  	String apendix = "cdr"+year+month+day+"/";
 		  	
 		  	if(logger.isInfoEnabled()){ logger.info("-> process from directory "+directoryFrom+apendix);}

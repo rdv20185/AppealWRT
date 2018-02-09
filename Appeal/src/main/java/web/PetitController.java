@@ -1,9 +1,11 @@
 package web;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -33,11 +35,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.xml.bind.JAXBException;
 
 import net.sf.jasperreports.engine.JRException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -47,12 +51,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -88,6 +94,7 @@ import domain.TypeL;
 import domain.Subtype;
 
 import ftp.FTPDownloadFileDemo;
+import ftp.Option;
 import exceptions.ValidationForRest;
 
 /**
@@ -123,6 +130,9 @@ public class PetitController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public @ResponseBody List<Petit> addPetit(Petit petit,String submitted,HttpServletRequest request,ModelMap model, Authentication aut) throws ParseException, InterruptedException, IOException, ValidationForRest {
 
+    	petit.setSurname(petit.getSurname().toUpperCase());
+    	petit.setName(petit.getName().toUpperCase());
+    	petit.setPatrony(petit.getPatrony().toUpperCase());
     	
     	String para = submitted;
 		validRest(para,petit);
@@ -169,10 +179,9 @@ public class PetitController {
 		String ff = request.getParameter("fil");
 		if(ff !=null && !ff.equals(""))
 		{
-    		Date date = new Date();
+    		
   		  	DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-  		  	try { date = df.parse(ff); } catch (ParseException e) { e.printStackTrace(); }
-    		petit.getBlockger2016().setDate_end(date);
+    		petit.getBlockger2016().setDate_end(df.parse(ff));
 		}
 		String para =submitted;//new String(submitted.getBytes("ISO-8859-1"),"UTF-8");
 		
@@ -233,7 +242,7 @@ public class PetitController {
 		}
 		
 		// Add entity to subtype
-		System.out.println("############# "+petit.getSubtype());
+		
 		if(petit.getSubtype() != null){
 			
 			for(int i=0; i < petit.getSubtype().size(); i++){
@@ -1127,4 +1136,30 @@ public class PetitController {
 	}
 		return petit;
 	}
+	
+   @PostMapping("/fileUpload_hotcall")
+   public ResponseEntity<Object> fileUpload(@RequestParam(value = "_csrf", required = false) String csrf, @RequestParam("file") MultipartFile file)
+         throws IOException, JAXBException {
+
+      // Save file on system
+      if (!file.getOriginalFilename().isEmpty()) {
+    	  
+    	 String pathStoreUploadedFile = Option.getDirectory("directory","directories.properties");
+    	 
+    	 File f = new File(pathStoreUploadedFile, file.getOriginalFilename());
+         BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
+         outputStream.write(file.getBytes());
+         outputStream.flush();
+         outputStream.close();
+         
+         List<Petit> pt = petitService.parseArchiveFile(f);
+         
+         for(Petit p : pt) petitService.addPetit(p);
+         
+      }else{
+         return new ResponseEntity<>("Файл не загружен. Повторите попытку или обратитесь к администратору.",HttpStatus.BAD_REQUEST);
+      }
+      
+      return new ResponseEntity<>("Файл успешно загружен в базу.",HttpStatus.OK);
+   }
 }

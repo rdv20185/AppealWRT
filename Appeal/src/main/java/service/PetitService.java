@@ -1,5 +1,7 @@
 package service;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
@@ -11,7 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.bind.JAXBException;
+
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import net.sf.jasperreports.engine.JRException;
 import domain.CauseL;
@@ -143,6 +148,16 @@ public interface PetitService {
 	public void deleteSubType(Integer id);
 	
 	public void power_sp1_sp2(ReportParams dateReport, String username[]) throws SQLException, ClassNotFoundException, JRException;
+	
+	
+	/**
+	 * Метод объединяет логику обработки и unmarshalig xml
+	 * @param file
+	 * @return возвращает коллекцию объектов готовых для загрузки
+	 * @throws JAXBException 
+	 */
+	public List<Petit> parseArchiveFile(File file)  throws IOException, JAXBException ;
+
 		
 
 }
