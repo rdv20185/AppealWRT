@@ -15,7 +15,7 @@ public interface MeoService {
 	 * @throws ClassNotFoundException
 	 * @throws JRException
 	 */
-	public void report_abortion(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
+	void report_abortion(ReportParams dateReport, String username, String database) throws SQLException, ClassNotFoundException, JRException;
 	
 	/**
 	 * Метод инициализирует выполнение отчета в JasperReport, Отчет по Скорой помощи с полем ДТП.
@@ -25,6 +25,8 @@ public interface MeoService {
 	 * @throws ClassNotFoundException
 	 * @throws JRException
 	 */
-	public void report_ambulance(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException;
+	void report_ambulance(ReportParams dateReport, String username, String name_sql) throws SQLException, ClassNotFoundException, JRException;
+
+
 
 }

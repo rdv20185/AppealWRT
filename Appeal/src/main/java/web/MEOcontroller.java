@@ -56,7 +56,8 @@ public class MEOcontroller {
     public String report_meo_abortion(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting_meo";
 		
-			 meoService.report_abortion(dateReport, "");
+			 // meoService.report_abortion(dateReport, "", "Abortion 2018 year.sql");
+				meoService.report_abortion(dateReport, "", dateReport.getTypeQuery());
 			
 			
     	return "reporting_meo";
@@ -72,7 +73,7 @@ public class MEOcontroller {
     public String report_meo_ambulance(@ModelAttribute("dateReport") @Valid ReportParams dateReport, BindingResult bindingResult) throws ClassNotFoundException, SQLException, JRException {
 		if(bindingResult.hasErrors()) return "reporting_meo";
 		
-			 meoService.report_ambulance(dateReport, "");
+			 meoService.report_ambulance(dateReport, "",dateReport.getTypeQuery());
 			
 			
     	return "reporting_meo";

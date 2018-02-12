@@ -65,7 +65,7 @@
 	
 	<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 	<h3>Сведения о количестве и стоимости абортов, проведенных за счет средств обязательного медицинского страхования</h3>
-	<h5>Данный отчет корретно работает в рамках 2017 года. То есть если выбрать дату в интервале от 01.01.2017 до 31.12.2017</h5>
+	<h5>Данный отчет делает выборку на основе даты лечения. При переходе между годами учитывайте вероятность подачи реестров на оплату задним числом.</h5>
 	<h5   style="margin:3px; color: red;">- 20.04.2017 Внесены изменения в отчет (мбк О07 убрана из сумм шестой строки отчета) За март нарастающим итогом по измененному алгоритму (commit 290599b23daaab43368efce330e97556b68a977a)</h5>
 	<form:form method="post" action="report_meo_abortion.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
 		<table cellspacing='15'>
@@ -74,9 +74,21 @@
 				<form:input id="db" path="dateBegin" class='reportParam' /></td>
 				<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
 				<form:input id="de" path="dateEnd" class='reportParam' /></td>
+			</tr>
+			<tr>	
+				<td>
+				Выбирете базу пролеченных:
+				</td>>
+				<td>
+					<form:select class="css-input" path="typeQuery">
+	      					<form:option value="Abortion 2018 year.sql" label="Collect2018" />
+							<form:option value="Abortion 2017 year.sql" label="Collect2017" />
+					</form:select>
+				</td>
 				
+			</tr>
+			<tr>
 				<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
-				
 			</tr>
 		</table>
 	</form:form>
@@ -95,9 +107,21 @@
 				<form:input id="db_am" path="dateBegin" class='reportParam' /></td>
 				<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
 				<form:input id="de_am" path="dateEnd" class='reportParam' /></td>
+			</tr>
+			<tr>	
+				<td>
+				Выбирете базу пролеченных:
+				</td>>
+				<td>
+					<form:select class="css-input" path="typeQuery">
+	      					<form:option value="Collect2018" label="Collect2018" />
+							<form:option value="Collect2017" label="Collect2017" />
+					</form:select>
+				</td>
 				
+			</tr>
+			<tr>
 				<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
-				
 			</tr>
 		</table>
 	</form:form>

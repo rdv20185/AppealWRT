@@ -17,6 +17,7 @@ public class ReportParams {
     private boolean clinic;
     private boolean eachMedicalOrg;
     private String insurcomp;
+    private String typeQuery;
     
     public String getInsurcomp() {
 		return insurcomp;
@@ -56,6 +57,14 @@ public class ReportParams {
 
 	public void setEachMedicalOrg(boolean eachMedicalOrg) {
 		this.eachMedicalOrg = eachMedicalOrg;
+	}
+
+	public String getTypeQuery() {
+		return typeQuery;
+	}
+
+	public void setTypeQuery(String typeQuery) {
+		this.typeQuery = typeQuery;
 	}
 	
 }

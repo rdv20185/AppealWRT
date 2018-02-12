@@ -45,17 +45,22 @@ public class MeoServiceImp implements MeoService {
     
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	public void report_abortion(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
+	public void report_abortion(ReportParams dateReport, String username, String name_sql) throws SQLException, ClassNotFoundException, JRException {
     	try{
     	Map mapReport = mapForJasper(dateReport, username);
     	
-    	Connection conn = connectForJasper();
+    	Connection conn = connectForJasper(name_sql);
     	ResultSet rs = null;
     	PreparedStatement stmt = null;
     	
-    	File sql_file = new File( servletcontext.getRealPath("/resources/sql/Abortion 2017 year.sql"));
+    	
+    	File sql_file = new File( servletcontext.getRealPath("/resources/sql/"+name_sql));
         InputStream is = new FileInputStream(sql_file);
-        String query = Util.importSQL(is).replace("'01.01.2017'", "'"+dateReport.getDateBegin()+"'").replace("'31.12.2017'", "'"+dateReport.getDateEnd()+"'");
+        String query = null;
+        
+        if(name_sql.equals("Abortion 2017 year.sql")){ query = Util.importSQL(is).replace("'01.01.2017'", "'"+dateReport.getDateBegin()+"'").replace("'31.12.2017'", "'"+dateReport.getDateEnd()+"'");}
+        if(name_sql.equals("Abortion 2018 year.sql")){ query = Util.importSQL(is).replace("'01.01.2018'", "'"+dateReport.getDateBegin()+"'").replace("'31.12.2018'", "'"+dateReport.getDateEnd()+"'");}
+        
         //System.out.println(query);
         stmt = conn.prepareStatement(query);
         rs = stmt.executeQuery();
@@ -105,11 +110,12 @@ public class MeoServiceImp implements MeoService {
     
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	public void report_ambulance(ReportParams dateReport, String username) throws SQLException, ClassNotFoundException, JRException {
+	public void report_ambulance(ReportParams dateReport, String username, String name_sql) throws SQLException, ClassNotFoundException, JRException {
     	try{
     	Map mapReport = mapForJasper(dateReport, username);
     	
-    	Connection conn = connectForJasper();
+    	
+    	Connection conn = connectForJasper(name_sql);
     	ResultSet rs = null;
     	PreparedStatement stmt = null;
     	
@@ -119,8 +125,8 @@ public class MeoServiceImp implements MeoService {
         //String dateBegin_edit = dateReport.getDateBegin().substring(6)+dateReport.getDateBegin().substring(3,5);
         //String dateEnd_edit = dateReport.getDateBegin().substring(6)+dateReport.getDateBegin().substring(3,5);
         String query = Util.importSQL(is).replace("201701", "'"+dateReport.getDateBegin()+"'").replace("201702", "'"+dateReport.getDateEnd()+"'");
-        System.out.println("@@ "+ query);
-        //System.out.println(query);
+        
+        System.out.println(query);
         stmt = conn.prepareStatement(query);
         rs = stmt.executeQuery();
         
@@ -182,20 +188,26 @@ public class MeoServiceImp implements MeoService {
 		return mapReport;
 	}
 
-	private Connection connectForJasper() throws ClassNotFoundException, SQLException {
+	private Connection connectForJasper(String name) throws ClassNotFoundException, SQLException {
 		Connection conn = null;
 		File f = new File( servletcontext.getRealPath("/WEB-INF/jdbc_collect.properties"));
 		Properties properties = new Properties();
+		
+		String prefix = "";
+		if(name.equals("Abortion 2018 year.sql") || name.equals("Collect2018")){
+			prefix = "_2";
+		}
 		
 		try {
 			
 			properties.load(new FileInputStream(f.getPath()));
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			System.out.println("Connect to "+properties.getProperty("jdbc.databaseurl") +" - "+properties.getProperty("jdbc.username")+"  -> is OK");	
+			System.out.println("Connect to "+properties.getProperty("jdbc.databaseurl"+prefix) +" - "+properties.getProperty("jdbc.username"+prefix)+"  -> is OK");	
 	      	conn = DriverManager.getConnection(
-  			properties.getProperty("jdbc.databaseurl"), 
-  			properties.getProperty("jdbc.username"),
-  			properties.getProperty("jdbc.password"));
+  			properties.getProperty("jdbc.databaseurl"+prefix), 
+  			properties.getProperty("jdbc.username"+prefix),
+  			properties.getProperty("jdbc.password"+prefix)
+  			);
 	      	
 		} catch (IOException e) {
 			e.printStackTrace();

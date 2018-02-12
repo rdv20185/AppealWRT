@@ -213,21 +213,24 @@ public class Utilitys {
 	    	   String fileName = ze.getName();
 	           File newFile = new File(pathStoreExractFiles + File.separator + fileName);
 
-//	           System.out.println("file unzip : "+ newFile.getAbsoluteFile());
+	           System.out.println("file unzip : "+ newFile.getAbsoluteFile());
 
 	            //create all non exists folders
 	            //else you will hit FileNotFoundException for compressed folder
-	            //new File(newFile.getParent()).mkdirs();
+	           //if (!newFile.exists())
+	        	   //new File(newFile.getParent()).mkdirs();
+	           //if(newFile.isFile()){
 
-	            FileOutputStream fos = new FileOutputStream(newFile);
-
-	            int len;
-	            while ((len = zis.read(buffer)) > 0) {
-	            	fos.write(buffer, 0, len);
-	            }
-
-	            fos.close();
-	            ls_file.add(newFile);
+		            FileOutputStream fos = new FileOutputStream(newFile);
+	
+		            int len;
+		            while ((len = zis.read(buffer)) > 0) {
+		            	fos.write(buffer, 0, len);
+		            }
+	
+		            fos.close();
+		            ls_file.add(newFile);
+	           //}
 	            ze = zis.getNextEntry();
 	    	}
 
@@ -271,6 +274,8 @@ public class Utilitys {
 	 */
 	public List<Petit> transformToEntity(List<IRPLIST> model) {
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		
 		List<Petit> list_p = new ArrayList<Petit>();
 		Petit p = null;
 		
@@ -278,13 +283,28 @@ public class Utilitys {
 			for(IRP irp : m.getIRP()){
 				
 				p = new Petit();
+				p.setBlockger2016(new BlockGER2016());
 				//p.setDateInput(irp.getDATECREATE());
 				
+				p.setDateInput(sdf.format(new Date()));
+				p.setConectId(1); // 1 - телефон
 				p.setPresentId(1);
-				p.setUsername("!!!!!!");
+				p.setUsername("test");
+				// адрес
+				// cause_id
+				// cause_note
+				// фио
+				// rectif1_id 
+				// satisf
+				// tel
+				// ter_answer_id
+				// ter_id
+				//type_id
+				// valid_id
 				
-				p.getBlockger2016().setRegname("!!!!!!!!!!");
+				p.getBlockger2016().setRegname("test");
 				p.getBlockger2016().setDate_end(new Date());
+				// regsource_id
 				
 				p.getBlockger2016().setState(4);
 				p.getBlockger2016().setPetit(p);
@@ -296,7 +316,7 @@ public class Utilitys {
 		}
 		
 		
-		return null;
+		return list_p;
 	}
 
 
