@@ -130,6 +130,9 @@ public class ExcelBuilder extends AbstractExcelView {
 		header.createCell(25).setCellValue("Номер исходящий для ответа гражданину");
 		header.getCell(25).setCellStyle(style);
 		
+		header.createCell(26).setCellValue("Дата письма");
+		header.getCell(26).setCellStyle(style);
+		
 		
 		// create data rows
 		int rowCount = 1;
@@ -157,6 +160,7 @@ public class ExcelBuilder extends AbstractExcelView {
 			aRow.createCell(17).setCellValue(petit.getCompensSum());
 			aRow.createCell(18).setCellValue(petit.getBlockger2016().getRegname());
 			aRow.createCell(19).setCellValue(petit.getUsername());
+			
 			
 			if(petit.getBlockger2016().getInbound_from() != null){
 			Map<Integer,String> map = Fields.getInbound_from();
@@ -189,6 +193,8 @@ public class ExcelBuilder extends AbstractExcelView {
 					aRow.createCell(25).setCellValue(petit.getBloutboindletter2016().getNumOutLetter());
 			}
 				}
+			
+			if(petit.getLetterDate()!= null) { aRow.createCell(26).setCellValue(petit.getLetterDate());}
 		}
 	}
 

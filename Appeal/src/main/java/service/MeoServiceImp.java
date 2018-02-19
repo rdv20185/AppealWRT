@@ -2,6 +2,7 @@ package service;
  
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -10,7 +11,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -22,21 +25,26 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import util.Util;
-
+import util.ResultSetMapper;
+import util.Util;import org.apache.poi.util.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import domain.Pat_eco;
 import domain.ReportParams;
+import domain.Test;
  
 @Service
 public class MeoServiceImp implements MeoService {
  
     @Autowired
     private ServletContext servletcontext;
+    @Autowired
+    ResultSetMapper<Pat_eco> resultSetMapper;
  
     private MeoServiceImp(){
     	
@@ -46,6 +54,7 @@ public class MeoServiceImp implements MeoService {
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	public void report_abortion(ReportParams dateReport, String username, String name_sql) throws SQLException, ClassNotFoundException, JRException {
+    	
     	try{
     	Map mapReport = mapForJasper(dateReport, username);
     	
@@ -58,8 +67,8 @@ public class MeoServiceImp implements MeoService {
         InputStream is = new FileInputStream(sql_file);
         String query = null;
         
-        if(name_sql.equals("Abortion 2017 year.sql")){ query = Util.importSQL(is).replace("'01.01.2017'", "'"+dateReport.getDateBegin()+"'").replace("'31.12.2017'", "'"+dateReport.getDateEnd()+"'");}
-        if(name_sql.equals("Abortion 2018 year.sql")){ query = Util.importSQL(is).replace("'01.01.2018'", "'"+dateReport.getDateBegin()+"'").replace("'31.12.2018'", "'"+dateReport.getDateEnd()+"'");}
+        if(name_sql.equals("Abortion 2017 year.sql")){ query = Util.importSQL(is,true).replace("'01.01.2017'", "'"+dateReport.getDateBegin()+"'").replace("'31.12.2017'", "'"+dateReport.getDateEnd()+"'");}
+        if(name_sql.equals("Abortion 2018 year.sql")){ query = Util.importSQL(is,true).replace("'01.01.2018'", "'"+dateReport.getDateBegin()+"'").replace("'31.12.2018'", "'"+dateReport.getDateEnd()+"'");}
         
         //System.out.println(query);
         stmt = conn.prepareStatement(query);
@@ -124,7 +133,7 @@ public class MeoServiceImp implements MeoService {
         
         //String dateBegin_edit = dateReport.getDateBegin().substring(6)+dateReport.getDateBegin().substring(3,5);
         //String dateEnd_edit = dateReport.getDateBegin().substring(6)+dateReport.getDateBegin().substring(3,5);
-        String query = Util.importSQL(is).replace("201701", "'"+dateReport.getDateBegin()+"'").replace("201702", "'"+dateReport.getDateEnd()+"'");
+        String query = Util.importSQL(is,true).replace("201701", "'"+dateReport.getDateBegin()+"'").replace("201702", "'"+dateReport.getDateEnd()+"'");
         
         System.out.println(query);
         stmt = conn.prepareStatement(query);
@@ -165,6 +174,85 @@ public class MeoServiceImp implements MeoService {
     		e.printStackTrace();
 		}
    		
+	}
+    
+	@Override
+	public void report_eco(ReportParams dateReport, String string, String typeQuery) throws FileNotFoundException, ClassNotFoundException, SQLException, JRException {
+
+		try{
+			
+		Map mapReport = mapForJasper(dateReport, "null");
+		
+		Connection conn = connectForJasper(typeQuery);
+		ResultSet rs = null;
+    	PreparedStatement stmt = null;
+
+    	/* ----------------- ОБНОВЛЕНИЕ ДАННЫХ ------------------ */
+    	
+    	File sql_file = new File( servletcontext.getRealPath("/resources/sql/Eco_main 2018_part3.sql"));
+        InputStream is = new FileInputStream(sql_file);
+    	String query = null;
+    	query = Util.importSQL(is,false);
+    	
+    	System.out.println(query);
+    	
+    	stmt = conn.prepareStatement(query);
+        rs = stmt.executeQuery();
+    	
+        /*---------------ВЫБОРКА ДЛЯ ОТЧЕТА -------------- */
+        
+    	sql_file = new File( servletcontext.getRealPath("/resources/sql/Eco_main 2018_part1.sql"));
+        is = new FileInputStream(sql_file);
+    	query = Util.importSQL(is,true).replace("date_ot", "'"+dateReport.getDateBegin()+"'").replace("date_to", "'"+dateReport.getDateEnd()+"'");
+    	
+    	System.out.println(query);
+    	
+    	stmt = conn.prepareStatement(query);
+        rs = stmt.executeQuery();
+      
+        while (rs.next()){
+        	mapReport.put(rs.getString(1), rs.getString(2));
+        	//System.out.println(rs.getString(1)+" - "+rs.getString(2));
+        }
+        
+        /* -------------------- EXECUTE SECOND QUERY -------------- */
+        
+        sql_file = new File( servletcontext.getRealPath("/resources/sql/Eco_main 2018_part2.sql"));
+        is = new FileInputStream(sql_file);
+    	query = Util.importSQL(is,true).replace("date_ot", "'"+dateReport.getDateBegin()+"'").replace("date_to", "'"+dateReport.getDateEnd()+"'");
+    	
+    	System.out.println(query);
+    	
+    	stmt = conn.prepareStatement(query);
+        rs = stmt.executeQuery();
+        
+        List<Pat_eco> pojoList = resultSetMapper.mapRersultSetToObject(rs, Pat_eco.class);
+        
+        
+        stmt.close();
+        rs.close();
+        
+        JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(pojoList);
+        
+        File f = new File( servletcontext.getRealPath("/resources/report/meo/report_meo_eco_v1.jrxml"));
+		
+		JasperReport jasperReport = JasperCompileManager.compileReport(f.getPath());
+		jasperReport.setProperty(JRTextElement.PROPERTY_PRINT_KEEP_FULL_TEXT, "true");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport,beanColDataSource);
+		//JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, mapReport);
+		
+		JRXlsExporter exporter = new JRXlsExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(f.getPath().replace(".jrxml", ".xls")));
+		exporter.exportReport();
+		
+        conn.close();        
+        
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+		
 	}
     
 
@@ -215,6 +303,9 @@ public class MeoServiceImp implements MeoService {
 		
 		return conn;
 	}
+
+
+
 
 	
 	

@@ -567,6 +567,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 		<tr>
 			<th><spring:message code="label.id" /></th>      
 		    <th><spring:message code="label.dateInput" /></th>
+		    <th>Дата письма</th>
 		    <th>Дата завершения обращения</th>
    		    <!-- <th><spring:message code="label.dateBegin" /></th>
 		    <th><spring:message code="label.dateEnd" /></th>-->  
@@ -635,6 +636,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			<tr  class="${cssClass}">
 				<td  align="center">${petit.id} ${petit.num}</td>      
 			    <td>${petit.dateInput}</td>
+			    <td>${petit.letterDate}</td>
 			    <td>${petit.blockger2016.date_end}</td>
 				<!-- <td>${petit.dateBegin}</td>
 			    <td>${petit.dateEnd}</td>-->  

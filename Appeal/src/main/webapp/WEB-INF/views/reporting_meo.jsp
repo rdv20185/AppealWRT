@@ -25,6 +25,9 @@
 			$( "#db_am" ).datepicker({dateFormat:'yymm'});
 			$( "#de_am" ).datepicker({dateFormat:'yymm'});
 			
+			$( "#db_eco" ).datepicker({dateFormat:'dd.mm.yy'});
+			$( "#de_eco" ).datepicker({dateFormat:'dd.mm.yy'});
+			
 		});
 	</script>
 	<script>
@@ -128,6 +131,38 @@
 	<br>
 	<a href="<c:url value="/cooked_report_meo_ambulance" />">Скачать</a>
 	<br><br><hr/>
+	
+	<h3>Экстракорпоральное оплодотворение</h3>
+	<h5><br></h5>
+	<form:form method="post" action="report_meo_eco.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
+		<table cellspacing='15'>
+			<tr>
+				<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>
+				<form:input id="db_eco" path="dateBegin" class='reportParam' /></td>
+				<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
+				<form:input id="de_eco" path="dateEnd" class='reportParam' /></td>
+			</tr>
+			<tr>	
+				<td>
+				Выбирете базу пролеченных:
+				</td>>
+				<td>
+					<form:select class="css-input" path="typeQuery">
+	      					<form:option value="Collect2018" label="Collect2018" />
+					</form:select>
+				</td>
+				
+			</tr>
+			<tr>
+				<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
+			</tr>
+		</table>
+	</form:form>
+	<br>
+	<a href="<c:url value="/cooked_report_meo_eco" />">Скачать</a>
+	
+	
+	
 	</sec:authorize>
 </div>
 </body>

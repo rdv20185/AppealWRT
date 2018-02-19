@@ -22,10 +22,14 @@ public class Util {
 		} 
 	
 	
-	public static String importSQL(InputStream in) throws SQLException
+	public static String importSQL(InputStream in,boolean use_delimetr) throws SQLException
 	{
 	    Scanner s = new Scanner(in);
-	    s.useDelimiter("(;(\r)?\n)|(--\n)");
+	    if(use_delimetr){ s.useDelimiter("(;(\r)?\n)|(--\n)");}
+	    else{
+	    	s.useDelimiter("(;(\n)?\n)|(--\n)");
+	    }
+	    
 	    
 	    String query = "";
 	    while (s.hasNext())

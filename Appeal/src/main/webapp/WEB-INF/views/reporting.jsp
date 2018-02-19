@@ -87,7 +87,7 @@
 			
 			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 				<td><form:checkbox path="insurcomp" value="smo_ingos"/>Ингосстрах</td>
-				<td><form:checkbox path="insurcomp" value="smo_rosno"/>Росно</td>
+				<td><form:checkbox path="insurcomp" value="smo_rosno"/>ВТБ-МС</td>
 				<td><form:checkbox path="insurcomp" value="smo_simaz"/>СимазМед</td>
 			</sec:authorize>
 		</tr>
@@ -123,7 +123,7 @@
 			
 			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 				<td><form:checkbox path="insurcomp" value="smo_ingos"/>Ингосстрах</td>
-				<td><form:checkbox path="insurcomp" value="smo_rosno"/>Росно</td>
+				<td><form:checkbox path="insurcomp" value="smo_rosno"/>ВТБ-МС</td>
 				<td><form:checkbox path="insurcomp" value="smo_simaz"/>СимазМед</td>
 			</sec:authorize>
 		</tr>
@@ -146,7 +146,7 @@
 			
 			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 				<td><form:checkbox path="insurcomp" value="smo_ingos"/>Ингосстрах</td>
-				<td><form:checkbox path="insurcomp" value="smo_rosno"/>Росно</td>
+				<td><form:checkbox path="insurcomp" value="smo_rosno"/>ВТБ-МС</td>
 				<td><form:checkbox path="insurcomp" value="smo_simaz"/>СимазМед</td>
 			</sec:authorize>
 		</tr>
