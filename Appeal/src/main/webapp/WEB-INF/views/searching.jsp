@@ -319,8 +319,19 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label></td>
 			<td><form:input id="dateEnd" path="dateEnd" /></td>
 			
+			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">
 			<td><form:label path="username"><spring:message code="label.username" /></form:label></td>
-			<td><form:input path="username" /></td>
+			<td>
+				<form:select path="username" id="presentIdhtml">
+					<form:option value="0" label="" />
+	    			<form:option value="ROLE_SIMAZ" label="Симаз" />
+	    			<form:option value="ROLE_ROSNO" label="ВТБ МС" />
+	    			<form:option value="ROLE_INGOS" label="Ингосстрах" />
+	    			
+				</form:select>
+				
+			</td>
+			</sec:authorize>
 		</tr>
 		<tr>	
 			<td><form:label path="sourceId"><spring:message code="label.source" /></form:label></td>

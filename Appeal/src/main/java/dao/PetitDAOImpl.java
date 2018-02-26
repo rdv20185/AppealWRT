@@ -246,15 +246,36 @@ public class PetitDAOImpl implements PetitDAO {
         			
         			
         			if(method.getName().equals("getBlockger2016") && method.getReturnType().getMethods().length != 0){
+        				
 	        			for(Method method_s :method.getReturnType().getMethods()){
+	        				
 	        				if (isGetter(method_s) && "getClaim_inshur".equals(method_s.getName()) &&  !method_s.invoke(petit.getBlockger2016()).equals("")) {
+	        					
 	        					fieldName2 = method_s.getName().replaceAll("get", "").substring(0, 1);
 	        					fieldName2 = fieldName2.toLowerCase().concat(method_s.getName().replaceAll("get", "").substring(1));
 	        					//System.out.println("!!2 "+fieldName2+" --- "+ method_s.invoke(petit.getBlockger2016()));
 	        					criteria.add(Restrictions.eq("b."+fieldName2, method_s.invoke(petit.getBlockger2016())));
 	        				}	
 	        			}
-        			}else{ /*System.out.println("!! "+fieldName+" --- "+ method.invoke(petit));*/ criteria.add(Restrictions.eq("p."+fieldName, method.invoke(petit)));}
+        			}else{
+        				
+        				System.out.println("!! "+fieldName+" --- "+ method.invoke(petit));
+        				//criteria.add(Restrictions.eq("p."+fieldName, method.invoke(petit)));
+        				
+        				if(method.invoke(petit).equals("ROLE_ROSNO")){
+        					
+        	    			System.out.println("5");
+        	    			criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_ROSNO","ROLE_ER5002") ) );
+        	    		}else if(method.invoke(petit).equals("ROLE_SIMAZ")){
+        	    			
+        	    			System.out.println("6");
+        	        		//criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_SIMAZ","ROLE_ER5001") ) );
+        	    		}else if(method.invoke(petit).equals("ROLE_INGOS")){
+        	    			
+        	    			System.out.println("7");
+        	    			criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_INGOS","ROLE_ER5003") ) );
+        	    		}
+        			}
         		}
    		   	}
    	   	}
@@ -294,22 +315,22 @@ public class PetitDAOImpl implements PetitDAO {
     	}
     	
     	
-    	
     	if(role.contains("ROLE_INGOS")) {
     		
     		criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_INGOS","ROLE_ER5003") ) );
-    	}
-    	if(role.contains("ROLE_SIMAZ")) {
+    		
+    	}else if (role.contains("ROLE_SIMAZ")) {
     		
     		criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_SIMAZ","ROLE_ER5001") ) );
-    	}
-    	if(role.contains("ROLE_ROSNO")) {
+    		
+    	}else if(role.contains("ROLE_ROSNO")) {
     		
     		criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_ROSNO","ROLE_ER5002") ) );
+    		
     	}
     	
     	criteria.addOrder(Order.desc("id"));
-    	criteria.setMaxResults(10000);
+    	criteria.setMaxResults(10_000);
 
     	return criteria.list();
     }
