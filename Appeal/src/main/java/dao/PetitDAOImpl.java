@@ -259,22 +259,24 @@ public class PetitDAOImpl implements PetitDAO {
 	        			}
         			}else{
         				
-        				System.out.println("!! "+fieldName+" --- "+ method.invoke(petit));
-        				//criteria.add(Restrictions.eq("p."+fieldName, method.invoke(petit)));
-        				
-        				if(method.invoke(petit).equals("ROLE_ROSNO")){
+        				if(!fieldName.equalsIgnoreCase("username")){
         					
-        	    			System.out.println("5");
-        	    			criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_ROSNO","ROLE_ER5002") ) );
-        	    		}else if(method.invoke(petit).equals("ROLE_SIMAZ")){
-        	    			
-        	    			System.out.println("6");
-        	        		//criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_SIMAZ","ROLE_ER5001") ) );
-        	    		}else if(method.invoke(petit).equals("ROLE_INGOS")){
-        	    			
-        	    			System.out.println("7");
-        	    			criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_INGOS","ROLE_ER5003") ) );
-        	    		}
+        					criteria.add(Restrictions.eq("p."+fieldName, method.invoke(petit)));
+        					
+        				}else{
+	        				if(method.invoke(petit).equals("ROLE_ROSNO")){
+	        					
+	        	    			criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_ROSNO","ROLE_ER5002") ) );
+	        	    			
+	        	    		}else if(method.invoke(petit).equals("ROLE_SIMAZ")){
+	        	    			
+	        	        		criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_SIMAZ","ROLE_ER5001") ) );
+	        	        		
+	        	    		}else if(method.invoke(petit).equals("ROLE_INGOS")){
+	        	    			
+	        	    			criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_INGOS","ROLE_ER5003") ) );
+	        	    		}
+        				}	
         			}
         		}
    		   	}

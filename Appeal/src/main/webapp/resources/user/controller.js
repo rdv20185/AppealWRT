@@ -791,6 +791,10 @@ function valid(var_role){
 	let n = var_role.indexOf("ROLE_ER");
 	 let n2 = var_role.indexOf("ROLE_ADMIN");
 	 
+	 console.log($('#moId').val() + ' - '+ $('#hspId').val() + ' - ' + $('#typempid').val());
+		 console.log($('#moId').val() != 0 && ($('#hspId').val() == 0 || $('#typempid').val() == 0));
+	 
+	 
 	 if($('#connectid').val() == 7 && n < 0 && n2 < 0 ){
 			$('.errorrep').append('<h3>У Вас нет прав создавать обращение с типом "Горячая линия" в поле Связь</h3>');
 			$('.errorrep').css({'display':'block'});
@@ -848,13 +852,13 @@ function valid(var_role){
 	}
 	else if(	(($('#redirect_adress').val() != 0 && $('#redirect_adress').is(':visible')) && $('#date_redirect').val() != '') &&
 				($('#date_response').val() == 0 || $('#responsible').val() == 0)){
-			$('.errorrep').append('<h3>При заполненом поле "Дата перенаправления для рассмотрения" и "Адресат" необходимо "Дата окончательного ответа гражданину","Номер","Ответственный"</h3>');
-			$('.errorrep').css({'display':'block'});
-			$('#draggable').animate({
-		        scrollTop:  0
-	    	});
-			return false;
-	}
+					$('.errorrep').append('<h3>При заполненом поле "Дата перенаправления для рассмотрения" и "Адресат" необходимо "Дата окончательного ответа гражданину","Номер","Ответственный"</h3>');
+					$('.errorrep').css({'display':'block'});
+					$('#draggable').animate({
+						scrollTop:  0
+					});
+				return false;
+				}
     else if($('#moId').val() != 0 && ($('#hspId').val() == 0 || $('#typempid').val() == 0)){
     	$('.errorrep').append('<h3>При заполненном поле "МО" заполнение полей "Вид МП" и "Тип МО" обязательно</h3>');
     	$('.errorrep').css({'display':'block'});

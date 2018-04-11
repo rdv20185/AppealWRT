@@ -122,7 +122,10 @@ public class Basic {
     		map.put("sourceList", source2);
     		map.put("conectList", Fields.getConect());
 			map.put("presentList", Fields.getPresent());
-			map.put("responsible" , coverter.getMap().get("ROLE_SIMAZ_SP2"));
+			
+			List<String> ls = coverter.getMap().get("ROLE_SIMAZ_SP2");
+			ls.addAll(coverter.getMap().get("ROLE_SIMAZ_SP3"));
+			map.put("responsible" , ls);
     	}
 				
 		if(getRole().contains("ROLE_ROSNO") && !getRole().contains("ROLE_TECH_ER")){
@@ -130,14 +133,20 @@ public class Basic {
 			map.put("sourceList", source2);
 			map.put("conectList", Fields.getConect());
 			map.put("presentList", Fields.getPresent());
-			map.put("responsible" , coverter.getMap().get("ROLE_ROSNO_SP2"));
+			
+			List<String> ls = coverter.getMap().get("ROLE_ROSNO_SP2");
+			ls.addAll(coverter.getMap().get("ROLE_ROSNO_SP3"));
+			map.put("responsible" , ls);
 		}
 		if(getRole().contains("ROLE_INGOS") && !getRole().contains("ROLE_TECH_ER")){
 			map.put("listassign", Fields.getfirstingos());
 			map.put("sourceList", source2);
 			map.put("conectList", Fields.getConect());
 			map.put("presentList", Fields.getPresent());
-			map.put("responsible" , coverter.getMap().get("ROLE_INGOS_SP2"));
+			
+			List<String> ls = coverter.getMap().get("ROLE_INGOS_SP2");
+			ls.addAll(coverter.getMap().get("ROLE_INGOS_SP3"));
+			map.put("responsible" , ls);
 		}
 
 		
