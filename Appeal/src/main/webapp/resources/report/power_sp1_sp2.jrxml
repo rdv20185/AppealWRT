@@ -20,25 +20,20 @@
 	</parameter>
 	<queryString>
 		<![CDATA[with
-
-
-			blockger as (select * from t_block_ger_all bl where trunc(bl.date_end) between $P{dateBegin} and $P{dateEnd}),
+            blockger as (select * from t_block_ger_all bl where trunc(bl.date_end) between $P{dateBegin} and $P{dateEnd}),
             petit as (select * from t_petit_all t,blockger t2 where  t.id=t2.id_ger),
 
-
-            r1c1 as (select count(*) c from blockger t2 where  $P{username_sp1} like '%'||t2.regname||'%'),
+            r1c1 as   (select count(*) c from blockger t2 where  $P{username_sp1} like '%'||t2.regname||'%'),
             r1c1d1 as (select count(*) c from blockger t2,petit p where  t2.regname='auto' and p.id=t2.id_ger and $P{username_sp1} like '%'||p.username||'%'),
-            r1c1d2 as (select count(*) c from blockger t2,petit p where  $P{username_sp1} like '%'||t2.regname||'%' and t2.regname like '%call%' and p.id=t2.id_ger),
-            r1c1d3 as (select count(*) c from blockger t2,petit p where  $P{username_sp1} like '%'||p.username||'%' and p.username like '%callnight%' and t2.regname='auto' and p.id=t2.id_ger),
-            r1c2 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and $P{username_sp1} like '%'||t.username||'%'),
-            r1c2d1 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and t2.regname='auto' and $P{username_sp1} like '%'||t.username||'%'  and t.conect_id = 7),
-            r1c2d2 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t.username||'%' and t.username like '%call%'  and t.conect_id = 7),
-
-            r2c1 as (select count(*) c from blockger t2 where  $P{username_sp2} like '%'||t2.regname||'%'),
+            r1c1d2 as (select count(*) c from blockger t2,petit p where  $P{username_sp1} like '%'||t2.regname||'%' and t2.regname like '%'||'call'||'%' and p.id=t2.id_ger),
+            r1c1d3 as (select count(*) c from blockger t2,petit p where  $P{username_sp1} like '%'||p.username||'%' and p.username like '%'||'callnight'||'%' and t2.regname='auto' and p.id=t2.id_ger),
+            r1c2 as   (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and $P{username_sp1} like '%'||t.username||'%'),
+            r1c2d1 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and t2.regname='auto' and $P{username_sp1} like '%'||t.username||'%'  and t.conect_id =7),
+            r1c2d2 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t.username||'%' and t.username like '%'||'call'||'%'  and t.conect_id = 7),
+            r2c1 as   (select count(*) c from blockger t2 where  $P{username_sp2} like '%'||t2.regname||'%'),
             r2c1d1 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and $P{username_sp2} like '%'||t.username||'%'),
-            r2c1d2 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%'  and t.conect_id = 7),
-            r2c1d3 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%call%') and $P{username_sp2} like '%'||t.username||'%' and t.conect_id = 7),
-
+            r2c1d2 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%'  and t.conect_id = '7'),
+            r2c1d3 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp2} like '%'||t.username||'%' and t.conect_id = '7'),
             r2c2 as (select count(*) c from petit t  where $P{username_sp2} like '%'||t.username||'%')
         select
 			r1c1.c r1c1,r1c2.c r1c2,r2c1.c r2c1,r2c2.c r2c2,r2c1d1.c r2c1d1,r2c1d2.c r2c1d2,r2c1d3.c r2c1d3,r1c1d1.c r1c1d1,r1c1d2.c r1c1d2,r1c1d3.c r1c1d3,r1c2d1.c r1c2d1,r1c2d2.c r1c2d2

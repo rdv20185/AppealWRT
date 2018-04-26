@@ -134,7 +134,7 @@
 
 <br><br><hr/>
 
-<h3>Форма для раздела III. Сведения о деятельности страховых представителей</h3>
+<h3>Таблица 9. Сведения о деятельности страховых представителей</h3>
 <form:form method="post" action="report_strax3.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
 	<table cellspacing='15'>
 		<tr>

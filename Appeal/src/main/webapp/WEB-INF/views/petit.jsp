@@ -423,6 +423,7 @@
 	<script>
 		$(function() {
 			$("#date_redirect").datepicker({dateFormat:'dd.mm.yy'});
+			$("#letterDate").datepicker({dateFormat:'dd.mm.yy'});
 		});
 	
 		$(function() {
@@ -639,7 +640,7 @@
 	  	<form:label path="letterNum"><spring:message code="label.letterNum" /></form:label>
 		<form:input path="letterNum" />
 		<form:label path="letterDate"><spring:message code="label.letterDate" /></form:label>
-		<form:input path="letterDate" />
+		<form:input path="letterDate"  id="letterDate"/>
 	  </p>
 </sec:authorize>	  
 </fieldset>

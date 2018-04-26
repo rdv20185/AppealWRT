@@ -355,6 +355,13 @@ public class Basic {
 			   (petit.getTypeId() == 1 && petit.getCauseId() == 13 && petit.getRectif1Id() ==0)){bindingResult.rejectValue("Rectif1Id", "error.petit", "Поле 'Уточнение1' обязательно для заполнения");}
     		
     		
+    		if((getRole().contains("ROLE_SMO_SP3") && !petit.getBlockger2016().getRegname().contains("sp3")) ||
+    		   (!getRole().contains("ROLE_SMO_SP3") && petit.getBlockger2016().getRegname().contains("sp3"))){
+    			
+    			bindingResult.rejectValue("Rectif1Id", "error.petit", "Право доступа на данное обращение принадлежит СП3 (зарегистрирован СП3) либо СП3 не имеет доступ к обращению (зарегестрировано не СП3)");
+    		}
+    		
+    		
     		if(petit.getBlockger2016().getRegname().contains("call") && petit.getConectId() != 7	){bindingResult.rejectValue("causeId", "error.petit", "У Вас недостаточно прав изменить поле 'Связь' или поле 'Cвязь' имеет неправильное значение отличное от значения 'Горячая линия' ");}
     		// доработать
     		if(petit.getConectId() == 7	&& !petit.getBlockger2016().getRegname().contains("call") &&  !petit.getBlockger2016().getRegname().contains("auto") &&
@@ -417,35 +424,37 @@ public class Basic {
 			{
 	    		petit.getBlockger2016().setState(1);
 	    		petit.getBlockger2016().setRegname(getUserName());
-	    	}else
-	    	{
-	    		if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 3 ){
+	    }else{
+	    	
+    		if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 3 ){
 	    			
 	    			DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.S");
 	        		try { petit.getBlockger2016().setDate_end(df.parse(petit.getBloutboindletter2016().getDate_response().concat(" 01:00:00.123")));} catch (ParseException e) {
 						e.printStackTrace();
 					}
 	        		
-	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){ petit.setUsername(getUserName());}
-	        		else{petit.setUsername(petit.getBloutboindletter2016().getResponsible());}
-	    		}
-	    		else{
+	        		if(petit.getBloutboindletter2016().getResponsible().equals("")){
+	        			petit.setUsername(getUserName());
+	        		}else{
+	        			petit.setUsername(petit.getBloutboindletter2016().getResponsible());
+	        			}
+	    	}else{
 	    			
 	    			if(petit.getPresentId() == 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 2 ){
 	    				petit.setUsername(getUserName());
 		    		}
 	    			else{
-	    			if(petit.getPresentId() != 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 1 ){
-	    				
-	    				petit.getBlockger2016().setState(2);
-		        		petit.setUsername(getUserName());
-		    		}
-	    			
-	    			if(petit.getPresentId() != 2)
-	    			petit.setUsername(getUserName());
+		    			if(petit.getPresentId() != 2 && para.trim().equals("Изменить") && petit.getBlockger2016().getState() == 1 ){
+		    				
+		    				petit.getBlockger2016().setState(2);
+			        		petit.setUsername(getUserName());
+			    		}
+		    			
+		    			if(petit.getPresentId() != 2)
+		    			petit.setUsername(getUserName());
 	    			}
-	    		}
-	    	}	
+	    	}
+	    }	
 		}
 
 		if(petit.getPresentId() == 2){

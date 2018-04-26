@@ -273,6 +273,7 @@ public class PetitDAOImpl implements PetitDAO {
 	        	        		criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_SIMAZ","ROLE_ER5001") ) );
 	        	        		
 	        	    		}else if(method.invoke(petit).equals("ROLE_INGOS")){
+	        	    			System.out.println("FFFFFF "+Arrays.toString(getUsernameOfRole("ROLE_INGOS","ROLE_ER5003")));
 	        	    			
 	        	    			criteria.add( Restrictions.in( "username", getUsernameOfRole("ROLE_INGOS","ROLE_ER5003") ) );
 	        	    		}

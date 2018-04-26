@@ -793,9 +793,22 @@ function valid(var_role){
 	 
 	 console.log($('#moId').val() + ' - '+ $('#hspId').val() + ' - ' + $('#typempid').val());
 		 console.log($('#moId').val() != 0 && ($('#hspId').val() == 0 || $('#typempid').val() == 0));
-	 
-	 
-	 if($('#connectid').val() == 7 && n < 0 && n2 < 0 ){
+
+		// в письменном обращении дата письма должна = дате регистрации
+		if  ($('#letterDate').val() != '') $('#dateInput').val($('#letterDate').val());
+		 
+     if($('#presentId').val() == 2 && ($('#letterDate').val() == '' || $('#letterNum').val() == '') ){
+    	 
+    	 $('.errorrep').append('<h3>Поле Номер письма и  Дата письма (дата письма должна бить)обязательно для заполнения при заполненом поле Представление - письменное </h3>');
+			$('.errorrep').css({'display':'block'});
+			$('#draggable').animate({
+		        scrollTop:  0
+	    	});
+			return false;
+    	 
+     }
+     
+     else if($('#connectid').val() == 7 && n < 0 && n2 < 0 ){
 			$('.errorrep').append('<h3>У Вас нет прав создавать обращение с типом "Горячая линия" в поле Связь</h3>');
 			$('.errorrep').css({'display':'block'});
 			$('#draggable').animate({
