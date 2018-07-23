@@ -36,7 +36,6 @@ import org.springframework.stereotype.Service;
 
 import domain.Pat_eco;
 import domain.ReportParams;
-import domain.Test;
  
 @Service
 public class MeoServiceImp implements MeoService {

@@ -519,12 +519,20 @@ public class PetitServiceImpl implements PetitService {
 			
 			mapReport.put("username_sp2", coverter.getMap().get("ROLE_SMO_SP2").toString());
 			System.out.println("User names fo jasper report SP2 (for log) \n"+ coverter.getMap().get("ROLE_SMO_SP2").toString());
+			
+			mapReport.put("username_sp3", coverter.getMap().get("ROLE_SMO_SP3").toString());
+			System.out.println("User names fo jasper report SP3 (for log) \n"+ coverter.getMap().get("ROLE_SMO_SP3").toString());
+
 		}else{
 			mapReport.put("username_sp1", username[0]);
 			System.out.println("User names fo jasper report SP1 (for log) \n"+ username[0]);
 			
 			mapReport.put("username_sp2", username[1]);
 			System.out.println("User names fo jasper report SP2 (for log) \n"+ username[1]);
+			
+			mapReport.put("username_sp3", username[2]);
+			System.out.println("User names fo jasper report SP2 (for log) \n"+ username[2]);
+
 		}
 		
 		return mapReport;

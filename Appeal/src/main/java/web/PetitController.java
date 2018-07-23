@@ -455,19 +455,19 @@ public class PetitController {
 		if(insursmo == null){
 			
 			if(getRole().contains("ROLE_ROSNO")){
-				String []users = {coverter.getMap().get("ROLE_ROSNO_SP1").toString(),coverter.getMap().get("ROLE_ROSNO_SP2").toString()};
+				String []users = {coverter.getMap().get("ROLE_ROSNO_SP1").toString(),coverter.getMap().get("ROLE_ROSNO_SP2").toString(), coverter.getMap().get("ROLE_ROSNO_SP3").toString()};
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+ Arrays.toString(users) );
 				petitService.power_sp1_sp2(dateReport,users);
 			}else
 			
 			if(getRole().contains("ROLE_INGOS")){
-				String[] users = {coverter.getMap().get("ROLE_INGOS_SP1").toString(),coverter.getMap().get("ROLE_INGOS_SP2").toString()};
+				String[] users = {coverter.getMap().get("ROLE_INGOS_SP1").toString(),coverter.getMap().get("ROLE_INGOS_SP2").toString(), coverter.getMap().get("ROLE_INGOS_SP3").toString()};
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
 				petitService.power_sp1_sp2(dateReport,users);
 			}else
 			
 			if(getRole().contains("ROLE_SIMAZ")){
-				String[] users = {coverter.getMap().get("ROLE_SIMAZ_SP1").toString(), coverter.getMap().get("ROLE_SIMAZ_SP2").toString()};
+				String[] users = {coverter.getMap().get("ROLE_SIMAZ_SP1").toString(), coverter.getMap().get("ROLE_SIMAZ_SP2").toString(), coverter.getMap().get("ROLE_SIMAZ_SP3").toString()};
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
 				petitService.power_sp1_sp2(dateReport,users);
 			}
@@ -480,19 +480,19 @@ public class PetitController {
 		else{
 			
 			if(insursmo.equals("smo_simaz")){
-				String[] users = {coverter.getMap().get("ROLE_SIMAZ_SP1").toString(), coverter.getMap().get("ROLE_SIMAZ_SP2").toString()};
+				String[] users = {coverter.getMap().get("ROLE_SIMAZ_SP1").toString(), coverter.getMap().get("ROLE_SIMAZ_SP2").toString(), coverter.getMap().get("ROLE_SIMAZ_SP3").toString()};
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
 				petitService.power_sp1_sp2(dateReport,users);
 			}
 			
 			if(insursmo.equals("smo_rosno")){
-				String []users = {coverter.getMap().get("ROLE_ROSNO_SP1").toString(),coverter.getMap().get("ROLE_ROSNO_SP2").toString()};
+				String []users = {coverter.getMap().get("ROLE_ROSNO_SP1").toString(),coverter.getMap().get("ROLE_ROSNO_SP2").toString(),coverter.getMap().get("ROLE_ROSNO_SP3").toString()};
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
 				petitService.power_sp1_sp2(dateReport,users);
 			}
 			
 			if(insursmo.contains("smo_ingos")){
-				String[] users = {coverter.getMap().get("ROLE_INGOS_SP1").toString(),coverter.getMap().get("ROLE_INGOS_SP2").toString()};
+				String[] users = {coverter.getMap().get("ROLE_INGOS_SP1").toString(),coverter.getMap().get("ROLE_INGOS_SP2").toString(), coverter.getMap().get("ROLE_INGOS_SP3").toString()};
 				System.out.println("Users name " + getClass().getName()+ " for log \n"+Arrays.toString(users) );
 				petitService.power_sp1_sp2(dateReport,users);
 			}
@@ -762,7 +762,7 @@ public class PetitController {
 	
 	@RequestMapping(value = "/downloadreestr1117_1", method = RequestMethod.GET)
     public void reestr1(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        downloadFile(request, response, "\\resources\\doc_fond\\all_01.02.2017.xlsx");
+        downloadFile(request, response, "\\resources\\doc_fond\\reestr_sp.xls");
 	}
 	
 	@RequestMapping(value = "/downloadmanual", method = RequestMethod.GET)
@@ -1161,5 +1161,27 @@ public class PetitController {
       }
       
       return new ResponseEntity<>("Файл успешно загружен в базу.",HttpStatus.OK);
+   }
+   
+   @PostMapping("/fileUpload_gr_sp")
+   public ResponseEntity<Object> fileUpload_gr_sp(@RequestParam(value = "_csrf", required = false) String csrf, @RequestParam("file") MultipartFile file)
+         throws IOException, JAXBException {
+
+      // Save file on system
+      if (!file.getOriginalFilename().isEmpty()) {
+    	  
+    	 
+    	 File f = new File(servletcontext.getRealPath("\\resources\\doc_fond\\reestr_sp.xls"));
+         BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
+         outputStream.write(file.getBytes());
+         outputStream.flush();
+         outputStream.close();
+         
+      }else{
+         return new ResponseEntity<>("Файл не загружен. Повторите попытку или обратитесь к администратору.",HttpStatus.BAD_REQUEST);
+      }
+      
+      
+      return new ResponseEntity<>(new String("Реестр успешно загружен.").getBytes("UTF-8"),HttpStatus.OK);
    }
 }

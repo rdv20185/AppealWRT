@@ -791,11 +791,11 @@ function valid(var_role){
 	let n = var_role.indexOf("ROLE_ER");
 	 let n2 = var_role.indexOf("ROLE_ADMIN");
 	 
-	 console.log($('#moId').val() + ' - '+ $('#hspId').val() + ' - ' + $('#typempid').val());
-		 console.log($('#moId').val() != 0 && ($('#hspId').val() == 0 || $('#typempid').val() == 0));
+		 
 
 		// в письменном обращении дата письма должна = дате регистрации
-		if  ($('#letterDate').val() != '') $('#dateInput').val($('#letterDate').val());
+		if  ($('#letterDate').val() != '' && $('#letterDate').val() != undefined){ $('#dateInput').val($('#letterDate').val());}
+		//console.log('ddddd '+$('#letterDate').val());
 		 
      if($('#presentId').val() == 2 && ($('#letterDate').val() == '' || $('#letterNum').val() == '') ){
     	 

@@ -108,7 +108,7 @@
 </a>&nbsp;&nbsp;&nbsp;&nbsp;
 <br><br><hr/>
 
-<h3>Нагрузка на страхового представителя 1-го и 2-го уровня</h3>
+<h3>Нагрузка на страхового представителя 1,2 и 3 уровней</h3>
 <form:form method="post" action="report_power_sp.html" commandName="dateReport" onsubmit="subDisableButton('submit');">
 	<table cellspacing='15'>
 		<tr>

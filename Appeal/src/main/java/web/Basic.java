@@ -210,6 +210,7 @@ public class Basic {
     
     private void nightcallsprocess(HttpServletRequest request){
     	String path = request.getServletContext().getRealPath("/")+"night_calls_working";
+    	System.out.println("path "+path);
     	String path_worked =/*request.getServletContext().getRealPath("/")+"night_calls_worked"; */"D:/Java/Tomcat7/TomCat7/night_calls_worked/"; 
     	File f = new File(path);
     	if(f.isAbsolute()){
@@ -355,11 +356,11 @@ public class Basic {
 			   (petit.getTypeId() == 1 && petit.getCauseId() == 13 && petit.getRectif1Id() ==0)){bindingResult.rejectValue("Rectif1Id", "error.petit", "Поле 'Уточнение1' обязательно для заполнения");}
     		
     		
-    		if((getRole().contains("ROLE_SMO_SP3") && !petit.getBlockger2016().getRegname().contains("sp3")) ||
+/*    		if((getRole().contains("ROLE_SMO_SP3") && !petit.getBlockger2016().getRegname().contains("sp3")) ||
     		   (!getRole().contains("ROLE_SMO_SP3") && petit.getBlockger2016().getRegname().contains("sp3"))){
     			
     			bindingResult.rejectValue("Rectif1Id", "error.petit", "Право доступа на данное обращение принадлежит СП3 (зарегистрирован СП3) либо СП3 не имеет доступ к обращению (зарегестрировано не СП3)");
-    		}
+    		}*/
     		
     		
     		if(petit.getBlockger2016().getRegname().contains("call") && petit.getConectId() != 7	){bindingResult.rejectValue("causeId", "error.petit", "У Вас недостаточно прав изменить поле 'Связь' или поле 'Cвязь' имеет неправильное значение отличное от значения 'Горячая линия' ");}
