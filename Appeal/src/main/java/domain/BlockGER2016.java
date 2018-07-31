@@ -86,14 +86,24 @@ public class BlockGER2016 {
 	// видМП. Добавлено Кузнецовой ИН 02.03.17
 	private Integer typempid;
 	
+	private Integer OTV_KON;
+	
 	public Integer getTypempid() {
 		return typempid;
 	}
 
+	public Integer getOTV_KON() {
+		return OTV_KON;
+	}
+	
 	public void setTypempid(Integer typempid) {
 		this.typempid = typempid;
 	}
 
+	public void setOTV_KON(Integer OTV_KON) {
+		this.OTV_KON = OTV_KON;
+	}
+	
 	public Date getDate_end() {
 		return date_end;
 	}

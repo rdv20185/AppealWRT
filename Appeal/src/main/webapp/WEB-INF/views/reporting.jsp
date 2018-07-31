@@ -35,7 +35,8 @@
 			$( "#de_1" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#db_2" ).datepicker({dateFormat:'dd.mm.yy'});
 			$( "#de_2" ).datepicker({dateFormat:'dd.mm.yy'});
-			
+			$( "#de_3" ).datepicker({dateFormat:'dd.mm.yy'});
+			$( "#de_4" ).datepicker({dateFormat:'dd.mm.yy'});
 			
 		});
 	</script>
@@ -116,9 +117,9 @@
 		</tr>
 		<tr>
 			<td><form:label path="dateBegin"><spring:message code="label.dateBegin" /></form:label>
-			<form:input id="dateBegin" path="dateBegin" class='reportParam' /></td>
+			<form:input id="de_3" path="dateBegin" class='reportParam' /></td>
 			<td><form:label path="dateEnd"><spring:message code="label.dateEnd" /></form:label>
-			<form:input id="dateEnd" path="dateEnd" class='reportParam' /></td>
+			<form:input id="de_4" path="dateEnd" class='reportParam' /></td>
 			<td><input id="submit" type="submit" value="<spring:message code="label.report"/>" /></td>
 			
 			<sec:authorize access="hasAnyRole('ROLE_TFOMS','ROLE_ADMIN')">

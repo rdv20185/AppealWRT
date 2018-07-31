@@ -1,4 +1,4 @@
-<beans:beans xmlns="http://www.springframework.org/schema/security"
+﻿<beans:beans xmlns="http://www.springframework.org/schema/security"
     xmlns:beans="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
@@ -118,7 +118,7 @@
 				<user name="filimonova" password="lkj098" authorities="ROLE_TFOMS" />
 				<user name="osipova" password="jkl890" authorities="ROLE_TFOMS" />
 				<user name="user_1" password="fdf342" authorities="ROLE_TFOMS" />
-				
+				<user name="utyatnikova" password="knk434" authorities="ROLE_TFOMS" />
 				
 				<user name="РОСНО" password="rosno" authorities="ROLE_ER,ROLE_ALLER,ROLE_ROSNO" />
 				<user name="СИМАЗ" password="simaz" authorities="ROLE_ER,ROLE_ALLER,ROLE_SIMAZ" />
