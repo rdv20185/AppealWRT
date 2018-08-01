@@ -235,7 +235,8 @@
 					console.log('test ');
 				}
 				
-			}
+			}			
+			
 			
 			$('#connectid').click(function(){
 				var epr = $( "#connectid option:selected" ).text();
@@ -507,7 +508,7 @@
 
 
   <nav>
-      <ul class="menu">
+      <ul class="menu">     
         <li><a href="<c:url value="/logout" />">Выйти из приложения</a></li>
         <li><a href="<c:url value="/index" />">Главная</a></li>
         <li><a href="<c:url value="/searching" />">Поиск</a></li>
