@@ -32,8 +32,8 @@
             r1c1 as (select count(*) c from blockger_2 t2 where  $P{username_sp1} like '%'||t2.regname||'%'),
             
             r1c1d1 as (select count(*) c from blockger_2 t2,petit_2 p where  t2.regname='auto' and p.id=t2.id_ger and $P{username_sp1} like '%'||p.username||'%'),
-            r1c1d2 as (select count(*) c from blockger_2 t2,petit p where  $P{username_sp1} like '%'||t2.regname||'%' and t2.regname like '%'||'call'||'%' and p.id=t2.id_ger),
-            r1c1d3 as (select count(*) c from blockger_2 t2,petit p where  $P{username_sp1} like '%'||p.username||'%' and p.username like '%'||'callnight'||'%' and t2.regname='auto' and p.id=t2.id_ger),
+            r1c1d2 as (select count(*) c from blockger_2 t2,petit_2 p where  $P{username_sp1} like '%'||t2.regname||'%' and t2.regname like '%'||'call'||'%' and p.id=t2.id_ger),
+            r1c1d3 as (select count(*) c from blockger_2 t2,petit_2 p where  $P{username_sp1} like '%'||p.username||'%' and p.username like '%'||'callnight'||'%' and t2.regname='auto' and p.id=t2.id_ger),
             r1c2 as   (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and $P{username_sp1} like '%'||t.username||'%'),
             r1c2d1 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and t2.regname='auto' and $P{username_sp1} like '%'||t.username||'%'  and t.conect_id =7),
             r1c2d2 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t.username||'%' and t.username like '%'||'call'||'%'  and t.conect_id = 7),
@@ -41,8 +41,8 @@
             r2c1 as (select count(*) c from blockger_2 t2 where  $P{username_sp2} like '%'||t2.regname||'%' and t2.regname like '%_sp2_%'),
                 
             r2c1d1 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and $P{username_sp2} like '%'||t.username||'%'),
-            r2c1d2 as (select count(*) c from blockger_2 t2,petit t where t.id = t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%'  and t.conect_id = '7'),
-            r2c1d3 as (select count(*) c from blockger_2 t2,petit t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp2} like '%'||t.username||'%' and t.conect_id = '7'),
+            r2c1d2 as (select count(*) c from blockger_2 t2,petit_2 t where t.id = t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%'  and t.conect_id = '7'),
+            r2c1d3 as (select count(*) c from blockger_2 t2,petit_2 t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp2} like '%'||t.username||'%' and t.conect_id = '7'),
             
             r2c2 as (select count(*) c from petit t  where $P{username_sp2} like '%'||t.username||'%'  and t.username like '%_sp2_%'),
 
@@ -52,8 +52,8 @@
             r1c2c3 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and $P{username_sp1} like '%'||t.username||'%' and t.present_id = 1),
             r1c2c4 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and $P{username_sp1} like '%'||t.username||'%' and t.present_id = 2),
             
-            r1c1d4 as (select count(*) c from blockger_2 t2,petit p where  $P{username_sp1} like '%'||t2.regname||'%' and t2.regname like '%'||'call'||'%' and p.id=t2.id_ger and p.present_id = 1),
-            r1c1d5 as (select count(*) c from blockger_2 t2,petit p where  $P{username_sp1} like '%'||t2.regname||'%' and t2.regname like '%'||'call'||'%' and p.id=t2.id_ger and p.present_id = 2),
+            r1c1d4 as (select count(*) c from blockger_2 t2,petit_2 p where  $P{username_sp1} like '%'||t2.regname||'%' and t2.regname like '%'||'call'||'%' and p.id=t2.id_ger and p.present_id = 1),
+            r1c1d5 as (select count(*) c from blockger_2 t2,petit_2 p where  $P{username_sp1} like '%'||t2.regname||'%' and t2.regname like '%'||'call'||'%' and p.id=t2.id_ger and p.present_id = 2),
             
             r1c2d3 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t.username||'%' and t.username like '%'||'call'||'%'  and t.conect_id = 7 and t.present_id = 1),
             r1c2d4 as (select count(*) c from blockger t2,petit t  where t.id = t2.id_ger and $P{username_sp1} like '%'||t.username||'%' and t.username like '%'||'call'||'%'  and t.conect_id = 7 and t.present_id = 2),
@@ -65,15 +65,15 @@
             r2c2c1 as (select count(*) c from petit t  where $P{username_sp2} like '%'||t.username||'%' and t.present_id = 1  and t.username like '%_sp2_%'),
             r2c2c2 as (select count(*) c from petit t  where $P{username_sp2} like '%'||t.username||'%' and t.present_id = 2  and t.username like '%_sp2_%'),
             
-            r2c1d4 as (select count(*) c from blockger_2 t2,petit t where t.id = t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%'  and t.conect_id = '7' and t.present_id = 1),
-            r2c1d5 as (select count(*) c from blockger_2 t2,petit t where t.id = t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%'  and t.conect_id = '7' and t.present_id = 1),
+            r2c1d4 as (select count(*) c from blockger_2 t2,petit_2 t where t.id = t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%'  and t.conect_id = '7' and t.present_id = 1),
+            r2c1d5 as (select count(*) c from blockger_2 t2,petit_2 t where t.id = t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%'  and t.conect_id = '7' and t.present_id = 1),
             
             r2c1d6 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp2} like '%'||t.username||'%' and t.conect_id = '7' and t.present_id = 1),
             r2c1d7 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp2} like '%'||t.username||'%' and t.conect_id = '7' and t.present_id = 2),
             
             r3c1 as (select count(*) c from blockger_2 t2 where  $P{username_sp3} like '%'||t2.regname||'%'),
-            r3c1c1 as   (select count(*) c from blockger_2 t2,petit p where  $P{username_sp3} like '%'||t2.regname||'%' and p.id=t2.id_ger and p.present_id = 1),
-            r3c1c2 as   (select count(*) c from blockger_2 t2,petit p where  $P{username_sp3} like '%'||t2.regname||'%' and p.id=t2.id_ger and p.present_id = 2),
+            r3c1c1 as   (select count(*) c from blockger_2 t2,petit_2 p where  $P{username_sp3} like '%'||t2.regname||'%' and p.id=t2.id_ger and p.present_id = 1),
+            r3c1c2 as   (select count(*) c from blockger_2 t2,petit_2 p where  $P{username_sp3} like '%'||t2.regname||'%' and p.id=t2.id_ger and p.present_id = 2),
             
             r3c2 as (select count(*) c from petit t  where $P{username_sp3} like '%'||t.username||'%'),
             r3c2c1 as (select count(*) c from petit t  where $P{username_sp3} like '%'||t.username||'%' and t.present_id = 1),
