@@ -25,7 +25,7 @@
 	<queryString>
 		<![CDATA[with
             blockger as (select * from t_block_ger_all bl where trunc(bl.date_end) between $P{dateBegin} and $P{dateEnd}),
-            blockger_2 as (select * from t_block_ger_all bl where trunc(bl.date_create) between $P{dateBegin} and $P{dateEnd}),
+            blockger_2 as (select bl.* from t_block_ger_all bl left join t_petit_all on (id = id_ger) where    date_input    between $P{dateBegin} and $P{dateEnd}),
             petit as (select * from t_petit_all t,blockger t2 where  t.id=t2.id_ger),
             petit_2 as (select * from t_petit_all t,blockger_2 t2 where  t.id=t2.id_ger),
           
@@ -42,7 +42,8 @@
                 
             r2c1d1 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and $P{username_sp2} like '%'||t.username||'%'),
             r2c1d2 as (select count(*) c from blockger_2 t2,petit_2 t where t.id = t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%'  and t.conect_id = '7'),
-            r2c1d3 as (select count(*) c from blockger_2 t2,petit_2 t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp2} like '%'||t.username||'%' and t.conect_id = '7'),
+            
+            r2c1d3 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp2} like '%'||t.username||'%' and t.conect_id = '7'),
             
             r2c2 as (select count(*) c from petit t  where $P{username_sp2} like '%'||t.username||'%'  and t.username like '%_sp2_%'),
 
@@ -77,16 +78,22 @@
             
             r3c2 as (select count(*) c from petit t  where $P{username_sp3} like '%'||t.username||'%'),
             r3c2c1 as (select count(*) c from petit t  where $P{username_sp3} like '%'||t.username||'%' and t.present_id = 1),
-            r3c2c2 as (select count(*) c from petit t  where $P{username_sp3} like '%'||t.username||'%' and t.present_id = 2)
+            r3c2c2 as (select count(*) c from petit t  where $P{username_sp3} like '%'||t.username||'%' and t.present_id = 2),
             
+            r3c3c1 as (select count(*) c from blockger_2 t2,petit_2 t where t.id = t2.id_ger and $P{username_sp3} like '%'||t2.regname||'%'  and t.conect_id = '7'),
+            r3c3c2 as (select count(*) c from blockger_2 t2,petit_2 t where t.id = t2.id_ger and $P{username_sp3} like '%'||t2.regname||'%'  and t.conect_id = '7' and t.present_id = 1),
+            r3c3c3 as (select count(*) c from blockger_2 t2,petit_2 t where t.id = t2.id_ger and $P{username_sp3} like '%'||t2.regname||'%'  and t.conect_id = '7' and t.present_id = 2),
             
+            r3c3c4 as (select count(*) c from blockger   t2,petit   t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp3} like '%'||t.username||'%' and t.conect_id = '7'),
+            r3c3c5 as (select count(*) c from blockger   t2,petit   t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp3} like '%'||t.username||'%' and t.conect_id = '7' and t.present_id = 1),
+            r3c3c6 as (select count(*) c from blockger   t2,petit   t where t.id = t2.id_ger and ($P{username_sp1} like '%'||t2.regname||'%' or t2.regname like '%'||'call'||'%') and $P{username_sp3} like '%'||t.username||'%' and t.conect_id = '7' and t.present_id = 2)
                        
             
         select
-			r1c1.c r1c1,r1c2.c r1c2,r2c1.c r2c1,r2c2.c r2c2,r2c1d1.c r2c1d1,r2c1d2.c r2c1d2,r2c1d3.c r2c1d3,r1c1d1.c r1c1d1,r1c1d2.c r1c1d2,r1c1d3.c r1c1d3,r1c2d1.c r1c2d1,r1c2d2.c r1c2d2, r1c1c1.c r1c1c1, r1c1c2.c r1c1c2, r1c2c3.c r1c2c3, r1c2c4.c r1c2c4, r1c1d4.c r1c1d4, r1c1d5.c r1c1d5,  r2c1c1.c r2c1c1, r2c1c2.c r2c1c2, r1c2d3.c r1c2d3, r1c2d4.c r1c2d4, r2c2c1.c r2c2c1, r2c2c2.c r2c2c2, r2c1d4.c r2c1d4, r2c1d5.c r2c1d5, r2c1d6.c r2c1d6, r2c1d7.c r2c1d7, r3c1.c r3c1, r3c1c1.c r3c1c1, r3c1c2.c r3c1c2, r3c2.c r3c2, r3c2c1.c r3c2c1, r3c2c2.c r3c2c2
+			r1c1.c r1c1,r1c2.c r1c2,r2c1.c r2c1,r2c2.c r2c2,r2c1d1.c r2c1d1,r2c1d2.c r2c1d2,r2c1d3.c r2c1d3,r1c1d1.c r1c1d1,r1c1d2.c r1c1d2,r1c1d3.c r1c1d3,r1c2d1.c r1c2d1,r1c2d2.c r1c2d2, r1c1c1.c r1c1c1, r1c1c2.c r1c1c2, r1c2c3.c r1c2c3, r1c2c4.c r1c2c4, r1c1d4.c r1c1d4, r1c1d5.c r1c1d5,  r2c1c1.c r2c1c1, r2c1c2.c r2c1c2, r1c2d3.c r1c2d3, r1c2d4.c r1c2d4, r2c2c1.c r2c2c1, r2c2c2.c r2c2c2, r2c1d4.c r2c1d4, r2c1d5.c r2c1d5, r2c1d6.c r2c1d6, r2c1d7.c r2c1d7, r3c1.c r3c1, r3c1c1.c r3c1c1, r3c1c2.c r3c1c2, r3c2.c r3c2, r3c2c1.c r3c2c1, r3c2c2.c r3c2c2, r3c3c1.c r3c3c1, r3c3c2.c r3c3c2, r3c3c3.c r3c3c3,  r3c3c4.c r3c3c4, r3c3c5.c r3c3c5, r3c3c6.c r3c3c6
 		
 		from
-			r1c1,r2c1,r1c2,r2c2,r2c1d1,r2c1d2,r2c1d3,r1c1d1,r1c1d2,r1c1d3,r1c2d1,r1c2d2, r1c1c1, r1c1c2, r1c2c3, r1c2c4, r1c1d4, r1c1d5, r2c1c1, r2c1c2, r1c2d3, r1c2d4, r2c2c1, r2c2c2, r2c1d4, r2c1d5, r2c1d6, r2c1d7, r3c1, r3c1c1, r3c1c2, r3c2, r3c2c1, r3c2c2]]>
+			r1c1,r2c1,r1c2,r2c2,r2c1d1,r2c1d2,r2c1d3,r1c1d1,r1c1d2,r1c1d3,r1c2d1,r1c2d2, r1c1c1, r1c1c2, r1c2c3, r1c2c4, r1c1d4, r1c1d5, r2c1c1, r2c1c2, r1c2d3, r1c2d4, r2c2c1, r2c2c2, r2c1d4, r2c1d5, r2c1d6, r2c1d7, r3c1, r3c1c1, r3c1c2, r3c2, r3c2c1, r3c2c2, r3c3c1, r3c3c2, r3c3c3,  r3c3c4, r3c3c5, r3c3c6]]>
 	</queryString>
 	<field name="r1c1" class="java.lang.Integer"/>
 	<field name="r2c1" class="java.lang.Integer"/>
@@ -120,12 +127,18 @@
 	<field name="r2c1d7" class="java.lang.Integer"/>
 	<field name="r3c1" class="java.lang.Integer"/>
 	<field name="r3c1c1" class="java.lang.Integer"/>
-	<field name="r3c1c2" class="java.lang.String"/>
+	<field name="r3c1c2" class="java.lang.Integer"/>
 	<field name="r3c2" class="java.lang.Integer"/>
 	<field name="r3c2c1" class="java.lang.Integer"/>
 	<field name="r3c2c2" class="java.lang.Integer"/>
+	<field name="r3c3c1" class="java.lang.Integer"/>
+	<field name="r3c3c2" class="java.lang.Integer"/>
+	<field name="r3c3c3" class="java.lang.Integer"/>
+	<field name="r3c3c4" class="java.lang.Integer"/>
+	<field name="r3c3c5" class="java.lang.Integer"/>
+	<field name="r3c3c6" class="java.lang.Integer"/>
 	<detail>
-		<band height="442" splitType="Stretch">
+		<band height="493" splitType="Stretch">
 			<textField>
 				<reportElement x="277" y="183" width="50" height="18" uuid="1dab5a2d-4c85-4cce-a291-790c5f4cf762"/>
 				<box>
@@ -1142,6 +1155,136 @@
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Количество поступивших обращений"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="442" width="148" height="49" uuid="7010d97a-47d1-4b01-89b7-6926eec38130"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Из них оператор 2-го уровня"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="442" width="31" height="49" uuid="4a24fecd-d99c-4635-adf1-10b976f0fb34"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["6"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="442" width="98" height="49" uuid="d32ac591-070e-4795-acb4-2c9751c06622"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="442" width="50" height="49" uuid="b8f7c71f-3365-4124-bc30-a7ba19833e3c"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r3c3c1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="442" width="63" height="49" uuid="b2e5dd82-2eaf-4146-ae9a-e8ba212e4a78"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r3c3c2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="442" width="80" height="49" uuid="61c8932a-865d-42b6-b1b7-85986d288a3c"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r3c3c2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="442" width="50" height="49" uuid="a24c58e5-71c4-4edb-843d-d112079d9bf9"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r3c3c4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="520" y="442" width="63" height="49" uuid="88e94707-d98b-40cb-8d01-0e30b03356b7"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r3c3c5}   ]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="583" y="442" width="79" height="49" uuid="800b8966-1ebc-422d-a4a6-52c7168ced39"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r3c3c6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="442" width="92" height="49" uuid="ddebfe30-1e0e-4d39-9592-98ac70eef075"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
