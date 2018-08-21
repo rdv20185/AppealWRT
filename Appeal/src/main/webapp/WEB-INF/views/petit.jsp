@@ -255,6 +255,10 @@
 	});
 		
 	</script>
+	
+	
+	
+	
 	<script type="text/javascript">
 	$(document).ready(function() { 
 		// добовляем стиль css если адрес сайта содердит refresh 
@@ -780,6 +784,7 @@
 						<form:option value="0" label="" />
     					<form:options items="${validList}"/>
 					</form:select>
+					
 	
 					<form:label path="compens"><spring:message code="label.compens" /></form:label>
 					<form:input class="css-input" path="compens" />
@@ -1707,5 +1712,8 @@ $(document).ready(function() {
 	//});	
 });	
 </script>
+
+
+
 </body>
 </html>
