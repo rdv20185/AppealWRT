@@ -791,7 +791,16 @@ function valid(var_role){
 	let n = var_role.indexOf("ROLE_ER");
 	 let n2 = var_role.indexOf("ROLE_ADMIN");
 	 
-		 
+	
+	 if ($('#type').val()==1 && $('#validId').val() == 1 && $('#satisf').val() == '') {
+		 $('.errorrep').append('<h3>Выберете поле Удовлетворена </h3>');
+			$('.errorrep').css({'display':'block'});
+			$('#draggable').animate({
+		        scrollTop:  0
+	    	});
+			return false;
+		  }
+	 
 
 		// в письменном обращении дата письма должна = дате регистрации
 		if  ($('#letterDate').val() != '' && $('#letterDate').val() != undefined){ $('#dateInput').val($('#letterDate').val());}

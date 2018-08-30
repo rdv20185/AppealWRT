@@ -256,6 +256,77 @@
 		
 	</script>
 	
+<script>
+$(document).ready(function() {
+	 
+
+ $('#validId').change(function() {
+	 
+if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17 || $('#cause').val() != 18 || $('#cause').val() != 19 || $('#cause').val() != 20 || $('#cause').val() != 21 || $('#cause').val() != 22 || $('#cause').val() != 23 || $('#cause').val() != 24 || $('#cause').val() != 25 || $('#cause').val() != 26 || $('#cause').val() != 27 || $('#cause').val() != 28 || $('#cause').val() != 29 || $('#cause').val() != 30 || $('#cause').val() != 31 || $('#cause').val() != 32 || $('#cause').val() != 33 || $('#cause').val() != 34 || $('#cause').val() != 35 || $('#cause').val() != 36 || $('#cause').val() != 0) {	  		
+  var validId = $(this).val();
+  if ($('#type').val()==1 && validId == 2) {
+	  $('#satisf').val("");
+   	$('#satisf').attr("disabled",true);
+  }
+  if ($('#type').val()==1 && validId != 2) {
+	  $('#satisf').val("");
+   	$('#satisf').attr("disabled",false);
+  }
+}
+
+ });
+
+ $('#type').change(function() {
+	  
+	 if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17 || $('#cause').val() != 18 || $('#cause').val() != 19 || $('#cause').val() != 20 || $('#cause').val() != 21 || $('#cause').val() != 22 || $('#cause').val() != 23 || $('#cause').val() != 24 || $('#cause').val() != 25 || $('#cause').val() != 26 || $('#cause').val() != 27 || $('#cause').val() != 28 || $('#cause').val() != 29 || $('#cause').val() != 30 || $('#cause').val() != 31 || $('#cause').val() != 32 || $('#cause').val() != 33 || $('#cause').val() != 34 || $('#cause').val() != 35 || $('#cause').val() != 36 || $('#cause').val() != 0) {
+	 var typeId = $(this).val();
+	  if (typeId==1 && $('#validId').val() == 2) {
+		  $('#satisf').val("");
+	   	$('#satisf').attr("disabled",true);
+	  }
+	  else {
+		  $('#satisf').val("");
+	   	$('#satisf').attr("disabled",false);
+	  }
+	 }
+	 
+	 });
+ $('#cause').change(function() {
+	  
+	 
+	 var causeId = $(this).val();
+	  if (causeId == 15 || causeId == 16 || causeId == 17 || causeId == 18 || causeId == 19 || causeId == 20 || causeId == 21 || causeId == 22 || causeId == 23 || causeId == 24 || causeId == 25 || causeId == 26 || causeId == 27 || causeId == 28 || causeId == 29 || causeId == 30 || causeId == 31 || causeId == 32 || causeId == 33 || causeId == 34 || causeId == 35 || causeId == 36 || causeId == 0) {
+		  $('#validId').val("");
+		   	$('#validId').attr("disabled",true);
+			  $('#satisf').val("");
+		   	$('#satisf').attr("disabled",true);
+	  }
+	  else {
+
+		  $('#validId').val("");
+	   	$('#validId').attr("disabled",false);
+		  $('#satisf').val("");
+	   	$('#satisf').attr("disabled",false);
+	  }
+	 
+	 	 });
+ 
+
+});
+
+    
+</script>
+
+
+
+
+	
+
+
+
+
+
+
 	
 	
 	
@@ -517,6 +588,7 @@
         <li><a href="<c:url value="/index" />">Главная</a></li>
         <li><a href="<c:url value="/searching" />">Поиск</a></li>
         <li><a href="<c:url value="/reporting" />">Создать отчет</a></li>
+      
         
         <li><a href="" class="submenu-link">Документация</a>
           <ul class="submenu">
