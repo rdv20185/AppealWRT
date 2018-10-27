@@ -756,6 +756,18 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 				<form:option value="54" label="54 Новосибирскaя область" />				
     			<form:options items="${terList}"/>
 		</form:select>
+		
+		
+				<form:label path="tematKodId"><spring:message code="label.terAnswer" /></form:label>
+		<form:select path="tematKodId">
+				<form:option value="0" label="" />		
+    			<form:options items="${tematsprList}"/>
+		</form:select>
+
+
+
+
+		
 	</p>
 </fieldset>  
 <fieldset class="row777">

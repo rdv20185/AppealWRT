@@ -43,7 +43,7 @@
          
        
             r1c2 as (select count(*) c from petit t where $P{username_sp1} like '%'||t.username||'%'),
-                 
+            r2c2 as (select count(*) c from petit t where $P{username_sp2} like '%'||t.username||'%' and t.username like '%_sp2_%' and t.present_id in(1, 2)),      
   
       
             r1c2d1 as (select count(*) c from blockger t2,petit t where t.id = t2.id_ger and t2.regname='auto' and $P{username_sp1} like '%'||t.username||'%'  and t.conect_id =7),
@@ -60,7 +60,7 @@
            r2c1d3 as (select count(*) c from petit t where $P{username_sp2} like '%'||t.username||'%' and t.username like '%_sp2_%' and t.conect_id = '7'),
                                
            
-             r2c2 as (select count(*) c from petit t where $P{username_sp2} like '%'||t.username||'%' and t.username like '%_sp2_%' and t.present_id in(1, 2)),
+             
 
             r1c1c1 as (select count(*) c from blockger_2 t2,petit_2 p where p.id=t2.id_ger and  $P{username_sp1} like '%'||t2.regname||'%' and p.present_id = 1),
             r1c1c2 as (select count(*) c from blockger_2 t2,petit_2 p where p.id=t2.id_ger and  $P{username_sp1} like '%'||t2.regname||'%' and p.present_id = 2),
@@ -128,41 +128,39 @@
     r4c4c14 as (select count(*) c from petit t where $P{username_sp2} like '%'||t.username||'%' and t.present_id = 2 and t.username like '%_sp2_%' and t.type_id = '1'),
     r4c4c15 as (select count(*) c from petit t where $P{username_sp3} like '%'||t.username||'%' and t.present_id = 2 and t.type_id = '1'),
     
-    r4c4c16 as (select count(*) c from petit t where $P{username_sp1} like '%'||t.username||'%' and t.present_id = 2 and t.type_id = '1' and t.type_id = '1'),    
-    r4c4c17 as (select count(*) c from petit t where $P{username_sp2} like '%'||t.username||'%' and t.present_id = 2 and t.username like '%_sp2_%' and t.type_id = '1' and t.type_id = '1'),
-    r4c4c18 as (select count(*) c from petit t where $P{username_sp3} like '%'||t.username||'%' and t.present_id = 2 and t.type_id = '1' and t.type_id = '1'),
+    r4c4c16 as (select count(*) c from petit t where $P{username_sp1} like '%'||t.username||'%' and t.present_id = 2 and t.type_id = '1' and t.valid_id = '1'),    
+    r4c4c17 as (select count(*) c from petit t where $P{username_sp2} like '%'||t.username||'%' and t.present_id = 2 and t.username like '%_sp2_%' and t.type_id = '1' and t.valid_id = '1'),
+    r4c4c18 as (select count(*) c from petit t where $P{username_sp3} like '%'||t.username||'%' and t.present_id = 2 and t.type_id = '1' and t.valid_id = '1'),
     
     
      r5c4c1 as (select count(*) c from blockger_2 t2,petit_2 p where p.id=t2.id_ger and  $P{username_sp1} like '%'||t2.regname||'%' and p.present_id = 2 and p.type_id = '1'),
      r5c4c2 as (select count(*) c from blockger_2 t2, petit_2 p where $P{username_sp2} like '%'||t2.regname||'%' and p.id=t2.id_ger and p.present_id = 2 and t2.regname like '%_sp2_%' and p.type_id = '1'),
      r5c4c3 as (select count(*) c from blockger_2 t2,petit_2 p where  $P{username_sp3} like '%'||t2.regname||'%' and p.id=t2.id_ger and p.present_id = 2 and p.type_id = '1'),
      
+     r10c10 as (
+     select	 name c from t_smo_java t  where  $P{username_sp3} like '%'|| t.jv||'%'  and rownum <=1 
+     ),
 
     r5c4c4 as (select count(*) c from blockger_2 t2,petit_2 p where p.id=t2.id_ger and  $P{username_sp1} like '%'||t2.regname||'%' and p.present_id = 1 and p.type_id = '1'),
     r5c4c5 as (select count(*) c from blockger_2 t2,petit_2 p where  t2.regname='auto' and p.id=t2.id_ger and $P{username_sp1} like '%'||p.username||'%' and p.type_id = '1'),
     r5c4c6 as (select count(*) c from blockger_2 t2, petit_2 p where $P{username_sp2} like '%'||t2.regname||'%' and p.id=t2.id_ger and p.present_id = 1 and t2.regname like '%_sp2_%' and p.type_id = '1'),
     r5c4c7 as (select count(*) c from blockger_2 t2,petit_2 p where  $P{username_sp3} like '%'||t2.regname||'%' and p.id=t2.id_ger and p.present_id = 1 and p.type_id = '1'),
-   
     
-    
-    
-    r5c4c8 as (select count(*) c from blockger_2 t2,petit_2 p where p.id=t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and p.type_id = '1'),
+     r5c4c8 as (select count(*) c from blockger_2 t2,petit_2 p where p.id=t2.id_ger and $P{username_sp1} like '%'||t2.regname||'%' and p.type_id = '1'),
     r5c4c9 as (select count(*) c from blockger_2 t2,petit_2 p where  t2.regname='auto' and p.id=t2.id_ger and $P{username_sp1} like '%'||p.username||'%' and p.type_id = '1'),
     r5c4c10 as (select count(*) c from blockger_2 t2,petit_2 p where p.id=t2.id_ger and $P{username_sp2} like '%'||t2.regname||'%' and t2.regname like '%_sp2_%' and p.type_id = '1'),
     r5c4c11 as (select count(*) c from blockger_2 t2,petit_2 p where p.id=t2.id_ger and $P{username_sp3} like '%'||t2.regname||'%' and p.type_id = '1')
- 
     
    
             
         select    
-			r1c1.c r1c1,r1c2.c r1c2,r2c1.c r2c1,r2c2.c r2c2,r2c1d1.c r2c1d1,r2c1d2.c r2c1d2,r2c1d3.c r2c1d3,r1c1d1.c r1c1d1,r1c1d2.c r1c1d2,r1c1d3.c r1c1d3,r1c2d1.c r1c2d1,r1c2d2.c r1c2d2,r1c1c1.c r1c1c1,r1c1c2.c r1c1c2,r1c2c3.c r1c2c3,r1c2c4.c r1c2c4,r1c1d4.c r1c1d4,r1c1d5.c r1c1d5,r2c1c1.c r2c1c1,r2c1c2.c r2c1c2,r1c2d3.c r1c2d3,r1c2d4.c r1c2d4,r2c2c1.c r2c2c1,r2c2c2.c r2c2c2,r2c1d4.c r2c1d4,r2c1d5.c r2c1d5,r2c1d6.c r2c1d6,r2c1d7.c r2c1d7,r3c1.c r3c1,r3c1c1.c r3c1c1,r3c1c2.c r3c1c2,r3c2.c r3c2,r3c2c1.c r3c2c1,r3c2c2.c r3c2c2,r3c3c1.c r3c3c1,r3c3c2.c r3c3c2,r3c3c3.c r3c3c3,r3c3c4.c r3c3c4,r3c3c5.c r3c3c5,r3c3c6.c r3c3c6,r4c4c1.c r4c4c1,r4c4c3.c r4c4c3,r4c4c2.c r4c4c2,r4c4c4.c r4c4c4,r4c4c5.c r4c4c5,r4c4c6.c r4c4c6,r4c4c7.c r4c4c7,r4c4c8.c r4c4c8,r4c4c9.c r4c4c9,r4c4c10.c r4c4c10,r4c4c11.c r4c4c11,r4c4c12.c r4c4c12,r4c4c13.c r4c4c13,r4c4c14.c r4c4c14,r4c4c15.c r4c4c15,r4c4c16.c r4c4c16,r4c4c17.c r4c4c17,r4c4c18.c r4c4c18,r5c4c1.c r5c4c1,r5c4c2.c r5c4c2,r5c4c3.c r5c4c3,r5c4c4.c r5c4c4,r5c4c5.c r5c4c5,r5c4c6.c r5c4c6,r5c4c7.c r5c4c7,r5c4c8.c r5c4c8,r5c4c9.c r5c4c9,r5c4c10.c r5c4c10,r5c4c11.c r5c4c11 
+			r1c1.c r1c1,r1c2.c r1c2,r2c1.c r2c1,r2c1d1.c r2c1d1,r2c1d2.c r2c1d2,r2c1d3.c r2c1d3,r1c1d1.c r1c1d1,r1c1d2.c r1c1d2,r1c1d3.c r1c1d3,r1c2d1.c r1c2d1,r1c2d2.c r1c2d2,r1c1c1.c r1c1c1,r1c1c2.c r1c1c2,r1c2c3.c r1c2c3,r1c2c4.c r1c2c4,r1c1d4.c r1c1d4,r1c1d5.c r1c1d5,r2c1c1.c r2c1c1,r2c1c2.c r2c1c2,r1c2d3.c r1c2d3,r1c2d4.c r1c2d4,r2c2c1.c r2c2c1,r2c2c2.c r2c2c2,r2c1d4.c r2c1d4,r2c1d5.c r2c1d5,r2c1d6.c r2c1d6,r2c1d7.c r2c1d7,r3c1.c r3c1,r3c1c1.c r3c1c1,r3c1c2.c r3c1c2,r3c2.c r3c2,r3c2c1.c r3c2c1,r3c2c2.c r3c2c2,r3c3c1.c r3c3c1,r3c3c2.c r3c3c2,r3c3c3.c r3c3c3,r3c3c4.c r3c3c4,r3c3c5.c r3c3c5,r3c3c6.c r3c3c6,r4c4c1.c r4c4c1,r4c4c3.c r4c4c3,r4c4c2.c r4c4c2,r4c4c4.c r4c4c4,r4c4c5.c r4c4c5,r4c4c6.c r4c4c6,r4c4c7.c r4c4c7,r4c4c8.c r4c4c8,r4c4c9.c r4c4c9,r4c4c10.c r4c4c10,r4c4c11.c r4c4c11,r4c4c12.c r4c4c12,r4c4c13.c r4c4c13,r4c4c14.c r4c4c14,r4c4c15.c r4c4c15,r4c4c16.c r4c4c16,r4c4c17.c r4c4c17,r4c4c18.c r4c4c18,r5c4c1.c r5c4c1,r5c4c2.c r5c4c2,r5c4c3.c r5c4c3,r5c4c4.c r5c4c4,r5c4c5.c r5c4c5,r5c4c6.c r5c4c6,r5c4c7.c r5c4c7,r10c10.c r10c10,r5c4c8.c r5c4c8,r5c4c9.c r5c4c9,r5c4c10.c r5c4c10,r5c4c11.c r5c4c11,r2c2.c r2c2 
 		
 		from
-			r1c1,r2c1,r1c2,r2c2,r2c1d1,r2c1d2,r2c1d3,r1c1d1,r1c1d2,r1c1d3,r1c2d1,r1c2d2,r1c1c1,r1c1c2,r1c2c3,r1c2c4,r1c1d4,r1c1d5,r2c1c1,r2c1c2,r1c2d3,r1c2d4,r2c2c1,r2c2c2,r2c1d4,r2c1d5,r2c1d6,r2c1d7,r3c1,r3c1c1,r3c1c2,r3c2,r3c2c1,r3c2c2,r3c3c1,r3c3c2,r3c3c3,r3c3c4,r3c3c5,r3c3c6,r4c4c1,r4c4c3,r4c4c2,r4c4c4,r4c4c5,r4c4c6,r4c4c7,r4c4c8,r4c4c9,r4c4c10,r4c4c11,r4c4c12,r4c4c13,r4c4c14,r4c4c15,r4c4c16,r4c4c17,r4c4c18,r5c4c1,r5c4c2,r5c4c3,r5c4c4,r5c4c5,r5c4c6,r5c4c7,r5c4c8,r5c4c9,r5c4c10,r5c4c11]]>
+			r1c1,r2c1,r1c2,r2c1d1,r2c1d2,r2c1d3,r1c1d1,r1c1d2,r1c1d3,r1c2d1,r1c2d2,r1c1c1,r1c1c2,r1c2c3,r1c2c4,r1c1d4,r1c1d5,r2c1c1,r2c1c2,r1c2d3,r1c2d4,r2c2c1,r2c2c2,r2c1d4,r2c1d5,r2c1d6,r2c1d7,r3c1,r3c1c1,r3c1c2,r3c2,r3c2c1,r3c2c2,r3c3c1,r3c3c2,r3c3c3,r3c3c4,r3c3c5,r3c3c6,r4c4c1,r4c4c3,r4c4c2,r4c4c4,r4c4c5,r4c4c6,r4c4c7,r4c4c8,r4c4c9,r4c4c10,r4c4c11,r4c4c12,r4c4c13,r4c4c14,r4c4c15,r4c4c16,r4c4c17,r4c4c18,r5c4c1,r5c4c2,r5c4c3,r5c4c4,r5c4c5,r5c4c6,r5c4c7,r10c10,r5c4c8,r5c4c9,r5c4c10,r5c4c11,r2c2]]>
 	</queryString>
 	<field name="r1c1" class="java.lang.Integer"/>
 	<field name="r2c1" class="java.lang.Integer"/>
-	<field name="r2c2" class="java.lang.Integer"/>
 	<field name="r1c2" class="java.lang.Integer"/>
 	<field name="r2c1d1" class="java.lang.Integer"/>
 	<field name="r2c1d2" class="java.lang.Integer"/>
@@ -227,10 +225,12 @@
 	<field name="r5c4c5" class="java.lang.Integer"/>
 	<field name="r5c4c6" class="java.lang.Integer"/>
 	<field name="r5c4c7" class="java.lang.Integer"/>
+	<field name="r10c10" class="java.lang.String"/>
 	<field name="r5c4c8" class="java.lang.Integer"/>
 	<field name="r5c4c9" class="java.lang.Integer"/>
 	<field name="r5c4c10" class="java.lang.Integer"/>
 	<field name="r5c4c11" class="java.lang.Integer"/>
+	<field name="r2c2" class="java.lang.Integer"/>
 	<detail>
 		<band height="650" splitType="Stretch">
 			<textField>
@@ -1899,6 +1899,13 @@
 					<font fontName="Times New Roman" size="10" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{r1c1}+$F{r1c1d1}+$F{r2c1}+$F{r3c1})-($F{r5c4c8}+$F{r5c4c9}+$F{r5c4c10}+$F{r5c4c11})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="680" y="0" width="75" height="20" uuid="c9025f14-1ff3-4ed5-ba19-fb8463df8612"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r10c10}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
