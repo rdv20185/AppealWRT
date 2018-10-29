@@ -89,6 +89,7 @@ import domain.Rectif4L;
 import domain.ReportParams;
 import domain.Source;
 import domain.Ter;
+import domain.Tematspr;
 import domain.Type;
 import domain.TypeL;
 import domain.Subtype;
@@ -1037,8 +1038,8 @@ public class PetitController {
 		cal.setTime(df.parse(petit.getDateInput()));
     	
     	if(petit.getPresentId() == 1){
-    		
-    			Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
+    		//Ранее было 30
+    			Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 29,0);
 				while(petitService.isCeleb(startdate_plus.getTime())){
 					startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
 				};
@@ -1049,8 +1050,8 @@ public class PetitController {
     	if(petit.getPresentId() == 2){
     	
     		if(petit.getBlockger2016().getDate_end() == null && petit.getBloutboindletter2016().getDate_between().equals("")){
-    		
-				Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
+    			//Ранее было 30
+				Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 29,0);
 				while(petitService.isCeleb(startdate_plus.getTime())){
 					startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
 				};
@@ -1069,8 +1070,8 @@ public class PetitController {
 				petit.getBlockger2016().setDate_plan_end(df.format(startdate_plus.getTime()));
     		}
     		if(petit.getBlockger2016().getDate_end() != null && petit.getBloutboindletter2016().getDate_between().equals("")){
-    			
-    			Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 30,0);
+    			//Ранее было 30
+    			Calendar startdate_plus = utilitys.daysPlus((Calendar)cal.clone(), 29,0);
 				while(petitService.isCeleb(startdate_plus.getTime())){
 					startdate_plus = utilitys.daysPlus(startdate_plus, 1,0);
 				};

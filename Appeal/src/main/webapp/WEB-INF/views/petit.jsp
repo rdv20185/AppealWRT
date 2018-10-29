@@ -50,6 +50,47 @@
 		parent.history.back();
 		};
 
+//Потом убрать
+	function mzchange(){
+		
+///	alert($('#inbound_from').val());
+		if($('#inbound_from').val() == '6') {
+		      $("#sel").empty();
+		  	//alert("[f[]]");
+		      //	$("#sel").append( $('<option value="" disabled="" selected="">Назначить</option>'));				 
+		      	$("#sel").append( $('<option value="0">Назначить</option>'));
+		      	$("#sel").append( $('<option value="ИНГОССТРАХ">ИНГОССТРАХ</option>'));
+		      	$("#sel").append( $('<option value="МИНЗДРАВ НСО">МИНЗДРАВ НСО</option>'));
+		      	$("#sel").append( $('<option value="РОСНО">РОСНО</option>'));
+		      	$("#sel").append( $('<option value="СИМАЗ">СИМАЗ</option>'));
+		      	$("#sel").append( $('<option value="ТФОМС">ТФОМС</option>'));
+		} else 
+			if($('#inbound_from').val() == '8') {
+		      	$("#sel").empty();
+		      //	$("#sel").append( $('<option value="" disabled="" selected="">Назначить</option>'));
+		      //		alert("2");			 
+		       $("#sel").append( $('<option value="0">Назначить</option>'));
+		       $("#sel").append( $('<option value="ИНГОССТРАХ">ИНГОССТРАХ</option>'));
+		       $("#sel").append( $('<option value="РОСЗДРАВНАДЗОР НСО">РОСЗДРАВНАДЗОР НСО</option>'));
+		       $("#sel").append( $('<option value="РОСНО">РОСНО</option>'));
+		       $("#sel").append( $('<option value="СИМАЗ">СИМАЗ</option>'));
+		       $("#sel").append( $('<option value="ТФОМС">ТФОМС</option>'));
+		} else {
+		      $("#sel").empty();
+		  	//alert("3]");
+		      //	$("#sel").append( $('<option value="" disabled="" selected="">Назначить</option>'));				 
+		      	$("#sel").append( $('<option value="0">Назначить</option>'));
+		      	$("#sel").append( $('<option value="ИНГОССТРАХ">ИНГОССТРАХ</option>'));
+		      	$("#sel").append( $('<option value="МИНЗДРАВ НСО">МИНЗДРАВ НСО</option>'));
+		      	$("#sel").append( $('<option value="РОСЗДРАВНАДЗОР НСО">РОСЗДРАВНАДЗОР НСО</option>'));
+		      	$("#sel").append( $('<option value="РОСНО">РОСНО</option>'));
+		      	$("#sel").append( $('<option value="СИМАЗ">СИМАЗ</option>'));
+		      	$("#sel").append( $('<option value="ТФОМС">ТФОМС</option>'));
+		}
+		
+	
+
+	}
 		
 	function numberone() {
 		
@@ -62,7 +103,83 @@
 			$('#addpetit').prop('disabled', true);
 			}
 		
-	 }	
+      if($('#sel').val() != 'МИНЗДРАВ НСО' && $('#sel').val() != 'РОСЗДРАВНАДЗОР НСО'){
+			
+    	  $('#tematsprId').fadeOut();	
+    	  $("#tematsprId").empty();
+    	  $('#addpetit').fadeIn();
+    	 
+    	
+    	//
+    	  //
+		}
+		else{
+		
+			$("#type").val('3').attr("selected", true);
+	    	 $("#cause").val('35').attr("selected", true);
+	    	 $('#addpetit').fadeOut(); 
+	   
+			 
+		
+			 if($('#sel').val() != 'МИНЗДРАВ НСО')
+		{
+				 
+				 $("#tematsprId").empty();
+				 $("#tematsprId").append( $('<option value="" disabled="" selected="">Тематический справочник</option>'));
+				 
+				 $("#tematsprId").append( $('<option value="1">Льготное лекарственное обеспечение за счет средств федерального бюджета (отсутствие льготных лекарств в аптеках, отказ в выписке льготного рецепта, синонимическая замена препарата, длительное отсроченное обслуживание)</option>'));
+				 $("#tematsprId").append( $('<option value="2">Льготное лекарственное обеспечение за счет средств регионального бюджета(отсутствие льготных лекарств в аптеках, отказ в выписке льготного рецепта, синонимическая замена препарата, длительное отсроченное обслуживание)</option>'));
+				 $("#tematsprId").append( $('<option value="3">Обеспечение обезболивающими наркотическими препаратами</option>'));
+				 $("#tematsprId").append( $('<option value="4">Лицензирование медицинской деятельности</option>'));
+				 $("#tematsprId").append( $('<option value="5">Лицензирование фармацевтической деятельности</option>'));
+				 $("#tematsprId").append( $('<option value="6">Лицензирование деятельности по обороту наркотических средств, психотропных веществ и их прекурсоров, культивированию наркосодержащих растений</option>'));
+				 $("#tematsprId").append( $('<option value="7">Лицензирование производства и технического обслуживания медицинской техники</option>'));
+				 $("#tematsprId").append( $('<option value="8">Регистрация медицинских изделий и контроль за обращением медицинских изделий</option>'));
+				 $("#tematsprId").append( $('<option value="9">Розничная торговля лекарственными средствами</option>'));
+				 $("#tematsprId").append( $('<option value="10">Оптовая торговля лекарственными средствами</option>'));
+				 $("#tematsprId").append( $('<option value="11">Хранение и уничтожение лекарственных средств</option>'));
+				 $("#tematsprId").append( $('<option value="12">Качество лекарственных средств</option>'));
+				
+		}
+			 else
+				 {//  а это РОСЗДРАВ
+				 $("#tematsprId").empty();
+				 $("#tematsprId").append( $('<option value="" disabled="" selected="">Тематический справочник</option>'));
+				 
+				 $("#tematsprId").append( $('<option value="21">Об организации работы медицинской организации, подведомственной МЗ НСО</option>'));
+				 $("#tematsprId").append( $('<option value="22">О санитарно-гигиеническом состоянии медицинской организации, подведомственной МЗ НСО</option>'));
+				 $("#tematsprId").append( $('<option value="23">О материально-техническом обеспечении медицинской организации, подведомственной МЗ НСО</option>'));
+				 $("#tematsprId").append( $('<option value="24">Об этики и деонтологии медицинских работников медицинской организации, подведомственной МЗ НСО</option>'));
+				 $("#tematsprId").append( $('<option value="25">О лекарственном обеспечении при оказании первичной медико-санитарной помощи в амбулаторных условиях лиц, имеющих право на бесплатное и льготное обеспечение лекарственными препаратами</option>'));
+				 $("#tematsprId").append( $('<option value="26">О возможности записи на прием к врачу, в том числе по приему заявок на вызов врача на дом, посредством единого портала государственных и муниципальных услуг</option>'));
+				 $("#tematsprId").append( $('<option value="27">О возможности прикрепления к медицинской организации  посредством единого портала государственных и муниципальных услуг</option>'));
+				 $("#tematsprId").append( $('<option value="28">О прикреплении пациента для медицинского обслуживания к медицинской организации, подведомственной МЗ НСО</option>'));
+				 };
+			$('#tematsprId').fadeIn();
+			
+			}
+	 
+ //Когда выбирается РОСЗДРАВНАДЗОР НСО то внизу скрывается МИНЗДРАВ НСО, а когда выбирается МИНЗДРАВ НСО то скрывается РОСЗДРАВНАДЗОР
+ /*
+if($('#connectid').val() == '7' && $('#presentId').val() == '1'){
+$("#sel").empty();
+//$("#sel").append( $('<option value="" disabled="" selected="">Назначить</option>'));				 
+$("#sel").append( $('<option value="0">Назначить</option>'));
+$("#sel").append( $('<option value="ИНГОССТРАХ">ИНГОССТРАХ</option>'));
+$("#sel").append( $('<option value="РОСЗДРАВНАДЗОР НСО">РОСЗДРАВНАДЗОР  НСО</option>'));
+$("#sel").append( $('<option value="МИНЗДРАВ НСО">МИНЗДРАВ НСО</option>'));
+$("#sel").append( $('<option value="РОСНО">РОСНО</option>'));
+$("#sel").append( $('<option value="СИМАЗ">СИМАЗ</option>'));
+$("#sel").append( $('<option value="ТФОМС">ТФОМС</option>'));
+ 
+ 
+ $('#sel').fadeIn();
+ }
+	*/	
+
+
+//
+	}	
 
 	function refreshp() {
 		location.reload();
@@ -75,23 +192,117 @@
 		location.href='nightcallfile';
 	 }	
 
-	function changepresentId() {
+	//Изначальный код
+	/*function changepresentId() {
 		if($("#presentId" ).val() !=1){
 			$('#inboundLetter').fadeIn();
 			
 			$('#inbound_from').fadeIn();
 			$('#addpetit').fadeOut();
 			$('#sel').fadeOut();
+			
+		
 		}else{
 			$('#inboundLetter').fadeOut();
 			$('#inbound_from').fadeOut();
 			
 			$('#addpetit').fadeIn();
 			$('#sel').fadeIn();	
+			
 		}
 		
-	 }
+	 }*/
+	 
+/*	function changepresentId() {
+		if($("#presentId" ).val() !=1){
+			$('#inboundLetter').fadeIn();
+			
+			$('#inbound_from').fadeOut();
+			$('#addpetit').fadeOut();
+			$('#sel').fadeOut();
 		
+			
+		}else{
+			$('#inboundLetter').fadeOut();
+			$('#inbound_from').fadeIn();
+			
+			$('#addpetit').fadeIn();
+			$('#sel').fadeIn();	
+			
+		}
+		
+		
+	 }*/
+
+	
+	 function changepresentId() {
+		
+			if($("#presentId" ).val() !=1){
+				$('#inboundLetter').fadeIn();
+				
+				$('#addpetit').fadeOut();
+				$('#sel').fadeOut();
+				
+			}else{
+				$('#inboundLetter').fadeOut();
+				//$('#inbound_from').fadeIn();
+				
+				$('#addpetit').fadeIn();
+				$('#sel').fadeIn();	
+				
+				
+			}
+			//Условие при открытии карточки для горячей линии сразу поставить от кого
+			if (($("#presentId" ).val() ==1 && ($("#connectid" ).val() !=1 && $("#connectid" ).val() !=7))
+					|| ($("#presentId").val() ==2 && ($("#connectid" ).val() ==1 || $("#connectid" ).val() ==7))
+					|| ($("#presentId").val() ==1 && $("#connectid").val() ==1))			
+			{	//Блокировка			
+					$('#inbound_from').fadeOut();
+				
+			}else{//Открытие
+					$('#inbound_from').fadeIn();
+			}
+
+			
+
+		 }	
+	 
+
+
+			
+	/*	 
+	 function changepresentId() {
+			if (($("#presentId" ).val() ==1 && ($("#connectid" ).val() !=1 && $("#connectid" ).val() !=7))
+				|| ($("#presentId").val() ==2 && ($("#connectid" ).val() ==1 || $("#connectid" ).val() ==7))
+				|| ($("#presentId").val() ==1 && $("#connectid").val() ==1))
+				
+				
+				
+		{	//Блокировка
+				$('#inboundLetter').fadeOut();
+				$('#inbound_from').fadeOut();
+				$('#addpetit').fadeOut();
+				$('#sel').fadeOut();	
+					
+				
+				
+		}else{//Открытие
+			
+			 $('#inboundLetter').fadeIn();
+				$('#inbound_from').fadeIn();
+				$('#addpetit').fadeIn();
+				$('#sel').fadeIn();
+				
+		}
+		
+	 }*/
+
+
+	 
+
+
+	 
+	 
 	$(document).ready(function() {
 		
 		/*
@@ -141,14 +352,43 @@
 				
 				$('#addpetit').fadeOut();
 				$('#sel').fadeOut();
+				
 			}else{
 				$('#inboundLetter').fadeOut();
-				$('#inbound_from').fadeOut();
+				if ($('#connectid').val() ==7
+						
+//Показывает при горячей линии в inbound_from только три позиции, остальные стирает
+
+		             &&     $("#inbound_from [value='2']"). remove() && 
+		                    $("#inbound_from [value='3']"). remove() && 
+		                    $("#inbound_from [value='4']"). remove() && 
+		                    $("#inbound_from [value='5']"). remove() && 
+		                    $("#inbound_from [value='7']"). remove() && 
+		                    $("#inbound_from [value='9']"). remove() && 
+		                    $("#inbound_from [value='10']"). remove() && 
+		                    $("#inbound_from [value='11']"). remove() && 
+		                    $("#inbound_from [value='12']"). remove() && 
+		                    $("#inbound_from [value='100']"). remove() &&
+		                    //Потом убрать
+		                    $("#inbound_from [value='6']"). remove() &&	
+		                    $("#inbound_from [value='8']"). remove()	
+				
+			
+			
+				)
+//
+					
+							
+
+
+				{$('#inbound_from').fadeIn();}
+	 else 
+	 {	$('#inbound_from').fadeOut();}
 				
 				$('#addpetit').fadeIn();
 				$('#sel').fadeIn();
 			}
-		
+			$('#tematsprId').fadeOut();	
 			var user = '${principal.username}';
 			if(user != 'ernso' && user != 'call5001' && user != 'call5002' && user != 'call5003'
 				&& user != 'callnight5001'
@@ -276,6 +516,10 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 
  });
 
+ 
+
+
+ 
  $('#type').change(function() {
 	  
 	 if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17 || $('#cause').val() != 18 || $('#cause').val() != 19 || $('#cause').val() != 20 || $('#cause').val() != 21 || $('#cause').val() != 22 || $('#cause').val() != 23 || $('#cause').val() != 24 || $('#cause').val() != 25 || $('#cause').val() != 26 || $('#cause').val() != 27 || $('#cause').val() != 28 || $('#cause').val() != 29 || $('#cause').val() != 30 || $('#cause').val() != 31 || $('#cause').val() != 32 || $('#cause').val() != 33 || $('#cause').val() != 34 || $('#cause').val() != 35 || $('#cause').val() != 36 || $('#cause').val() != 0) {
@@ -291,6 +535,11 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 	 }
 	 
 	 });
+ 
+
+
+
+ 
  $('#cause').change(function() {
 	  
 	 
@@ -316,6 +565,7 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 
     
 </script>
+
 
 
 
@@ -698,6 +948,7 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 		</form:select>
 	  </p>
 	  <p>
+	  
 			<form:label path="conectId"><spring:message code="label.conect" /></form:label>
 				<form:select path="conectId" id="connectid">
 				<form:options items="${conectList}"/>
@@ -708,8 +959,10 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 		<form:select id="presentId" onclick='changepresentId()' path="presentId">
 	 		<form:options items="${presentList}"/>
 		</form:select>
-		<form:select id="inbound_from"  path="blockger2016.inbound_from">
-		<option value="" disabled selected>От кого</option>
+		
+		
+		<form:select id="inbound_from" onchange='mzchange()'  path="blockger2016.inbound_from">
+		<option value="" disabled selected>От кого</option>	
 	 		<form:options items="${inbound_fromList}"/>
 		</form:select>
 	  </p>
@@ -738,8 +991,9 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 		<form:label  style="font-weight: bold;" path="policy"><spring:message code="label.policy" /></form:label>
 		<form:input  path="policy" />
 
-		<form:label  style="font-weight: bold;" path="tel"><spring:message code="label.tel" /></form:label>
+		<form:label  style="font-weight: bold;" path="tel"><spring:message code="label.tel"/></form:label>
 		<form:input  path="tel"/>
+		
 
 		<form:label  style="font-weight: bold;" path="adress"><spring:message code="label.adress" /></form:label>
 		<form:input  path="adress" />	
@@ -751,19 +1005,14 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
    			<form:options items="${terList}"/>
 		</form:select>
 	
+	
 		<form:label path="terAnswerId"><spring:message code="label.terAnswer" /></form:label>
 		<form:select path="terAnswerId">
 				<form:option value="54" label="54 Новосибирскaя область" />				
     			<form:options items="${terList}"/>
 		</form:select>
 		
-		
-				<form:label path="tematKodId"><spring:message code="label.terAnswer" /></form:label>
-		<form:select path="tematKodId">
-				<form:option value="0" label="" />		
-    			<form:options items="${tematsprList}"/>
-		</form:select>
-
+				
 
 
 
@@ -805,8 +1054,14 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 				<span id="causeWarning" style="color:#ff8000">!
 					<span style="font-size:8">${petit.cause.causeName}</span>
 				</span>
-			<form:select id="cause" path="causeId" onchange="document.getElementById('causeWarning').hidden = true;"></form:select>	
+			<form:select id="cause" path="causeId" onchange="document.getElementById('causeWarning').hidden = true;">
+						<form:option value="0" label=""/>
+			<form:option value="35" label="4.14 ДРУГИЕ" />
+			
+			</form:select>	
 	</p>
+	
+
 	<p>			
 			<form:label path="rectif1Id"><spring:message code="label.rectif1" /></form:label>
 				<span id="rectif1Warning" style="color:#ff8000">!
@@ -908,6 +1163,9 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 	   <div style="float:left;"><button type="button" id="btn_add_subtype" title="Добавить причину">+</button></div>
 	   <div style="float:left; height: 21px; width: 24px; margin-left: 3px;"><button type="button" id="btn_del_subtype" title="Удалить причину">-</button></div>
 	   <div style="float: left; font-size: 11px; font-style: oblique; margin-top: 3px; margin-left: 13px;">Добавить/Удалить дополнительную причину (только для Жалоб)</div>
+	   
+	   
+	   
 	   </div>
 	</p>
 	<p>
@@ -1224,6 +1482,9 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 								<form:option label="Назначить"  value="0" />
 								<form:options items="${listassign}"/>
 							</form:select>
+								
+							
+							
 							<input name="cancel_button" onclick="cancelback()" type="button" value="<spring:message code="label.cancelpetit"/>"/>
 							
 							<input type="submit"  id="addpetit" name="submit" value="Назначить" disabled="disabled" 
@@ -1278,6 +1539,13 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
 						<form:option label="Назначить"  value="0" />
 						<form:options items="${listassign}"/>
 					</form:select>
+					
+		
+		<form:select path="tematsprId">
+		<form:option value="0" label="" />
+   		<form:options items="${tematsprList}"/>
+		</form:select>
+
 					
 						<input type="submit"  id="addpetit" name="submit" value="<spring:message code="label.addpetit"/>" disabled="disabled" 
 							onclick="document.getElementById('typeWarning').hidden = false;document.getElementById('causeWarning').hidden = false;document.getElementById('rectif1Warning').hidden = false;"
@@ -1365,7 +1633,7 @@ if($('#cause').val() != 15 || $('#cause').val() != 16 || $('#cause').val() != 17
     <thead>
         <tr>
         <th class="cuting2"><spring:message code="label.id" /></th>      
-		    <th class="cuting2">Дата поступления</th>
+		  // <th class="cuting2">Дата поступления</th> 
 		    <!-- <th>Дата изменения</th> -->
 		    <th class="cuting2">Дата ответа</th>
 		    <th><spring:message code="label.type" /></th>

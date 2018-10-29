@@ -1,6 +1,6 @@
 package domain;
 
-//55555556
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -84,6 +84,14 @@ public class Petit implements java.io.Serializable {
     @Column(name = "SURNAME")
     private String surname;
     
+    @Column(name = "OTV_KON")
+    private String otvkon;
+   
+    //Тематический справочник
+    @Column(name = "TEMAT_KOD_ID")
+    private Integer tematsprId;
+
+    
 	//@NotEmpty(message="Поле \"Отчество\" обязательно для заполнения")
     @Column(name = "PATRONY")
     private String patrony;
@@ -120,6 +128,8 @@ public class Petit implements java.io.Serializable {
     
     @Column(name = "INSUR_ID")
     private int insurId;
+    
+ 
     
     @Column(name = "PLACE")
     private int placeId;
@@ -275,6 +285,20 @@ public class Petit implements java.io.Serializable {
 	        return terAnswer;
 	}
 	
+	//Тема сообщения
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="TEMAT_KOD_ID", referencedColumnName = "TEMAT_SPR_ID", insertable = false, updatable = false)
+	private Tematspr tematspr;
+	
+	public void setTematspr(Tematspr tematspr) {
+		this.tematspr = tematspr;
+	}
+	
+	public Tematspr getTematspr() {
+	        return tematspr;
+	} 
+
+	
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="VALID_ID", referencedColumnName = "VALID_ID", insertable = false, updatable = false)
 	private Valid valid;
@@ -358,6 +382,8 @@ public class Petit implements java.io.Serializable {
 	public Insur getInsur() {
 	        return insur;
 	}
+	
+
 	
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="MO_ID", referencedColumnName = "MO_ID", insertable = false, updatable = false)
@@ -455,6 +481,15 @@ public class Petit implements java.io.Serializable {
 		this.surname = surname;
 	}
 
+	
+	public String getOtvkon() {
+		return otvkon;
+	}
+
+	public void setOtvkon(String otvkon) {
+		this.otvkon = otvkon;
+	}
+	
 	public String getPatrony() {
 		return patrony;
 	}
@@ -477,6 +512,17 @@ public class Petit implements java.io.Serializable {
 
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+
+	
+	//Тематический справочник
+	public Integer getTematsprId() {
+		return tematsprId;
+	}
+
+	public void setTematsprId(Integer tematsprId) {
+		this.tematsprId = tematsprId;
+	
 	}
 
 	public String getAdress() {
@@ -539,10 +585,13 @@ public class Petit implements java.io.Serializable {
 		return insurId;
 	}
 
+	
 	public void setInsurId(int insurId) {
 		this.insurId = insurId;
 	}
 
+	
+	
 	public int getPlaceId() {
 		return placeId;
 	}
@@ -765,6 +814,8 @@ public class Petit implements java.io.Serializable {
 		builder.append(name);
 		builder.append(", surname=");
 		builder.append(surname);
+		builder.append(", otvkon=");
+		builder.append(otvkon);
 		builder.append(", patrony=");
 		builder.append(patrony);
 		builder.append(", policy=");
@@ -787,6 +838,13 @@ public class Petit implements java.io.Serializable {
 		builder.append(hspId);
 		builder.append(", insurId=");
 		builder.append(insurId);
+		//Тематический справочник
+	      builder.append(", tematsprId=");
+	      builder.append(tematsprId);
+	      builder.append(", tematspr=");
+	      builder.append(tematspr);
+
+	      
 		builder.append(", placeId=");
 		builder.append(placeId);
 		builder.append(", username=");

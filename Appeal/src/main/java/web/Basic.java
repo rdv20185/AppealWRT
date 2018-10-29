@@ -51,6 +51,7 @@ import domain.Rectif4;
 import domain.Source;
 import domain.Subtype;
 import domain.Ter;
+import domain.Tematspr;
 import domain.Type;
 import domain.blOutboindLETTER2016;
 import res.Fields;
@@ -160,6 +161,8 @@ public class Basic {
     	map.put("validList", Fields.getValid());
     	map.put("hspList", Fields.getHsp());
     	map.put("typeMP", Fields.getTypeMP());
+    	//Тематический справочник
+    	map.put("tematsprList", Fields.getTematspr());
     	
     	//map.put("dateReport", new ReportParams());
     	
@@ -524,7 +527,9 @@ public class Basic {
 		if(petit.getHspId() != 0) petit.setHsp(new Hsp(Fields.getHsp().get(petit.getHspId()), petit.getHspId()));
 		//if(!petit.getBlockger2016().getClaim_inshur().equals("0")) petit.getBlockger2016().setClaim_inshur("1");
 		map.put("petitParam", petit);
-
+        //Тематический справочник
+		if(petit.getTematsprId() != 0) petit.setTematspr(new Tematspr(Fields.getTematspr().get(petit.getTematsprId()), petit.getTematsprId()));
+		
 		//searching
 		petitService.setSearchParams(petit);
 		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound,overdueappeal,getRole());

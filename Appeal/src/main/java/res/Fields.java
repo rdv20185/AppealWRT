@@ -148,6 +148,16 @@ public class Fields {
 		return getProperties(test);
 	}
 	
+	//Тематический справочник
+	public static Map<Integer, String> getTematspr() throws UnsupportedEncodingException {
+		String test = str+"listtematspr.txt";
+		test = URLDecoder.decode(test, "UTF-8");
+		test = new File(test).getPath();
+		
+		return getProperties(test);
+	} 
+
+	
 	public static Map<Integer, String> getInsur() throws UnsupportedEncodingException {
 		String test = str+"insur.txt";
 		test = URLDecoder.decode(test, "UTF-8");
@@ -212,6 +222,7 @@ public class Fields {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
+			
 		}
 		return map;
 	}

@@ -621,8 +621,8 @@ public class PetitServiceImpl implements PetitService {
 				utilitys.processDate(listPetit.get(i));
 				startdate = utilitys.getCal();
 				enddate = utilitys.getCal2();
-				
-				startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 30,0);
+				//Ранее было 30
+				startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 29,0);
 				
 				while(isCeleb(startdate_plus.getTime())){
 					startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
@@ -683,8 +683,8 @@ public class PetitServiceImpl implements PetitService {
 				startdate = utilitys.getCal();
 				enddate = utilitys.getCal2();
 	
-				
-				startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 30,0);
+				//Ранее было 30
+				startdate_plus = utilitys.daysPlus((Calendar)startdate.clone(), 29,0);
 				
 				while(isCeleb(startdate_plus.getTime())){
 					startdate_plus = utilitys.daysPlus((Calendar)startdate_plus.clone(), 1,0);
