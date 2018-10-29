@@ -499,9 +499,6 @@ function new_body(btn,role){
 				   this.reset();
 				   $('#inbound_from').fadeOut();
 				});
-				
-				
-				
 				// прячем доп причины
 				let test = $("[id*='div_subtype']");
 				for(let i = 0;i < test.length; i++){
@@ -803,32 +800,8 @@ function valid(var_role){
 	    	});
 			return false;
 		  }
-	//Пока убрал 
-	 if ($('#inbound_from').css("display") != "none" && $('#inbound_from').val() == null) {
-         $('.errorrep').append('<h3>Выберите поле От кого</h3>');
-            $('.errorrep').css({'display':'block'});
-            $('#draggable').animate({
-                scrollTop:  0
-            });
-            return false;
-          }
-
-
 	 
-	 //Выход сообщения при вводе определенных номеров телефона
-	 if($('#tel').val() == '223-23-15' || $('#tel').val() == '2232315' || $('#tel').val() == '83832232315'|| $('#tel').val() == '8-383-223-23-15' ||
-			 $('#tel').val() == '238-63-63' || $('#tel').val() == '2386363' || $('#tel').val() == '83832386363'|| $('#tel').val() == '8-383-238-63-63'	 ) {
-		 $('.errorrep').append('<h3>Уточните телефон звонящего</h3>');
-			$('.errorrep').css({'display':'block'});
-			$('#draggable').animate({
-		        scrollTop:  0
-	    	});
-			return false;
-		  }
-	 //
 
-	 
-	 
 		// в письменном обращении дата письма должна = дате регистрации
 		if  ($('#letterDate').val() != '' && $('#letterDate').val() != undefined){ $('#dateInput').val($('#letterDate').val());}
 		//console.log('ddddd '+$('#letterDate').val());
@@ -869,6 +842,10 @@ function valid(var_role){
     	});
 		return false;
 	}
+        
+     
+     
+     
 	else if(($('#type').val() == 1 && $('#cause').val() == 2 && $('#rectif1').val() == 0) ||
 			($('#type').val() == 1 && $('#cause').val() == 4 && $('#rectif1').val() == 0) ||
 			($('#type').val() == 1 && $('#cause').val() == 11 && $('#rectif1').val() == 0)||

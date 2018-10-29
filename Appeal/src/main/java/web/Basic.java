@@ -1,5 +1,7 @@
 package web;
 
+//Тест555
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -51,7 +53,6 @@ import domain.Rectif4;
 import domain.Source;
 import domain.Subtype;
 import domain.Ter;
-import domain.Tematspr;
 import domain.Type;
 import domain.blOutboindLETTER2016;
 import res.Fields;
@@ -97,6 +98,7 @@ public class Basic {
 			map.put("sourceList", source1);
 			map.put("presentList", Fields.getPresent());
 			map.put("conectList", Fields.getConect());
+			//map.put("tematsprList", Fields.getTematspr());
 			map.put("listassign", Fields.getProperties());
 			map.put("responsible" , coverter.getMap().get("ROLE_ADMIN"));
 		}
@@ -105,6 +107,7 @@ public class Basic {
 			map.put("sourceList", source1);
 			map.put("presentList", Fields.getPresent());
 			map.put("conectList", Fields.getConect());
+		//	map.put("tematsprList", Fields.getTematspr());
 			map.put("listassign", Fields.getfirsttfoms());
 			map.put("responsible" , coverter.getMap().get("ROLE_TFOMS"));
 		}
@@ -122,6 +125,7 @@ public class Basic {
     		map.put("listassign", Fields.getfirstsimaz());
     		map.put("sourceList", source2);
     		map.put("conectList", Fields.getConect());
+    	//	map.put("tematsprList", Fields.getTematspr());
 			map.put("presentList", Fields.getPresent());
 			
 			List<String> ls = coverter.getMap().get("ROLE_SIMAZ_SP2");
@@ -133,6 +137,7 @@ public class Basic {
 			map.put("listassign", Fields.getfirstrosno());
 			map.put("sourceList", source2);
 			map.put("conectList", Fields.getConect());
+	//		map.put("tematsprList", Fields.getTematspr());
 			map.put("presentList", Fields.getPresent());
 			
 			List<String> ls = coverter.getMap().get("ROLE_ROSNO_SP2");
@@ -143,6 +148,7 @@ public class Basic {
 			map.put("listassign", Fields.getfirstingos());
 			map.put("sourceList", source2);
 			map.put("conectList", Fields.getConect());
+	//		map.put("tematsprList", Fields.getTematspr());
 			map.put("presentList", Fields.getPresent());
 			
 			List<String> ls = coverter.getMap().get("ROLE_INGOS_SP2");
@@ -155,14 +161,13 @@ public class Basic {
     	map.put("intermedList", Fields.getIntermed());
     	map.put("typeList", Fields.getType());
     	map.put("terList", Fields.getTer());
+    	map.put("tematsprList", Fields.getTematspr());
     	map.put("moList", Fields.getMo());
     	map.put("insurList", Fields.getInsur());
     	map.put("placeList", Fields.getPlace());
     	map.put("validList", Fields.getValid());
     	map.put("hspList", Fields.getHsp());
     	map.put("typeMP", Fields.getTypeMP());
-    	//Тематический справочник
-    	map.put("tematsprList", Fields.getTematspr());
     	
     	//map.put("dateReport", new ReportParams());
     	
@@ -521,15 +526,16 @@ public class Basic {
 		if(petit.getConectId() != 0) petit.setConect(new Conect(Fields.getConect().get(petit.getConectId()), petit.getConectId()));
 		if(petit.getTerId() != 0) petit.setTer(new Ter(Fields.getTer().get(petit.getTerId()), petit.getTerId()));
 		if(petit.getTerAnswerId() != 0) petit.setTerAnswer(new Ter(Fields.getTer().get(petit.getTerAnswerId()), petit.getTerAnswerId()));
+		//Для тематического справочника
+		//if(petit.getTematKodId() != 0) petit.setTematkod(new Tematspr(Fields.getTematspr().get(petit.getTematKodId()), petit.getTematKodId()));
+		
 		if(petit.getMoId() != 0) petit.setMo(new Mo(Fields.getMo().get(petit.getMoId()), petit.getMoId()));
 		if(petit.getInsurId() != 0) petit.setInsur(new Insur(Fields.getInsur().get(petit.getInsurId()), petit.getInsurId()));
 		if(petit.getValidId() != 0) petit.setValid(new domain.Valid(Fields.getValid().get(petit.getValidId()), petit.getValidId()));
 		if(petit.getHspId() != 0) petit.setHsp(new Hsp(Fields.getHsp().get(petit.getHspId()), petit.getHspId()));
 		//if(!petit.getBlockger2016().getClaim_inshur().equals("0")) petit.getBlockger2016().setClaim_inshur("1");
 		map.put("petitParam", petit);
-        //Тематический справочник
-		if(petit.getTematsprId() != 0) petit.setTematspr(new Tematspr(Fields.getTematspr().get(petit.getTematsprId()), petit.getTematsprId()));
-		
+
 		//searching
 		petitService.setSearchParams(petit);
 		List<Petit> listPetit = petitService.listSearch(getUserName(),searchcheckinbound,overdueappeal,getRole());

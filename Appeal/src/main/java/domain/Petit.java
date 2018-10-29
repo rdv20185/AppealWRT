@@ -86,11 +86,10 @@ public class Petit implements java.io.Serializable {
     
     @Column(name = "OTV_KON")
     private String otvkon;
-   
+    
     //Тематический справочник
-    @Column(name = "TEMAT_KOD_ID")
-    private Integer tematsprId;
-
+    @Column(name = "TEMAT_KOD")
+    private Spring tematKodId;
     
 	//@NotEmpty(message="Поле \"Отчество\" обязательно для заполнения")
     @Column(name = "PATRONY")
@@ -285,18 +284,19 @@ public class Petit implements java.io.Serializable {
 	        return terAnswer;
 	}
 	
-	//Тема сообщения
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="TEMAT_KOD_ID", referencedColumnName = "TEMAT_SPR_ID", insertable = false, updatable = false)
-	private Tematspr tematspr;
 	
-	public void setTematspr(Tematspr tematspr) {
-		this.tematspr = tematspr;
+	//Тема обращения
+    @ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="TEMAT_KOD", referencedColumnName = "TEMAT_SPR_ID", insertable = false, updatable = false)
+	private Tematspr tematKod;
+	
+	public void setTematKod(Tematspr tematKod) {
+		this.tematKod = tematKod;
 	}
 	
-	public Tematspr getTematspr() {
-	        return tematspr;
-	} 
+	public Tematspr getTematKod() {
+	        return tematKod;
+	}
 
 	
     @ManyToOne(fetch = FetchType.EAGER)
@@ -490,6 +490,15 @@ public class Petit implements java.io.Serializable {
 		this.otvkon = otvkon;
 	}
 	
+	public Spring getTematKodId() {
+		return tematKodId;
+	}
+	
+	public void setTematkod(Spring tematKodId) {
+		this.tematKodId = tematKodId;
+	}
+
+	
 	public String getPatrony() {
 		return patrony;
 	}
@@ -512,17 +521,6 @@ public class Petit implements java.io.Serializable {
 
 	public void setTel(String tel) {
 		this.tel = tel;
-	}
-
-	
-	//Тематический справочник
-	public Integer getTematsprId() {
-		return tematsprId;
-	}
-
-	public void setTematsprId(Integer tematsprId) {
-		this.tematsprId = tematsprId;
-	
 	}
 
 	public String getAdress() {
@@ -816,6 +814,8 @@ public class Petit implements java.io.Serializable {
 		builder.append(surname);
 		builder.append(", otvkon=");
 		builder.append(otvkon);
+	      builder.append(", tematKodId=");
+	      builder.append(tematKodId);
 		builder.append(", patrony=");
 		builder.append(patrony);
 		builder.append(", policy=");
@@ -838,13 +838,7 @@ public class Petit implements java.io.Serializable {
 		builder.append(hspId);
 		builder.append(", insurId=");
 		builder.append(insurId);
-		//Тематический справочник
-	      builder.append(", tematsprId=");
-	      builder.append(tematsprId);
-	      builder.append(", tematspr=");
-	      builder.append(tematspr);
-
-	      
+		
 		builder.append(", placeId=");
 		builder.append(placeId);
 		builder.append(", username=");
