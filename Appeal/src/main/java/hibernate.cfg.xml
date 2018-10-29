@@ -17,6 +17,7 @@
 		<mapping class="domain.Conect"></mapping>
 		<mapping class="domain.Type"></mapping>
 		<mapping class="domain.Ter"></mapping>
+		<mapping class="domain.Tematspr"></mapping>
 		<mapping class="domain.Valid"></mapping>
 		<mapping class="domain.Mo"></mapping>
 		<mapping class="domain.Hsp"></mapping>
