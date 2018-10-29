@@ -2,3 +2,5 @@ hamit=ТФОМС
 simaz=СИМАЗ
 ingos=ИНГОССТРАХ
 rosno=РОСНО
+roszdrnso=РОСЗДРАВНАДЗОР НСО
+minzdrnso=МИНЗДРАВ НСО

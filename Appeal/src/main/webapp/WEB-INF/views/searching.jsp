@@ -401,6 +401,13 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 				<form:option value="54" label="Новосибирскaя область" />				
     			<form:options items="${terList}"/>
 			</form:select></td>
+			
+			<td><form:label path="tematsprId"><spring:message code="label.tematspr" /></form:label></td>
+		<td><form:select path="tematsprId">
+			<form:option value="0" label="" />
+   		
+		</form:select></td>
+		
 		</tr>
 	</table>
 	<table>	
@@ -557,6 +564,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 <c:if test="${petitParam.adress ne ''}"><spring:message code="label.adress" /> - <c:out value="${petitParam.adress}"/>;&nbsp&nbsp&nbsp&nbsp</c:if>
 <c:if test="${petitParam.ter.terName ne null}"><spring:message code="label.ter" /> - <c:out value="${petitParam.ter.terName}"/>;&nbsp&nbsp&nbsp&nbsp</c:if>
 <c:if test="${petitParam.terAnswer.terName ne null}"><spring:message code="label.terAnswer" /> - <c:out value="${petitParam.terAnswer.terName}"/>;&nbsp&nbsp&nbsp&nbsp</c:if>
+<c:if test="${petitParam.tematspr.tematsprName ne null}"><spring:message code="label.tematspr" /> - <c:out value="${petitParam. tematspr. tematsprName }"/>;&nbsp&nbsp&nbsp&nbsp</c:if>
 <c:if test="${petitParam.last1 ne 0}"><spring:message code="label.last1" /> - <c:out value="${petitParam.last1}"/>;&nbsp&nbsp&nbsp&nbsp</c:if>
 <c:if test="${petitParam.last2 ne 0}"><spring:message code="label.last2" /> - <c:out value="${petitParam.last2}"/>;&nbsp&nbsp&nbsp&nbsp</c:if>
 <c:if test="${petitParam.hsp.hspName ne null}"><spring:message code="label.hsp" /> - <c:out value="${petitParam.hsp.hspName}"/>;&nbsp&nbsp&nbsp&nbsp</c:if>
@@ -667,6 +675,7 @@ response.setDateHeader ("Expires", 10000); //prevents caching at the proxy serve
 			    <td>${petit.tel}</td>
 			    <td>${petit.adress}</td> -->
 			    <td class="cuting2">${petit.ter.terName}</td>
+			    <td class="cuting2">${petit.tematspr.tematsprName}</td>
 			    <!--<td>${petit.terAnswer.terName}</td>
 			    <td>${petit.last1}</td>
 			    <td>${petit.last2}</td>
